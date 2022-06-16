@@ -155,7 +155,7 @@ namespace StudyProgressManagement.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
-                {
+                {                 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -334,6 +334,12 @@ namespace StudyProgressManagement.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+
+                     // Set user role as Student
+                    string rolename = "Student";
+                    var currentUser = UserManager.FindByEmail(loginInfo.Email);
+                    var roleresult = UserManager.AddToRole(currentUser.Id, rolename);
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -374,7 +380,7 @@ namespace StudyProgressManagement.Controllers
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
-                    {
+                    {                      
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }

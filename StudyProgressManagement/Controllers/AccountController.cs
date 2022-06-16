@@ -160,10 +160,14 @@ namespace StudyProgressManagement.Controllers
             {
                 case SignInStatus.Success:
 
-                     // Set user role as Student
-                    string rolename = "Student";
                     var currentUser = UserManager.FindByEmail(loginInfo.Email);
-                    var roleresult = UserManager.AddToRole(currentUser.Id, rolename);
+
+                    if (currentUser.Roles.FirstOrDefault() == null)
+                    {
+                        // Set user role as Student
+                        string rolename = "Student";
+                        UserManager.AddToRole(currentUser.Id, rolename);
+                    }
 
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:

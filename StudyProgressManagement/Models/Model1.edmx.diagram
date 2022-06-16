@@ -4,21 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="73a3350d48d4457e923056a3185608e6" Name="Diagram1">
-        <EntityTypeShape EntityType="sep_team03Model.C__MigrationHistory" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="sep_team03Model.AspNetRole" Width="1.5" PointX="5.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="sep_team03Model.AspNetUserClaim" Width="1.5" PointX="10.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="sep_team03Model.AspNetUserLogin" Width="1.5" PointX="10.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="sep_team03Model.AspNetUser" Width="1.5" PointX="8" PointY="1.375" IsExpanded="true" />
+      <Diagram DiagramId="74804f219b3343d38d7879eb2cd32e50" Name="Diagram1">
         <EntityTypeShape EntityType="sep_team03Model.major" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
         <EntityTypeShape EntityType="sep_team03Model.registration_results" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="sep_team03Model.student" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="sep_team03Model.student_course" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="sep_team03Model.study_program" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="sep_team03Model.study_results" Width="1.5" PointX="8.25" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="sep_team03Model.sysdiagram" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
-        <AssociationConnector Association="sep_team03Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="sep_team03Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="sep_team03Model.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="sep_team03Model.FK_student_major" ManuallyRouted="false" />
         <AssociationConnector Association="sep_team03Model.FK_study_program_major" ManuallyRouted="false" />
         <AssociationConnector Association="sep_team03Model.FK_study_results_major" ManuallyRouted="false" />
@@ -26,7 +19,6 @@
         <AssociationConnector Association="sep_team03Model.FK_study_results_student" ManuallyRouted="false" />
         <AssociationConnector Association="sep_team03Model.FK_study_program_student_course" ManuallyRouted="false" />
         <AssociationConnector Association="sep_team03Model.FK_study_results_student_course" ManuallyRouted="false" />
-        <AssociationConnector Association="sep_team03Model.AspNetUserRoles" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

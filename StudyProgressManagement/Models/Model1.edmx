@@ -1,0 +1,936 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="sep_team03Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="major">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="major_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="registration_results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="curriculum_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="curriculum_class_id" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="curriculum_name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="credits" Type="int" Nullable="false" />
+          <Property Name="registration_type" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="education_level" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="education_type" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="registration_date" Type="datetime" Nullable="false" />
+          <Property Name="registration_person" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="lecturer_id" Type="varchar" MaxLength="50" />
+          <Property Name="lecturer_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="schedule" Type="nvarchar(max)" />
+          <Property Name="student_id" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="birth_date" Type="datetime" />
+          <Property Name="birth_place" Type="nvarchar" MaxLength="100" />
+          <Property Name="class_student_id" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="200" />
+          <Property Name="gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="faculty" Type="nvarchar" MaxLength="100" />
+          <Property Name="major_id" Type="int" Nullable="false" />
+          <Property Name="student_course_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="student_course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="course" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="major_id" Type="int" Nullable="false" />
+          <Property Name="year_study" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="study_program">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="no" Type="int" Nullable="false" />
+          <Property Name="curriculum_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="curriculum_name_vietnamese" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="curriculum_name_english" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="credits" Type="int" Nullable="false" />
+          <Property Name="theoretical_hours" Type="int" />
+          <Property Name="practice_hours" Type="int" />
+          <Property Name="internship_hours" Type="int" />
+          <Property Name="project_hours" Type="int" />
+          <Property Name="compulsory_or_optional" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="prerequisites" Type="varchar" MaxLength="50" />
+          <Property Name="learn_before" Type="varchar" MaxLength="100" />
+          <Property Name="editing_notes" Type="varchar" MaxLength="100" />
+          <Property Name="kind_of_knowledge" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="major_id" Type="int" Nullable="false" />
+          <Property Name="student_course_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="study_results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="term_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="term_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="curriculum_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="study_unit_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="study_unit_alias" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="curriculum_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="credits" Type="int" Nullable="false" />
+          <Property Name="mark10" Type="varchar" MaxLength="10" />
+          <Property Name="mark10_2" Type="varchar" MaxLength="10" />
+          <Property Name="mark10_3" Type="varchar" MaxLength="10" />
+          <Property Name="mark10_4" Type="varchar" MaxLength="10" />
+          <Property Name="mark10_5" Type="varchar" MaxLength="10" />
+          <Property Name="max_mark_10" Type="varchar" MaxLength="10" />
+          <Property Name="max_mark_4" Type="varchar" MaxLength="10" />
+          <Property Name="max_mark_letter" Type="varchar" MaxLength="10" />
+          <Property Name="is_pass" Type="varchar" MaxLength="10" />
+          <Property Name="major_id" Type="int" />
+          <Property Name="student_course_id" Type="int" />
+          <Property Name="student_id" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_registration_results_student">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="registration_results" Type="Self.registration_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="registration_results">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_major">
+          <End Role="major" Type="Self.major" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="major">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="major_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_program_major">
+          <End Role="major" Type="Self.major" Multiplicity="1" />
+          <End Role="study_program" Type="Self.study_program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="major">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_program">
+              <PropertyRef Name="major_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_program_student_course">
+          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
+          <End Role="study_program" Type="Self.study_program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_program">
+              <PropertyRef Name="student_course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_results_major">
+          <End Role="major" Type="Self.major" Multiplicity="0..1" />
+          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="major">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_results">
+              <PropertyRef Name="major_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_results_student">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_results">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_results_student_course">
+          <End Role="student_course" Type="Self.student_course" Multiplicity="0..1" />
+          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_results">
+              <PropertyRef Name="student_course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sep_team03ModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="major" EntityType="Self.major" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="registration_results" EntityType="Self.registration_results" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="student" EntityType="Self.student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="student_course" EntityType="Self.student_course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="study_program" EntityType="Self.study_program" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="study_results" EntityType="Self.study_results" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_registration_results_student" Association="Self.FK_registration_results_student">
+            <End Role="student" EntitySet="student" />
+            <End Role="registration_results" EntitySet="registration_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_major" Association="Self.FK_student_major">
+            <End Role="major" EntitySet="major" />
+            <End Role="student" EntitySet="student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_program_major" Association="Self.FK_study_program_major">
+            <End Role="major" EntitySet="major" />
+            <End Role="study_program" EntitySet="study_program" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_program_student_course" Association="Self.FK_study_program_student_course">
+            <End Role="student_course" EntitySet="student_course" />
+            <End Role="study_program" EntitySet="study_program" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_results_major" Association="Self.FK_study_results_major">
+            <End Role="major" EntitySet="major" />
+            <End Role="study_results" EntitySet="study_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_results_student" Association="Self.FK_study_results_student">
+            <End Role="student" EntitySet="student" />
+            <End Role="study_results" EntitySet="study_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_results_student_course" Association="Self.FK_study_results_student_course">
+            <End Role="student_course" EntitySet="student_course" />
+            <End Role="study_results" EntitySet="study_results" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sep_team03Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+        </EntityType>
+        <EntityType Name="major">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="major_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="students" Relationship="Self.FK_student_major" FromRole="major" ToRole="student" />
+          <NavigationProperty Name="study_program" Relationship="Self.FK_study_program_major" FromRole="major" ToRole="study_program" />
+          <NavigationProperty Name="study_results" Relationship="Self.FK_study_results_major" FromRole="major" ToRole="study_results" />
+        </EntityType>
+        <EntityType Name="registration_results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="curriculum_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="curriculum_class_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="curriculum_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="credits" Type="Int32" Nullable="false" />
+          <Property Name="registration_type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="education_level" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="education_type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="registration_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="registration_person" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lecturer_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="lecturer_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="schedule" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="student_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="student" Relationship="Self.FK_registration_results_student" FromRole="registration_results" ToRole="student" />
+        </EntityType>
+        <EntityType Name="student">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="birth_date" Type="DateTime" Precision="3" />
+          <Property Name="birth_place" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="class_student_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="faculty" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="major_id" Type="Int32" Nullable="false" />
+          <Property Name="student_course_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="major" Relationship="Self.FK_student_major" FromRole="student" ToRole="major" />
+          <NavigationProperty Name="registration_results" Relationship="Self.FK_registration_results_student" FromRole="student" ToRole="registration_results" />
+          <NavigationProperty Name="study_results" Relationship="Self.FK_study_results_student" FromRole="student" ToRole="study_results" />
+        </EntityType>
+        <EntityType Name="student_course">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="course" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="major_id" Type="Int32" Nullable="false" />
+          <Property Name="year_study" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="study_program" Relationship="Self.FK_study_program_student_course" FromRole="student_course" ToRole="study_program" />
+          <NavigationProperty Name="study_results" Relationship="Self.FK_study_results_student_course" FromRole="student_course" ToRole="study_results" />
+        </EntityType>
+        <EntityType Name="study_program">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="no" Type="Int32" Nullable="false" />
+          <Property Name="curriculum_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="curriculum_name_vietnamese" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="curriculum_name_english" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="credits" Type="Int32" Nullable="false" />
+          <Property Name="theoretical_hours" Type="Int32" />
+          <Property Name="practice_hours" Type="Int32" />
+          <Property Name="internship_hours" Type="Int32" />
+          <Property Name="project_hours" Type="Int32" />
+          <Property Name="compulsory_or_optional" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prerequisites" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="learn_before" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="editing_notes" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="kind_of_knowledge" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="major_id" Type="Int32" Nullable="false" />
+          <Property Name="student_course_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="major" Relationship="Self.FK_study_program_major" FromRole="study_program" ToRole="major" />
+          <NavigationProperty Name="student_course" Relationship="Self.FK_study_program_student_course" FromRole="study_program" ToRole="student_course" />
+        </EntityType>
+        <EntityType Name="study_results">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="term_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="term_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="curriculum_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="study_unit_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="study_unit_alias" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="curriculum_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="credits" Type="Int32" Nullable="false" />
+          <Property Name="mark10" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="mark10_2" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="mark10_3" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="mark10_4" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="mark10_5" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="max_mark_10" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="max_mark_4" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="max_mark_letter" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="is_pass" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="major_id" Type="Int32" />
+          <Property Name="student_course_id" Type="Int32" />
+          <Property Name="student_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="major" Relationship="Self.FK_study_results_major" FromRole="study_results" ToRole="major" />
+          <NavigationProperty Name="student" Relationship="Self.FK_study_results_student" FromRole="study_results" ToRole="student" />
+          <NavigationProperty Name="student_course" Relationship="Self.FK_study_results_student_course" FromRole="study_results" ToRole="student_course" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_student_major">
+          <End Role="major" Type="Self.major" Multiplicity="1" />
+          <End Role="student" Type="Self.student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="major">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="student">
+              <PropertyRef Name="major_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_program_major">
+          <End Role="major" Type="Self.major" Multiplicity="1" />
+          <End Role="study_program" Type="Self.study_program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="major">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_program">
+              <PropertyRef Name="major_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_results_major">
+          <End Role="major" Type="Self.major" Multiplicity="0..1" />
+          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="major">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_results">
+              <PropertyRef Name="major_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_registration_results_student">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="registration_results" Type="Self.registration_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="registration_results">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_results_student">
+          <End Role="student" Type="Self.student" Multiplicity="1" />
+          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_results">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_program_student_course">
+          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
+          <End Role="study_program" Type="Self.study_program" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_program">
+              <PropertyRef Name="student_course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_results_student_course">
+          <End Role="student_course" Type="Self.student_course" Multiplicity="0..1" />
+          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_results">
+              <PropertyRef Name="student_course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="sep_team03Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="majors" EntityType="Self.major" />
+          <EntitySet Name="registration_results" EntityType="Self.registration_results" />
+          <EntitySet Name="students" EntityType="Self.student" />
+          <EntitySet Name="student_course" EntityType="Self.student_course" />
+          <EntitySet Name="study_program" EntityType="Self.study_program" />
+          <EntitySet Name="study_results" EntityType="Self.study_results" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_student_major" Association="Self.FK_student_major">
+            <End Role="major" EntitySet="majors" />
+            <End Role="student" EntitySet="students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_program_major" Association="Self.FK_study_program_major">
+            <End Role="major" EntitySet="majors" />
+            <End Role="study_program" EntitySet="study_program" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_results_major" Association="Self.FK_study_results_major">
+            <End Role="major" EntitySet="majors" />
+            <End Role="study_results" EntitySet="study_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_registration_results_student" Association="Self.FK_registration_results_student">
+            <End Role="student" EntitySet="students" />
+            <End Role="registration_results" EntitySet="registration_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_results_student" Association="Self.FK_study_results_student">
+            <End Role="student" EntitySet="students" />
+            <End Role="study_results" EntitySet="study_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_program_student_course" Association="Self.FK_study_program_student_course">
+            <End Role="student_course" EntitySet="student_course" />
+            <End Role="study_program" EntitySet="study_program" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_results_student_course" Association="Self.FK_study_results_student_course">
+            <End Role="student_course" EntitySet="student_course" />
+            <End Role="study_results" EntitySet="study_results" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="sep_team03ModelStoreContainer" CdmEntityContainer="sep_team03Entities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="sep_team03Model.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="sep_team03Model.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="sep_team03Model.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="sep_team03Model.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="sep_team03Model.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="majors">
+            <EntityTypeMapping TypeName="sep_team03Model.major">
+              <MappingFragment StoreEntitySet="major">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="major_name" ColumnName="major_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="registration_results">
+            <EntityTypeMapping TypeName="sep_team03Model.registration_results">
+              <MappingFragment StoreEntitySet="registration_results">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="curriculum_id" ColumnName="curriculum_id" />
+                <ScalarProperty Name="curriculum_class_id" ColumnName="curriculum_class_id" />
+                <ScalarProperty Name="curriculum_name" ColumnName="curriculum_name" />
+                <ScalarProperty Name="credits" ColumnName="credits" />
+                <ScalarProperty Name="registration_type" ColumnName="registration_type" />
+                <ScalarProperty Name="education_level" ColumnName="education_level" />
+                <ScalarProperty Name="education_type" ColumnName="education_type" />
+                <ScalarProperty Name="registration_date" ColumnName="registration_date" />
+                <ScalarProperty Name="registration_person" ColumnName="registration_person" />
+                <ScalarProperty Name="lecturer_id" ColumnName="lecturer_id" />
+                <ScalarProperty Name="lecturer_name" ColumnName="lecturer_name" />
+                <ScalarProperty Name="schedule" ColumnName="schedule" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="students">
+            <EntityTypeMapping TypeName="sep_team03Model.student">
+              <MappingFragment StoreEntitySet="student">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="birth_date" ColumnName="birth_date" />
+                <ScalarProperty Name="birth_place" ColumnName="birth_place" />
+                <ScalarProperty Name="class_student_id" ColumnName="class_student_id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="faculty" ColumnName="faculty" />
+                <ScalarProperty Name="major_id" ColumnName="major_id" />
+                <ScalarProperty Name="student_course_id" ColumnName="student_course_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="student_course">
+            <EntityTypeMapping TypeName="sep_team03Model.student_course">
+              <MappingFragment StoreEntitySet="student_course">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="course" ColumnName="course" />
+                <ScalarProperty Name="major_id" ColumnName="major_id" />
+                <ScalarProperty Name="year_study" ColumnName="year_study" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="study_program">
+            <EntityTypeMapping TypeName="sep_team03Model.study_program">
+              <MappingFragment StoreEntitySet="study_program">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="no" ColumnName="no" />
+                <ScalarProperty Name="curriculum_id" ColumnName="curriculum_id" />
+                <ScalarProperty Name="curriculum_name_vietnamese" ColumnName="curriculum_name_vietnamese" />
+                <ScalarProperty Name="curriculum_name_english" ColumnName="curriculum_name_english" />
+                <ScalarProperty Name="credits" ColumnName="credits" />
+                <ScalarProperty Name="theoretical_hours" ColumnName="theoretical_hours" />
+                <ScalarProperty Name="practice_hours" ColumnName="practice_hours" />
+                <ScalarProperty Name="internship_hours" ColumnName="internship_hours" />
+                <ScalarProperty Name="project_hours" ColumnName="project_hours" />
+                <ScalarProperty Name="compulsory_or_optional" ColumnName="compulsory_or_optional" />
+                <ScalarProperty Name="prerequisites" ColumnName="prerequisites" />
+                <ScalarProperty Name="learn_before" ColumnName="learn_before" />
+                <ScalarProperty Name="editing_notes" ColumnName="editing_notes" />
+                <ScalarProperty Name="kind_of_knowledge" ColumnName="kind_of_knowledge" />
+                <ScalarProperty Name="major_id" ColumnName="major_id" />
+                <ScalarProperty Name="student_course_id" ColumnName="student_course_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="study_results">
+            <EntityTypeMapping TypeName="sep_team03Model.study_results">
+              <MappingFragment StoreEntitySet="study_results">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="term_id" ColumnName="term_id" />
+                <ScalarProperty Name="term_name" ColumnName="term_name" />
+                <ScalarProperty Name="curriculum_id" ColumnName="curriculum_id" />
+                <ScalarProperty Name="study_unit_id" ColumnName="study_unit_id" />
+                <ScalarProperty Name="study_unit_alias" ColumnName="study_unit_alias" />
+                <ScalarProperty Name="curriculum_name" ColumnName="curriculum_name" />
+                <ScalarProperty Name="credits" ColumnName="credits" />
+                <ScalarProperty Name="mark10" ColumnName="mark10" />
+                <ScalarProperty Name="mark10_2" ColumnName="mark10_2" />
+                <ScalarProperty Name="mark10_3" ColumnName="mark10_3" />
+                <ScalarProperty Name="mark10_4" ColumnName="mark10_4" />
+                <ScalarProperty Name="mark10_5" ColumnName="mark10_5" />
+                <ScalarProperty Name="max_mark_10" ColumnName="max_mark_10" />
+                <ScalarProperty Name="max_mark_4" ColumnName="max_mark_4" />
+                <ScalarProperty Name="max_mark_letter" ColumnName="max_mark_letter" />
+                <ScalarProperty Name="is_pass" ColumnName="is_pass" />
+                <ScalarProperty Name="major_id" ColumnName="major_id" />
+                <ScalarProperty Name="student_course_id" ColumnName="student_course_id" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="sep_team03Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="sep_team03Model.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

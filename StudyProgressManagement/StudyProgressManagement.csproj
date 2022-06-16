@@ -173,6 +173,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Faculty\Controllers\FacultyHomeController.cs" />
     <Compile Include="Areas\Faculty\FacultyAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -302,7 +303,8 @@
     <Content Include="app-assets\img\logos\logo-big-black.png" />
     <Content Include="app-assets\img\logos\logo-big-white.png" />
     <Content Include="app-assets\img\logos\logo-color-big.png" />
-    <Content Include="app-assets\img\logos\logo-vlu.png" />
+    <Content Include="app-assets\img\logos\vlu_logo.png" />
+    <Content Include="app-assets\img\logos\vlu_name.png" />
     <Content Include="app-assets\img\oval.svg" />
     <Content Include="app-assets\img\pages\cd-arrow.svg" />
     <Content Include="app-assets\img\pages\sativa.png" />
@@ -1138,6 +1140,8 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Faculty\Views\Shared\_Layout_faculty.cshtml" />
+    <Content Include="Areas\Faculty\Views\FacultyHome\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1405,9 +1409,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Faculty\Controllers\" />
     <Folder Include="Areas\Faculty\Data\" />
-    <Folder Include="Areas\Faculty\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

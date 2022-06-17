@@ -58,7 +58,7 @@
                             <a href="#"><i class="icon-user"></i><span data-i18n="" class="menu-title">Khoá</span></a>
                         </li>
                         <li class=" nav-item">
-                            <a href="#"><i class="icon-graduation"></i><span data-i18n="" class="menu-title">Ngành</span></a>
+                            <a href="@Url.Action("Index", "Major")"><i class="icon-graduation"></i><span data-i18n="" class="menu-title">Ngành</span></a>
                         </li>
                         <li class=" nav-item">
                             <a href="#"><i class="icon-pie-chart"></i><span data-i18n="" class="menu-title">Thống kê</span></a>
@@ -284,6 +284,7 @@
             </div>
         </div>
     </aside>
+    @RenderSection("scripts", required: false)
     <!-- BEGIN VENDOR JS-->
     <script src="~/app-assets/vendors/js/core/jquery-3.3.1.min.js"></script>
     <script src="~/app-assets/vendors/js/core/popper.min.js"></script>

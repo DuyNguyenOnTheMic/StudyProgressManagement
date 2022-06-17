@@ -174,6 +174,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Faculty\Controllers\FacultyHomeController.cs" />
+    <Compile Include="Areas\Faculty\Controllers\MajorController.cs" />
     <Compile Include="Areas\Faculty\FacultyAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1144,6 +1145,7 @@
     </Content>
     <Content Include="Areas\Faculty\Views\Shared\_Layout_faculty.cshtml" />
     <Content Include="Areas\Faculty\Views\FacultyHome\Index.cshtml" />
+    <Content Include="Areas\Faculty\Views\Major\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

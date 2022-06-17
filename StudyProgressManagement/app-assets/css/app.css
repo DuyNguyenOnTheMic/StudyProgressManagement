@@ -46134,6 +46134,7 @@ datetime .form-group {
   height : auto;
   border : 0;
   border-radius : 1000px;
+  -webkit-box-shadow: 5px 5px 5px #ccc;
 }
 
 #user-profile .profile-with-cover {

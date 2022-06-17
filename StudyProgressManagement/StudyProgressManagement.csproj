@@ -753,6 +753,7 @@
     <Content Include="images\High five-bro.svg" />
     <Content Include="images\login_background.png" />
     <Content Include="images\user_avatar.png" />
+    <Content Include="images\Welcome-rafiki.svg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>

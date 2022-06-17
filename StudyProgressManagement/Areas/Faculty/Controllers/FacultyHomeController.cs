@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace StudyProgressManagement.Areas.Faculty.Controllers
 {
+    [Authorize(Roles = "Faculty")]
     public class FacultyHomeController : Controller
     {
         // GET: Faculty/FacultyHome

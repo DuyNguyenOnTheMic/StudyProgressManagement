@@ -17,7 +17,7 @@ namespace StudyProgressManagement.Areas.Faculty
             context.MapRoute(
                 "Faculty_default",
                 "Faculty/{controller}/{action}/{id}",
-                new { controller = "FacultyHome", action = "Index", id = UrlParameter.Optional }
+                new { action = "Index", id = UrlParameter.Optional }
             );
         }
     }

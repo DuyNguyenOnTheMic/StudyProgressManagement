@@ -247,7 +247,7 @@ namespace StudyProgressManagement.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "FacultyHome", new { area = "Faculty"});
+            return RedirectToAction("Index", "Home");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

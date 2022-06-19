@@ -12,29 +12,39 @@ namespace StudyProgressManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class student
+    public partial class curriculum
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public student()
+        public curriculum()
         {
             this.registration_results = new HashSet<registration_results>();
+            this.studentcourse_curriculum = new HashSet<studentcourse_curriculum>();
             this.study_results = new HashSet<study_results>();
         }
     
         public string id { get; set; }
-        public string full_name { get; set; }
-        public Nullable<System.DateTime> birth_date { get; set; }
-        public string birth_place { get; set; }
-        public string email { get; set; }
-        public string gender { get; set; }
-        public string faculty { get; set; }
-        public string class_student_id { get; set; }
-        public Nullable<int> student_course_id { get; set; }
+        public int no { get; set; }
+        public string name { get; set; }
+        public string name_english { get; set; }
+        public int credits { get; set; }
+        public string education_level { get; set; }
+        public string education_type { get; set; }
+        public Nullable<int> theoretical_hours { get; set; }
+        public Nullable<int> practice_hours { get; set; }
+        public Nullable<int> internship_hours { get; set; }
+        public Nullable<int> project_hours { get; set; }
+        public string compulsory_or_optional { get; set; }
+        public string prerequisites { get; set; }
+        public string learn_before { get; set; }
+        public string editing_notes { get; set; }
+        public string kind_of_knowledge { get; set; }
+        public int student_course_id { get; set; }
     
-        public virtual class_student class_student { get; set; }
+        public virtual student_course student_course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<registration_results> registration_results { get; set; }
-        public virtual student_course student_course { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<studentcourse_curriculum> studentcourse_curriculum { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<study_results> study_results { get; set; }
     }

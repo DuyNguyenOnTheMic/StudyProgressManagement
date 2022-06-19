@@ -12,18 +12,18 @@ namespace StudyProgressManagement.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class major
+    public partial class class_student
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public major()
+        public class_student()
         {
-            this.student_course = new HashSet<student_course>();
+            this.students = new HashSet<student>();
         }
     
-        public int id { get; set; }
+        public string id { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<student_course> student_course { get; set; }
+        public virtual ICollection<student> students { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -151,6 +152,15 @@ namespace StudyProgressManagement.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync2();
             if (loginInfo == null)
             {
+                return RedirectToAction("Login");
+            }
+
+            // check email domain of VanLang
+            MailAddress address = new MailAddress(loginInfo.Email);
+            string host = address.Host;
+            if ( host != "vanlanguni.vn" && host != "vlu.edu.vn" )
+            {
+                TempData["mailDomainError"] = "Oops, dường như email bạn dùng để đăng nhập không nằm trong hệ thống email Văn Lang, bạn hãy thử lại nhé!";
                 return RedirectToAction("Login");
             }
 

@@ -46,6 +46,11 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-block">
+
+                                    @if (TempData["mailDomainError"] != null)
+                                    {
+                                        <p class="text-danger" style=" text-align:justify; ">@TempData["mailDomainError"]</p>
+                                    }
                                     
                                     @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
 

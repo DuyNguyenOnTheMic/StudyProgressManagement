@@ -23,5 +23,20 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             List<major> majorList = db.majors.ToList();
             return Json(new { data = majorList },JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public ActionResult AddOrEdit(int id = 0)
+        {
+            return View(new major());
+        }
+
+        [HttpPost]
+        public ActionResult AddOrEdit(major major)
+        {
+            db.majors.Add(major);
+            db.SaveChanges();
+            return Json(new { success = true, message = "Lưu thành công!" }, JsonRequestBehavior.AllowGet);
+        }
+        
     }
 }

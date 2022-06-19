@@ -544,6 +544,13 @@
     <Content Include="app-assets\vendors\css\dropzone.min.css" />
     <Content Include="app-assets\vendors\css\fullcalendar.min.css" />
     <Content Include="app-assets\vendors\css\hopscotch.css" />
+    <Content Include="app-assets\vendors\css\images\ui-icons_444444_256x240.png" />
+    <Content Include="app-assets\vendors\css\images\ui-icons_555555_256x240.png" />
+    <Content Include="app-assets\vendors\css\images\ui-icons_777620_256x240.png" />
+    <Content Include="app-assets\vendors\css\images\ui-icons_777777_256x240.png" />
+    <Content Include="app-assets\vendors\css\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="app-assets\vendors\css\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="app-assets\vendors\css\jquery-ui.min.css" />
     <Content Include="app-assets\vendors\css\katex.min.css" />
     <Content Include="app-assets\vendors\css\monokai-sublime.min.css" />
     <Content Include="app-assets\vendors\css\perfect-scrollbar.min.css" />
@@ -1176,6 +1183,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Faculty\Views\Major\AddOrEdit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

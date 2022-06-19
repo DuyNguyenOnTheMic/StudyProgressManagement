@@ -1,0 +1,22 @@
+﻿@model StudyProgressManagement.Models.major
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "Major", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.id)
+    <div class="modal-body">
+        <label>Ngành: </label>
+        <div class="form-group">
+            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.name, null, new { @class = "text-danger" })
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button type="submit" value="Submit" class="btn btn-success">Submit <i class="fa fa-thumbs-o-up position-right"></i></button>
+        <button type="reset" value="Reset" class="btn btn-danger">Reset <i class="fa fa-refresh position-right"></i></button>
+    </div>
+}

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Net.Mail;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.VanLang;
 using StudyProgressManagement.Models;
+using System.Linq;
+using System.Net.Mail;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace StudyProgressManagement.Controllers
 {
@@ -24,7 +21,7 @@ namespace StudyProgressManagement.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,9 +33,9 @@ namespace StudyProgressManagement.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -91,7 +88,7 @@ namespace StudyProgressManagement.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
-        }    
+        }
 
         //
         // GET: /Account/Register
@@ -113,9 +110,9 @@ namespace StudyProgressManagement.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
-                {                 
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -129,9 +126,9 @@ namespace StudyProgressManagement.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
-        }       
-    
-   
+        }
+
+
 
         //
         // POST: /Account/ExternalLogin
@@ -158,7 +155,7 @@ namespace StudyProgressManagement.Controllers
             // check email domain of VanLang
             MailAddress address = new MailAddress(loginInfo.Email);
             string host = address.Host;
-            if ( host != "vanlanguni.vn" && host != "vlu.edu.vn" )
+            if (host != "vanlanguni.vn" && host != "vlu.edu.vn")
             {
                 TempData["mailDomainError"] = "Oops, dường như email bạn dùng để đăng nhập không nằm trong hệ thống email Văn Lang, bạn hãy thử lại nhé!";
                 return RedirectToAction("Login");
@@ -191,7 +188,7 @@ namespace StudyProgressManagement.Controllers
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
-        }    
+        }
 
         //
         // POST: /Account/LogOff

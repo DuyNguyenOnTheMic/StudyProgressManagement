@@ -1,8 +1,6 @@
 ﻿using StudyProgressManagement.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace StudyProgressManagement.Areas.Faculty.Controllers
@@ -21,7 +19,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public ActionResult GetData()
         {
             List<major> majorList = db.majors.ToList();
-            return Json(new { data = majorList },JsonRequestBehavior.AllowGet);
+            return Json(new { data = majorList }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -37,6 +35,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             db.SaveChanges();
             return Json(new { success = true, message = "Lưu thành công!" }, JsonRequestBehavior.AllowGet);
         }
-        
+
     }
 }

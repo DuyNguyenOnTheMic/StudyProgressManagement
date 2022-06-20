@@ -54,7 +54,7 @@
 
     <script type="text/javascript">
 
-        var popup, datatable;
+        var popup;
         $(document).ready(function () {
             $('#tblMajor').DataTable(
                 {
@@ -119,12 +119,13 @@
                             $('#tblMajor').DataTable().ajax.reload();
 
                             // Show message when create succeeded
+                            toastr.options.positionClass = 'toast-bottom-right';
                             toastr.success('Tạo khoá mới thành công!');
 
                         }
                     }
                 });
-            }        
+            }
             return false;
         }
 

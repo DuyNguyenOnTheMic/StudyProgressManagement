@@ -25,15 +25,31 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpGet]
         public ActionResult AddOrEdit(int id = 0)
         {
-            return View(new major());
+            if (id == 0)
+            {
+                return View(new major());
+            }
+            else
+            {
+                return View(db.majors.Where(x => x.id == id).FirstOrDefault());
+            }
         }
 
         [HttpPost]
         public ActionResult AddOrEdit(major major)
         {
-            db.majors.Add(major);
-            db.SaveChanges();
-            return Json(new { success = true, message = "Lưu thành công!" }, JsonRequestBehavior.AllowGet);
+            if (major.id == 0)
+            {
+                db.majors.Add(major);
+                db.SaveChanges();
+                return Json(new { success = true, message = "Lưu thành công!" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                db.Entry(major).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { success = true, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
     }

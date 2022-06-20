@@ -52,5 +52,14 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            major major = db.majors.Where(x => x.id == id).FirstOrDefault();
+            db.majors.Remove(major);
+            db.SaveChanges();
+            return Json(new { success = true, message = "Xoá thành công!" }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

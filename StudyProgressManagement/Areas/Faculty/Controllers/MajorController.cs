@@ -20,6 +20,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public JsonResult GetData()
         {
+            // Get majors data from datatabse
             return Json(db.majors.Select(m => new
             {
                 id = m.id,

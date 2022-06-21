@@ -1188,6 +1188,7 @@
     </Content>
     <Content Include="Areas\Faculty\Views\Major\AddOrEdit.cshtml" />
     <Content Include="Areas\Faculty\Views\StudentCourse\Index.cshtml" />
+    <Content Include="Areas\Faculty\Views\StudentCourse\AddOrEdit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

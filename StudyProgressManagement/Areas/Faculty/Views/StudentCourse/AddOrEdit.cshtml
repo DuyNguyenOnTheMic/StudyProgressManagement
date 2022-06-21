@@ -1,0 +1,34 @@
+﻿@model StudyProgressManagement.Models.student_course
+
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "StudentCourse", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(model => model.id)
+
+    <label>Khoá: </label>
+    <div class="form-group">
+        @Html.EditorFor(model => model.course, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.course, null, new { @class = "text-danger" })
+    </div>
+
+    <label>Ngành: </label>
+    <div class="form-group">
+        <select id="projectinput7" name="budget" class="form-control">
+            <option value="0" selected="" disabled="">Budget</option>
+            <option value="less than 5000$">less than 5000$</option>
+            <option value="5000$ - 10000$">5000$ - 10000$</option>
+            <option value="10000$ - 20000$">10000$ - 20000$</option>
+            <option value="more than 20000$">more than 20000$</option>
+        </select>
+        @Html.DropDownList("major", (IEnumerable<SelectListItem>)ViewBag.majorList, new { @class = "form-control" })
+    </div>
+
+    <div class="form-actions right">
+        <button type="submit" class="btn btn-success">
+            <i class="icon-note"></i> Lưu
+        </button>
+    </div>
+}

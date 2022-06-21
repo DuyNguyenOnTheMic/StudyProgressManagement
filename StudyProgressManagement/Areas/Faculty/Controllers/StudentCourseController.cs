@@ -1,8 +1,6 @@
 ﻿using StudyProgressManagement.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace StudyProgressManagement.Areas.Faculty.Controllers
@@ -21,13 +19,64 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public JsonResult GetData()
         {
+            // Get student courses data from datatabse
             return Json(db.student_course.Select(s => new
             {
                 id = s.id,
                 course = s.course,
                 major_id = s.major.name,
-                
+                year_study = s.year_study
+
             }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult AddOrEdit(int id = 0)
+        {
+            // Get data from major table
+            List<major> majors = db.majors.ToList();
+
+            // Tạo SelectList
+            SelectList majorList = new SelectList(majors, "id", "name");
+
+            // Set vào ViewBag
+            ViewBag.majorList = majorList;
+            if (id == 0)
+            {
+                return View(new student_course());
+            }
+            else
+            {            
+                return View(db.student_course.Where(x => x.id == id).FirstOrDefault());
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddOrEdit(student_course student_course)
+        {
+            // Add or edit student course
+            if (student_course.id == 0)
+            {
+                db.student_course.Add(student_course);
+                db.SaveChanges();
+                return Json(new { success = true, message = "Lưu thành công!" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                db.Entry(student_course).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { success = true, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            // Delete student course
+            student_course student_course = db.student_course.Where(x => x.id == id).FirstOrDefault();
+            db.student_course.Remove(student_course);
+            db.SaveChanges();
+            return Json(new { success = true, message = "Xoá thành công!" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

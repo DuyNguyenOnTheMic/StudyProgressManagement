@@ -593,6 +593,7 @@
     <Content Include="app-assets\vendors\js\datatable\pdfmake.min.js" />
     <Content Include="app-assets\vendors\js\datatable\vfs_fonts.js" />
     <Content Include="app-assets\vendors\js\daterangepicker.js" />
+    <Content Include="app-assets\vendors\js\datetime-moment.js" />
     <Content Include="app-assets\vendors\js\dragula.min.js" />
     <Content Include="app-assets\vendors\js\dropzone.min.js" />
     <Content Include="app-assets\vendors\js\fullcalendar.min.js" />
@@ -759,6 +760,7 @@
     <Content Include="app-assets\vendors\js\prism.min.js" />
     <Content Include="app-assets\vendors\js\quill.min.js" />
     <Content Include="app-assets\vendors\js\screenfull.min.js" />
+    <Content Include="app-assets\vendors\js\sweetalert2%4011.js" />
     <Content Include="app-assets\vendors\js\sweetalert2.min.js" />
     <Content Include="app-assets\vendors\js\switchery.min.js" />
     <Content Include="app-assets\vendors\js\tagging.min.js" />

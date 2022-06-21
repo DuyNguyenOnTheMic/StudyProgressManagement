@@ -66,19 +66,20 @@
             // Populate Major datatable
             dataTable = $('#tblMajor').DataTable(
                 {
-                    ajax: {
-                        type: "GET",
+                     ajax: {
+                        dataSrc: "",
+                        type: "POST",
                         url: "@Url.Action("GetData", "Major")",
+                        data: '{}',
+                        contentType: "application/json; charset=utf-8",
                         dataType: "json",
                     },
-
                     columnDefs: [
                         {
                             targets: [2],
                             className: "text-center"
                         },
                     ],
-
                     columns: [
                         { 'data': 'id' },
                         { 'data': 'name' },
@@ -90,17 +91,14 @@
                             orderable: false,
                             searchable: false,
                             width: "100px"
-
                         }
                     ],
-
                     language: {
 
                         'emptyTable': "Chưa có ngành học, vui lòng chọn <b>Thêm ngành mới</b>",
                         'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>"
 
                     },
-
                     responsive: true,
                     LengthChange: true,
                     Filter: true,

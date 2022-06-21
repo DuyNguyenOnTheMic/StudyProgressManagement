@@ -16,11 +16,16 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return View();
         }
 
-        public ActionResult GetData()
+
+        [HttpPost]
+        public JsonResult GetData()
         {
-            // Get majors data from server
-            List<major> majorList = db.majors.ToList();
-            return Json(new { data = majorList }, JsonRequestBehavior.AllowGet);
+            return Json(db.majors.Select(m => new
+            {
+                id = m.id,
+                name = m.name,
+
+            }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

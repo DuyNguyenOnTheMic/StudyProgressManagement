@@ -18,6 +18,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
 
         public ActionResult GetData()
         {
+            // Get majors data from server
             List<major> majorList = db.majors.ToList();
             return Json(new { data = majorList }, JsonRequestBehavior.AllowGet);
         }
@@ -38,6 +39,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public ActionResult AddOrEdit(major major)
         {
+            // Add or edit major
             if (major.id == 0)
             {
                 db.majors.Add(major);
@@ -55,6 +57,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
+            // Delete major
             major major = db.majors.Where(x => x.id == id).FirstOrDefault();
             db.majors.Remove(major);
             db.SaveChanges();

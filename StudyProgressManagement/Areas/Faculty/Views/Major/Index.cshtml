@@ -69,15 +69,15 @@
             dataTable = $('#tblMajor').DataTable(
                 {
                      ajax: {
-                        dataSrc: "",
-                        type: "POST",
-                        url: "@Url.Action("GetData", "Major")",
+                        dataSrc: '',
+                        type: 'POST',
+                        url: '@Url.Action("GetData", "Major")',
                         dataType: "json",
                     },
                     columnDefs: [
                         {
                             targets: [2],
-                            className: "text-center"
+                            className: 'text-center'
                         },
                     ],
                     columns: [
@@ -86,11 +86,11 @@
                         {
                             'data': 'id', 'render': function (data)
                             {
-                                return "<a class='success p - 0' data-original-title='' title='' id='editRow' onclick=PopupForm('@Url.Action("AddOrEdit","Major")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='danger p-0' style='margin-left:5px' data-original-title='' title='' id='deleteRow' onclick=Delete(" + data + ")><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
+                                return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("AddOrEdit","Major")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='deleteRow danger p-0' style='margin-left:5px' data-original-title='' title='' onclick=Delete(" + data + ")><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
                             },
                             orderable: false,
                             searchable: false,
-                            width: "100px"
+                            width: '100px'
                         }
                     ],
                     language: {
@@ -123,11 +123,11 @@
                     width: 700,
                     open: function () {
                         // Prevent user from add edit delete while dialog is populated
-                        $("#addRow").prop('disabled', true);
-                        $('#editRow').each(function () {
+                        $('#addRow').prop('disabled', true);
+                        $('.editRow').each(function () {
                             this.style.pointerEvents = 'none';
                         });
-                        $('#deleteRow').each(function () {
+                        $('.deleteRow').each(function () {
                             this.style.pointerEvents = 'none';
                         });
 
@@ -136,13 +136,13 @@
                         popup.dialog('destroy').remove();
 
                         // Re-enable buttons when user closes the dialog
-                        $("#addRow").prop('disabled', false);
-                        $('#editRow').each(function () {
+                        $('#addRow').prop('disabled', false);
+                        $('.editRow').each(function () {
                             this.style.pointerEvents = 'auto';
                         });
-                        $('#deleteRow').each(function () {
+                        $('.deleteRow').each(function () {
                             this.style.pointerEvents = 'auto';
-                        }); 
+                        });
                     }
                 });
             });
@@ -153,7 +153,7 @@
 
             if ($(form).valid()) {
                 $.ajax({
-                    type: "POST",
+                    type: 'POST',
                     url: form.action,
                     data: $(form).serialize(),
                     success: function (data) {
@@ -175,7 +175,7 @@
         function Delete(id) {
             swal({
                 title: 'Thông báo',
-                text: "Bạn có chắc muốn xoá ngành này?",
+                text: 'Bạn có chắc muốn xoá ngành này?',
                 type: 'warning',
                 showCancelButton: true,
                 cancelButtonText: 'Huỷ',

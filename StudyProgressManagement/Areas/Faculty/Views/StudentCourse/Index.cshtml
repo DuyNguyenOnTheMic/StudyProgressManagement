@@ -77,15 +77,15 @@
             dataTable = $('#tblStudentCourse').DataTable(
                 {
                      ajax: {
-                        dataSrc: "",
-                        type: "POST",
-                        url: "@Url.Action("GetData", "StudentCourse")",
-                        dataType: "json",
+                        dataSrc: '',
+                        type: 'POST',
+                        url: '@Url.Action("GetData", "StudentCourse")',
+                        dataType: 'json',
                     },
                     columnDefs: [
                         {
                             targets: [4],
-                            className: "text-center"
+                            className: 'text-center'
                         },
                     ],
                     columns: [
@@ -96,11 +96,11 @@
                          {
                             'data': 'id', 'render': function (data)
                             {
-                                return "<a class='success p - 0' data-original-title='' id='editRow' title='' onclick=PopupForm('@Url.Action("AddOrEdit","StudentCourse")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='danger p-0' style='margin-left:5px' data-original-title='' title='' id='deleteRow' onclick=Delete(" + data + ")><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
+                                return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("AddOrEdit","StudentCourse")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='deleteRow danger p-0' style='margin-left:5px' data-original-title='' title='' onclick=Delete(" + data + ")><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
                             },
                             orderable: false,
                             searchable: false,
-                            width: "100px"
+                            width: '100px'
                         },
                     ],
                     language: {
@@ -129,30 +129,30 @@
                     autoOpen: true,
                     resizable: true,
                     title: 'Quản lý khoá sinh viên',
-                    height: 380,
+                    height: 480,
                     width: 700,
-                    open: function () {                      
+                    open: function () {
                         // Prevent user from add edit delete while dialog is populated
-                        $("#addRow").prop('disabled', true);
-                        $('#editRow').each(function () {
+                        $('#addRow').prop('disabled', true);
+                        $('.editRow').each(function () {
                             this.style.pointerEvents = 'none';
-                        }); 
-                        $('#deleteRow').each(function () {
+                        });
+                        $('.deleteRow').each(function () {
                             this.style.pointerEvents = 'none';
-                        }); 
+                        });
 
                     },
                     close: function () {
                         popup.dialog('destroy').remove();
 
                         // Re-enable buttons when user closes the dialog
-                        $("#addRow").prop('disabled', false);
-                        $('#editRow').each(function () {
+                        $('#addRow').prop('disabled', false);
+                        $('.editRow').each(function () {
                             this.style.pointerEvents = 'auto';
-                        }); 
-                        $('#deleteRow').each(function () {
+                        });
+                        $('.deleteRow').each(function () {
                             this.style.pointerEvents = 'auto';
-                        }); 
+                        });
                     }
                 });
             });
@@ -163,7 +163,7 @@
 
             if ($(form).valid()) {
                 $.ajax({
-                    type: "POST",
+                    type: 'POST',
                     url: form.action,
                     data: $(form).serialize(),
                     success: function (data) {
@@ -174,7 +174,7 @@
                             // Show message when create or edit succeeded
                             toastr.options.positionClass = 'toast-bottom-right';
                             toastr.success(data.message);
-                        } 
+                        }
                     }
                 });
             }

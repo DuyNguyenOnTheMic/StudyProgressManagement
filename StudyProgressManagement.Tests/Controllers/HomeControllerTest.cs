@@ -13,7 +13,7 @@ namespace StudyProgressManagement.Tests.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void Index_Test()
         {
             // Arrange
             HomeController controller = new HomeController();

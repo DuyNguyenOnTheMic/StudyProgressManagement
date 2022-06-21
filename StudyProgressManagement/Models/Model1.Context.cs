@@ -12,7 +12,8 @@ namespace StudyProgressManagement.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using SqlProviderServices = System.Data.Entity.SqlServer.SqlProviderServices;
+
     public partial class sep_team03Entities : DbContext
     {
         public sep_team03Entities()

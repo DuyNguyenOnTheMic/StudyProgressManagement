@@ -16,7 +16,7 @@ namespace StudyProgressManagement.Tests.Controllers
         public void Index_Test()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var controller = new HomeController();
 
             // Act
             ViewResult result = controller.Index() as ViewResult;

@@ -1,7 +1,10 @@
 ﻿
 @{
+    ViewBag.Title = "Quản lý khoá sinh viên";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<title>@ViewBag.Title</title>
 
 <!-- Zero configuration table -->
 <section id="configuration">
@@ -71,12 +74,12 @@
                     dataType: "json",
                     },
 
-                    responsive: true,                    
+                    responsive: true,
                     Filter: true,
                     Sort: true,
                     Paginate: true,
-                   
-                    columns: 
+
+                    columns:
                         [{ 'data': 'id' },
                         { 'data': 'course' },
                         { 'data': 'major_id' }]

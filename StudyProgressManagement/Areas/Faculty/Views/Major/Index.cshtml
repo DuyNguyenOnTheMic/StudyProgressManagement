@@ -1,8 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản lý ngành học";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<title>@ViewBag.Title</title>
 
 <!-- Zero configuration table -->
 <section id="configuration">
@@ -70,8 +72,6 @@
                         dataSrc: "",
                         type: "POST",
                         url: "@Url.Action("GetData", "Major")",
-                        data: '{}',
-                        contentType: "application/json; charset=utf-8",
                         dataType: "json",
                     },
                     columnDefs: [

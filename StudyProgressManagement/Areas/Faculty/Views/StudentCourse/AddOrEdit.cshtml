@@ -15,8 +15,15 @@
     </div>
 
     <label>Ngành: </label>
-    <div class="form-group">      
-        @Html.DropDownList("major", (IEnumerable<SelectListItem>)ViewBag.majorList, new { @class = "form-control" })
+    <div class="form-group">
+        @Html.DropDownList("major_id", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.major_id, "", new { @class = "text-danger" })
+    </div>
+
+    <label>Năm học: </label>
+    <div class="form-group">
+        @Html.EditorFor(model => model.year_study, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.year_study, null, new { @class = "text-danger" })
     </div>
 
     <div class="form-actions right">

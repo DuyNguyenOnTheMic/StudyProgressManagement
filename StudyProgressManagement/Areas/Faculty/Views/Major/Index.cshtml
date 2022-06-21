@@ -165,7 +165,6 @@
                             // Show message when create or edit succeeded
                             toastr.options.positionClass = 'toast-bottom-right';
                             toastr.success(data.message);
-
                         }
                     }
                 });
@@ -194,6 +193,14 @@
                             // Show message when delete succeeded
                             toastr.options.positionClass = 'toast-bottom-right';
                             toastr.success(data.message);
+                        }
+                        else
+                        {
+                            swal({
+                                title: 'Thông báo',
+                                text: 'Không thể xoá do đã có sinh viên học ngành này!',
+                                type: 'error',
+                            })
                         }
                     }
 

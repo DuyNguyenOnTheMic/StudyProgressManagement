@@ -15,14 +15,7 @@
     </div>
 
     <label>Ngành: </label>
-    <div class="form-group">
-        <select id="projectinput7" name="budget" class="form-control">
-            <option value="0" selected="" disabled="">Budget</option>
-            <option value="less than 5000$">less than 5000$</option>
-            <option value="5000$ - 10000$">5000$ - 10000$</option>
-            <option value="10000$ - 20000$">10000$ - 20000$</option>
-            <option value="more than 20000$">more than 20000$</option>
-        </select>
+    <div class="form-group">      
         @Html.DropDownList("major", (IEnumerable<SelectListItem>)ViewBag.majorList, new { @class = "form-control" })
     </div>
 

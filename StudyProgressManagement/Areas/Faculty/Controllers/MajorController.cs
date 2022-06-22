@@ -24,16 +24,15 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return Json(db.majors.Select(m => new
             {
                 id = m.id,
-                major_id = m.major_id,
-                major_name = m.major_name,
+                name = m.name,
 
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public ActionResult AddOrEdit(int id = 0)
+        public ActionResult AddOrEdit(string id = null)
         {
-            if (id == 0)
+            if (id == null)
             {
                 return View(new major());
             }
@@ -46,8 +45,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public ActionResult AddOrEdit(major major)
         {
+            var query = db.majors.AsNoTracking().Where(x => x.id == major.id).FirstOrDefault();
             // Add or edit major
-            if (major.id == 0)
+            if (query == null)
             {
                 db.majors.Add(major);
                 db.SaveChanges();
@@ -62,7 +62,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
             try
             {

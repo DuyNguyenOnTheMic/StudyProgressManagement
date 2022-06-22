@@ -6,18 +6,16 @@
 
 @using (Html.BeginForm("AddOrEdit", "Major", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
 {
-    @Html.HiddenFor(model => model.id)
-
     <label>Mã ngành: </label>
     <div class="form-group">
-        @Html.EditorFor(model => model.major_id, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.major_id, null, new { @class = "text-danger" })
+        @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.id, null, new { @class = "text-danger" })
     </div>
 
     <label>Tên ngành: </label>
     <div class="form-group">
-        @Html.EditorFor(model => model.major_name, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.major_name, null, new { @class = "text-danger" })
+        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.name, null, new { @class = "text-danger" })
     </div>
 
     <div class="form-actions right">

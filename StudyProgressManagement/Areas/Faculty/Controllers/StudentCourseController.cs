@@ -24,7 +24,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             {
                 id = s.id,
                 course = s.course,
-                major_id = s.major.major_name,
+                major_id = s.major.name,
                 year_study = s.year_study
 
             }).ToList(), JsonRequestBehavior.AllowGet);
@@ -35,7 +35,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         {
             // Get data from major table
             List<major> majors = db.majors.ToList();
-            ViewBag.major_id = new SelectList(db.majors, "id", "major_name");
+            ViewBag.major_id = new SelectList(db.majors, "id", "name");
 
             if (id == 0)
             {
@@ -44,7 +44,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             else
             {
                 student_course student_course = db.student_course.Find(id);
-                ViewBag.major_id = new SelectList(db.majors, "id", "major_name", student_course.major_id);
+                ViewBag.major_id = new SelectList(db.majors, "id", "name", student_course.major_id);
                 return View(db.student_course.Where(x => x.id == id).FirstOrDefault());
             }
         }
@@ -63,7 +63,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             {
                 db.Entry(student_course).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.major_id = new SelectList(db.majors, "id", "major_name", student_course.major_id);
+                ViewBag.major_id = new SelectList(db.majors, "id", "name", student_course.major_id);
 
                 return Json(new { success = true, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
             }

@@ -29,7 +29,7 @@ namespace StudyProgressManagement.Models
         public string course { get; set; }
         [MaxLength(100, ErrorMessage = "Tối đa {1} kí tự được cho phép")]
         public string year_study { get; set; }
-        public int major_id { get; set; }
+        public string major_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<curriculum> curricula { get; set; }

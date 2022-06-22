@@ -20,14 +20,13 @@ namespace StudyProgressManagement.Models
         {
             this.student_course = new HashSet<student_course>();
         }
-    
-        public int id { get; set; }
+
         [Required(ErrorMessage = "Bạn chưa nhập mã ngành")]
         [MaxLength(50, ErrorMessage = "Tối đa {1} kí tự được cho phép")]
-        public string major_id { get; set; }
+        public string id { get; set; }
         [Required(ErrorMessage = "Bạn chưa nhập tên ngành")]
         [MaxLength(255, ErrorMessage = "Tối đa {1} kí tự được cho phép")]
-        public string major_name { get; set; }
+        public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<student_course> student_course { get; set; }

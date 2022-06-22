@@ -24,7 +24,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return Json(db.majors.Select(m => new
             {
                 id = m.id,
-                name = m.name,
+                major_id = m.major_id,
+                major_name = m.major_name,
 
             }).ToList(), JsonRequestBehavior.AllowGet);
         }

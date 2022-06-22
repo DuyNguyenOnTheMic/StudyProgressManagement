@@ -8,13 +8,19 @@
 {
     @Html.HiddenFor(model => model.id)
 
-        <label>Ngành: </label>
-        <div class="form-group">
-            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.name, null, new { @class = "text-danger" })
-        </div>
-        
-    <div class="form-actions right">      
+    <label>Mã ngành: </label>
+    <div class="form-group">
+        @Html.EditorFor(model => model.major_id, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.major_id, null, new { @class = "text-danger" })
+    </div>
+
+    <label>Tên ngành: </label>
+    <div class="form-group">
+        @Html.EditorFor(model => model.major_name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.major_name, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-actions right">
         <button type="submit" class="btn btn-success">
             <i class="icon-note"></i> Lưu
         </button>

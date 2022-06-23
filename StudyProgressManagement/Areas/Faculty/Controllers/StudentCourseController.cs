@@ -24,7 +24,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             {
                 id = s.id,
                 course = s.course,
-                major_id = s.major.name,
+                major_id = s.major_id,
+                major_name = s.major.name,
                 year_study = s.year_study
 
             }).ToList(), JsonRequestBehavior.AllowGet);

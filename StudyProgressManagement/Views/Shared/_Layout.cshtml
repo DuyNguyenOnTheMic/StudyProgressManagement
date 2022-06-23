@@ -48,22 +48,30 @@
                         </li>
                         @if (User.IsInRole("Faculty"))
                         {
-                            <li class=" nav-item">
+                            <li class="has-sub nav-item">
                                 <a href="#"><i class="icon-layers"></i><span data-i18n="" class="menu-title">CTĐT</span></a>
+                                <ul class="menu-content">
+                                    <li>
+                                        <a href="chat.html" class="menu-item">Xem CTĐT</a>
+                                    </li>
+                                    <li>
+                                        <a href="taskboard.html" class="menu-item">Import CTĐT</a>
+                                    </li>              
+                                </ul>
                             </li>
-                            <li class=" nav-item">
+                            <li class="nav-item">
                                 <a href="#"><i class="icon-book-open"></i><span data-i18n="" class="menu-title">Kết quả học tập</span></a>
                             </li>
-                            <li class=" nav-item">
+                            <li class="nav-item">
                                 <a href="#"><i class="icon-note"></i><span data-i18n="" class="menu-title">Kết quả ĐK học tập</span></a>
                             </li>
-                            <li class=" nav-item">
+                            <li class="nav-item">
                                 <a href="@Url.Action("Index", "StudentCourse", new { Area = "Faculty" })"><i class="icon-user"></i><span data-i18n="" class="menu-title">Khoá</span></a>
                             </li>
-                            <li class=" nav-item">
+                            <li class="nav-item">
                                 <a href="@Url.Action("Index", "Major", new { Area = "Faculty" })"><i class="icon-graduation"></i><span data-i18n="" class="menu-title">Ngành</span></a>
                             </li>
-                            <li class=" nav-item">
+                            <li class="nav-item">
                                 <a href="#"><i class="icon-pie-chart"></i><span data-i18n="" class="menu-title">Thống kê</span></a>
                             </li>
                         }

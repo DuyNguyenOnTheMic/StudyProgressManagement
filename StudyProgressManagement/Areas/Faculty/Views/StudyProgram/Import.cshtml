@@ -12,7 +12,7 @@
                 <div class="card-header">
                     <div class="card-title-wrap bar-success">
                         <h4 class="card-title">Import chương trình đào tạo</h4>
-                    </div>                 
+                    </div>
                 </div>
                 <div class="card-body collapse show">
                     <div class="card-block">
@@ -25,7 +25,7 @@
                                 <option>Option 3</option>
                                 <option>Option 4</option>
                                 <option>Option 5</option>
-                            </select>                           
+                            </select>
                         </fieldset>
                         <fieldset class="form-group">
                             <label for="basicSelect">Khoá: </label>
@@ -36,16 +36,61 @@
                                 <option>Option 3</option>
                                 <option>Option 4</option>
                                 <option>Option 5</option>
-                            </select>                           
+                            </select>
                         </fieldset>
                         <form action="/" class="dropzone dropzone-area" id="dpz-single-file">
                         </form>
-                        <h4 class="card-title" style="text-align:center; margin-top: 50px">Chọn hoặc kéo thả file để bắt đầu import chương trình đào tạo</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-success">
+                        <h4 class="card-title">Tips</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block">
+                        <h4 class="card-title" style="text-align:center">Chọn hoặc kéo thả file để bắt đầu import chương trình đào tạo</h4>
                         <img style="display: block; margin-left: auto; margin-right: auto; width: 50%;" src="~/images/Instruction manual-cuate.svg" width="250" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </section>
 <!-- // Dropzone section end -->
+
+<link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/dropzone.min.css">
+
+@section scripts {
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/app-assets/vendors/js/dropzone.min.js"></script>
+
+    <script>
+
+        (function (window, document, $) {
+            'use strict';
+            Dropzone.options.dpzSingleFile = {
+                paramName: "file", // The name that will be used to transfer the file
+                maxFiles: 1,
+                init: function () {
+                    this.on("maxfilesexceeded", function (file) {
+                        this.removeAllFiles();
+                        this.addFile(file);
+                    });
+                }
+            };
+        })(window, document, jQuery);
+
+    </script>
+}
+
+

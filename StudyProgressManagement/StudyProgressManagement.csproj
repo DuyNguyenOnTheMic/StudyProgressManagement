@@ -794,6 +794,7 @@
     <Content Include="gulp-tasks\sass\watch.js" />
     <Content Include="gulp-tasks\uglify\min.js" />
     <Content Include="images\High five-bro.svg" />
+    <Content Include="images\Instruction manual-cuate.svg" />
     <Content Include="images\login_background.png" />
     <Content Include="images\user_avatar.png" />
     <Content Include="images\Welcome-rafiki.svg" />

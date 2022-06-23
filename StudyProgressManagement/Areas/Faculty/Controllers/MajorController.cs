@@ -29,36 +29,49 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
+
+
         [HttpGet]
-        public ActionResult AddOrEdit(string id = null)
+        public ActionResult Create()
         {
-            if (id == null)
-            {
-                return View(new major());
-            }
-            else
-            {
-                return View(db.majors.Where(x => x.id == id).FirstOrDefault());
-            }
+            return View(new major());
         }
 
         [HttpPost]
-        public ActionResult AddOrEdit(major major)
+        public ActionResult Create(major major)
         {
-            var query = db.majors.AsNoTracking().Where(x => x.id == major.id).FirstOrDefault();
-            // Add or edit major
-            if (query == null)
+            try
             {
                 db.majors.Add(major);
                 db.SaveChanges();
                 return Json(new { success = true, message = "Lưu thành công!" }, JsonRequestBehavior.AllowGet);
             }
-            else
+            catch
+            {
+                return Json(new { error = true }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            return View(db.majors.Where(x => x.id == id).FirstOrDefault());
+        }
+
+        [HttpPost]
+        public ActionResult Edit(major major)
+        {
+            try
             {
                 db.Entry(major).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return Json(new { success = true, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
             }
+            catch (Exception)
+            {
+                return Json(new { error = true }, JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         [HttpPost]

@@ -1179,7 +1179,7 @@
     <Content Include="assets\scss\variables\app-variables.scss" />
     <Content Include="assets\scss\variables\variables.scss" />
     <Content Include="Areas\Faculty\Views\Major\Index.cshtml" />
-    <Content Include="Areas\Faculty\Views\Major\AddOrEdit.cshtml" />
+    <Content Include="Areas\Faculty\Views\Major\Create.cshtml" />
     <Content Include="Areas\Faculty\Views\StudentCourse\Index.cshtml" />
     <Content Include="Areas\Faculty\Views\StudentCourse\AddOrEdit.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
@@ -1189,6 +1189,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Faculty\Views\Major\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

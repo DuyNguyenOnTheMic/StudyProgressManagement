@@ -13,11 +13,7 @@
                     <div class="card-title-wrap bar-success">
                         <h4 class="card-title">Quản lý khoá sinh viên</h4>
                     </div>
-                </div>
-                @if (TempData["deleteError"] != null)
-                {
-                    <p>@TempData["deleteError"]</p>
-                }
+                </div>               
                 <div class="card-body collapse show">
                     <div class="card-block card-dashboard">
                         <button id="addRow" class="btn btn-primary mb-2" onclick="PopupForm('@Url.Action("AddOrEdit", "StudentCourse")')"><i class="ft-plus"></i>&nbsp; Thêm khoá mới</button>

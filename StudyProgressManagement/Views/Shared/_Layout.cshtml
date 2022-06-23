@@ -7,6 +7,7 @@
     <meta name="description" content="Convex admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, Convex admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
+    <title>@ViewBag.Title</title>
     <link rel="apple-touch-icon" sizes="60x60" href="~/app-assets/img/ico/apple-icon-60.png">
     <link rel="apple-touch-icon" sizes="76x76" href="~/app-assets/img/ico/apple-icon-76.png">
     <link rel="apple-touch-icon" sizes="120x120" href="~/app-assets/img/ico/apple-icon-120.png">
@@ -54,7 +55,7 @@
                                     <li>
                                         <a href="chat.html" class="menu-item">Xem CTĐT</a>
                                     </li>
-                                    <li>
+                                    <li class="@(ViewBag.Title == "Import Chương trình đào tạo" ? "active" : "")">
                                         <a href="@Url.Action("Import", "StudyProgram", new { area = "Faculty" })" class="menu-item">Import CTĐT</a>
                                     </li>              
                                 </ul>

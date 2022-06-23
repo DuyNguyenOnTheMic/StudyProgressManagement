@@ -18,24 +18,18 @@
                     <div class="card-block">
                         <fieldset class="form-group">
                             <label for="basicSelect">Ngành: </label>
-                            <select class="form-control" id="basicSelect">
-                                <option>Select Option</option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                <option>Option 4</option>
-                                <option>Option 5</option>
+                            <select class="form-control" id="comboboxMajor">
+                                <option selected="selected" disabled="disabled"> ----------- Chọn ngành ----------- </option>                              
+                                @foreach (var major in ViewBag.majors)
+                                {
+                                    <option value="@major.id">@major.name</option>
+                                }
                             </select>
                         </fieldset>
                         <fieldset class="form-group">
                             <label for="basicSelect">Khoá: </label>
-                            <select class="form-control" id="basicSelect">
-                                <option>Select Option</option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                <option>Option 4</option>
-                                <option>Option 5</option>
+                            <select class="form-control" id="comboboxStudentCourse">
+                                <option selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
                             </select>
                         </fieldset>
                         <form action="/" class="dropzone dropzone-area" id="dpz-single-file">
@@ -74,7 +68,31 @@
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/app-assets/vendors/js/dropzone.min.js"></script>
 
-    <script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // Load cascading dropdown between majors and student courses
+            $('#comboboxMajor').on('change', function () {
+                $("#comboboxStudentCourse").empty();
+                var majorId = $('#comboboxMajor option:selected').val();
+                $.ajax({
+                    type: 'GET',
+                    data: { majorId: majorId },
+                    url: '@Url.Action("LoadStudentCourses", "StudyProgram")',
+                    success: function (result) {
+                        var s = '<option selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>';
+                        for (var i = 0; i < result.length; i++) {
+                            s += '<option value=' + result[i].Id + '">' + result[i].course + '</option>';
+                        }
+                        $('#comboboxStudentCourse').html(s);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+    <script type="text/javascript">
 
         (function (window, document, $) {
             'use strict';

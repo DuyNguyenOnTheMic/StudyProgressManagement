@@ -83,6 +83,7 @@
                             searchable: false,
                             orderable: false,
                             className: 'text-center',
+                            width: '20px'
                         },
                         { 'data': 'id' },
                         { 'data': 'name' },
@@ -93,7 +94,8 @@
                             },
                             orderable: false,
                             searchable: false,
-                            width: '100px'
+                            width: '100px',
+                            className: 'text-center'
                         }
                     ],
                     language: {
@@ -174,7 +176,7 @@
                             toastr.success(data.message);
                         }
                         else {
-                            // Show message when create or edit failed
+                            // Show message when create failed
                             swal({
                                 title: 'Thông báo',
                                 text: 'Mã ngành này đã tồn tại!',

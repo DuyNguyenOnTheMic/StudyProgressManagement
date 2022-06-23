@@ -61,17 +61,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public ActionResult Edit(major major)
         {
-            try
-            {
-                db.Entry(major).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return Json(new { success = true, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
-                return Json(new { error = true }, JsonRequestBehavior.AllowGet);
-            }
-
+            db.Entry(major).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return Json(new { success = true, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

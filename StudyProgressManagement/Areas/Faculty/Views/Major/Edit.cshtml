@@ -8,7 +8,7 @@
 {
     <label>Mã ngành: </label>
     <div class="form-group">
-        @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
         @Html.ValidationMessageFor(model => model.id, null, new { @class = "text-danger" })
     </div>
 

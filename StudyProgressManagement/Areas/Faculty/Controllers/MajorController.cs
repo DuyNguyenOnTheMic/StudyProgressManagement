@@ -42,6 +42,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         {
             try
             {
+                // Create new major
                 db.majors.Add(major);
                 db.SaveChanges();
                 return Json(new { success = true, message = "Lưu thành công!" }, JsonRequestBehavior.AllowGet);
@@ -61,6 +62,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public ActionResult Edit(major major)
         {
+            // Update major
             db.Entry(major).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return Json(new { success = true, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);

@@ -23,6 +23,7 @@ namespace StudyProgressManagement.Models
 
         [Required(ErrorMessage = "Bạn chưa nhập mã ngành")]
         [MaxLength(50, ErrorMessage = "Tối đa {1} kí tự được cho phép")]
+        [RegularExpression(@"^[A-Za-z0-9_@./#&+-]*$", ErrorMessage = "Chỉ được nhập chữ cái không dấu và không có khoảng trắng!")]
         public string id { get; set; }
         [Required(ErrorMessage = "Bạn chưa nhập tên ngành")]
         [MaxLength(255, ErrorMessage = "Tối đa {1} kí tự được cho phép")]

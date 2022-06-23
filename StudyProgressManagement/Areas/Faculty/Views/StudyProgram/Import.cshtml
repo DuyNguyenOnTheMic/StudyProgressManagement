@@ -4,5 +4,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Import</h2>
+<div class="container-fluid">
+    <!-- Dropzone section start -->
+    <section id="dropzone-examples">        
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title-wrap bar-success">
+                            <h4 class="card-title">Single File Upload</h4>
+                        </div>
+                    </div>
+                    <div class="card-body collapse show">
+                        <div class="card-block">
+                            <p class="card-text">This example uploads a single file using dropzone js library. By default, dropzone is a multiple file uploader and does not have specific option allowing us to switch to single file uploading mode, but this functionality can be achieved by adding more options to the plugin settings, such as <code>maxfilesexceeded</code> callback and <code>maxFiles</code> option set to 1. <code>maxFiles: 1</code> is used to tell dropzone that there should be only one file. When there is more then 1 file the function <code>maxfilesexceeded</code> will be called, with the exceeding file in the first parameter. Now only 1 file can be selected and it will be replaced with another one instead of adding it to the preview.</p>
+                            <form action="/" class="dropzone dropzone-area" id="dpz-single-file">
+                                <div class="dz-message">Drop Files Here To Upload</div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </section>
+    <!-- // Dropzone section end -->
+</div>
 

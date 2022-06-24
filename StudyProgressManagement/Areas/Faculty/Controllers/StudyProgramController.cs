@@ -1,6 +1,4 @@
 ﻿using StudyProgressManagement.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,12 +16,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return View();
         }
 
-        public ActionResult Import()
-        {
-            ViewBag.majors = db.majors.ToList();
-            return View();
-        }
-
         public ActionResult LoadStudentCourses(string majorId)
         {
             // get student courses data from database
@@ -32,6 +24,25 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 id = s.id,
                 course = s.course
             }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Import()
+        {
+            ViewBag.majors = db.majors.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Import(HttpPostedFileBase postedFile, string student_course)
+        {
+            var postedMajor = Request.Form["major"].ToString();
+            var postedStudentCourse = Request.Form["student_course"].ToString();
+            foreach (var imageFile in Request.Files)
+            {
+
+            }
+
+            return Json(new { status = true, Message = "Account created." + postedMajor + postedStudentCourse });
         }
     }
 }

@@ -16,24 +16,45 @@
                 </div>
                 <div class="card-body collapse show">
                     <div class="card-block">
-                        <fieldset class="form-group">
-                            <label for="basicSelect">Ngành: </label>
-                            <select class="form-control" id="comboboxMajor">
-                                <option selected="selected" disabled="disabled"> ----------- Chọn ngành ----------- </option>                              
-                                @foreach (var major in ViewBag.majors)
-                                {
-                                    <option value="@major.id">@major.name</option>
-                                }
-                            </select>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <label for="basicSelect">Khoá: </label>
-                            <select class="form-control" id="comboboxStudentCourse">
-                                <option selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
-                            </select>
-                        </fieldset>
-                        <form action="/" class="dropzone dropzone-area" id="dpz-single-file">
-                        </form>
+                        <form action="#">
+                            <div class="form-body">
+                                <div class="row justify-content-center">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Ngành: </label>
+                                            <select class="form-control" id="comboboxMajor">
+                                                <option selected="selected" disabled="disabled"> ----------- Chọn ngành ----------- </option>
+                                                @foreach (var major in ViewBag.majors)
+                                                {
+                                                    <option value="@major.id">@major.name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Khoá: </label>
+                                            <select class="form-control" id="comboboxStudentCourse">
+                                                <option selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropzone" id="my-dropzone" name="dpz-single-file">
+                                    <div class="dz-default dz-message"><span>Drop files here to upload</span></div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary mr-1" id="submit-all">
+                                        Submit
+                                        <i class="ft-thumbs-up position-right"></i>
+                                    </button>
+                                    <button type="reset" class="btn btn-warning">
+                                        Reset
+                                        <i class="ft-refresh-cw position-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>                        
                     </div>
                 </div>
             </div>
@@ -94,7 +115,7 @@
 
     <script type="text/javascript">
 
-        (function (window, document, $) {
+        @*(function (window, document, $) {
             'use strict';
             Dropzone.options.dpzSingleFile = {
                 paramName: "file", // The name that will be used to transfer the file
@@ -106,7 +127,51 @@
                     });
                 }
             };
-        })(window, document, jQuery);
+        })(window, document, jQuery);*@
+
+        Dropzone.options.myDropzone = {
+            url: "/Account/Create",
+            autoProcessQueue: false,
+            uploadMultiple: true,
+            parallelUploads: 100,
+            maxFiles: 100,
+            acceptedFiles: "image/*",
+
+            init: function () {
+
+                var submitButton = document.querySelector("#submit-all");
+                var wrapperThis = this;
+
+                submitButton.addEventListener("click", function () {
+                    wrapperThis.processQueue();
+                });
+
+                this.on("addedfile", function (file) {
+
+                    // Create the remove button
+                    var removeButton = Dropzone.createElement("<button class='btn btn-lg dark'>Remove File</button>");
+
+                    // Listen to the click event
+                    removeButton.addEventListener("click", function (e) {
+                        // Make sure the button click doesn't submit the form:
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        // Remove the file preview.
+                        wrapperThis.removeFile(file);
+                        // If you want to the delete the file on the server as well,
+                        // you can do the AJAX request here.
+                    });
+
+                    // Add the button to the file preview element.
+                    file.previewElement.appendChild(removeButton);
+                });
+
+                this.on('sendingmultiple', function (data, xhr, formData) {
+                    formData.append("Username", $("#Username").val());
+                });
+            }
+        };
 
     </script>
 }

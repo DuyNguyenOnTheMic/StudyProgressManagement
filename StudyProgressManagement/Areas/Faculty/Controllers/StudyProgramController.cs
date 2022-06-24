@@ -26,6 +26,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
 
         public ActionResult LoadStudentCourses(string majorId)
         {
+            // get student courses data from database
             return Json(db.student_course.Where(s => s.major_id == majorId).Select(s => new
             {
                 id = s.id,

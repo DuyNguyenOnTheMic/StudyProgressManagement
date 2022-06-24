@@ -66,10 +66,10 @@
                             <li class="nav-item">
                                 <a href="#"><i class="icon-note"></i><span data-i18n="" class="menu-title">Kết quả ĐK học tập</span></a>
                             </li>
-                            <li class="nav-item">
+                            <li class="@(ViewBag.Title == "Quản lý khoá sinh viên" ? "active" : "nav-item")">
                                 <a href="@Url.Action("Index", "StudentCourse", new { Area = "Faculty" })"><i class="icon-user"></i><span data-i18n="" class="menu-title">Khoá</span></a>
                             </li>
-                            <li class="nav-item">
+                            <li class="@(ViewBag.Title == "Quản lý ngành học" ? "active" : "nav-item")">
                                 <a href="@Url.Action("Index", "Major", new { Area = "Faculty" })"><i class="icon-graduation"></i><span data-i18n="" class="menu-title">Ngành</span></a>
                             </li>
                             <li class="nav-item">

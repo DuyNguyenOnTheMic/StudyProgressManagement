@@ -93,7 +93,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
-            // Load cascading dropdown between majors and student courses           
+            // Load cascading dropdown between majors and student courses
              $("#comboboxMajor").change(function () {
                 $("#comboboxStudentCourse").empty();
                 var majorId = $('#comboboxMajor option:selected').val();
@@ -122,16 +122,31 @@
 
         Dropzone.options.myDropzone = {
             url: '@Url.Action("Import", "StudyProgram")',
+            autoProcessQueue: false,
             paramName: 'postedFile',
             maxFiles: 1,
             acceptedFiles: '.xlsx, .xls, .csv',
 
             init: function () {
 
+                var myDropzone = this;
+
                 this.on("maxfilesexceeded", function (file) {
                     this.removeAllFiles();
                     this.addFile(file);
-                });                           
+                });  
+
+                $("#submit-all").click(function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    myDropzone.processQueue();
+                }); 
+
+                this.on('sending', function (data, xhr, formData) {
+                    $('.form-control').each(function () {
+                        formData.append($(this).attr('name'), $(this).val());
+                    })
+                });
             }
         };
 

@@ -67,6 +67,8 @@
     <script type="text/javascript">
 
         var popup, dataTable;
+        var groupColumn = 3;
+
         $(document).ready(function () {
 
             // Populate Major datatable
@@ -79,6 +81,27 @@
                         dataType: 'json',
                     },
 
+                    columnDefs: [{ visible: false, targets: groupColumn }],
+                    order: [[groupColumn, 'asc']],
+                    drawCallback: function (settings) {
+                        var api = this.api();
+                        var rows = api.rows({ page: 'current' }).nodes();
+                        var last = null;
+
+                        api
+                            .column(groupColumn, { page: 'current' })
+                            .data()
+                            .each(function (group, i) {
+                                if (last !== group) {
+                                    $(rows)
+                                        .eq(i)
+                                        .before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
+
+                                    last = group;
+                                }
+                            });
+                    },
+
                     columns: [
                         {
                             'data': null,
@@ -88,7 +111,11 @@
                             width: '20px'
                         },
                         { 'data': 'course' },
-                        { 'data': 'major_id' },
+                        {
+                            'data': 'major_id',
+                            visible: false,
+                            searchable: true,
+                        },
                         { 'data': 'major_name' },
                         { 'data': 'year_study' },
                          {
@@ -108,7 +135,6 @@
                         'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>"
                     },
 
-                    order: [[1, 'asc']],
                     responsive: true,
                     LengthChange: true,
                     Filter: true,
@@ -122,6 +148,16 @@
                     cell.innerHTML = i + 1;
                 });
             }).draw();
+
+            // Order by the grouping
+            $('#example tbody').on('click', 'tr.group', function () {
+                var currentOrder = table.order()[0];
+                if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+                    table.order([groupColumn, 'desc']).draw();
+                } else {
+                    table.order([groupColumn, 'asc']).draw();
+                }
+            });
 
         });
 

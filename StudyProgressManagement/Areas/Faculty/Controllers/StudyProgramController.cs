@@ -1,4 +1,5 @@
 ﻿using StudyProgressManagement.Models;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
@@ -103,8 +104,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         {
                             db.knowledge_type.Add(new knowledge_type
                             {
-                                id = row["Mã loại kiến thức"].ToString().Trim(),
-                                name = row["Tên loại kiến thức"].ToString().Trim()
+                                id = SetNullOnEmpty(row["Mã loại kiến thức"].ToString()),
+                                name = SetNullOnEmpty(row["Tên loại kiến thức"].ToString())
                             });
                         }
                         db.SaveChanges();
@@ -115,26 +116,26 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         {
                             db.curricula.Add(new curriculum
                             {
-                                id = row["Mã học phần"].ToString().Trim(),
-                                name = row["Tên học phần (Tiếng Việt)"].ToString().Trim(),
-                                name_english = row["Tên học phần (Tiếng Anh)"].ToString().Trim(),
-                                credits = string.IsNullOrEmpty(row["TC"].ToString()) ? 0 : int.Parse(row["TC"].ToString().Trim()),
-                                theoretical_hours = string.IsNullOrEmpty(row["LT"].ToString()) ? 0 : int.Parse(row["TC"].ToString().Trim()),
-                                practice_hours = string.IsNullOrEmpty(row["TH"].ToString()) ? 0 : int.Parse(row["TC"].ToString().Trim()),
-                                internship_hours = string.IsNullOrEmpty(row["TT"].ToString()) ? 0 : int.Parse(row["TC"].ToString().Trim()),
-                                project_hours = string.IsNullOrEmpty(row["DA"].ToString()) ? 0 : int.Parse(row["TC"].ToString().Trim()),
-                                compulsory_or_optional = row["Bắt buộc/ Tự chọn"].ToString().Trim(),
-                                prerequisites = row["Điều kiện tiên quyết"].ToString().Trim(),
-                                learn_before = row["Học trước – học sau"].ToString().Trim(),
-                                editing_notes = row["Ghi chú chỉnh sửa"].ToString().Trim(),
-                                knowledge_type_id = row["Mã loại kiến thức"].ToString().Trim()
+                                id = SetNullOnEmpty(row["Mã học phần"].ToString()),
+                                name = SetNullOnEmpty(row["Tên học phần (Tiếng Việt)"].ToString()),
+                                name_english = SetNullOnEmpty(row["Tên học phần (Tiếng Anh)"].ToString()),
+                                credits = (int)ToNullableInt(row["TC"].ToString()),
+                                theoretical_hours = ToNullableInt(row["LT"].ToString()),
+                                practice_hours = ToNullableInt(row["TH"].ToString()),
+                                internship_hours = ToNullableInt(row["TT"].ToString()),
+                                project_hours = ToNullableInt(row["DA"].ToString()),
+                                compulsory_or_optional = SetNullOnEmpty(row["Bắt buộc/ Tự chọn"].ToString()),
+                                prerequisites = SetNullOnEmpty(row["Điều kiện tiên quyết"].ToString()),
+                                learn_before = SetNullOnEmpty(row["Học trước – học sau"].ToString()),
+                                editing_notes = SetNullOnEmpty(row["Ghi chú chỉnh sửa"].ToString()),
+                                knowledge_type_id = SetNullOnEmpty(row["Mã loại kiến thức"].ToString())
                             });
                         }
 
                         db.studentcourse_curriculum.Add(new studentcourse_curriculum
                         {
                             student_course_id = int.Parse(postedStudentCourse),
-                            curriculum_id = row["Mã học phần"].ToString().Trim()
+                            curriculum_id = SetNullOnEmpty(row["Mã học phần"].ToString())
                         });
                     }
                     db.SaveChanges();
@@ -142,6 +143,17 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             }
             ViewBag.majors = db.majors.ToList();
             return View();
+        }
+
+        public static int? ToNullableInt(string value)
+        {
+            return value != null && string.IsNullOrEmpty(value.Trim()) ? (int?)null : int.Parse(value);
+        }
+
+        public static string SetNullOnEmpty(string value)
+        {
+            // Check if string is empty
+            return value != null && string.IsNullOrEmpty(value.Trim()) ? null : value;
         }
     }
 }

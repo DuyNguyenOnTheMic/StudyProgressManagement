@@ -1,5 +1,4 @@
 ﻿using StudyProgressManagement.Models;
-using System;
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
@@ -38,9 +37,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         }
 
         [HttpPost]
-        public ActionResult Import(HttpPostedFileBase postedFile, string student_course)
+        public ActionResult Import(HttpPostedFileBase postedFile)
         {
-            var postedMajor = Request.Form["major"].ToString();
             var postedStudentCourse = Request.Form["student_course"].ToString();
             foreach (var imageFile in Request.Files)
             {
@@ -99,9 +97,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     //Insert records to database table.
                     foreach (DataRow row in dt.Rows)
                     {
-                       /* string knowledge_type = row["Mã loại kiến thức"].ToString();
-                        var query = db.knowledge_type.Where(k => k.id == knowledge_type).FirstOrDefault();
-                        if (query == null)
+                        string knowledge_type = row["Mã loại kiến thức"].ToString();
+                        var query_knowledge_type = db.knowledge_type.Where(k => k.id == knowledge_type).FirstOrDefault();
+                        if (query_knowledge_type == null)
                         {
                             db.knowledge_type.Add(new knowledge_type
                             {
@@ -109,25 +107,30 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                                 name = row["Tên loại kiến thức"].ToString().Trim()
                             });
                         }
-                        db.SaveChanges();*/
+                        db.SaveChanges();
 
-                        db.curricula.Add(new curriculum
+                        string curriculum = row["Mã học phần"].ToString();
+                        var query_curriculum = db.curricula.Where(c => c.id == curriculum).FirstOrDefault();
+                        if (query_curriculum == null)
                         {
-                            id = row["Mã học phần"].ToString().Trim(),
-                            name = row["Tên học phần (Tiếng Việt)"].ToString().Trim(),
-                            name_english = row["Tên học phần (Tiếng Anh)"].ToString().Trim(),
-                            credits = /*int.Parse(row["TC"].ToString())*/ Convert.ToInt32(row["TC"]),
-                            /*theoretical_hours = int.Parse(row["LT"].ToString().Trim()),
-                            practice_hours = int.Parse(row["TH"].ToString().Trim()),
-                            internship_hours = int.Parse(row["TT"].ToString().Trim()),
-                            project_hours = int.Parse(row["DA"].ToString().Trim()),
-                            compulsory_or_optional = row["Bắt buộc/ Tự chọn"].ToString().Trim(),
-                            prerequisites = row["Điều kiện tiên quyết"].ToString().Trim(),
-                            learn_before = row["Học trước – học sau"].ToString().Trim(),
-                            editing_notes = row["Ghi chú chỉnh sửa"].ToString().Trim(),
-                            knowledge_type_id = row["Mã loại kiến thức"].ToString().Trim(),
-                            student_course_id = int.Parse(postedStudentCourse)*/
-                        });
+                            db.curricula.Add(new curriculum
+                            {
+                                id = row["Mã học phần"].ToString().Trim(),
+                                name = row["Tên học phần (Tiếng Việt)"].ToString().Trim(),
+                                name_english = row["Tên học phần (Tiếng Anh)"].ToString().Trim(),
+                                credits = string.IsNullOrEmpty(row["TC"].ToString()) ? 0 : int.Parse(row["TC"].ToString().Trim()),
+                                theoretical_hours = string.IsNullOrEmpty(row["LT"].ToString()) ? 0 : int.Parse(row["TC"].ToString().Trim()),
+                                practice_hours = string.IsNullOrEmpty(row["TH"].ToString()) ? 0 : int.Parse(row["TC"].ToString().Trim()),
+                                internship_hours = string.IsNullOrEmpty(row["TT"].ToString()) ? 0 : int.Parse(row["TC"].ToString().Trim()),
+                                project_hours = string.IsNullOrEmpty(row["DA"].ToString()) ? 0 : int.Parse(row["TC"].ToString().Trim()),
+                                compulsory_or_optional = row["Bắt buộc/ Tự chọn"].ToString().Trim(),
+                                prerequisites = row["Điều kiện tiên quyết"].ToString().Trim(),
+                                learn_before = row["Học trước – học sau"].ToString().Trim(),
+                                editing_notes = row["Ghi chú chỉnh sửa"].ToString().Trim(),
+                                knowledge_type_id = row["Mã loại kiến thức"].ToString().Trim(),
+                                student_course_id = int.Parse(postedStudentCourse)
+                            });
+                        }                      
                     }
                     db.SaveChanges();
                 }

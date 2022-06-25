@@ -23,7 +23,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Ngành: </label>
-                                            <select class="form-control" id="comboboxMajor" name="major" required="required" oninvalid="this.setCustomValidity('Bạn chưa chọn ngành')" oninput="this.setCustomValidity('')">
+                                            <select class="form-control" id="comboboxMajor" name="major" required onkeypress="document.getElementById('resp1').innerHTML=''">
                                                 <option value="" selected="selected" disabled="disabled"> ----------- Chọn ngành ----------- </option>
                                                 @foreach (var major in ViewBag.majors)
                                                 {
@@ -33,7 +33,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Khoá: </label>
-                                            <select class="form-control" id="comboboxStudentCourse" name="student_course" required="required" oninvalid="this.setCustomValidity('Bạn chưa chọn khoá')" oninput="this.setCustomValidity('')">
+                                            <select class="form-control" id="comboboxStudentCourse" name="student_course" required>
                                                 <option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
                                             </select>
                                         </div>
@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="dropzone" id="my-dropzone">
                                     <div class="dz-default dz-message"><span>Drop files here to upload</span></div>
-                                </div>                              
+                                </div>
                             </div>
                             <div class="form-actions">
                                 <div class="text-center">
@@ -89,6 +89,9 @@
 
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/app-assets/vendors/js/dropzone.min.js"></script>
+    <script src="~/app-assets/vendors/js/sweetalert2@11.js"></script>
+    <script src="~/app-assets/vendors/js/sweetalert2.min.js"></script>
+    <script src="~/app-assets/js/sweet-alerts.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -134,13 +137,31 @@
                 this.on("maxfilesexceeded", function (file) {
                     this.removeAllFiles();
                     this.addFile(file);
-                });  
+                });
 
                 $("#submit-all").click(function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    myDropzone.processQueue();
-                }); 
+
+                    var count = myDropzone.getQueuedFiles().length;
+
+
+                    if (document.getElementById("comboboxMajor").value == '') {
+                        toastr.options.positionClass = 'toast-bottom-right';
+                        toastr.warning('Bạn chưa chọn ngành và khoá');
+                    }
+                    else if (document.getElementById("comboboxStudentCourse").value == '') {
+                        toastr.options.positionClass = 'toast-bottom-right';
+                        toastr.warning('Bạn chưa chọn khoá');
+                    }                 
+                    else if (count == 0) {
+                        toastr.options.positionClass = 'toast-bottom-right';
+                        toastr.warning('Bạn chưa chọn file để upload');
+                    }
+                    else {
+                        myDropzone.processQueue();
+                    }
+                });
 
                 this.on('sending', function (data, xhr, formData) {
                     $('.form-control').each(function () {

@@ -127,9 +127,15 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                                 prerequisites = row["Điều kiện tiên quyết"].ToString().Trim(),
                                 learn_before = row["Học trước – học sau"].ToString().Trim(),
                                 editing_notes = row["Ghi chú chỉnh sửa"].ToString().Trim(),
-                                knowledge_type_id = row["Mã loại kiến thức"].ToString().Trim(),
+                                knowledge_type_id = row["Mã loại kiến thức"].ToString().Trim()
                             });
-                        }                      
+                        }
+
+                        db.studentcourse_curriculum.Add(new studentcourse_curriculum
+                        {
+                            student_course_id = int.Parse(postedStudentCourse),
+                            curriculum_id = row["Mã học phần"].ToString().Trim()
+                        });
                     }
                     db.SaveChanges();
                 }

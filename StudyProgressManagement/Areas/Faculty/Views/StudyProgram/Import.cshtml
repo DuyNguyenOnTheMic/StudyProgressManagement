@@ -84,6 +84,7 @@
 <!-- // Dropzone section end -->
 
 <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/dropzone.min.css">
+<link href="~/app-assets/vendors/css/sweetalert2.min.css" rel="stylesheet" />
 
 @section scripts {
 
@@ -175,22 +176,22 @@
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
                         errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi';
 
-                        Swal.fire({
+                        swal({
                             title: 'Thông báo',
                             text: "Khoá sinh viên này đã có chương trình đào tạo, bạn có muốn import lại?",
-                            icon: 'warning',
+                            type: 'warning',
                             showCancelButton: true,
                             confirmButtonText: 'Yes, delete it!'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                Swal.fire(
+                                swal(
                                     'Deleted!',
                                     'Your file has been deleted.',
                                     'success'
                                 )
                             }
                         })
-                    }                  
+                    }
                 });
             }
         };

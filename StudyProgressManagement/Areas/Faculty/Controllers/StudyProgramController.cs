@@ -42,12 +42,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         {
             var postedStudentCourse = Request.Form["student_course"];
 
-           /* int studentcourse_id = int.Parse(postedStudentCourse);
+            int studentcourse_id = int.Parse(postedStudentCourse);
             var query_studentcourse_curriculum = db.studentcourse_curriculum.Where(s => s.student_course_id == studentcourse_id).FirstOrDefault();
             if (query_studentcourse_curriculum != null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }*/
+            }
 
 
             string filePath = string.Empty;

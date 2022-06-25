@@ -37,10 +37,8 @@ namespace StudyProgressManagement.Models
         public string learn_before { get; set; }
         public string editing_notes { get; set; }
         public string knowledge_type_id { get; set; }
-        public int student_course_id { get; set; }
     
         public virtual knowledge_type knowledge_type { get; set; }
-        public virtual student_course student_course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<registration_results> registration_results { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

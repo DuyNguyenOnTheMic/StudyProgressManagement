@@ -128,7 +128,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                                 learn_before = row["Học trước – học sau"].ToString().Trim(),
                                 editing_notes = row["Ghi chú chỉnh sửa"].ToString().Trim(),
                                 knowledge_type_id = row["Mã loại kiến thức"].ToString().Trim(),
-                                student_course_id = int.Parse(postedStudentCourse)
                             });
                         }                      
                     }

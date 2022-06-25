@@ -92,7 +92,6 @@
           <Property Name="learn_before" Type="varchar" MaxLength="100" />
           <Property Name="editing_notes" Type="nvarchar(max)" />
           <Property Name="knowledge_type_id" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="student_course_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="curriculum_class">
           <Key>
@@ -219,18 +218,6 @@
             </Principal>
             <Dependent Role="curriculum">
               <PropertyRef Name="knowledge_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_curriculum_student_course">
-          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
-          <End Role="curriculum" Type="Self.curriculum" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="student_course">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="curriculum">
-              <PropertyRef Name="student_course_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -483,10 +470,6 @@
             <End Role="knowledge_type" EntitySet="knowledge_type" />
             <End Role="curriculum" EntitySet="curriculum" />
           </AssociationSet>
-          <AssociationSet Name="FK_curriculum_student_course" Association="Self.FK_curriculum_student_course">
-            <End Role="student_course" EntitySet="student_course" />
-            <End Role="curriculum" EntitySet="curriculum" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -651,9 +634,7 @@
           <Property Name="learn_before" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="editing_notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="knowledge_type_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="student_course_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="knowledge_type" Relationship="Self.FK_curriculum_knowledge_type" FromRole="curriculum" ToRole="knowledge_type" />
-          <NavigationProperty Name="student_course" Relationship="Self.FK_curriculum_student_course" FromRole="curriculum" ToRole="student_course" />
           <NavigationProperty Name="registration_results" Relationship="Self.FK_registration_results_curriculum" FromRole="curriculum" ToRole="registration_results" />
           <NavigationProperty Name="studentcourse_curriculum" Relationship="Self.FK_studentcourse_curriculum_curriculum" FromRole="curriculum" ToRole="studentcourse_curriculum" />
           <NavigationProperty Name="study_results" Relationship="Self.FK_study_results_curriculum" FromRole="curriculum" ToRole="study_results" />
@@ -735,7 +716,6 @@
           <Property Name="course" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="year_study" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="major_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="curricula" Relationship="Self.FK_curriculum_student_course" FromRole="student_course" ToRole="curriculum" />
           <NavigationProperty Name="major" Relationship="Self.FK_student_course_major" FromRole="student_course" ToRole="major" />
           <NavigationProperty Name="students" Relationship="Self.FK_student_student_course" FromRole="student_course" ToRole="student" />
           <NavigationProperty Name="studentcourse_curriculum" Relationship="Self.FK_studentcourse_curriculum_student_course" FromRole="student_course" ToRole="studentcourse_curriculum" />
@@ -849,18 +829,6 @@
             </Principal>
             <Dependent Role="curriculum">
               <PropertyRef Name="knowledge_type_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_curriculum_student_course">
-          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
-          <End Role="curriculum" Type="Self.curriculum" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="student_course">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="curriculum">
-              <PropertyRef Name="student_course_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1060,10 +1028,6 @@
             <End Role="knowledge_type" EntitySet="knowledge_type" />
             <End Role="curriculum" EntitySet="curricula" />
           </AssociationSet>
-          <AssociationSet Name="FK_curriculum_student_course" Association="Self.FK_curriculum_student_course">
-            <End Role="student_course" EntitySet="student_course" />
-            <End Role="curriculum" EntitySet="curricula" />
-          </AssociationSet>
           <AssociationSet Name="FK_registration_results_curriculum" Association="Self.FK_registration_results_curriculum">
             <End Role="curriculum" EntitySet="curricula" />
             <End Role="registration_results" EntitySet="registration_results" />
@@ -1208,7 +1172,6 @@
                 <ScalarProperty Name="learn_before" ColumnName="learn_before" />
                 <ScalarProperty Name="editing_notes" ColumnName="editing_notes" />
                 <ScalarProperty Name="knowledge_type_id" ColumnName="knowledge_type_id" />
-                <ScalarProperty Name="student_course_id" ColumnName="student_course_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

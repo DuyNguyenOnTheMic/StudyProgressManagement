@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="sep_team03Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="sep_team03Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -89,7 +89,7 @@
           <Property Name="project_hours" Type="int" />
           <Property Name="compulsory_or_optional" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="prerequisites" Type="varchar" MaxLength="50" />
-          <Property Name="learn_before" Type="varchar" MaxLength="100" />
+          <Property Name="learn_before" Type="nvarchar" MaxLength="100" />
           <Property Name="editing_notes" Type="nvarchar(max)" />
           <Property Name="knowledge_type_id" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -543,8 +543,7 @@
             <End Role="study_results" EntitySet="study_results" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="sep_team03Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -631,7 +630,7 @@
           <Property Name="project_hours" Type="Int32" />
           <Property Name="compulsory_or_optional" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="prerequisites" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="learn_before" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="learn_before" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="editing_notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="knowledge_type_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="knowledge_type" Relationship="Self.FK_curriculum_knowledge_type" FromRole="curriculum" ToRole="knowledge_type" />

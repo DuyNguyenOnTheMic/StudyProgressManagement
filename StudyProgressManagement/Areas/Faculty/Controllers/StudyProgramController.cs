@@ -1,4 +1,5 @@
 ﻿using StudyProgressManagement.Models;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
@@ -98,7 +99,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     //Insert records to database table.
                     foreach (DataRow row in dt.Rows)
                     {
-                        string knowledge_type = row["Mã loại kiến thức"].ToString();
+                       /* string knowledge_type = row["Mã loại kiến thức"].ToString();
                         var query = db.knowledge_type.Where(k => k.id == knowledge_type).FirstOrDefault();
                         if (query == null)
                         {
@@ -108,16 +109,15 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                                 name = row["Tên loại kiến thức"].ToString().Trim()
                             });
                         }
-                        db.SaveChanges();
+                        db.SaveChanges();*/
 
                         db.curricula.Add(new curriculum
                         {
-                            no = int.Parse(row["STT"].ToString().Trim()),
                             id = row["Mã học phần"].ToString().Trim(),
                             name = row["Tên học phần (Tiếng Việt)"].ToString().Trim(),
                             name_english = row["Tên học phần (Tiếng Anh)"].ToString().Trim(),
-                            credits = int.Parse(row["TC"].ToString().Trim()),
-                            theoretical_hours = int.Parse(row["LT"].ToString().Trim()),
+                            credits = /*int.Parse(row["TC"].ToString())*/ Convert.ToInt32(row["TC"]),
+                            /*theoretical_hours = int.Parse(row["LT"].ToString().Trim()),
                             practice_hours = int.Parse(row["TH"].ToString().Trim()),
                             internship_hours = int.Parse(row["TT"].ToString().Trim()),
                             project_hours = int.Parse(row["DA"].ToString().Trim()),
@@ -126,7 +126,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             learn_before = row["Học trước – học sau"].ToString().Trim(),
                             editing_notes = row["Ghi chú chỉnh sửa"].ToString().Trim(),
                             knowledge_type_id = row["Mã loại kiến thức"].ToString().Trim(),
-                            student_course_id = int.Parse(postedStudentCourse)
+                            student_course_id = int.Parse(postedStudentCourse)*/
                         });
                     }
                     db.SaveChanges();

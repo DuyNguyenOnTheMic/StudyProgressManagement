@@ -23,7 +23,6 @@ namespace StudyProgressManagement.Models
         }
     
         public string id { get; set; }
-        public int no { get; set; }
         public string name { get; set; }
         public string name_english { get; set; }
         public int credits { get; set; }

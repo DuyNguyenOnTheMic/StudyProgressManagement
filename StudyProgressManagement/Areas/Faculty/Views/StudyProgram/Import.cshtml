@@ -94,8 +94,8 @@
     <script src="~/app-assets/js/sweet-alerts.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
 
+        $(document).ready(function () {
             // Load cascading dropdown between majors and student courses
              $("#comboboxMajor").change(function () {
                 $("#comboboxStudentCourse").empty();
@@ -118,10 +118,6 @@
                 return false;
             }).change();
         });
-
-    </script>
-
-    <script type="text/javascript">
 
         Dropzone.options.myDropzone = {
             url: '@Url.Action("Import", "StudyProgram")',
@@ -153,7 +149,7 @@
                     else if (document.getElementById("comboboxStudentCourse").value == '') {
                         toastr.options.positionClass = 'toast-bottom-right';
                         toastr.warning('Bạn chưa chọn khoá');
-                    }                 
+                    }
                     else if (count == 0) {
                         toastr.options.positionClass = 'toast-bottom-right';
                         toastr.warning('File chưa được upload hoặc sai định dạng ');
@@ -167,6 +163,34 @@
                     $('.form-control').each(function () {
                         formData.append($(this).attr('name'), $(this).val());
                     })
+                });
+
+                @*this.on("complete", function (data) {
+                    var res = eval(data.xhr.responseText);
+                    alert(res.Message);
+                });*@
+
+                this.on("error", function (data, errorMessage, xhr) {
+                    if (errorMessage.indexOf('Error 400') !== -1) {
+                        var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
+                        errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi';
+
+                        Swal.fire({
+                            title: 'Thông báo',
+                            text: "Khoá sinh viên này đã có chương trình đào tạo, bạn có muốn import lại?",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'Your file has been deleted.',
+                                    'success'
+                                )
+                            }
+                        })
+                    }                  
                 });
             }
         };

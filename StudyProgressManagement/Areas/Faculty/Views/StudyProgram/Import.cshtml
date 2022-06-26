@@ -125,7 +125,8 @@
             autoProcessQueue: false,
             paramName: 'postedFile',
             maxFiles: 1,
-            acceptedFiles: '.xlsx, .xls, .csv',
+            acceptedFiles: '.xlsx, .xls',
+            dictInvalidFileType: "Tệp tin sai định dạng, chỉ được upload file excel",
 
             init: function () {
 
@@ -164,7 +165,7 @@
                     $('.form-control').each(function () {
                         formData.append($(this).attr('name'), $(this).val());
                     })
-                });
+                });              
 
                 this.on('error', function (data, errorMessage, xhr) {
 
@@ -178,7 +179,7 @@
 
                         swal({
                             title: 'Thông báo',
-                            text: 'Ngành này đã có chương trình đào tạo, bạn có chắc muốn import lại?',
+                            text: 'Ngành này đã có chương trình đào tạo, bạn có muốn import lại?',
                             type: 'warning',
                             showCancelButton: true,
                             cancelButtonText: 'Huỷ',
@@ -193,7 +194,15 @@
                                 data: { 'id': studentCourseId },
                                 success: function (data) {
                                     if (data.success) {
-                                        alert(data.message);
+
+                                        $.each(myDropzone.files, function (i, file) {
+                                            file.status = Dropzone.QUEUED
+                                            file.previewElement.classList.remove("dz-error");
+                                            return file.previewElement.classList.add("dz-success");
+                                        });
+                                        myDropzone.processQueue();
+
+                                        swal("Thông báo", "Import lại CTĐT thành công!", "success").done();
                                     }
                                 }
                             });

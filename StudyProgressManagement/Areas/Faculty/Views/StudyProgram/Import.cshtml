@@ -182,9 +182,11 @@
                             }
                         })
                     })
-                });              
+                });
 
                 this.on('error', function (data, errorMessage, xhr) {
+
+                    swal.close();
 
                     if (errorMessage.indexOf('Error 417') !== -1) {
                         // Show message if the file is not in the right format (like missing columns, etc, ...)

@@ -133,17 +133,19 @@
                 var myDropzone = this;
 
                 this.on('maxfilesexceeded', function (file) {
+                    // Remove file and add again if user input more than 1
                     this.removeAllFiles();
                     this.addFile(file);
                 });
 
                 $("#submit-all").click(function (e) {
+                    // Prevent dropzone from auto submit file
                     e.preventDefault();
                     e.stopPropagation();
 
                     var count = myDropzone.getQueuedFiles().length;
 
-
+                    // Validation for form
                     if (document.getElementById("comboboxMajor").value == '') {
                         toastr.options.positionClass = 'toast-bottom-right';
                         toastr.warning('Bạn chưa chọn ngành và khoá');
@@ -157,6 +159,7 @@
                         toastr.warning('File chưa được upload hoặc sai định dạng ');
                     }
                     else {
+                        // Begin to import file
                         myDropzone.processQueue();                        
 
                         myDropzone.on("success", function () {
@@ -167,6 +170,7 @@
 
                 this.on('sending', function (data, xhr, formData) {
                     $('.form-control').each(function () {
+                        // Send form data along with submit
                         formData.append($(this).attr('name'), $(this).val());
 
                         swal({
@@ -183,10 +187,12 @@
                 this.on('error', function (data, errorMessage, xhr) {
 
                     if (errorMessage.indexOf('Error 417') !== -1) {
+                        // Show message if the file is not in the right format (like missing columns, etc, ...)
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
                         errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi, vui lòng kiểm tra lại tệp tin';
                     }
                     else if (errorMessage.indexOf('Error 400') !== -1) {
+                        // Show message if this student course already has study program
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
                         errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi';
 
@@ -201,6 +207,8 @@
                         }).then(function () {
 
                             var studentCourseId = $('#comboboxStudentCourse').val();
+
+                            // Ajax call to delete study program of that student course
                             $.ajax({
                                 type: 'POST',
                                 url: '@Url.Action("Delete", "StudyProgram")',
@@ -208,6 +216,7 @@
                                 success: function (data) {
                                     if (data.success) {
 
+                                        // Re-import file after delete successfully
                                         $.each(myDropzone.files, function (i, file) {
                                             file.status = Dropzone.QUEUED
                                             file.previewElement.classList.remove("dz-error");

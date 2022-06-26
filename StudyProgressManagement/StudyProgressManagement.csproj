@@ -764,7 +764,6 @@
     <Content Include="app-assets\vendors\js\prism.min.js" />
     <Content Include="app-assets\vendors\js\quill.min.js" />
     <Content Include="app-assets\vendors\js\screenfull.min.js" />
-    <Content Include="app-assets\vendors\js\sweetalert2%4011.js" />
     <Content Include="app-assets\vendors\js\sweetalert2.min.js" />
     <Content Include="app-assets\vendors\js\switchery.min.js" />
     <Content Include="app-assets\vendors\js\tagging.min.js" />

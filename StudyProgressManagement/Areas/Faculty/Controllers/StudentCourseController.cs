@@ -1,4 +1,5 @@
 ﻿using StudyProgressManagement.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -73,10 +74,17 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            // Delete student course
-            student_course student_course = db.student_course.Where(x => x.id == id).FirstOrDefault();
-            db.student_course.Remove(student_course);
-            db.SaveChanges();
+            try
+            {
+                // Delete student course
+                student_course student_course = db.student_course.Where(x => x.id == id).FirstOrDefault();
+                db.student_course.Remove(student_course);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return Json(new { error = true }, JsonRequestBehavior.AllowGet);
+            }
             return Json(new { success = true, message = "Xoá thành công!" }, JsonRequestBehavior.AllowGet);
         }
     }

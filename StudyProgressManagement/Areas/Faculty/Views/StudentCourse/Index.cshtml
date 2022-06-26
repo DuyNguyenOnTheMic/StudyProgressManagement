@@ -242,6 +242,15 @@
                             toastr.options.positionClass = 'toast-bottom-right';
                             toastr.success(data.message);
                         }
+                        else
+                        {
+                            // Show message when delete failed
+                            swal({
+                                title: 'Thông báo',
+                                text: 'Không thể xoá do khoá sinh viên này đã có chương trình đào tạo!',
+                                type: 'error',
+                            })
+                        }
                     }
 
                 });

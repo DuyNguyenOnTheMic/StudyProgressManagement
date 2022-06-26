@@ -179,6 +179,15 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            db.studentcourse_curriculum.RemoveRange(db.studentcourse_curriculum.Where(c => c.student_course_id == id));
+            db.SaveChanges();
+            return Json(new { success = true, message = "Xoá thành công!" }, JsonRequestBehavior.AllowGet);
+        }
+
+
         public static int? ToNullableInt(string value)
         {
             // Convert string to nullable int

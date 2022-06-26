@@ -170,13 +170,13 @@
 
                     if (errorMessage.indexOf('Error 417') !== -1) {
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
-                        errorDisplay[errorDisplay.length - 1].innerHTML = 'gì vậy ba';
+                        errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi, vui lòng kiểm tra lại tệp tin';
                     }
                     else if (errorMessage.indexOf('Error 400') !== -1) {
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
                         errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi';
 
-                     swal({
+                        swal({
                             title: 'Thông báo',
                             text: 'Ngành này đã có chương trình đào tạo, bạn có chắc muốn import lại?',
                             type: 'warning',
@@ -184,30 +184,25 @@
                             cancelButtonText: 'Huỷ',
                             confirmButtonText: 'Import lại',
 
-                     }).then(function () {
+                        }).then(function () {
 
-                            @*var _customer = {};
-                            _customer.CustomerId = $("#txtCustomerId").val();
+                            var studentCourseId = $('#comboboxStudentCourse').val();
                             $.ajax({
-                                type: "POST",
-                                url: "/Home/DeleteCustomer",
-                                data: JSON.stringify(_customer),
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "json",
-                                success: function (customer) {
-                                    if (customer != null) {
-                                        alert("Deleted Customer: " + customer.Name);
-                                    } else {
-                                        alert("Customer record not found.");
+                                type: 'POST',
+                                url: '@Url.Action("Delete", "StudyProgram")',
+                                data: { 'id': studentCourseId },
+                                success: function (data) {
+                                    if (data.success) {
+                                        alert(data.message);
                                     }
                                 }
-                            });*@
+                            });
 
-                        }, function (dismiss) {
-                            if (dismiss === 'cancel' || dismiss === 'close') {
-                                // Ignore
-                            }
-                        })
+                            }, function (dismiss) {
+                                if (dismiss === 'cancel' || dismiss === 'close') {
+                                    // Ignore
+                                }
+                            })
                     }
                 });
             }

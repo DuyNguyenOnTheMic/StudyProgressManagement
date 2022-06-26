@@ -157,13 +157,26 @@
                         toastr.warning('File chưa được upload hoặc sai định dạng ');
                     }
                     else {
-                        myDropzone.processQueue();
+                        myDropzone.processQueue();                        
+
+                        myDropzone.on("success", function () {
+                            swal("Thông báo", "Import thành công!", "success").done();
+                        });
                     }
-                });
+                });               
 
                 this.on('sending', function (data, xhr, formData) {
                     $('.form-control').each(function () {
                         formData.append($(this).attr('name'), $(this).val());
+
+                        swal({
+                            title: 'Vui lòng đợi...',
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                            onOpen: () => {
+                                swal.showLoading();
+                            }
+                        })
                     })
                 });              
 
@@ -201,8 +214,10 @@
                                             return file.previewElement.classList.add("dz-success");
                                         });
                                         myDropzone.processQueue();
-
-                                        swal("Thông báo", "Import lại CTĐT thành công!", "success").done();
+                                        
+                                        myDropzone.on("success", function (file) {
+                                            swal("Thông báo", "Import lại CTĐT thành công!", "success").done();
+                                        });
                                     }
                                 }
                             });

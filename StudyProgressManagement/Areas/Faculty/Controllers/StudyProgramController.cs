@@ -182,9 +182,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
+            // Delete all records for re-import
             db.studentcourse_curriculum.RemoveRange(db.studentcourse_curriculum.Where(c => c.student_course_id == id));
             db.SaveChanges();
-            return Json(new { success = true, message = "Xoá thành công!" }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
 

@@ -184,8 +184,24 @@
                             cancelButtonText: 'Huỷ',
                             confirmButtonText: 'Import lại',
 
-                        }).then(function () {
+                     }).then(function () {
 
+                            @*var _customer = {};
+                            _customer.CustomerId = $("#txtCustomerId").val();
+                            $.ajax({
+                                type: "POST",
+                                url: "/Home/DeleteCustomer",
+                                data: JSON.stringify(_customer),
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (customer) {
+                                    if (customer != null) {
+                                        alert("Deleted Customer: " + customer.Name);
+                                    } else {
+                                        alert("Customer record not found.");
+                                    }
+                                }
+                            });*@
 
                         }, function (dismiss) {
                             if (dismiss === 'cancel' || dismiss === 'close') {

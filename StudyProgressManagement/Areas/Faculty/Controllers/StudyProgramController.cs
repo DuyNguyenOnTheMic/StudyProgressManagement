@@ -41,7 +41,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public ActionResult Import(HttpPostedFileBase postedFile)
         {
-            var postedStudentCourse = Request.Form["student_course"];          
+            var postedStudentCourse = Request.Form["student_course"];
+            int studentCourseId = int.Parse(postedStudentCourse);
 
 
             string filePath = string.Empty;
@@ -96,13 +97,14 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     }
                 }
 
+                var query_studentcourse_curriculum = db.studentcourse_curriculum.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
+
                 try
                 {
                     //Insert records to database table.
                     foreach (DataRow row in dt.Rows)
                     {
                         // Declare all columns
-                        int studentCourseId = int.Parse(postedStudentCourse);
                         string knowledgeTypeId = row["Mã loại kiến thức"].ToString();
                         string knowledgeTypeName = row["Tên loại kiến thức"].ToString();
                         string curriculumId = row["Mã học phần"].ToString();
@@ -119,11 +121,11 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         string editingNotes = row["Ghi chú chỉnh sửa"].ToString();
 
                         // Check if student course already has study program
-                        var query_studentcourse_curriculum = db.studentcourse_curriculum.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
                         if (query_studentcourse_curriculum != null)
                         {
                             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                         }
+
 
                         var query_knowledge_type = db.knowledge_type.Where(k => k.id == knowledgeTypeId).FirstOrDefault();
                         if (query_knowledge_type == null)

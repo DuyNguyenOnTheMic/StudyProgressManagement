@@ -50,8 +50,8 @@
                             <li class="has-sub nav-item">
                                 <a href="#"><i class="icon-layers"></i><span data-i18n="" class="menu-title">CTĐT</span></a>
                                 <ul class="menu-content">
-                                    <li>
-                                        <a href="#" class="menu-item">Xem CTĐT</a>
+                                    <li class="@(ViewBag.Title == "Xem chương trình đào tạo" ? "active" : "")">
+                                        <a href="@Url.Action("Index", "StudyProgram", new { area = "Faculty" })" class="menu-item">Xem CTĐT</a>
                                     </li>
                                     <li class="@(ViewBag.Title == "Import chương trình đào tạo" ? "active" : "")">
                                         <a href="@Url.Action("Import", "StudyProgram", new { area = "Faculty" })" class="menu-item">Import CTĐT</a>

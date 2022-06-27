@@ -2,6 +2,7 @@
 using System;
 using System.Configuration;
 using System.Data;
+using System.Data.Entity;
 using System.Data.OleDb;
 using System.IO;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         // GET: Faculty/StudyProgram
         public ActionResult Index()
         {
-            return View();
+            var studentcourse_curriculum = db.studentcourse_curriculum.Include(s => s.curriculum).Include(s => s.student_course);
+            return View(studentcourse_curriculum.ToList());
         }
 
         public ActionResult LoadStudentCourses(string majorId)

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<StudyProgressManagement.Models.studentcourse_curriculum>
+
+@{
+    ViewBag.Title = "Xem chương trình đào tạo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int count = 1;
+}
+
+<!--Bootstrap Grid options Starts-->
+<section id="grid-option">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-success">
+                        <h4 class="card-title">Xem chương trình đào tạo</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2"> STT </th>
+                                        <th rowspan="2"> Mã học phần </th>
+                                        <th rowspan="2"> Tên học phần (Tiếng Việt) </th>
+                                        <th rowspan="2"> Tên học phần (Tiếng Anh) </th>
+                                        <th rowspan="2"> TC </th>
+                                        <th colspan="4"> Số tiết </th>
+                                        <th rowspan="2"> BB/ TC </th>
+                                        <th rowspan="2"> Điều kiện tiên quyết </th>
+                                        <th rowspan="2"> Học trước – học sau </th>
+                                        <th rowspan="2"> Ghi chú chỉnh sửa </th>
+                                    </tr>
+                                    <tr>
+
+                                        <th> LT </th>
+                                        <th> TH </th>
+                                        <th> TT </th>
+                                        <th> DA </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.curriculum.id</td>
+                                            <td>@item.curriculum.name</td>
+                                            <td>@item.curriculum.name_english</td>
+                                            <td>@item.curriculum.credits</td>
+                                            <td>@item.curriculum.theoretical_hours</td>
+                                            <td>@item.curriculum.practice_hours</td>
+                                            <td>@item.curriculum.internship_hours</td>
+                                            <td>@item.curriculum.project_hours</td>
+                                            <td>@item.curriculum.compulsory_or_optional</td>
+                                            <td>@item.curriculum.prerequisites</td>
+                                            <td>@item.curriculum.learn_before</td>
+                                            <td>@item.curriculum.editing_notes</td>
+                                        </tr>
+                                        count++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Bootstrap Grid options Ends-->
+
+@section scripts {
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
+    <script src="~/app-assets/vendors/js/datatable/dataTables.responsive.min.js"></script>
+}

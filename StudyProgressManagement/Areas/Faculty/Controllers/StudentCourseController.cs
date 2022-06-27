@@ -9,7 +9,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
     [Authorize(Roles = "Faculty")]
     public class StudentCourseController : Controller
     {
-        sep_team03Entities db = new sep_team03Entities();
+        SEP25Team03Entities db = new SEP25Team03Entities();
 
         // GET: Faculty/StudentCourse
         public ActionResult Index()

@@ -14,10 +14,10 @@ namespace StudyProgressManagement.Models
     using System.Data.Entity.Infrastructure;
     using SqlProviderServices = System.Data.Entity.SqlServer.SqlProviderServices;
 
-    public partial class sep_team03Entities : DbContext
+    public partial class SEP25Team03Entities : DbContext
     {
-        public sep_team03Entities()
-            : base("name=sep_team03Entities")
+        public SEP25Team03Entities()
+            : base("name=SEP25Team03Entities")
         {
         }
     

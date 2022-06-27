@@ -104,7 +104,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         {
             //Arrange
             var controller = new MajorController();
-            var db = new sep_team03Entities();
+            var db = new SEP25Team03Entities();
 
             //Act
             var actionResult = controller.GetData();

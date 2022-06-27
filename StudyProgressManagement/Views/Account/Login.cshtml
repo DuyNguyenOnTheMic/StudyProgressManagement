@@ -38,7 +38,7 @@
         <section id="login">
             <div class="container-fluid">
                 <div class="row full-height-vh">
-                    <div class="col-12 d-flex align-items-center justify-content-center" style="background-image: url('../../images/login_background.png'); background-repeat: no-repeat; background-size: cover; background-position: center; ">
+                    <div class="col-12 d-flex align-items-center justify-content-center" style="background-image: url('@Url.Content("~/images/login_background.png")'); background-repeat: no-repeat; background-size: cover; background-position: center; ">
                         <div class="card px-4 py-2 box-shadow-2 width-400">
                             <div class="card-header text-center">
                                 <h4 class="text-uppercase text-bold-400 grey darken-1">Website quản lý tiến độ học tập</h4>
@@ -51,11 +51,11 @@
                                     {
                                         <p class="text-danger" style=" text-align:justify; ">@TempData["mailDomainError"]</p>
                                     }
-                                    
+
                                     @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
 
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -63,24 +63,5 @@
         </section>
         <!--Login Page Ends-->
     </div>
-    <!-- ////////////////////////////////////////////////////////////////////////////-->
-    <!-- BEGIN VENDOR JS-->
-    <script src="~/app-assets/vendors/js/core/jquery-3.3.1.min.js"></script>
-    <script src="~/app-assets/vendors/js/core/popper.min.js"></script>
-    <script src="~/app-assets/vendors/js/core/bootstrap.min.js"></script>
-    <script src="~/app-assets/vendors/js/perfect-scrollbar.jquery.min.js"></script>
-    <script src="~/app-assets/vendors/js/prism.min.js"></script>
-    <script src="~/app-assets/vendors/js/jquery.matchHeight-min.js"></script>
-    <script src="~/app-assets/vendors/js/screenfull.min.js"></script>
-    <script src="~/app-assets/vendors/js/pace/pace.min.js"></script>
-    <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <!-- END PAGE VENDOR JS-->
-    <!-- BEGIN CONVEX JS-->
-    <script src="~/app-assets/js/app-sidebar.js"></script>
-    <script src="~/app-assets/js/notification-sidebar.js"></script>
-    <!-- END CONVEX JS-->
-    <!-- BEGIN PAGE LEVEL JS-->
-    <!-- END PAGE LEVEL JS-->
 </body>
 </html>

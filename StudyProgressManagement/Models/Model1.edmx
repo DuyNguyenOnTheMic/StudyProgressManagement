@@ -87,8 +87,8 @@
           <Property Name="practice_hours" Type="int" />
           <Property Name="internship_hours" Type="int" />
           <Property Name="project_hours" Type="int" />
-          <Property Name="compulsory_or_optional" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="prerequisites" Type="varchar" MaxLength="50" />
+          <Property Name="compulsory_or_optional" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="prerequisites" Type="nvarchar" MaxLength="50" />
           <Property Name="learn_before" Type="nvarchar" MaxLength="100" />
           <Property Name="editing_notes" Type="nvarchar(max)" />
           <Property Name="knowledge_type_id" Type="varchar" MaxLength="50" Nullable="false" />
@@ -569,8 +569,8 @@
           <Property Name="practice_hours" Type="Int32" />
           <Property Name="internship_hours" Type="Int32" />
           <Property Name="project_hours" Type="Int32" />
-          <Property Name="compulsory_or_optional" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="prerequisites" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="compulsory_or_optional" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prerequisites" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="learn_before" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="editing_notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="knowledge_type_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />

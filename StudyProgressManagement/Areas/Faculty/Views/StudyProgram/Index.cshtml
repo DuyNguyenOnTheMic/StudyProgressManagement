@@ -1,9 +1,7 @@
-﻿@model IEnumerable<StudyProgressManagement.Models.studentcourse_curriculum>
-
+﻿
 @{
     ViewBag.Title = "Xem chương trình đào tạo";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    int count = 1;
 }
 
 <!--Bootstrap Grid options Starts-->
@@ -19,50 +17,29 @@
                 <div class="card-body">
                     <div class="card-block">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
+                            <table class="table table-bordered table-striped" id="tblStudyProgram" cellspacing="0" width="100%">
+                                <thead style="text-align: center">
                                     <tr>
                                         <th rowspan="2"> STT </th>
-                                        <th rowspan="2"> Mã học phần </th>
-                                        <th rowspan="2"> Tên học phần (Tiếng Việt) </th>
-                                        <th rowspan="2"> Tên học phần (Tiếng Anh) </th>
+                                        <th rowspan="2"> MÃ HỌC PHẦN </th>
+                                        <th rowspan="2"> TÊN HỌC PHẦN </th>
+                                        <th rowspan="2"> TÊN HỌC PHẦN (TA) </th>
                                         <th rowspan="2"> TC </th>
-                                        <th colspan="4"> Số tiết </th>
+                                        <th colspan="4"> SỐ TIẾT </th>
                                         <th rowspan="2"> BB/ TC </th>
-                                        <th rowspan="2"> Điều kiện tiên quyết </th>
-                                        <th rowspan="2"> Học trước – học sau </th>
-                                        <th rowspan="2"> Ghi chú chỉnh sửa </th>
+                                        <th rowspan="2"> HỌC PHẦN TIÊN QUYẾT </th>
+                                        <th rowspan="2"> HỌC PHẦN HỌC TRƯỚC </th>
+                                        <th rowspan="2"> GHI CHÚ CHỈNH SỬA </th>
+                                        <th rowspan="2"> TÊN LOẠI KIẾN THỨC </th>
                                     </tr>
                                     <tr>
-
                                         <th> LT </th>
                                         <th> TH </th>
                                         <th> TT </th>
                                         <th> DA </th>
-
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>@count</td>
-                                            <td>@item.curriculum.id</td>
-                                            <td>@item.curriculum.name</td>
-                                            <td>@item.curriculum.name_english</td>
-                                            <td>@item.curriculum.credits</td>
-                                            <td>@item.curriculum.theoretical_hours</td>
-                                            <td>@item.curriculum.practice_hours</td>
-                                            <td>@item.curriculum.internship_hours</td>
-                                            <td>@item.curriculum.project_hours</td>
-                                            <td>@item.curriculum.compulsory_or_optional</td>
-                                            <td>@item.curriculum.prerequisites</td>
-                                            <td>@item.curriculum.learn_before</td>
-                                            <td>@item.curriculum.editing_notes</td>
-                                        </tr>
-                                        count++;
-                                    }
-                                </tbody>
+                                <tbody></tbody>
                             </table>
                         </div>
                     </div>
@@ -73,8 +50,112 @@
 </section>
 <!--Bootstrap Grid options Ends-->
 
+<link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
+
 @section scripts {
+
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
-    <script src="~/app-assets/vendors/js/datatable/dataTables.responsive.min.js"></script>
+
+    <script>
+
+        var popup, dataTable;
+        var groupColumn = 13;
+
+        $(document).ready(function () {
+
+            // Populate Study Program datatable
+            dataTable = $('#tblStudyProgram').DataTable(
+                {
+                     ajax: {
+                        dataSrc: '',
+                        type: 'POST',
+                        url: '@Url.Action("GetData", "StudyProgram")',
+                        dataType: 'json',
+                    },
+
+                    // Row grouping
+                    columnDefs: [
+                        {
+                            visible: false,
+                            targets: groupColumn,
+                        },
+                        {
+                            targets: -1,
+                            className: 'dt-head-center'
+                        }
+                    ],
+                    order: [[groupColumn, 'asc']],
+                    drawCallback: function (settings) {
+                        var api = this.api();
+                        var rows = api.rows({ page: 'current' }).nodes();
+                        var last = null;
+
+                        api
+                            .column(groupColumn, { page: 'current' })
+                            .data()
+                            .each(function (group, i) {
+                                if (last !== group) {
+                                    $(rows)
+                                        .eq(i)
+                                        .before('<tr class="group"><td colspan="13">' + group + '</td></tr>');
+
+                                    last = group;
+                                }
+                            });
+                    },
+
+                    columns: [
+                        {
+                            'data': null,
+                            searchable: false,
+                            orderable: false,
+                            className: 'text-center',
+                            width: '20px'
+                        },
+                        { 'data': 'id' },
+                        { 'data': 'name' },
+                        { 'data': 'name_english' },
+                        { 'data': 'credits' },
+                        { 'data': 'theoretical_hours' },
+                        { 'data': 'practice_hours' },
+                        { 'data': 'internship_hours' },
+                        { 'data': 'project_hours' },
+                        { 'data': 'compulsory_or_optional' },
+                        { 'data': 'prerequisites' },
+                        { 'data': 'learn_before' },
+                        { 'data': 'editing_notes' },
+                        { 'data': 'knowledge_type_name' }
+                    ],
+
+                    language: {
+                        'emptyTable': "Khoá sinh viên này chưa có dữ liệu <i class='ft-help-circle' style='vertical-align:middle'></i>",
+                    },
+
+                    paging: false,
+                    ordering: false,
+                    info: false,
+
+                });
+
+            // Create Index column datatable
+            dataTable.on('order.dt search.dt', function () {
+                dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+
+            // Order by the grouping
+            $('#tblStudyProgram tbody').on('click', 'tr.group', function () {
+                var currentOrder = table.order()[0];
+                if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+                    table.order([groupColumn, 'desc']).draw();
+                } else {
+                    table.order([groupColumn, 'asc']).draw();
+                }
+            });
+
+        });
+    </script>
+
 }

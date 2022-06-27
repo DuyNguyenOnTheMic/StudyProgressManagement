@@ -67,7 +67,7 @@
 
         $(document).ready(function () {
 
-            // Populate Major datatable
+            // Populate Student Course datatable
             dataTable = $('#tblStudentCourse').DataTable(
                 {
                      ajax: {
@@ -77,6 +77,7 @@
                         dataType: 'json',
                     },
 
+                    // Row grouping
                     columnDefs: [{ visible: false, targets: groupColumn }],
                     order: [[groupColumn, 'asc']],
                     drawCallback: function (settings) {
@@ -147,7 +148,7 @@
             }).draw();
 
             // Order by the grouping
-            $('#example tbody').on('click', 'tr.group', function () {
+            $('#tblStudentCourse tbody').on('click', 'tr.group', function () {
                 var currentOrder = table.order()[0];
                 if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
                     table.order([groupColumn, 'desc']).draw();

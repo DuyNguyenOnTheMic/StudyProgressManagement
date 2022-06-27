@@ -2,7 +2,6 @@
 using System;
 using System.Configuration;
 using System.Data;
-using System.Data.Entity;
 using System.Data.OleDb;
 using System.IO;
 using System.Linq;
@@ -20,8 +19,29 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         // GET: Faculty/StudyProgram
         public ActionResult Index()
         {
-            var studentcourse_curriculum = db.studentcourse_curriculum.Include(s => s.curriculum).Include(s => s.student_course);
-            return View(studentcourse_curriculum.ToList());
+            return View();
+        }
+
+        public JsonResult GetData()
+        {
+            // Get curriculum of student courses data from datatabse
+            return Json(db.studentcourse_curriculum.Select(s => new
+            {
+                id = s.curriculum.id,
+                name = s.curriculum.name,
+                name_english = s.curriculum.name_english,
+                credits = s.curriculum.credits,
+                theoretical_hours = s.curriculum.theoretical_hours,
+                practice_hours = s.curriculum.practice_hours,
+                internship_hours = s.curriculum.internship_hours,
+                project_hours = s.curriculum.project_hours,
+                compulsory_or_optional = s.curriculum.compulsory_or_optional,
+                prerequisites = s.curriculum.prerequisites,
+                learn_before = s.curriculum.learn_before,
+                editing_notes = s.curriculum.editing_notes,
+                knowledge_type_name = s.curriculum.knowledge_type.name,
+
+            }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult LoadStudentCourses(string majorId)

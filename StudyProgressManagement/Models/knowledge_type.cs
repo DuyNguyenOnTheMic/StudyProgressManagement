@@ -22,6 +22,7 @@ namespace StudyProgressManagement.Models
     
         public string id { get; set; }
         public string name { get; set; }
+        public string group { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<curriculum> curricula { get; set; }

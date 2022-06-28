@@ -106,6 +106,7 @@
           </Key>
           <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="group" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="lecturer">
           <Key>
@@ -594,6 +595,7 @@
           <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="curricula" Relationship="Self.FK_curriculum_knowledge_type" FromRole="knowledge_type" ToRole="curriculum" />
+          <Property Name="group" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="lecturer">
           <Key>
@@ -1130,6 +1132,7 @@
           <EntitySetMapping Name="knowledge_type">
             <EntityTypeMapping TypeName="SEP25Team03Model.knowledge_type">
               <MappingFragment StoreEntitySet="knowledge_type">
+                <ScalarProperty Name="group" ColumnName="group" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>

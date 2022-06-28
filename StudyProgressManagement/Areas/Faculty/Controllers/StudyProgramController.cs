@@ -152,11 +152,24 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         var query_knowledge_type = db.knowledge_type.Where(k => k.id == knowledgeTypeId).FirstOrDefault();
                         if (query_knowledge_type == null)
                         {
-                            db.knowledge_type.Add(new knowledge_type
+                            if (knowledgeTypeId.StartsWith("DC"))
                             {
-                                id = SetNullOnEmpty(knowledgeTypeId),
-                                name = SetNullOnEmpty(knowledgeTypeName)
-                            });
+                                db.knowledge_type.Add(new knowledge_type
+                                {
+                                    id = SetNullOnEmpty(knowledgeTypeId),
+                                    name = SetNullOnEmpty(knowledgeTypeName),
+                                    group = "Kiến thức giáo dục đại cương"
+                                });
+                            }
+                            else
+                            {
+                                db.knowledge_type.Add(new knowledge_type
+                                {
+                                    id = SetNullOnEmpty(knowledgeTypeId),
+                                    name = SetNullOnEmpty(knowledgeTypeName),
+                                    group = "Kiến thức giáo dục chuyên nghiệp"
+                                });
+                            }
                         }
                         db.SaveChanges();
 

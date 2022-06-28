@@ -23,10 +23,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return View();
         }
 
-        public JsonResult GetData()
+        public JsonResult GetData(int id)
         {
             // Get curriculum of student courses data from datatabse
-            return Json(db.studentcourse_curriculum.Select(s => new
+            return Json(db.studentcourse_curriculum.Where(s=>s.student_course_id == id).Select(s => new
             {
                 id = s.curriculum.id,
                 name = s.curriculum.name,
@@ -46,7 +46,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult LoadStudentCourses(string majorId)
+        public JsonResult LoadStudentCourses(string majorId)
         {
             // get student courses data from database
             return Json(db.student_course.Where(s => s.major_id == majorId).Select(s => new

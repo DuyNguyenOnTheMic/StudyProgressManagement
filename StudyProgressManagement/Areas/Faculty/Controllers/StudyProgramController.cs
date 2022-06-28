@@ -152,6 +152,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         var query_knowledge_type = db.knowledge_type.Where(k => k.id == knowledgeTypeId).FirstOrDefault();
                         if (query_knowledge_type == null)
                         {
+                            // Add knowledge_type
                             if (knowledgeTypeId.StartsWith("DC"))
                             {
                                 db.knowledge_type.Add(new knowledge_type
@@ -177,6 +178,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         var query_curriculum = db.curricula.Where(c => c.id == curriculum).FirstOrDefault();
                         if (query_curriculum == null)
                         {
+                            // Add curriculum
                             db.curricula.Add(new curriculum
                             {
                                 id = SetNullOnEmpty(curriculumId),
@@ -197,6 +199,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
 
                         db.studentcourse_curriculum.Add(new studentcourse_curriculum
                         {
+                            // Add studentcourse_curriculum
                             student_course_id = studentCourseId,
                             curriculum_id = SetNullOnEmpty(curriculumId)
                         });

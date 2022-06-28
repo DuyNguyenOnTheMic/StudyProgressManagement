@@ -19,6 +19,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         // GET: Faculty/StudyProgram
         public ActionResult Index()
         {
+            ViewBag.majors = db.majors.ToList();
             return View();
         }
 

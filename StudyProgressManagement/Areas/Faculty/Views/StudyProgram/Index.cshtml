@@ -90,8 +90,6 @@
 
             var dataTable;
 
-
-
             // Load cascading dropdown between majors and student courses
              $("#comboboxMajor").change(function () {
                 $("#comboboxStudentCourse").empty();
@@ -133,7 +131,7 @@
                             info: false,
                             destroy: true,
 
-                            // Row grouping
+                            // Row grouping of knowledge type name
                             order: [[14, 'asc'], [13, 'asc']],
                             columnDefs: [
                                 { visible: false, targets: [13, 14] },
@@ -149,6 +147,7 @@
                                                 i : 0;
                                     };
 
+                                    // Sum credits group by rows
                                     var creditsSum = rows
                                         .data()
                                         .pluck('credits')
@@ -165,6 +164,8 @@
                                 },
                                 dataSrc: 'knowledge_type_name',
                             },
+
+                            // Row grouping of knowledge type group
                             drawCallback: function (settings) {
                                 var api = this.api();
                                 var rows = api.rows({ page: 'current' }).nodes();
@@ -184,6 +185,7 @@
                                     });
                             },
 
+                            // Declare columns
                             columns: [
                                 {
                                     'data': null,

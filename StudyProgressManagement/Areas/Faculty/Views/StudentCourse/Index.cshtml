@@ -149,11 +149,11 @@
 
             // Order by the grouping
             $('#tblStudentCourse tbody').on('click', 'tr.group', function () {
-                var currentOrder = table.order()[0];
+                var currentOrder = dataTable.order()[0];
                 if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
-                    table.order([groupColumn, 'desc']).draw();
+                    dataTable.order([groupColumn, 'desc']).draw();
                 } else {
-                    table.order([groupColumn, 'asc']).draw();
+                    dataTable.order([groupColumn, 'asc']).draw();
                 }
             });
 

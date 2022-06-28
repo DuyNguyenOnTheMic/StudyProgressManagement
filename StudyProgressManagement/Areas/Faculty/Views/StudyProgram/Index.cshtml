@@ -17,8 +17,8 @@
                 <div class="card-body">
                     <div class="card-block">
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped" id="tblStudyProgram" cellspacing="0" width="100%">
-                                <thead style="text-align: center">
+                            <table class="table table-bordered" id="tblStudyProgram" cellspacing="0" width="100%">
+                                <thead style="text-align: center; background-color: #FFC8A4; color: rgba(0, 0, 0, 0.87) ">
                                     <tr>
                                         <th rowspan="2"> STT </th>
                                         <th rowspan="2"> MÃ HỌC PHẦN </th>
@@ -31,6 +31,7 @@
                                         <th rowspan="2"> HỌC PHẦN HỌC TRƯỚC </th>
                                         <th rowspan="2"> GHI CHÚ CHỈNH SỬA </th>
                                         <th rowspan="2"> TÊN LOẠI KIẾN THỨC </th>
+                                        <th rowspan="2"> KHỐI KIẾN THỨC </th>
                                     </tr>
                                     <tr>
                                         <th> LT </th>
@@ -59,8 +60,7 @@
 
     <script>
 
-        var popup, dataTable;
-        var groupColumn = 13;
+        var dataTable;
 
         $(document).ready(function () {
 
@@ -73,20 +73,32 @@
                         url: '@Url.Action("GetData", "StudyProgram")',
                         dataType: 'json',
                     },
-
+                   
                     // Row grouping
-                    columnDefs: [
-                        {
-                            visible: false,
-                            targets: groupColumn,
-                        }
-                    ],
-                    order: [[groupColumn, 'asc']],
+                    order: [[14, 'asc'], [13, 'asc']],
+                    columnDefs: [{ visible: false, targets: [13, 14] }],
                     rowGroup: {
                         dataSrc: 'knowledge_type_name'
                     },
-                    
+                    drawCallback: function (settings) {
+                        var api = this.api();
+                        var rows = api.rows({ page: 'current' }).nodes();
+                        var last = null;
 
+                        api
+                            .column(14, { page: 'current' })
+                            .data()
+                            .each(function (group, i) {
+                                if (last !== group) {
+                                    $(rows)
+                                        .eq(i)
+                                        .before('<tr class="group"><td colspan="13">' + group + '</td></tr>');
+
+                                    last = group;
+                                }
+                            });
+                    },
+                    
                     columns: [
                         {
                             'data': null,
@@ -107,11 +119,13 @@
                         { 'data': 'prerequisites' },
                         { 'data': 'learn_before' },
                         { 'data': 'editing_notes' },
-                        { 'data': 'knowledge_type_name' }
+                        { 'data': 'knowledge_type_name' },
+                        { 'data': 'knowledge_type_group' }
                     ],
 
                     language: {
                         'emptyTable': "Khoá sinh viên này chưa có dữ liệu <i class='ft-help-circle' style='vertical-align:middle'></i>",
+                        'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>"
                     },
 
                     paging: false,
@@ -125,8 +139,7 @@
                 dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
                 });
-            }).draw();          
-
+            }).draw();    
         });
     </script>
 

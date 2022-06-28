@@ -1187,6 +1187,7 @@
     <Content Include="Areas\Faculty\Views\StudentCourse\AddOrEdit.cshtml" />
     <Content Include="Areas\Faculty\Views\Major\Edit.cshtml" />
     <Content Include="Areas\Faculty\Views\StudyProgram\Import.cshtml" />
+    <Content Include="Areas\Faculty\Views\StudyProgram\Index.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -1194,7 +1195,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Faculty\Views\StudyProgram\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

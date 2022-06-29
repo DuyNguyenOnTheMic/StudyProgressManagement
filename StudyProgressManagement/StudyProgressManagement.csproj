@@ -576,7 +576,7 @@
     <Content Include="app-assets\vendors\css\tables\datatable\responsive.dataTables.min.css" />
     <Content Include="app-assets\vendors\css\tables\datatable\select.dataTables.min.css" />
     <Content Include="app-assets\vendors\css\tagging.css" />
-    <Content Include="app-assets\vendors\css\toastr.css" />
+    <Content Include="app-assets\vendors\css\toastr.min.css" />
     <Content Include="app-assets\vendors\css\wizard.css" />
     <Content Include="app-assets\vendors\js\bootstrap-checkbox.min.js" />
     <Content Include="app-assets\vendors\js\chart.min.js" />

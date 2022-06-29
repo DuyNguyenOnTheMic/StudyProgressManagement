@@ -45,10 +45,12 @@
 <!--/ Zero configuration table -->
 
 <link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
+<link href="~/app-assets/vendors/css/jquery-ui.min.css" rel="stylesheet" />
 
 @section scripts {
 
     <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
+    <script src="~/app-assets/vendors/js/jquery-ui.min.js"></script>
 
 
     <script type="text/javascript">
@@ -56,10 +58,6 @@
         var popup, dataTable;
 
         $(document).ready(function () {
-
-            // return $.fn.button to previously assigned value
-            var bootstrapButton = $.fn.button.noConflict();
-            $.fn.bootstrapBtn = bootstrapButton;
 
             // Populate Major datatable
             dataTable = $('#tblMajor').DataTable(

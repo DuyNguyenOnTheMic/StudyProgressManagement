@@ -17,26 +17,27 @@ namespace StudyProgressManagement
                 "~/app-assets/vendors/js/jquery.matchHeight-min.js",
                 "~/app-assets/vendors/js/jquery.validate.min.js",
                 "~/app-assets/vendors/js/jquery.validate.unobtrusive.min.js",
-                "~/app-assets/vendors/js/jquery-ui.min.js",
                 "~/app-assets/vendors/js/screenfull.min.js",
-                "~/app-assets/vendors/js/pace/pace.min.js"));
+                "~/app-assets/vendors/js/pace/pace.min.js",
+                "~/app-assets/vendors/js/toastr.min.js",
+                "~/app-assets/vendors/js/sweetalert2.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/sidebarJs").Include(
                "~/app-assets/js/app-sidebar.js",
                "~/app-assets/js/notification-sidebar.js"));
 
             // Style Bundles
-            bundles.Add(new StyleBundle("~/bundles/vendorCss").Include(
+            bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/app-assets/fonts/feather/style.min.css",
-                "~/app-assets/fonts/simple-line-icons/style.css",
+                "~/app-assets/fonts/simple-line-icons/style.min.css",
                 "~/app-assets/fonts/font-awesome/css/font-awesome.min.css",
                 "~/app-assets/vendors/css/perfect-scrollbar.min.css",
                 "~/app-assets/vendors/css/prism.min.css",
-                "~/app-assets/vendors/css/jquery-ui.min.css",
-                "~/app-assets/vendors/css/toastr.css",
+                "~/app-assets/vendors/css/toastr.min.css",
                 "~/app-assets/vendors/css/sweetalert2.min.css",
-                "~/app-assets/css/app.css"));
+                "~/app-assets/css/app.min.css"));
 
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

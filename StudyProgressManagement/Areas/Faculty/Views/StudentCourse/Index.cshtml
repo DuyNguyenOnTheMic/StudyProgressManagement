@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body collapse show">
                     <div class="card-block card-dashboard">
-                        <button id="addRow" class="btn btn-primary mb-2" onclick="PopupForm('@Url.Action("AddOrEdit", "StudentCourse")')"><i class="ft-plus"></i>&nbsp; Thêm khoá mới</button>
+                        <button type="button" id="addRow" class="btn btn-primary mb-2" onclick="PopupForm('@Url.Action("AddOrEdit", "StudentCourse")')"><i class="ft-plus"></i>&nbsp; Thêm khoá mới</button>
                         <table class="table table-bordered" id="tblStudentCourse" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
@@ -49,19 +49,20 @@
 <!--/ Zero configuration table -->
 
 <link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
-<link href="~/app-assets/vendors/css/tables/datatable/responsive.dataTables.min.css" rel="stylesheet" />
 
 @section scripts {
 
     <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
-    <script src="~/app-assets/vendors/js/datatable/dataTables.responsive.min.js"></script>
-
 
     <script type="text/javascript">
 
         var popup, dataTable;
 
         $(document).ready(function () {
+
+            // return $.fn.button to previously assigned value
+            var bootstrapButton = $.fn.button.noConflict();
+            $.fn.bootstrapBtn = bootstrapButton;
 
             // Populate Student Course datatable
             dataTable = $('#tblStudentCourse').DataTable(
@@ -113,7 +114,6 @@
                         'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>"
                     },
 
-                    responsive: true,
                     LengthChange: true,
                     Filter: true,
                     Sort: true,

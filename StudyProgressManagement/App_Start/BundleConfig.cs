@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace StudyProgressManagement
 {
@@ -8,23 +7,37 @@ namespace StudyProgressManagement
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            // Scripts bundles
+            bundles.Add(new ScriptBundle("~/bundles/vendorJs").Include(
+                "~/app-assets/vendors/js/core/jquery-3.3.1.min.js",
+                "~/app-assets/vendors/js/core/popper.min.js",
+                "~/app-assets/vendors/js/core/bootstrap.min.js",
+                "~/app-assets/vendors/js/perfect-scrollbar.jquery.min.js",
+                "~/app-assets/vendors/js/prism.min.js",
+                "~/app-assets/vendors/js/jquery.matchHeight-min.js",
+                "~/app-assets/vendors/js/jquery.validate.min.js",
+                "~/app-assets/vendors/js/jquery.validate.unobtrusive.min.js",
+                "~/app-assets/vendors/js/jquery-ui.min.js",
+                "~/app-assets/vendors/js/screenfull.min.js",
+                "~/app-assets/vendors/js/pace/pace.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+            bundles.Add(new ScriptBundle("~/bundles/sidebarJs").Include(
+               "~/app-assets/js/app-sidebar.js",
+               "~/app-assets/js/notification-sidebar.js"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            // Style Bundles
+            bundles.Add(new StyleBundle("~/bundles/vendorCss").Include(
+                "~/app-assets/fonts/feather/style.min.css",
+                "~/app-assets/fonts/simple-line-icons/style.css",
+                "~/app-assets/fonts/font-awesome/css/font-awesome.min.css",
+                "~/app-assets/vendors/css/perfect-scrollbar.min.css",
+                "~/app-assets/vendors/css/prism.min.css",
+                "~/app-assets/vendors/css/jquery-ui.min.css",
+                "~/app-assets/vendors/css/toastr.css",
+                "~/app-assets/vendors/css/sweetalert2.min.css",
+                "~/app-assets/css/app.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

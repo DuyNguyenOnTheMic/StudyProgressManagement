@@ -610,6 +610,7 @@
     <Content Include="app-assets\vendors\js\jquery.raty.js" />
     <Content Include="app-assets\vendors\js\jquery.steps.min.js" />
     <Content Include="app-assets\vendors\js\jquery.validate.min.js" />
+    <Content Include="app-assets\vendors\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="app-assets\vendors\js\katex.min.js" />
     <Content Include="app-assets\vendors\js\moment.min.js" />
     <Content Include="app-assets\vendors\js\pace\pace.js" />
@@ -773,14 +774,8 @@
     <Content Include="app-assets\vendors\js\vertical-timeline.js" />
     <Content Include="app-assets\vendors\js\wizard-steps.js" />
     <Content Include="assets\js\scripts.js" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="gulp-tasks\autoprefixer\css.js" />
     <Content Include="gulp-tasks\clean\css.js" />
     <Content Include="gulp-tasks\clean\js.js" />
@@ -809,8 +804,6 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Faculty\Views\web.config" />
     <Content Include="app-assets\fonts\feather\fonts\feather.eot" />
     <Content Include="app-assets\fonts\feather\fonts\feather.ttf" />
@@ -861,17 +854,6 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="src\js\app-sidebar.js" />
     <Content Include="src\js\chartist.js" />
     <Content Include="src\js\chartjs.js" />
@@ -1119,17 +1101,7 @@
     <Folder Include="Areas\Faculty\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

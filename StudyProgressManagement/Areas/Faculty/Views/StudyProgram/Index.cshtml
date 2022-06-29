@@ -81,12 +81,19 @@
 </section>
 <!--Bootstrap Grid options Ends-->
 
-<link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
 
 @section scripts {
 
+    <link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/rowgroup/1.2.0/css/rowGroup.dataTables.min.css" rel="stylesheet" />
+
+
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/rowgroup/1.2.0/js/dataTables.rowGroup.min.js"></script>
+
+
 
     <script>
 
@@ -150,11 +157,15 @@
 
                     // Row grouping of knowledge type name
                     order: [[14, 'asc'], [13, 'asc']],
+                    rowGroup: {
+                        dataSrc: ['knowledge_type_group', 'knowledge_type_name']
+                    },
                     columnDefs: [
                         { visible: false, targets: [13, 14] },
                         { className: "text-center", targets: [4, 5, 6, 7, 8, 9] }
                     ],
-                    rowGroup: {
+
+                    @*rowGroup: {
                         startRender: function (rows, group) {
 
                             var intVal = function (i) {
@@ -200,7 +211,7 @@
                                     last = group;
                                 }
                             });
-                    },
+                    },*@
 
                     // Declare columns
                     columns: [

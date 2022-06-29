@@ -43,7 +43,7 @@
                             </div>
                         </form>
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="tblStudyProgram" cellspacing="0" width="100%">
+                            <table class="table table-bordered" id="tblStudyProgram" cellspacing="0" width="100%" style="display: none">
                                 <thead style="text-align: center; background-color: #FFC8A4; color: rgba(0, 0, 0, 0.87) ">
                                     <tr>
                                         <th rowspan="2"> STT </th>
@@ -68,6 +68,10 @@
                                 </thead>
                                 <tbody></tbody>
                             </table>
+                            <div class="container" id="viewStudyProgram_instruction">
+                                <h4 class="card-title" style="text-align: center; margin-top: 50px;">Chọn ngành và khoá để xem chương trình đào tạo</h4>
+                                <img style="display: block; margin-left: auto; margin-right: auto; width: 60%;" alt="Instruction" src="~/images/Viewing-amico.svg" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -122,6 +126,9 @@
         });
 
         function PopulateStudyProgram(studentCourseId) {
+
+            $('#tblStudyProgram').show();
+            $('#viewStudyProgram_instruction').hide();
 
             var dataTable;
 

@@ -799,6 +799,7 @@
     <Content Include="images\Instruction manual-cuate.svg" />
     <Content Include="images\login_background.png" />
     <Content Include="images\user_avatar.png" />
+    <Content Include="images\Viewing-amico.svg" />
     <Content Include="images\Welcome-rafiki.svg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

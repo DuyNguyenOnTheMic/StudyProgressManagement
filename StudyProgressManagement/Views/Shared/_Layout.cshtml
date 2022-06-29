@@ -296,8 +296,8 @@
             </div>
         </div>
     </aside>
-    @RenderSection("scripts", required: false)
     <!-- BEGIN VENDOR JS-->
+    <script src="~/app-assets/vendors/js/core/jquery-3.3.1.min.js"></script>
     <script src="~/app-assets/vendors/js/core/popper.min.js"></script>
     <script src="~/app-assets/vendors/js/core/bootstrap.min.js"></script>
     <script src="~/app-assets/vendors/js/perfect-scrollbar.jquery.min.js"></script>
@@ -312,6 +312,7 @@
     <!-- BEGIN PAGE VENDOR JS-->
     <script src="~/app-assets/vendors/js/toastr.min.js"></script>
     <script src="~/app-assets/vendors/js/sweetalert2.min.js"></script>
+    @RenderSection("scripts", required: false)
     <!-- END PAGE VENDOR JS-->
     <!-- BEGIN CONVEX JS-->
     <script src="~/app-assets/js/app-sidebar.js"></script>

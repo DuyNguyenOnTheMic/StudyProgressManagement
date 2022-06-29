@@ -17,7 +17,7 @@
                 <div class="card-body collapse show">
                     <div class="card-block card-dashboard">
                         <button id="addRow" class="btn btn-primary mb-2" onclick="PopupForm('@Url.Action("AddOrEdit", "StudentCourse")')"><i class="ft-plus"></i>&nbsp; Thêm khoá mới</button>
-                        <table class="table table-striped table-bordered zero-configuration" id="tblStudentCourse" cellspacing="0" width="100%">
+                        <table class="table table-bordered" id="tblStudentCourse" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -61,7 +61,6 @@
     <script type="text/javascript">
 
         var popup, dataTable;
-        var groupColumn = 3;
 
         $(document).ready(function () {
 
@@ -76,25 +75,10 @@
                     },
 
                     // Row grouping
-                    columnDefs: [{ visible: false, targets: groupColumn }],
-                    order: [[groupColumn, 'asc']],
-                    drawCallback: function (settings) {
-                        var api = this.api();
-                        var rows = api.rows({ page: 'current' }).nodes();
-                        var last = null;
-
-                        api
-                            .column(groupColumn, { page: 'current' })
-                            .data()
-                            .each(function (group, i) {
-                                if (last !== group) {
-                                    $(rows)
-                                        .eq(i)
-                                        .before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
-
-                                    last = group;
-                                }
-                            });
+                    columnDefs: [{ visible: false, targets: 3 }],
+                    order: [[3, 'asc']],
+                    rowGroup: {
+                        dataSrc: 'major_name'
                     },
 
                     columns: [

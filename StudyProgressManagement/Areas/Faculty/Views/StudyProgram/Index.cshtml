@@ -58,6 +58,7 @@
                                         <th rowspan="2"> GHI CHÚ CHỈNH SỬA </th>
                                         <th rowspan="2" style="display: none"></th>
                                         <th rowspan="2" style="display: none"></th>
+                                        <th rowspan="2" style="display: none"></th>
                                     </tr>
                                     <tr>
                                         <th> LT </th>
@@ -148,9 +149,9 @@
                     destroy: true,
 
                     // Row grouping of knowledge type name
-                    order: [[14, 'asc'], [13, 'asc']],
+                    order: [[13, 'asc'], [14, 'asc'], [15, 'asc']],
                     columnDefs: [
-                        { visible: false, targets: [13, 14] },
+                        { visible: false, targets: [13, 14, 15] },
                         { className: "text-center", targets: [4, 5, 6, 7, 8, 9] }
                     ],
                     rowGroup: {
@@ -199,6 +200,22 @@
                                     last = group;
                                 }
                             });
+
+                        api
+                            .column(15, { page: 'current' })
+                            .data()
+                            .each(function (group, i) {
+                                if (group == null) {
+                                    return false;
+                                }
+                                if (last !== group) {
+                                    $(rows)
+                                        .eq(i)
+                                        .before('<tr class="group"><td colspan="13">' + group + '</td></tr>');
+
+                                    last = group;
+                                }
+                            });
                     },
 
                     // Declare columns
@@ -223,7 +240,8 @@
                         { 'data': 'learn_before' },
                         { 'data': 'editing_notes' },
                         { 'data': 'knowledge_type_name' },
-                        { 'data': 'knowledge_type_group' }
+                        { 'data': 'knowledge_type_group' },
+                        { 'data': 'knowledge_type_group2' }
                     ],
 
                     language: {

@@ -41,7 +41,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 learn_before = s.curriculum.learn_before,
                 editing_notes = s.curriculum.editing_notes,
                 knowledge_type_name = s.curriculum.knowledge_type.name,
-                knowledge_type_group = s.curriculum.knowledge_type.group
+                knowledge_type_group = s.curriculum.knowledge_type.group,
+                knowledge_type_group2 = s.curriculum.knowledge_type.group_2
 
             }).ToList(), JsonRequestBehavior.AllowGet);
         }

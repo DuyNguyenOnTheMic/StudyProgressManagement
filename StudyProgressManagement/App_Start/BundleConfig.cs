@@ -9,7 +9,7 @@ namespace StudyProgressManagement
         {
             // Scripts bundles
             bundles.Add(new ScriptBundle("~/bundles/vendorJs").Include(
-                "~/app-assets/vendors/js/core/jquery-3.3.1.min.js",
+                "~/app-assets/vendors/js/core/jquery-{version}.min.js",
                 "~/app-assets/vendors/js/core/popper.min.js",
                 "~/app-assets/vendors/js/core/bootstrap.min.js",
                 "~/app-assets/vendors/js/perfect-scrollbar.jquery.min.js",

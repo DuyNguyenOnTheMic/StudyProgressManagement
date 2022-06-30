@@ -582,8 +582,7 @@
     <Content Include="app-assets\vendors\js\chart.min.js" />
     <Content Include="app-assets\vendors\js\chartist.min.js" />
     <Content Include="app-assets\vendors\js\core\bootstrap.min.js" />
-    <Content Include="app-assets\vendors\js\core\jquery-3.2.1.min.js" />
-    <Content Include="app-assets\vendors\js\core\jquery-3.3.1.min.js" />
+    <Content Include="app-assets\vendors\js\core\jquery-3.6.0.min.js" />
     <Content Include="app-assets\vendors\js\core\popper.min.js" />
     <Content Include="app-assets\vendors\js\datatable\buttons.flash.min.js" />
     <Content Include="app-assets\vendors\js\datatable\buttons.html5.min.js" />

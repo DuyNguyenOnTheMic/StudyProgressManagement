@@ -26,7 +26,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public JsonResult GetData(int id)
         {
             // Get curriculum of student courses data from datatabse
-            return Json(db.studentcourse_curriculum.Where(s=>s.student_course_id == id).Select(s => new
+            return Json(db.studentcourse_curriculum.Where(s => s.student_course_id == id).Select(s => new
             {
                 id = s.curriculum.id,
                 name = s.curriculum.name,
@@ -165,13 +165,23 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                                     group = "Kiến thức giáo dục đại cương"
                                 });
                             }
-                            else
+                            else if (knowledgeTypeId.StartsWith("CSN"))
                             {
                                 db.knowledge_type.Add(new knowledge_type
                                 {
                                     id = SetNullOnEmpty(knowledgeTypeId),
                                     name = SetNullOnEmpty(knowledgeTypeName),
                                     group = "Kiến thức giáo dục chuyên nghiệp"
+                                });
+                            }
+                            else
+                            {
+                                db.knowledge_type.Add(new knowledge_type
+                                {
+                                    id = SetNullOnEmpty(knowledgeTypeId),
+                                    name = SetNullOnEmpty(knowledgeTypeName),
+                                    group = "Kiến thức giáo dục chuyên nghiệp",
+                                    group_2 = "Kiến thức chuyên ngành"
                                 });
                             }
                         }

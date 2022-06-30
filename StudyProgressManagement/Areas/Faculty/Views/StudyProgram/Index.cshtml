@@ -82,13 +82,16 @@
 </section>
 <!--Bootstrap Grid options Ends-->
 
+
 <link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
+<link href="~/app-assets/vendors/css/tables/datatable/rowGroup.dataTables.min.css" rel="stylesheet" />
 
 @section scripts {
 
-    <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
+    <script src="~/app-assets/vendors/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/app-assets/vendors/js/datatable/dataTables.rowGroup.min.js"></script>
 
-    <script>
+    <script type="text/javascript">
 
         $(document).ready(function () {
 
@@ -150,10 +153,6 @@
 
                     // Row grouping of knowledge type name
                     order: [[13, 'asc'], [14, 'asc'], [15, 'asc']],
-                    columnDefs: [
-                        { visible: false, targets: [13, 14, 15] },
-                        { className: "text-center", targets: [4, 5, 6, 7, 8, 9] }
-                    ],
                     rowGroup: {
                         startRender: function (rows, group) {
 
@@ -172,51 +171,24 @@
                                     return intVal(a) + intVal(b);
                                 }, 0);
 
-
-                            return $('<tr/>')
-                                .append('<td colspan="4" style="padding-left:40px">' + group + '</td>')
-                                .append('<td style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
-                                .append('<td colspan="8"></td>')
-
+                            // Check null rowGroup
+                            if (group == null) {
+                                return;
+                            }
+                            else {
+                                return $('<tr/>')
+                                    .append('<th colspan="4">' + group + '</td>')
+                                    .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
+                                    .append('<th colspan="8"></td>')
+                            }
                         },
-                        dataSrc: 'knowledge_type_name',
+                        emptyDataGroup: null,
+                        dataSrc: ['knowledge_type_group', 'knowledge_type_group2', 'knowledge_type_name' ]
                     },
-
-                    // Row grouping of knowledge type group
-                    drawCallback: function (settings) {
-                        var api = this.api();
-                        var rows = api.rows({ page: 'current' }).nodes();
-                        var last = null;
-
-                        api
-                            .column(14, { page: 'current' })
-                            .data()
-                            .each(function (group, i) {
-                                if (last !== group) {
-                                    $(rows)
-                                        .eq(i)
-                                        .before('<tr class="group"><td colspan="13">' + group + '</td></tr>');
-
-                                    last = group;
-                                }
-                            });
-
-                        api
-                            .column(15, { page: 'current' })
-                            .data()
-                            .each(function (group, i) {
-                                if (group == null) {
-                                    return false;
-                                }
-                                if (last !== group) {
-                                    $(rows)
-                                        .eq(i)
-                                        .before('<tr class="group group-start"><td colspan="13" style="padding-left: 40px">' + group + '</td></tr>');
-
-                                    last = group;
-                                }
-                            });
-                    },
+                    columnDefs: [
+                        { visible: false, targets: [13, 14, 15] },
+                        { className: "text-center", targets: [4, 5, 6, 7, 8, 9] }
+                    ],
 
                     // Declare columns
                     columns: [

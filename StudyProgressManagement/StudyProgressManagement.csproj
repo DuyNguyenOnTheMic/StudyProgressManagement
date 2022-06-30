@@ -574,6 +574,7 @@
     <Content Include="app-assets\vendors\css\tables\datatable\datatables.min.css" />
     <Content Include="app-assets\vendors\css\tables\datatable\jquery.dataTables.min.css" />
     <Content Include="app-assets\vendors\css\tables\datatable\responsive.dataTables.min.css" />
+    <Content Include="app-assets\vendors\css\tables\datatable\rowGroup.dataTables.min.css" />
     <Content Include="app-assets\vendors\css\tables\datatable\select.dataTables.min.css" />
     <Content Include="app-assets\vendors\css\tagging.css" />
     <Content Include="app-assets\vendors\css\toastr.min.css" />
@@ -590,6 +591,8 @@
     <Content Include="app-assets\vendors\js\datatable\dataTables.buttons.min.js" />
     <Content Include="app-assets\vendors\js\datatable\datatables.min.js" />
     <Content Include="app-assets\vendors\js\datatable\dataTables.responsive.min.js" />
+    <Content Include="app-assets\vendors\js\datatable\dataTables.rowGroup.min.js" />
+    <Content Include="app-assets\vendors\js\datatable\jquery.dataTables.min.js" />
     <Content Include="app-assets\vendors\js\datatable\jszip.min.js" />
     <Content Include="app-assets\vendors\js\datatable\pdfmake.min.js" />
     <Content Include="app-assets\vendors\js\datatable\vfs_fonts.js" />

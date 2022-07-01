@@ -27,10 +27,7 @@ namespace StudyProgressManagement
                "~/app-assets/js/notification-sidebar.js"));
 
             // Style Bundles
-            bundles.Add(new StyleBundle("~/Content/css")
-                .Include("~/app-assets/fonts/feather/style.min.css", new CssRewriteUrlTransform())
-                .Include("~/app-assets/fonts/simple-line-icons/style.min.css",
-                "~/app-assets/fonts/font-awesome/css/font-awesome.min.css",
+            bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/app-assets/vendors/css/perfect-scrollbar.min.css",
                 "~/app-assets/vendors/css/prism.min.css",
                 "~/app-assets/vendors/css/toastr.min.css",

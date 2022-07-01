@@ -15,8 +15,12 @@ namespace StudyProgressManagement.Models
     public partial class studentcourse_curriculum
     {
         public int id { get; set; }
-        public Nullable<int> student_course_id { get; set; }
+        public int student_course_id { get; set; }
         public string curriculum_id { get; set; }
+        public string knowledge_type_alias { get; set; }
+        public string group_1 { get; set; }
+        public string group_2 { get; set; }
+        public string group_3 { get; set; }
     
         public virtual curriculum curriculum { get; set; }
         public virtual student_course student_course { get; set; }

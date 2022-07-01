@@ -34,7 +34,6 @@ namespace StudyProgressManagement.Models
         public virtual DbSet<class_student> class_student { get; set; }
         public virtual DbSet<curriculum> curricula { get; set; }
         public virtual DbSet<curriculum_class> curriculum_class { get; set; }
-        public virtual DbSet<knowledge_type> knowledge_type { get; set; }
         public virtual DbSet<lecturer> lecturers { get; set; }
         public virtual DbSet<major> majors { get; set; }
         public virtual DbSet<registration_results> registration_results { get; set; }

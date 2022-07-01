@@ -208,9 +208,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\knowledge_type.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\lecturer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -796,16 +793,6 @@
     <Content Include="images\user_avatar.png" />
     <Content Include="images\Viewing-amico.svg" />
     <Content Include="images\Welcome-rafiki.svg" />
-    <Content Include="Models\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
     <Content Include="Areas\Faculty\Views\web.config" />
     <Content Include="app-assets\fonts\feather\fonts\feather.eot" />
     <Content Include="app-assets\fonts\feather\fonts\feather.ttf" />
@@ -856,6 +843,16 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <Content Include="src\js\app-sidebar.js" />
     <Content Include="src\js\chartist.js" />
     <Content Include="src\js\chartjs.js" />

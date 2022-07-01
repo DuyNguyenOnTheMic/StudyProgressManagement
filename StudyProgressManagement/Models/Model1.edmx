@@ -158,9 +158,9 @@
           <Property Name="student_course_id" Type="int" Nullable="false" />
           <Property Name="curriculum_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="knowledge_type_alias" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="group_1" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="group_2" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="group_3" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="group_1" Type="nvarchar" MaxLength="255" />
+          <Property Name="group_2" Type="nvarchar" MaxLength="255" />
+          <Property Name="group_3" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="study_results">
           <Key>
@@ -697,9 +697,9 @@
           <Property Name="student_course_id" Type="Int32" Nullable="false" />
           <Property Name="curriculum_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="knowledge_type_alias" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="group_1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="group_2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="group_3" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="group_1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="group_2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="group_3" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="curriculum" Relationship="Self.FK_studentcourse_curriculum_curriculum" FromRole="studentcourse_curriculum" ToRole="curriculum" />
           <NavigationProperty Name="student_course" Relationship="Self.FK_studentcourse_curriculum_student_course" FromRole="studentcourse_curriculum" ToRole="student_course" />
         </EntityType>

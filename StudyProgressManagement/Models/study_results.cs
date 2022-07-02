@@ -25,7 +25,7 @@ namespace StudyProgressManagement.Models
         public string max_mark_letter { get; set; }
         public string is_pass { get; set; }
         public string term_id { get; set; }
-        public string curriculum_id { get; set; }
+        public int curriculum_id { get; set; }
         public string study_unit_id { get; set; }
         public string student_id { get; set; }
     

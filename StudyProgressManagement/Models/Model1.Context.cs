@@ -39,7 +39,6 @@ namespace StudyProgressManagement.Models
         public virtual DbSet<registration_results> registration_results { get; set; }
         public virtual DbSet<student> students { get; set; }
         public virtual DbSet<student_course> student_course { get; set; }
-        public virtual DbSet<studentcourse_curriculum> studentcourse_curriculum { get; set; }
         public virtual DbSet<study_results> study_results { get; set; }
         public virtual DbSet<study_unit> study_unit { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }

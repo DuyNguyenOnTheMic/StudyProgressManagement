@@ -19,7 +19,7 @@ namespace StudyProgressManagement.Models
         public System.DateTime registration_date { get; set; }
         public string registration_person { get; set; }
         public string term_id { get; set; }
-        public string curriculum_id { get; set; }
+        public int curriculum_id { get; set; }
         public string curriculum_class_id { get; set; }
         public string lecturer_id { get; set; }
         public string student_id { get; set; }

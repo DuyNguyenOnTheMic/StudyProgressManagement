@@ -18,11 +18,11 @@ namespace StudyProgressManagement.Models
         public curriculum()
         {
             this.registration_results = new HashSet<registration_results>();
-            this.studentcourse_curriculum = new HashSet<studentcourse_curriculum>();
             this.study_results = new HashSet<study_results>();
         }
     
-        public string id { get; set; }
+        public int id { get; set; }
+        public string curriculum_id { get; set; }
         public string name { get; set; }
         public string name_english { get; set; }
         public int credits { get; set; }
@@ -36,11 +36,15 @@ namespace StudyProgressManagement.Models
         public string prerequisites { get; set; }
         public string learn_before { get; set; }
         public string editing_notes { get; set; }
+        public string knowledge_type_alias { get; set; }
+        public string group_1 { get; set; }
+        public string group_2 { get; set; }
+        public string group_3 { get; set; }
+        public int student_course_id { get; set; }
     
+        public virtual student_course student_course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<registration_results> registration_results { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<studentcourse_curriculum> studentcourse_curriculum { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<study_results> study_results { get; set; }
     }

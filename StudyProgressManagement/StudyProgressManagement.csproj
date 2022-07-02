@@ -236,9 +236,6 @@
     <Compile Include="Models\student.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\studentcourse_curriculum.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\student_course.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

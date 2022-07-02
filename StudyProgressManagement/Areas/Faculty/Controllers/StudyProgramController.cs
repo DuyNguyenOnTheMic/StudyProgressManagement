@@ -26,24 +26,23 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public JsonResult GetData(int id)
         {
             // Get curriculum of student courses data from datatabse
-            return Json(db.studentcourse_curriculum.Where(s => s.student_course_id == id).Select(s => new
+            return Json(db.curricula.Where(s => s.student_course_id == id).Select(s => new
             {
-                id = s.curriculum.id,
-                name = s.curriculum.name,
-                name_english = s.curriculum.name_english,
-                credits = s.curriculum.credits,
-                theoretical_hours = s.curriculum.theoretical_hours,
-                practice_hours = s.curriculum.practice_hours,
-                internship_hours = s.curriculum.internship_hours,
-                project_hours = s.curriculum.project_hours,
-                compulsory_or_optional = s.curriculum.compulsory_or_optional,
-                prerequisites = s.curriculum.prerequisites,
-                learn_before = s.curriculum.learn_before,
-                editing_notes = s.curriculum.editing_notes,
+                curriculum_id = s.curriculum_id,
+                name = s.name,
+                name_english = s.name_english,
+                credits = s.credits,
+                theoretical_hours = s.theoretical_hours,
+                practice_hours = s.practice_hours,
+                internship_hours = s.internship_hours,
+                project_hours = s.project_hours,
+                compulsory_or_optional = s.compulsory_or_optional,
+                prerequisites = s.prerequisites,
+                learn_before = s.learn_before,
+                editing_notes = s.editing_notes,
                 knowledge_type_group_1 = s.group_1,
                 knowledge_type_group_2 = s.group_2,
                 knowledge_type_group_3 = s.group_3
-
 
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
@@ -123,7 +122,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     }
                 }
 
-                var query_studentcourse_curriculum = db.studentcourse_curriculum.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
+                var query_studentcourse_curriculum = db.curricula.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
 
                 try
                 {
@@ -152,13 +151,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                         }
 
-                        var query_curriculum = db.curricula.Where(c => c.id == curriculumId).FirstOrDefault();
-                        if (query_curriculum == null)
+                        // Check knowledge type
+                        if (knowledgeTypeAlias.StartsWith("DC"))
                         {
-                            // Add curriculum
+                            // Add general knowledge curriculum
                             db.curricula.Add(new curriculum
                             {
-                                id = SetNullOnEmpty(curriculumId),
+                                curriculum_id = SetNullOnEmpty(curriculumId),
                                 name = SetNullOnEmpty(curriculumName),
                                 name_english = SetNullOnEmpty(curriculumNameEnglish),
                                 credits = (int)ToNullableInt(credits),
@@ -170,44 +169,57 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                                 prerequisites = SetNullOnEmpty(prerequisites),
                                 learn_before = SetNullOnEmpty(learnBefore),
                                 editing_notes = SetNullOnEmpty(editingNotes),
-                            });
-                            db.SaveChanges();
-                        }
-
-                        // Add studentcourse_curriculum
-                        if (knowledgeTypeAlias.StartsWith("DC"))
-                        {
-                            db.studentcourse_curriculum.Add(new studentcourse_curriculum
-                            {
-                                student_course_id = studentCourseId,
-                                curriculum_id = SetNullOnEmpty(curriculumId),
                                 knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
                                 group_1 = "Kiến thức giáo dục đại cương",
                                 group_2 = SetNullOnEmpty(knowledgeTypeName),
+                                student_course_id = studentCourseId
                             });
-
                         }
                         else if (knowledgeTypeAlias.StartsWith("CSN"))
                         {
-                            db.studentcourse_curriculum.Add(new studentcourse_curriculum
+                            // Add major base knowledge curriculum
+                            db.curricula.Add(new curriculum
                             {
-                                student_course_id = studentCourseId,
                                 curriculum_id = SetNullOnEmpty(curriculumId),
+                                name = SetNullOnEmpty(curriculumName),
+                                name_english = SetNullOnEmpty(curriculumNameEnglish),
+                                credits = (int)ToNullableInt(credits),
+                                theoretical_hours = ToNullableInt(theoreticalHours),
+                                practice_hours = ToNullableInt(practiceHours),
+                                internship_hours = ToNullableInt(internshipHours),
+                                project_hours = ToNullableInt(projectHours),
+                                compulsory_or_optional = SetNullOnEmpty(compulsoryOrOptional),
+                                prerequisites = SetNullOnEmpty(prerequisites),
+                                learn_before = SetNullOnEmpty(learnBefore),
+                                editing_notes = SetNullOnEmpty(editingNotes),
                                 knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
                                 group_1 = "Kiến thức giáo dục chuyên nghiệp",
                                 group_2 = SetNullOnEmpty(knowledgeTypeName),
+                                student_course_id = studentCourseId
                             });
                         }
                         else
                         {
-                            db.studentcourse_curriculum.Add(new studentcourse_curriculum
+                            // Add major specialized knowledge curriculum
+                            db.curricula.Add(new curriculum
                             {
-                                student_course_id = studentCourseId,
                                 curriculum_id = SetNullOnEmpty(curriculumId),
+                                name = SetNullOnEmpty(curriculumName),
+                                name_english = SetNullOnEmpty(curriculumNameEnglish),
+                                credits = (int)ToNullableInt(credits),
+                                theoretical_hours = ToNullableInt(theoreticalHours),
+                                practice_hours = ToNullableInt(practiceHours),
+                                internship_hours = ToNullableInt(internshipHours),
+                                project_hours = ToNullableInt(projectHours),
+                                compulsory_or_optional = SetNullOnEmpty(compulsoryOrOptional),
+                                prerequisites = SetNullOnEmpty(prerequisites),
+                                learn_before = SetNullOnEmpty(learnBefore),
+                                editing_notes = SetNullOnEmpty(editingNotes),
                                 knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
                                 group_1 = "Kiến thức giáo dục chuyên nghiệp",
                                 group_2 = "Kiến thức chuyên ngành",
                                 group_3 = SetNullOnEmpty(knowledgeTypeName),
+                                student_course_id = studentCourseId
                             });
                         }
                     }
@@ -227,7 +239,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public ActionResult Delete(int id)
         {
             // Delete all records for re-import
-            db.studentcourse_curriculum.RemoveRange(db.studentcourse_curriculum.Where(c => c.student_course_id == id));
+            db.curricula.RemoveRange(db.curricula.Where(c => c.student_course_id == id));
             db.SaveChanges();
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }

@@ -18,8 +18,8 @@ namespace StudyProgressManagement.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public student_course()
         {
+            this.curricula = new HashSet<curriculum>();
             this.students = new HashSet<student>();
-            this.studentcourse_curriculum = new HashSet<studentcourse_curriculum>();
         }
     
         public int id { get; set; }
@@ -30,10 +30,10 @@ namespace StudyProgressManagement.Models
         public string year_study { get; set; }
         public string major_id { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<curriculum> curricula { get; set; }
         public virtual major major { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<student> students { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<studentcourse_curriculum> studentcourse_curriculum { get; set; }
     }
 }

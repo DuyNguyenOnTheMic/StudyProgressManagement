@@ -16,26 +16,28 @@
                 </div>
                 <div class="card-body collapse show">
                     <div class="card-block card-dashboard">
-                        <button type="button" id="addRow" class="btn btn-primary mb-2" onclick="PopupForm('@Url.Action("Create", "Major")')"><i class="ft-plus"></i>&nbsp; Thêm ngành mới</button>
-                        <table class="table table-striped table-bordered" id="tblMajor" cellspacing="0" style="width: 100% !important">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Mã ngành</th>
-                                    <th>Tên ngành</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th>Mã ngành</th>
-                                    <th>Tên ngành</th>
-                                    <th></th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                        <div class="table-responsive">
+                            <button type="button" id="addRow" class="btn btn-primary mb-2" onclick="PopupForm('@Url.Action("Create", "Major")')"><i class="ft-plus"></i>&nbsp; Thêm ngành mới</button>
+                            <table class="table table-striped table-bordered" id="tblMajor" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Mã ngành</th>
+                                        <th>Tên ngành</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th>Mã ngành</th>
+                                        <th>Tên ngành</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

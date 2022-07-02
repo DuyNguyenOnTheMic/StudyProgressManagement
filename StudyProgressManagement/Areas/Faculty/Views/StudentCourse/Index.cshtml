@@ -16,30 +16,32 @@
                 </div>
                 <div class="card-body collapse show">
                     <div class="card-block card-dashboard">
-                        <button type="button" id="addRow" class="btn btn-primary mb-2" onclick="PopupForm('@Url.Action("AddOrEdit", "StudentCourse")')"><i class="ft-plus"></i>&nbsp; Thêm khoá mới</button>
-                        <table class="table table-bordered" id="tblStudentCourse" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Khoá</th>
-                                    <th>Mã ngành</th>
-                                    <th>Tên ngành</th>
-                                    <th>Năm học</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                            <tfoot>
-                                <tr>
-                                    <th></th>
-                                    <th>Khoá</th>
-                                    <th>Mã ngành</th>
-                                    <th>Tên ngành</th>
-                                    <th>Năm học</th>
-                                    <th></th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                        <div class="table-responsive">
+                            <button type="button" id="addRow" class="btn btn-primary mb-2" onclick="PopupForm('@Url.Action("AddOrEdit", "StudentCourse")')"><i class="ft-plus"></i>&nbsp; Thêm khoá mới</button>
+                            <table class="table table-bordered" id="tblStudentCourse" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Khoá</th>
+                                        <th>Mã ngành</th>
+                                        <th>Tên ngành</th>
+                                        <th>Năm học</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th></th>
+                                        <th>Khoá</th>
+                                        <th>Mã ngành</th>
+                                        <th>Tên ngành</th>
+                                        <th>Năm học</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

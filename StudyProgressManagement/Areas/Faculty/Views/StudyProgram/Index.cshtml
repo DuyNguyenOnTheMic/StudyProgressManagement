@@ -59,6 +59,8 @@
                                         <th rowspan="2" style="display: none"></th>
                                         <th rowspan="2" style="display: none"></th>
                                         <th rowspan="2" style="display: none"></th>
+                                        <th rowspan="2" style="display: none"></th>
+                                        <th rowspan="2" style="display: none"></th>
                                     </tr>
                                     <tr>
                                         <th> LT </th>
@@ -154,7 +156,7 @@
                     // Row grouping of knowledge type name
                     order: [[13, 'asc'], [14, 'asc'], [15, 'asc']],
                     rowGroup: {
-                        startRender: function (rows, group) {
+                        startRender: function (rows, group, level) {
 
                             var intVal = function (i) {
                                 return typeof i === 'string' ?
@@ -175,6 +177,27 @@
                             if (group == null) {
                                 return;
                             }
+                            else if (level != 0) {
+                                if (rows.data()[0].compulsory_credits != null && rows.data()[0].optional_credits != null) {
+                                    var total_credits = rows.data()[0].compulsory_credits + rows.data()[0].optional_credits;
+                                    return $('<tr/>')
+                                        .append('<th colspan="4">' + group + ' (' + total_credits + ' tín chỉ: ' + rows.data()[0].compulsory_credits + ' bắt buộc + ' + rows.data()[0].optional_credits + ' tự chọn)' + '</td>')
+                                        .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
+                                        .append('<th colspan="8"></td>')                                    
+                                }
+                                else if (rows.data()[0].compulsory_credits != null) {
+                                    return $('<tr/>')
+                                        .append('<th colspan="4">' + group + ' (' + rows.data()[0].compulsory_credits + ' TC bắt buộc)'+ '</td>')
+                                        .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
+                                        .append('<th colspan="8"></td>')
+                                }
+                                else {
+                                    return $('<tr/>')
+                                        .append('<th colspan="4">' + group + ' (' + rows.data()[0].optional_credits + ' TC tự chọn)' + '</td>')
+                                        .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
+                                        .append('<th colspan="8"></td>')
+                                }
+                            }
                             else {
                                 return $('<tr/>')
                                     .append('<th colspan="4">' + group + '</td>')
@@ -186,7 +209,7 @@
                         dataSrc: ['knowledge_type_group_1', 'knowledge_type_group_2', 'knowledge_type_group_3' ]
                     },
                     columnDefs: [
-                        { visible: false, targets: [13, 14, 15] },
+                        { visible: false, targets: [13, 14, 15, 16, 17] },
                         { className: "text-center", targets: [4, 5, 6, 7, 8, 9] }
                     ],
 
@@ -213,7 +236,9 @@
                         { 'data': 'editing_notes' },
                         { 'data': 'knowledge_type_group_1' },
                         { 'data': 'knowledge_type_group_2' },
-                        { 'data': 'knowledge_type_group_3' }
+                        { 'data': 'knowledge_type_group_3' },
+                        { 'data': 'compulsory_credits' },
+                        { 'data': 'optional_credits' }
                     ],
 
                     language: {

@@ -41,7 +41,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 editing_notes = s.editing_notes,
                 knowledge_type_group_1 = s.knowledge_type.group_1,
                 knowledge_type_group_2 = s.knowledge_type.group_2,
-                knowledge_type_group_3 = s.knowledge_type.group_3
+                knowledge_type_group_3 = s.knowledge_type.group_3,
+                compulsory_credits = s.knowledge_type.compulsory_credits,
+                optional_credits = s.knowledge_type.optional_credits
 
             }).ToList(), JsonRequestBehavior.AllowGet);
         }

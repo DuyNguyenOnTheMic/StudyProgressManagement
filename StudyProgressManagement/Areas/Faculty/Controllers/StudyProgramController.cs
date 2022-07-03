@@ -11,7 +11,6 @@ using System.Web.Mvc;
 
 namespace StudyProgressManagement.Areas.Faculty.Controllers
 {
-    [Authorize(Roles = "Faculty")]
     public class StudyProgramController : Controller
     {
         SEP25Team03Entities db = new SEP25Team03Entities();
@@ -40,9 +39,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 prerequisites = s.prerequisites,
                 learn_before = s.learn_before,
                 editing_notes = s.editing_notes,
-                knowledge_type_group_1 = s.group_1,
-                knowledge_type_group_2 = s.group_2,
-                knowledge_type_group_3 = s.group_3
+                knowledge_type_group_1 = s.knowledge_type.group_1,
+                knowledge_type_group_2 = s.knowledge_type.group_2,
+                knowledge_type_group_3 = s.knowledge_type.group_3
 
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
@@ -132,6 +131,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         // Declare all columns
                         string knowledgeTypeAlias = row["Mã loại kiến thức"].ToString();
                         string knowledgeTypeName = row["Tên loại kiến thức"].ToString();
+                        string compulsoryCredits = row["Số chỉ BB"].ToString();
+                        string optionalCredits = row["Số chỉ TC"].ToString();
                         string curriculumId = row["Mã học phần"].ToString();
                         string curriculumName = row["Tên học phần (Tiếng Việt)"].ToString();
                         string curriculumNameEnglish = row["Tên học phần (Tiếng Anh)"].ToString();
@@ -151,77 +152,73 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                         }
 
-                        // Check knowledge type
-                        if (knowledgeTypeAlias.StartsWith("DC"))
+                        var query_knowledge_type = db.knowledge_type.Where(k => k.knowledge_type_alias ==
+                        knowledgeTypeAlias && k.student_course_id == studentCourseId).FirstOrDefault();
+                        if (query_knowledge_type == null)
                         {
-                            // Add general knowledge curriculum
-                            db.curricula.Add(new curriculum
+                            if (knowledgeTypeAlias.StartsWith("DC"))
                             {
-                                curriculum_id = SetNullOnEmpty(curriculumId),
-                                name = SetNullOnEmpty(curriculumName),
-                                name_english = SetNullOnEmpty(curriculumNameEnglish),
-                                credits = (int)ToNullableInt(credits),
-                                theoretical_hours = ToNullableInt(theoreticalHours),
-                                practice_hours = ToNullableInt(practiceHours),
-                                internship_hours = ToNullableInt(internshipHours),
-                                project_hours = ToNullableInt(projectHours),
-                                compulsory_or_optional = SetNullOnEmpty(compulsoryOrOptional),
-                                prerequisites = SetNullOnEmpty(prerequisites),
-                                learn_before = SetNullOnEmpty(learnBefore),
-                                editing_notes = SetNullOnEmpty(editingNotes),
-                                knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
-                                group_1 = "Kiến thức giáo dục đại cương",
-                                group_2 = SetNullOnEmpty(knowledgeTypeName),
-                                student_course_id = studentCourseId
-                            });
+                                db.knowledge_type.Add(new knowledge_type
+                                {
+                                    // Add general knowledge type
+                                    knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
+                                    group_1 = "Kiến thức giáo dục đại cương",
+                                    group_2 = SetNullOnEmpty(knowledgeTypeName),
+                                    compulsory_credits = ToNullableInt(compulsoryCredits),
+                                    optional_credits = ToNullableInt(optionalCredits),
+                                    student_course_id = studentCourseId
+                                });
+                            }
+                            else if (knowledgeTypeAlias.StartsWith("CSN"))
+                            {
+                                db.knowledge_type.Add(new knowledge_type
+                                {
+                                    // Add major base knowledge type
+                                    knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
+                                    group_1 = "Kiến thức giáo dục chuyên nghiệp",
+                                    group_2 = SetNullOnEmpty(knowledgeTypeName),
+                                    compulsory_credits = ToNullableInt(compulsoryCredits),
+                                    optional_credits = ToNullableInt(optionalCredits),
+                                    student_course_id = studentCourseId
+                                });
+                            }
+                            else
+                            {
+                                db.knowledge_type.Add(new knowledge_type
+                                {
+                                    // Add major specialized knowledge type
+                                    knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
+                                    group_1 = "Kiến thức giáo dục chuyên nghiệp",
+                                    group_2 = "Kiến thức chuyên ngành",
+                                    group_3 = SetNullOnEmpty(knowledgeTypeName),
+                                    compulsory_credits = ToNullableInt(compulsoryCredits),
+                                    optional_credits = ToNullableInt(optionalCredits),
+                                    student_course_id = studentCourseId
+                                });
+                            }
+                            db.SaveChanges();
                         }
-                        else if (knowledgeTypeAlias.StartsWith("CSN"))
+
+                        int lastKnowledgeId = db.knowledge_type.Max(item => item.id);
+
+                        db.curricula.Add(new curriculum
                         {
-                            // Add major base knowledge curriculum
-                            db.curricula.Add(new curriculum
-                            {
-                                curriculum_id = SetNullOnEmpty(curriculumId),
-                                name = SetNullOnEmpty(curriculumName),
-                                name_english = SetNullOnEmpty(curriculumNameEnglish),
-                                credits = (int)ToNullableInt(credits),
-                                theoretical_hours = ToNullableInt(theoreticalHours),
-                                practice_hours = ToNullableInt(practiceHours),
-                                internship_hours = ToNullableInt(internshipHours),
-                                project_hours = ToNullableInt(projectHours),
-                                compulsory_or_optional = SetNullOnEmpty(compulsoryOrOptional),
-                                prerequisites = SetNullOnEmpty(prerequisites),
-                                learn_before = SetNullOnEmpty(learnBefore),
-                                editing_notes = SetNullOnEmpty(editingNotes),
-                                knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
-                                group_1 = "Kiến thức giáo dục chuyên nghiệp",
-                                group_2 = SetNullOnEmpty(knowledgeTypeName),
-                                student_course_id = studentCourseId
-                            });
-                        }
-                        else
-                        {
-                            // Add major specialized knowledge curriculum
-                            db.curricula.Add(new curriculum
-                            {
-                                curriculum_id = SetNullOnEmpty(curriculumId),
-                                name = SetNullOnEmpty(curriculumName),
-                                name_english = SetNullOnEmpty(curriculumNameEnglish),
-                                credits = (int)ToNullableInt(credits),
-                                theoretical_hours = ToNullableInt(theoreticalHours),
-                                practice_hours = ToNullableInt(practiceHours),
-                                internship_hours = ToNullableInt(internshipHours),
-                                project_hours = ToNullableInt(projectHours),
-                                compulsory_or_optional = SetNullOnEmpty(compulsoryOrOptional),
-                                prerequisites = SetNullOnEmpty(prerequisites),
-                                learn_before = SetNullOnEmpty(learnBefore),
-                                editing_notes = SetNullOnEmpty(editingNotes),
-                                knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
-                                group_1 = "Kiến thức giáo dục chuyên nghiệp",
-                                group_2 = "Kiến thức chuyên ngành",
-                                group_3 = SetNullOnEmpty(knowledgeTypeName),
-                                student_course_id = studentCourseId
-                            });
-                        }
+                            // Add curriculum data
+                            curriculum_id = SetNullOnEmpty(curriculumId),
+                            name = SetNullOnEmpty(curriculumName),
+                            name_english = SetNullOnEmpty(curriculumNameEnglish),
+                            credits = (int)ToNullableInt(credits),
+                            theoretical_hours = ToNullableInt(theoreticalHours),
+                            practice_hours = ToNullableInt(practiceHours),
+                            internship_hours = ToNullableInt(internshipHours),
+                            project_hours = ToNullableInt(projectHours),
+                            compulsory_or_optional = SetNullOnEmpty(compulsoryOrOptional),
+                            prerequisites = SetNullOnEmpty(prerequisites),
+                            learn_before = SetNullOnEmpty(learnBefore),
+                            editing_notes = SetNullOnEmpty(editingNotes),
+                            student_course_id = studentCourseId,
+                            knowledge_type_id = lastKnowledgeId
+                        });
                     }
                     db.SaveChanges();
                 }
@@ -230,7 +227,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.ExpectationFailed);
                 }
             }
-
             ViewBag.majors = db.majors.ToList();
             return View();
         }
@@ -240,6 +236,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         {
             // Delete all records for re-import
             db.curricula.RemoveRange(db.curricula.Where(c => c.student_course_id == id));
+            db.knowledge_type.RemoveRange(db.knowledge_type.Where(c => c.student_course_id == id));
             db.SaveChanges();
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }

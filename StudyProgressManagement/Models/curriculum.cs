@@ -26,8 +26,6 @@ namespace StudyProgressManagement.Models
         public string name { get; set; }
         public string name_english { get; set; }
         public int credits { get; set; }
-        public string education_level { get; set; }
-        public string education_type { get; set; }
         public Nullable<int> theoretical_hours { get; set; }
         public Nullable<int> practice_hours { get; set; }
         public Nullable<int> internship_hours { get; set; }
@@ -36,12 +34,10 @@ namespace StudyProgressManagement.Models
         public string prerequisites { get; set; }
         public string learn_before { get; set; }
         public string editing_notes { get; set; }
-        public string knowledge_type_alias { get; set; }
-        public string group_1 { get; set; }
-        public string group_2 { get; set; }
-        public string group_3 { get; set; }
         public int student_course_id { get; set; }
+        public int knowledge_type_id { get; set; }
     
+        public virtual knowledge_type knowledge_type { get; set; }
         public virtual student_course student_course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<registration_results> registration_results { get; set; }

@@ -176,6 +176,7 @@
     <Compile Include="Areas\Faculty\Controllers\MajorController.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudentCourseController.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudyProgramController.cs" />
+    <Compile Include="Areas\Faculty\Controllers\StudyResultController.cs" />
     <Compile Include="Areas\Faculty\FacultyAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -842,6 +843,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Faculty\Views\StudyResult\Import.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

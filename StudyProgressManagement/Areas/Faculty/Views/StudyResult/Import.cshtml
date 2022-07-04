@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Import chương trình đào tạo";
+    ViewBag.Title = "Import kết quả học tập";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -11,12 +11,12 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title-wrap bar-success">
-                        <h4 class="card-title">Import chương trình đào tạo</h4>
+                        <h4 class="card-title">Import kết quả học tập</h4>
                     </div>
                 </div>
                 <div class="card-body collapse show">
                     <div class="card-block">
-                        @using (Html.BeginForm("Import", "StudyProgram", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                        @using (Html.BeginForm("Import", "StudyResult", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                         {
                             <div class="form-body">
                                 <div class="row justify-content-center">
@@ -47,7 +47,7 @@
                                 <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit-all">
                                     Import
                                     <i class="ft-thumbs-up position-right"></i>
-                                </button>                                    
+                                </button>
                             </div>
                         }
                     </div>
@@ -66,8 +66,8 @@
                 </div>
                 <div class="card-body">
                     <div class="card-block">
-                        <h4 class="card-title" style="text-align:center">Chọn hoặc kéo thả file để bắt đầu import chương trình đào tạo</h4>
-                        <img style="display: block; margin-left: auto; margin-right: auto; width: 50%;" alt="Instruction" src="~/images/Instruction manual-cuate.svg"/>
+                        <h4 class="card-title" style="text-align:center">Chọn hoặc kéo thả file để bắt đầu import kết quả học tập</h4>
+                        <img style="display: block; margin-left: auto; margin-right: auto; width: 50%;" alt="Instruction" src="~/images/Instruction manual-cuate.svg" />
                     </div>
                 </div>
             </div>
@@ -79,7 +79,6 @@
 <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/dropzone.min.css">
 
 @section scripts {
-
     <script src="~/app-assets/vendors/js/dropzone.min.js"></script>
 
     <script type="text/javascript">
@@ -91,7 +90,7 @@
                 var majorId = $('#comboboxMajor option:selected').val();
                 $.ajax({
                     type: 'GET',
-                    url: '@Url.Action("LoadStudentCourses", "StudyProgram")',
+                    url: '@Url.Action("LoadStudentCourses", "StudyResult")',
                     dataType: 'json',
                     data: { majorId: majorId },
                     success: function (results) {
@@ -108,8 +107,8 @@
             }).change();
         });
 
-        Dropzone.options.myDropzone = {
-            url: '@Url.Action("Import", "StudyProgram")',
+         Dropzone.options.myDropzone = {
+            url: '@Url.Action("Import", "StudyResult")',
             autoProcessQueue: false,
             paramName: 'postedFile',
             timeout: null,
@@ -149,13 +148,13 @@
                     }
                     else {
                         // Begin to import file
-                        myDropzone.processQueue();                        
+                        myDropzone.processQueue();
 
                         myDropzone.on("success", function () {
                             swal("Thông báo", "Import thành công!", "success").done();
                         });
                     }
-                });               
+                });
 
                 this.on('sending', function (data, xhr, formData) {
                     $('.form-control').each(function () {
@@ -182,7 +181,7 @@
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
                         errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi, vui lòng kiểm tra lại tệp tin';
                     }
-                    else if (errorMessage.indexOf('Error 400') !== -1) {
+                    @*else if (errorMessage.indexOf('Error 400') !== -1) {
                         // Show message if this student course already has study program
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
                         errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi';
@@ -214,7 +213,7 @@
                                             return file.previewElement.classList.add("dz-success");
                                         });
                                         myDropzone.processQueue();
-                                        
+
                                         myDropzone.on("success", function (file) {
                                             swal("Thông báo", "Import lại CTĐT thành công!", "success").done();
                                         });
@@ -227,13 +226,13 @@
                                     // Ignore
                                 }
                             })
-                    }
+                    }*@
                 });
             }
         };
-
-
     </script>
 }
+
+
 
 

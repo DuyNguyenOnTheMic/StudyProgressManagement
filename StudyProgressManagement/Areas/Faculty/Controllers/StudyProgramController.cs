@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace StudyProgressManagement.Areas.Faculty.Controllers
 {
+    [Authorize(Roles = "Faculty")]
     public class StudyProgramController : Controller
     {
         SEP25Team03Entities db = new SEP25Team03Entities();

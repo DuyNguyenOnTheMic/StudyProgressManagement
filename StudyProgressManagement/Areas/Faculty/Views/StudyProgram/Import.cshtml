@@ -30,7 +30,7 @@
                                                     <option value="@major.id">@major.name</option>
                                                 }
                                             </select>
-                                        </div>
+                                        </div>                                        
                                         <div class="form-group">
                                             <label>Khoá: </label>
                                             <select class="form-control" id="comboboxStudentCourse" name="student_course" required>
@@ -47,7 +47,7 @@
                                 <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit-all">
                                     Import
                                     <i class="ft-thumbs-up position-right"></i>
-                                </button>                                    
+                                </button>
                             </div>
                         }
                     </div>
@@ -67,7 +67,7 @@
                 <div class="card-body">
                     <div class="card-block">
                         <h4 class="card-title" style="text-align:center">Chọn hoặc kéo thả file để bắt đầu import chương trình đào tạo</h4>
-                        <img style="display: block; margin-left: auto; margin-right: auto; width: 50%;" alt="Instruction" src="~/images/Instruction manual-cuate.svg"/>
+                        <img style="display: block; margin-left: auto; margin-right: auto; width: 50%;" alt="Instruction" src="~/images/Instruction manual-cuate.svg" />
                     </div>
                 </div>
             </div>
@@ -81,8 +81,34 @@
 @section scripts {
 
     <script src="~/app-assets/vendors/js/dropzone.min.js"></script>
+    <script src="~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js"></script>
+    <script src="/signalr/hubs"></script>
 
     <script type="text/javascript">
+
+        function StartProgressBar() {
+            // Reference the auto-generated proxy for the hub.
+            var progress = $.connection.progressHub;
+            console.log(progress);
+
+            // Create a function that the hub can call back to display messages.
+            progress.client.AddProgress = function (message, percentage) {
+                if (percentage >= 100) {
+                    return;
+                }
+                else {
+                    $('#myprogress')
+                        .attr({ 'aria-valuenow': percentage })
+                        .text(message + ' ' + percentage + ' %')
+                        .width(percentage);
+                }
+            };
+
+            $.connection.hub.start().done(function () {
+                var connectionId = $.connection.hub.id;
+                console.log(connectionId);
+            });
+        }
 
         $(document).ready(function () {
             // Load cascading dropdown between majors and student courses
@@ -149,13 +175,13 @@
                     }
                     else {
                         // Begin to import file
-                        myDropzone.processQueue();                        
+                        myDropzone.processQueue();
 
                         myDropzone.on("success", function () {
                             swal("Thông báo", "Import thành công!", "success").done();
                         });
                     }
-                });               
+                });
 
                 this.on('sending', function (data, xhr, formData) {
                     $('.form-control').each(function () {
@@ -166,10 +192,13 @@
                             title: 'Vui lòng đợi...',
                             allowEscapeKey: false,
                             allowOutsideClick: false,
+                            html: '<div class="progress mb-2" style="height: 30px; margin-top: 50px"><div id="myprogress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>',
                             onOpen: () => {
                                 swal.showLoading();
                             }
                         })
+
+                        StartProgressBar();
                     })
                 });
 
@@ -214,7 +243,7 @@
                                             return file.previewElement.classList.add("dz-success");
                                         });
                                         myDropzone.processQueue();
-                                        
+
                                         myDropzone.on("success", function (file) {
                                             swal("Thông báo", "Import lại CTĐT thành công!", "success").done();
                                         });
@@ -231,8 +260,6 @@
                 });
             }
         };
-
-
     </script>
 }
 

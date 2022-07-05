@@ -1,4 +1,5 @@
-﻿using StudyProgressManagement.Models;
+﻿using SignalRProgressBarSimpleExample.Util;
+using StudyProgressManagement.Models;
 using System;
 using System.Configuration;
 using System.Data;
@@ -124,6 +125,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 }
 
                 var query_studentcourse_curriculum = db.curricula.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
+                int itemsCount = dt.Rows.Count;
 
                 try
                 {
@@ -221,6 +223,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             student_course_id = studentCourseId,
                             knowledge_type_id = lastKnowledgeId
                         });
+
+                        // Send progress to progress bar
+                        Functions.SendProgress("Đang import...", dt.Rows.IndexOf(row), itemsCount);
+
                     }
                     db.SaveChanges();
                 }

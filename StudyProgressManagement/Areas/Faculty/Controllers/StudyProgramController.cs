@@ -243,10 +243,17 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            // Delete all records for re-import
-            db.curricula.RemoveRange(db.curricula.Where(c => c.student_course_id == id));
-            db.knowledge_type.RemoveRange(db.knowledge_type.Where(c => c.student_course_id == id));
-            db.SaveChanges();
+            try
+            {
+                // Delete all records for re-import
+                db.curricula.RemoveRange(db.curricula.Where(c => c.student_course_id == id));
+                db.knowledge_type.RemoveRange(db.knowledge_type.Where(c => c.student_course_id == id));
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return Json(new { error = true }, JsonRequestBehavior.AllowGet);
+            }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 

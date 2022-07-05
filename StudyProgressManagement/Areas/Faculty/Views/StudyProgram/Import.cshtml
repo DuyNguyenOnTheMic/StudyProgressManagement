@@ -248,6 +248,15 @@
                                             swal("Thông báo", "Import lại CTĐT thành công!", "success").done();
                                         });
                                     }
+                                    else
+                                    {
+                                        // Show message when delete failed
+                                        swal({
+                                            title: 'Thông báo',
+                                            text: 'Không thể import lại do khoá sinh viên này đã có kết quả học tập hoặc kết quả đăng ký học tập!',
+                                            type: 'error',
+                                        })
+                                    }
                                 }
                             });
 

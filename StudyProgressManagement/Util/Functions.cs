@@ -7,13 +7,13 @@ namespace SignalRProgressBarSimpleExample.Util
     {
         public static void SendProgress(string progressMessage, int progressCount, int totalItems)
         {
-            //IN ORDER TO INVOKE SIGNALR FUNCTIONALITY DIRECTLY FROM SERVER SIDE WE MUST USE THIS
+            // In order to invoke signalr functionality directly from server side we must use this
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<ProgressHub>();
 
-            //CALCULATING PERCENTAGE BASED ON THE PARAMETERS SENT
+            // Calculating percentage based on the parameters sent
             var percentage = (progressCount * 100) / totalItems;
 
-            //PUSHING DATA TO ALL CLIENTS
+            // Pushing data to all clients
             hubContext.Clients.All.AddProgress(progressMessage, percentage + "%");
         }
     }

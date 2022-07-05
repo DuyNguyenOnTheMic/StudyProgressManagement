@@ -1,4 +1,5 @@
-﻿using StudyProgressManagement.Models;
+﻿using SignalRProgressBarSimpleExample.Util;
+using StudyProgressManagement.Models;
 using System;
 using System.Configuration;
 using System.Data;
@@ -96,7 +97,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     }
                 }
 
-                /*var query_studentcourse_curriculum = db.curricula.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();*/
+                int itemsCount = dt.Rows.Count;
 
                 /*try
                 {*/
@@ -126,6 +127,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     string maxMark4 = row["maxMark4"].ToString();
                     string maxMarkLetter = row["MaxMarkLetter"].ToString();
                     string isPass = row["IsPass"].ToString();
+
+
+                    /*var query_studyresults_term = db.study_results.Where(s => s.term_id == termId).FirstOrDefault();*/
+                    var newTermId = "HK" + SplitYearStudyString(yearStudy) + SplitTermString(termId);
 
 
                     var query_classstudent = db.class_student.Where(s => s.id == classStudentId).FirstOrDefault();
@@ -178,27 +183,32 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         db.SaveChanges();
                     }
 
-                    var query_curriculum = db.curricula.Where(c => c.curriculum_id == 
+                    var query_curriculum = db.curricula.Where(c => c.curriculum_id ==
                     curriculumId && c.student_course_id == studentCourseId).FirstOrDefault();
 
-                    db.study_results.Add(new study_results
+                    if (query_curriculum != null)
                     {
-                        mark10 = SetNullOnEmpty(mark10),
-                        mark10_2 = SetNullOnEmpty(mark10_2),
-                        mark10_3 = SetNullOnEmpty(mark10_3),
-                        mark10_4 = SetNullOnEmpty(mark10_4),
-                        mark10_5 = SetNullOnEmpty(mark10_5),
-                        max_mark_10 = SetNullOnEmpty(maxMark10),
-                        max_mark_4 = SetNullOnEmpty(maxMark4),
-                        max_mark_letter = SetNullOnEmpty(maxMarkLetter),
-                        is_pass = SetNullOnEmpty(isPass),
-                        year_study = yearStudy,
-                        term_id = termId,
-                        curriculum_id = query_curriculum.id,
-                        study_unit_id = studyUnitId,
-                        student_id = studentId
-                    });
+                        db.study_results.Add(new study_results
+                        {
+                            mark10 = SetNullOnEmpty(mark10),
+                            mark10_2 = SetNullOnEmpty(mark10_2),
+                            mark10_3 = SetNullOnEmpty(mark10_3),
+                            mark10_4 = SetNullOnEmpty(mark10_4),
+                            mark10_5 = SetNullOnEmpty(mark10_5),
+                            max_mark_10 = SetNullOnEmpty(maxMark10),
+                            max_mark_4 = SetNullOnEmpty(maxMark4),
+                            max_mark_letter = SetNullOnEmpty(maxMarkLetter),
+                            is_pass = SetNullOnEmpty(isPass),
+                            year_study = yearStudy,
+                            term_id = termId,
+                            curriculum_id = query_curriculum.id,
+                            study_unit_id = studyUnitId,
+                            student_id = studentId
+                        });
+                    }
 
+                    // Send progress to progress bar
+                    Functions.SendProgress("Đang import...", dt.Rows.IndexOf(row), itemsCount);
 
                 }
                 db.SaveChanges();
@@ -222,6 +232,18 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         {
             // Check if string is empty
             return value != null && string.IsNullOrEmpty(value.Trim()) ? null : value;
+        }
+
+        public static string SplitYearStudyString(string value)
+        {
+            // Split year study
+            return value.Split('-')[0].Substring(value.Split('-')[0].Length - 2);
+        }
+
+        public static string SplitTermString(string value)
+        {
+            // Split team
+            return value.Substring(value.Length - 1);
         }
     }
 }

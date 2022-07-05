@@ -179,6 +179,7 @@
 
                         myDropzone.on("success", function () {
                             swal("Thông báo", "Import thành công!", "success").done();
+                            window.onbeforeunload = null;
                         });
                     }
                 });
@@ -199,12 +200,18 @@
                         })
 
                         StartProgressBar();
+
+                        // Show confirmation message when user closes tab
+                        window.onbeforeunload = function () {
+                            return "Changes you made may not be saved";
+                        };
                     })
                 });
 
                 this.on('error', function (data, errorMessage, xhr) {
 
                     swal.close();
+                    window.onbeforeunload = null;
 
                     if (errorMessage.indexOf('Error 417') !== -1) {
                         // Show message if the file is not in the right format (like missing columns, etc, ...)

@@ -782,6 +782,7 @@
     <Content Include="app-assets\vendors\js\unslider.min.js" />
     <Content Include="app-assets\vendors\js\vertical-timeline.js" />
     <Content Include="app-assets\vendors\js\wizard-steps.js" />
+    <Content Include="assets\images\img_excel.svg" />
     <Content Include="assets\js\scripts.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

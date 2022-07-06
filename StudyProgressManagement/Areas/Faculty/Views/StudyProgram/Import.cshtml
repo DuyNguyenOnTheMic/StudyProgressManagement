@@ -245,6 +245,8 @@
                                 success: function (data) {
                                     if (data.success) {
 
+                                        swal.close();
+
                                         // Re-import file after delete successfully
                                         $.each(myDropzone.files, function (i, file) {
                                             file.status = Dropzone.QUEUED

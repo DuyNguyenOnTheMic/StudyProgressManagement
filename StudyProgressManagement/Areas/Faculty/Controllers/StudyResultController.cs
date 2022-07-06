@@ -129,9 +129,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     string maxMarkLetter = row["MaxMarkLetter"].ToString();
                     string isPass = row["IsPass"].ToString();
 
-                    
+
                     var newTermId = "HK" + SplitYearStudyString(yearStudy) + SplitTermString(oldTermId);
-                    /*var query_studyresults_term = db.study_results.Where(s => s.term_id == newTermId && s.student_course_id == studentCourseId).FirstOrDefault();*/
 
 
                     var query_classstudent = db.class_student.Where(s => s.id == classStudentId).FirstOrDefault();
@@ -222,6 +221,22 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             }
             ViewBag.majors = db.majors.ToList();
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                // Delete all records for re-import
+                db.study_results.RemoveRange(db.study_results.Where(c => c.student_course_id == id));
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return Json(new { error = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
         public static int? ToNullableInt(string value)

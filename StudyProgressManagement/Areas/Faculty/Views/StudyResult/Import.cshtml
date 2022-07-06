@@ -109,7 +109,7 @@
                 var connectionId = $.connection.hub.id;
                 console.log(connectionId);
             });
-        }       
+        }
 
         $(document).ready(function () {
             // Load cascading dropdown between majors and student courses
@@ -175,13 +175,39 @@
                         toastr.warning('File chưa được upload hoặc sai định dạng ');
                     }
                     else {
-                        // Begin to import file
-                        myDropzone.processQueue();
 
-                        myDropzone.on("success", function () {
-                            swal("Thông báo", "Import thành công!", "success").done();
-                            window.onbeforeunload = null;
-                        });
+                        var studentCourseId = $('#comboboxStudentCourse').val();
+
+                        // Show waiting message while delete
+                        swal({
+                            title: 'Đang xoá dữ liệu cũ...',
+                            allowEscapeKey: false,
+                            allowOutsideClick: false,
+                            onOpen: () => {
+                                swal.showLoading();
+                            }
+                        })
+
+                        // Ajax call to delete previous study results of student course
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("Delete", "StudyResult")',
+                            data: { 'id': studentCourseId },
+                            success: function (data) {
+                                if (data.success) {
+
+                                    swal.close();
+                                  
+                                    myDropzone.processQueue();
+
+                                    myDropzone.on("success", function () {
+                                        swal("Thông báo", "Import thành công!", "success").done();
+                                        window.onbeforeunload = null;
+                                    });
+
+                                }
+                            }
+                        });                       
                     }
                 });
 

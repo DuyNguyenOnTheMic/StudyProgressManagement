@@ -4,6 +4,7 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -153,7 +154,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             // Add student
                             id = studentId,
                             full_name = SetNullOnEmpty(studentName),
-                            birth_date = DateTime.Parse(birthDay),
+                            birth_date = DateTime.ParseExact(birthDay, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                             birth_place = SetNullOnEmpty(birthPlace),
                             class_student_id = SetNullOnEmpty(classStudentId),
                             student_course_id = studentCourseId

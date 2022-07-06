@@ -797,12 +797,12 @@
     <Content Include="gulp-tasks\sass\style.js" />
     <Content Include="gulp-tasks\sass\watch.js" />
     <Content Include="gulp-tasks\uglify\min.js" />
-    <Content Include="assets\images\High five-bro.svg" />
-    <Content Include="assets\images\Instruction manual-cuate.svg" />
-    <Content Include="assets\images\login_background.png" />
-    <Content Include="assets\images\user_avatar.png" />
-    <Content Include="assets\images\Viewing-amico.svg" />
-    <Content Include="assets\images\Welcome-rafiki.svg" />
+    <Content Include="assets\images\img_highfive.svg" />
+    <Content Include="assets\images\img_guide.svg" />
+    <Content Include="assets\images\img_login_background.png" />
+    <Content Include="assets\images\img_user_avatar.png" />
+    <Content Include="assets\images\img_viewing.svg" />
+    <Content Include="assets\images\img_welcome.svg" />
     <Content Include="Areas\Faculty\Views\web.config" />
     <Content Include="app-assets\fonts\feather\fonts\feather.eot" />
     <Content Include="app-assets\fonts\feather\fonts\feather.ttf" />
@@ -853,6 +853,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="assets\files\CTDT_K3_CNTT_Mau.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

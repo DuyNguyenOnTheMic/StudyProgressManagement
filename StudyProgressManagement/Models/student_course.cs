@@ -19,7 +19,9 @@ namespace StudyProgressManagement.Models
         public student_course()
         {
             this.curricula = new HashSet<curriculum>();
+            this.registration_results = new HashSet<registration_results>();
             this.students = new HashSet<student>();
+            this.study_results = new HashSet<study_results>();
         }
     
         public int id { get; set; }
@@ -34,6 +36,10 @@ namespace StudyProgressManagement.Models
         public virtual ICollection<curriculum> curricula { get; set; }
         public virtual major major { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<registration_results> registration_results { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<student> students { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<study_results> study_results { get; set; }
     }
 }

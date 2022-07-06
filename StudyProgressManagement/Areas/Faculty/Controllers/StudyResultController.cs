@@ -112,7 +112,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     string classStudentId = row["ClassStudentID"].ToString();
                     string classStudentName = row["ClassStudentName"].ToString();
                     string yearStudy = row["YearStudy"].ToString();
-                    string termId = row["TermID"].ToString();
+                    string oldTermId = row["TermID"].ToString();
                     string termName = row["TermName"].ToString();
                     string curriculumId = row["CurriculumID"].ToString();
                     string studyUnitId = row["StudyUnitID"].ToString();
@@ -128,9 +128,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     string maxMarkLetter = row["MaxMarkLetter"].ToString();
                     string isPass = row["IsPass"].ToString();
 
-
-                    /*var query_studyresults_term = db.study_results.Where(s => s.term_id == termId).FirstOrDefault();*/
-                    var newTermId = "HK" + SplitYearStudyString(yearStudy) + SplitTermString(termId);
+                    
+                    var newTermId = "HK" + SplitYearStudyString(yearStudy) + SplitTermString(oldTermId);
+                    /*var query_studyresults_term = db.study_results.Where(s => s.term_id == newTermId && s.student_course_id == studentCourseId).FirstOrDefault();*/
 
 
                     var query_classstudent = db.class_student.Where(s => s.id == classStudentId).FirstOrDefault();
@@ -161,12 +161,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         db.SaveChanges();
                     }
 
-                    var query_term = db.terms.Where(t => t.id == termId).FirstOrDefault();
+                    var query_term = db.terms.Where(t => t.id == newTermId).FirstOrDefault();
                     if (query_term == null)
                     {
                         db.terms.Add(new term
                         {
-                            id = termId,
+                            id = newTermId,
                             name = termName
                         });
                         db.SaveChanges();
@@ -200,10 +200,11 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             max_mark_letter = SetNullOnEmpty(maxMarkLetter),
                             is_pass = SetNullOnEmpty(isPass),
                             year_study = yearStudy,
-                            term_id = termId,
+                            term_id = newTermId,
                             curriculum_id = query_curriculum.id,
                             study_unit_id = studyUnitId,
-                            student_id = studentId
+                            student_id = studentId,
+                            student_course_id = studentCourseId
                         });
                     }
 

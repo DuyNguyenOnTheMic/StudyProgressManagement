@@ -140,6 +140,7 @@
           <Property Name="curriculum_class_id" Type="varchar" MaxLength="100" />
           <Property Name="lecturer_id" Type="varchar" MaxLength="50" />
           <Property Name="student_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="student_course_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="student">
           <Key>
@@ -183,6 +184,7 @@
           <Property Name="curriculum_id" Type="int" Nullable="false" />
           <Property Name="study_unit_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="student_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="student_course_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="study_unit">
           <Key>
@@ -336,6 +338,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_registration_results_student_course">
+          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
+          <End Role="registration_results" Type="Self.registration_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="registration_results">
+              <PropertyRef Name="student_course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_registration_results_term">
           <End Role="term" Type="Self.term" Multiplicity="1" />
           <End Role="registration_results" Type="Self.registration_results" Multiplicity="*" />
@@ -405,6 +419,18 @@
             </Principal>
             <Dependent Role="study_results">
               <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_results_student_course">
+          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
+          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_results">
+              <PropertyRef Name="student_course_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -492,6 +518,10 @@
             <End Role="student" EntitySet="student" />
             <End Role="registration_results" EntitySet="registration_results" />
           </AssociationSet>
+          <AssociationSet Name="FK_registration_results_student_course" Association="Self.FK_registration_results_student_course">
+            <End Role="student_course" EntitySet="student_course" />
+            <End Role="registration_results" EntitySet="registration_results" />
+          </AssociationSet>
           <AssociationSet Name="FK_registration_results_term" Association="Self.FK_registration_results_term">
             <End Role="term" EntitySet="term" />
             <End Role="registration_results" EntitySet="registration_results" />
@@ -514,6 +544,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_study_results_student" Association="Self.FK_study_results_student">
             <End Role="student" EntitySet="student" />
+            <End Role="study_results" EntitySet="study_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_results_student_course" Association="Self.FK_study_results_student_course">
+            <End Role="student_course" EntitySet="student_course" />
             <End Role="study_results" EntitySet="study_results" />
           </AssociationSet>
           <AssociationSet Name="FK_study_results_study_unit" Association="Self.FK_study_results_study_unit">
@@ -672,10 +706,12 @@
           <Property Name="curriculum_class_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="lecturer_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="student_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="student_course_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="curriculum" Relationship="Self.FK_registration_results_curriculum" FromRole="registration_results" ToRole="curriculum" />
           <NavigationProperty Name="curriculum_class" Relationship="Self.FK_registration_results_curriculum_class" FromRole="registration_results" ToRole="curriculum_class" />
           <NavigationProperty Name="lecturer" Relationship="Self.FK_registration_results_lecturer" FromRole="registration_results" ToRole="lecturer" />
           <NavigationProperty Name="student" Relationship="Self.FK_registration_results_student" FromRole="registration_results" ToRole="student" />
+          <NavigationProperty Name="student_course" Relationship="Self.FK_registration_results_student_course" FromRole="registration_results" ToRole="student_course" />
           <NavigationProperty Name="term" Relationship="Self.FK_registration_results_term" FromRole="registration_results" ToRole="term" />
         </EntityType>
         <EntityType Name="student">
@@ -706,7 +742,9 @@
           <Property Name="major_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="curricula" Relationship="Self.FK_curriculum_student_course" FromRole="student_course" ToRole="curriculum" />
           <NavigationProperty Name="major" Relationship="Self.FK_student_course_major" FromRole="student_course" ToRole="major" />
+          <NavigationProperty Name="registration_results" Relationship="Self.FK_registration_results_student_course" FromRole="student_course" ToRole="registration_results" />
           <NavigationProperty Name="students" Relationship="Self.FK_student_student_course" FromRole="student_course" ToRole="student" />
+          <NavigationProperty Name="study_results" Relationship="Self.FK_study_results_student_course" FromRole="student_course" ToRole="study_results" />
         </EntityType>
         <EntityType Name="study_results">
           <Key>
@@ -727,8 +765,10 @@
           <Property Name="curriculum_id" Type="Int32" Nullable="false" />
           <Property Name="study_unit_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="student_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="student_course_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="curriculum" Relationship="Self.FK_study_results_curriculum" FromRole="study_results" ToRole="curriculum" />
           <NavigationProperty Name="student" Relationship="Self.FK_study_results_student" FromRole="study_results" ToRole="student" />
+          <NavigationProperty Name="student_course" Relationship="Self.FK_study_results_student_course" FromRole="study_results" ToRole="student_course" />
           <NavigationProperty Name="study_unit" Relationship="Self.FK_study_results_study_unit" FromRole="study_results" ToRole="study_unit" />
           <NavigationProperty Name="term" Relationship="Self.FK_study_results_term" FromRole="study_results" ToRole="term" />
         </EntityType>
@@ -895,6 +935,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_registration_results_student_course">
+          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
+          <End Role="registration_results" Type="Self.registration_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="registration_results">
+              <PropertyRef Name="student_course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_registration_results_term">
           <End Role="term" Type="Self.term" Multiplicity="1" />
           <End Role="registration_results" Type="Self.registration_results" Multiplicity="*" />
@@ -928,6 +980,18 @@
             </Principal>
             <Dependent Role="study_results">
               <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_study_results_student_course">
+          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
+          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="study_results">
+              <PropertyRef Name="student_course_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1022,6 +1086,10 @@
             <End Role="student" EntitySet="students" />
             <End Role="registration_results" EntitySet="registration_results" />
           </AssociationSet>
+          <AssociationSet Name="FK_registration_results_student_course" Association="Self.FK_registration_results_student_course">
+            <End Role="student_course" EntitySet="student_course" />
+            <End Role="registration_results" EntitySet="registration_results" />
+          </AssociationSet>
           <AssociationSet Name="FK_registration_results_term" Association="Self.FK_registration_results_term">
             <End Role="term" EntitySet="terms" />
             <End Role="registration_results" EntitySet="registration_results" />
@@ -1032,6 +1100,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_study_results_student" Association="Self.FK_study_results_student">
             <End Role="student" EntitySet="students" />
+            <End Role="study_results" EntitySet="study_results" />
+          </AssociationSet>
+          <AssociationSet Name="FK_study_results_student_course" Association="Self.FK_study_results_student_course">
+            <End Role="student_course" EntitySet="student_course" />
             <End Role="study_results" EntitySet="study_results" />
           </AssociationSet>
           <AssociationSet Name="FK_study_results_study_unit" Association="Self.FK_study_results_study_unit">
@@ -1187,6 +1259,7 @@
                 <ScalarProperty Name="curriculum_class_id" ColumnName="curriculum_class_id" />
                 <ScalarProperty Name="lecturer_id" ColumnName="lecturer_id" />
                 <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="student_course_id" ColumnName="student_course_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1233,6 +1306,7 @@
                 <ScalarProperty Name="curriculum_id" ColumnName="curriculum_id" />
                 <ScalarProperty Name="study_unit_id" ColumnName="study_unit_id" />
                 <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="student_course_id" ColumnName="student_course_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

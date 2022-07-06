@@ -29,9 +29,11 @@ namespace StudyProgressManagement.Models
         public int curriculum_id { get; set; }
         public string study_unit_id { get; set; }
         public string student_id { get; set; }
+        public int student_course_id { get; set; }
     
         public virtual curriculum curriculum { get; set; }
         public virtual student student { get; set; }
+        public virtual student_course student_course { get; set; }
         public virtual study_unit study_unit { get; set; }
         public virtual term term { get; set; }
     }

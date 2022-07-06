@@ -4,25 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5af6911432ba427c93bc8bc8dab3bd37" Name="Diagram1">
-        <EntityTypeShape EntityType="SEP25Team03Model.C__MigrationHistory" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="1d0e8c83724649cdb21957d7ab8c6754" Name="Diagram1">
+        <EntityTypeShape EntityType="SEP25Team03Model.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SEP25Team03Model.AspNetRole" Width="1.5" PointX="8.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SEP25Team03Model.AspNetUserClaim" Width="1.5" PointX="13.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="SEP25Team03Model.AspNetUserLogin" Width="1.5" PointX="13.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SEP25Team03Model.AspNetUser" Width="1.5" PointX="11" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.class_student" Width="1.5" PointX="1.5" PointY="21.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.curriculum" Width="1.5" PointX="3.75" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.curriculum_class" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.knowledge_type" Width="1.5" PointX="1.5" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.lecturer" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.major" Width="1.5" PointX="1.5" PointY="18.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.registration_results" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.student" Width="1.5" PointX="3.75" PointY="20.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.student_course" Width="1.5" PointX="1.5" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.study_results" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.study_unit" Width="1.5" PointX="3.75" PointY="25.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.sysdiagram" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SEP25Team03Model.term" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.class_student" Width="1.5" PointX="1.5" PointY="35.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.curriculum" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.curriculum_class" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.knowledge_type" Width="1.5" PointX="1.5" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.lecturer" Width="1.5" PointX="0.75" PointY="28" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.major" Width="1.5" PointX="1.5" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.registration_results" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.student" Width="1.5" PointX="0.75" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.student_course" Width="1.5" PointX="1.5" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.study_results" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.study_unit" Width="1.5" PointX="3.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SEP25Team03Model.term" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
         <AssociationConnector Association="SEP25Team03Model.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team03Model.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team03Model.FK_student_class_student" ManuallyRouted="false" />
@@ -34,9 +34,11 @@
         <AssociationConnector Association="SEP25Team03Model.FK_registration_results_lecturer" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team03Model.FK_student_course_major" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team03Model.FK_registration_results_student" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP25Team03Model.FK_registration_results_student_course" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team03Model.FK_registration_results_term" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team03Model.FK_student_student_course" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team03Model.FK_study_results_student" ManuallyRouted="false" />
+        <AssociationConnector Association="SEP25Team03Model.FK_study_results_student_course" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team03Model.FK_study_results_study_unit" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team03Model.FK_study_results_term" ManuallyRouted="false" />
         <AssociationConnector Association="SEP25Team03Model.AspNetUserRoles" ManuallyRouted="false" />

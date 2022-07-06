@@ -259,12 +259,59 @@
                                     }
                                     else
                                     {
-                                        // Show message when delete failed
+                                        // Show message for user to confirm re-import all data
                                         swal({
                                             title: 'Thông báo',
-                                            text: 'Không thể import lại do khoá sinh viên này đã có kết quả học tập hoặc kết quả đăng ký học tập!',
-                                            type: 'error',
-                                        })
+                                            text: 'Ngành này đã có kết quả học tập hoặc kết quả đăng ký học tập, bạn có muốn import lại từ đầu, tất cả dữ liệu sẽ bị xoá hết?',
+                                            type: 'warning',
+                                            showCancelButton: true,
+                                            cancelButtonText: 'Huỷ',
+                                            confirmButtonText: 'Import lại từ đầu',
+
+                                        }).then(function () {
+
+                                            // Show waiting message while delete
+                                            swal({
+                                                title: 'Đang xoá dữ liệu...',
+                                                allowEscapeKey: false,
+                                                allowOutsideClick: false,
+                                                onOpen: () => {
+                                                    swal.showLoading();
+                                                }
+                                            })
+
+                                            // Ajax call to delete all study results and registration results of student course
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '@Url.Action("DeleteAll", "StudyProgram")',
+                                                data: { 'id': studentCourseId },
+                                                success: function (data) {
+                                                    if (data.success) {
+
+                                                        swal.close();
+
+                                                        // Re-import file after delete successfully
+                                                        $.each(myDropzone.files, function (i, file) {
+                                                            file.status = Dropzone.QUEUED
+                                                            file.previewElement.classList.remove("dz-error");
+                                                            return file.previewElement.classList.add("dz-success");
+                                                        });
+                                                        myDropzone.processQueue();
+
+                                                        myDropzone.on("success", function (file) {
+                                                            swal("Thông báo", "Import lại CTĐT thành công!", "success").done();
+                                                        });
+
+                                                    }
+                                                }
+                                            });
+
+
+                                        }), function (dismiss) {
+                                            if (dismiss === 'cancel' || dismiss === 'close') {
+                                                // Ignore
+                                            }
+                                        }
                                     }
                                 }
                             });

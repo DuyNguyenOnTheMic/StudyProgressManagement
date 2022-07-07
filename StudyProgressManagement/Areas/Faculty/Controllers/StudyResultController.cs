@@ -100,10 +100,15 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 }
 
                 int itemsCount = dt.Rows.Count;
-                DataTable export = new DataTable("Grid");
-                export.Columns.AddRange(new DataColumn[2]
-                { new DataColumn("curriculumId"),
-                  new DataColumn("credits")});
+
+                // Create a datatable
+                DataTable errorCurriculums = new DataTable("Grid");
+                errorCurriculums.Columns.AddRange(
+                    new DataColumn[3]{
+                        new DataColumn("curriculumId"),
+                        new DataColumn("curriculumName"),
+                        new DataColumn("credits")
+                    });
 
                 /*try
                 {*/
@@ -123,6 +128,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     string curriculumId = row["CurriculumID"].ToString();
                     string studyUnitId = row["StudyUnitID"].ToString();
                     string studyUnitAlias = row["StudyUnitAlias"].ToString();
+                    string curriculumName = row["CurriculumName"].ToString();
                     string credits = row["Credits"].ToString();
                     string mark10 = row["Mark10"].ToString();
                     string mark10_2 = row["Mark10_2"].ToString();
@@ -214,7 +220,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     }
                     else
                     {
-                        export.Rows.Add(curriculumId, credits);
+                        // Add error curriculums which are not in study program
+                        errorCurriculums.Rows.Add(curriculumId, curriculumName, credits);
                     }
 
                     // Send progress to progress bar
@@ -223,7 +230,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 }
                 db.SaveChanges();
 
-                return DataTableToJsonWithJsonNet(export);
+                // Remove duplicate values
+                DataTable distinctTable = errorCurriculums.AsEnumerable()
+                 .GroupBy(x => x.Field<string>("curriculumId"))
+                 .Select(y => y.First())
+                 .CopyToDataTable(); ;
+                return DataTableToJson(distinctTable);
 
 
                 /*}
@@ -236,10 +248,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return View();
         }
 
-        public JsonResult DataTableToJsonWithJsonNet(DataTable table)
+        public JsonResult DataTableToJson(DataTable table)
         {
-            string jsonString = string.Empty;
-            jsonString = JsonConvert.SerializeObject(table);
+            // Convert datatable to Json
+            string jsonString = JsonConvert.SerializeObject(table);
             return Json(jsonString, JsonRequestBehavior.AllowGet);
         }
 

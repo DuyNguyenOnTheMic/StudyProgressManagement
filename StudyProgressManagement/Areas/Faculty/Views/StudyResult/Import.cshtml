@@ -94,7 +94,9 @@
                                 <thead>
                                     <tr>
                                         <th> STT </th>
-                                        <th> MÃ HỌC PHẦN </th>
+                                        <th> Mã học phần </th>
+                                        <th> Tên học phần </th>
+                                        <th> Số tín chỉ </th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -239,13 +241,30 @@
 
                                         data = JSON.parse(data);
 
-                                        $('#tblErrorRows').DataTable({
+                                        var dataTable;
+
+                                        dataTable = $('#tblErrorRows').DataTable({
                                             data: data,
                                             columns: [
+                                                {
+                                                    'data': null,
+                                                    searchable: false,
+                                                    orderable: false,
+                                                    className: 'text-center',
+                                                    width: '20px'
+                                                },
                                                 { "data": "curriculumId" },
+                                                { "data": "curriculumName" },
                                                 { "data": "credits" },
                                             ]
                                         });
+
+                                        // Create Index column datatable
+                                        dataTable.on('order.dt search.dt', function () {
+                                            dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                                                cell.innerHTML = i + 1;
+                                            });
+                                        }).draw();
                                     });
                                 }
                             }

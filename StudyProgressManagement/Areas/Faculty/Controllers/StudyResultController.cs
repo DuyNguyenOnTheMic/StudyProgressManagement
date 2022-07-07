@@ -1,4 +1,5 @@
-﻿using SignalRProgressBarSimpleExample.Util;
+﻿using Newtonsoft.Json;
+using SignalRProgressBarSimpleExample.Util;
 using StudyProgressManagement.Models;
 using System;
 using System.Configuration;
@@ -99,6 +100,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 }
 
                 int itemsCount = dt.Rows.Count;
+                DataTable export = new DataTable("Grid");
+                export.Columns.AddRange(new DataColumn[2]
+                { new DataColumn("curriculumId"),
+                  new DataColumn("credits")});
 
                 /*try
                 {*/
@@ -207,12 +212,20 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             student_course_id = studentCourseId
                         });
                     }
+                    else
+                    {
+                        export.Rows.Add(curriculumId, credits);
+                    }
 
                     // Send progress to progress bar
                     Functions.SendProgress("Đang import...", dt.Rows.IndexOf(row), itemsCount);
 
                 }
                 db.SaveChanges();
+
+                return DataTableToJsonWithJsonNet(export);
+
+
                 /*}
                 catch (Exception)
                 {
@@ -221,6 +234,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             }
             ViewBag.majors = db.majors.ToList();
             return View();
+        }
+
+        public JsonResult DataTableToJsonWithJsonNet(DataTable table)
+        {
+            string jsonString = string.Empty;
+            jsonString = JsonConvert.SerializeObject(table);
+            return Json(jsonString, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

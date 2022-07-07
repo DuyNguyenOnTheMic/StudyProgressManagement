@@ -63,13 +63,13 @@
                     <div class="card-title-wrap bar-success">
                         <h4 class="card-title">Tips</h4>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="card-block">
-                        <h4 class="card-title" style="text-align:center">Chọn hình dưới để tải tệp tin import mẫu</h4>
-                        <a href="#">
-                            <img style="display: block; margin-left: auto; margin-right: auto; margin-top: 50px; width: 100px; filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));" alt="img_downloadIcon" src="~/assets/images/img_excel.svg" />
-                        </a>
+                    <div class="card-body">
+                        <div class="card-block">
+                            <h4 class="card-title" style="text-align:center">Chọn hình dưới để tải tệp tin import mẫu</h4>
+                            <a href="#">
+                                <img style="display: block; margin-left: auto; margin-right: auto; margin-top: 50px; width: 100px; filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));" alt="img_downloadIcon" src="~/assets/images/img_excel.svg" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,10 +78,42 @@
 </section>
 <!-- // Dropzone section end -->
 
+<section id="configuration">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-success">
+                        <h4 class="card-title">Những học phần không import được</h4>
+                    </div>
+                </div>
+                <div class="card-body collapse show">
+                    <div class="card-block card-dashboard">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="tblErrorRows" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th> STT </th>
+                                        <th> MÃ HỌC PHẦN </th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/ Zero configuration table -->
+
 <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/dropzone.min.css">
+<link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
 
 @section scripts {
     <script src="~/app-assets/vendors/js/dropzone.min.js"></script>
+    <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
     <script src="~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js"></script>
     <script src="~/signalr/hubs"></script>
 
@@ -112,6 +144,7 @@
         }
 
         $(document).ready(function () {
+
             // Load cascading dropdown between majors and student courses
              $("#comboboxMajor").change(function () {
                 $("#comboboxStudentCourse").empty();
@@ -197,17 +230,26 @@
                                 if (data.success) {
 
                                     swal.close();
-                                  
+
                                     myDropzone.processQueue();
 
-                                    myDropzone.on("success", function () {
+                                    myDropzone.on("success", function (response, data) {
                                         swal("Thông báo", "Import thành công!", "success").done();
                                         window.onbeforeunload = null;
-                                    });
 
+                                        data = JSON.parse(data);
+
+                                        $('#tblErrorRows').DataTable({
+                                            data: data,
+                                            columns: [
+                                                { "data": "curriculumId" },
+                                                { "data": "credits" },
+                                            ]
+                                        });
+                                    });
                                 }
                             }
-                        });                       
+                        });
                     }
                 });
 
@@ -297,7 +339,3 @@
         };
     </script>
 }
-
-
-
-

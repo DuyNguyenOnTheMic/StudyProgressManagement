@@ -66,7 +66,7 @@
                     <div class="card-body">
                         <div class="card-block">
                             <h4 class="card-title" style="text-align:center">Chọn hình dưới để tải tệp tin import mẫu</h4>
-                            <a href="#">
+                            <a href="~/assets/files/KQHT_K3_CNTT_Mau.xlsx">
                                 <img style="display: block; margin-left: auto; margin-right: auto; margin-top: 50px; width: 100px; filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));" alt="img_downloadIcon" src="~/assets/images/img_excel.svg" />
                             </a>
                         </div>
@@ -75,11 +75,8 @@
             </div>
         </div>
     </div>
-</section>
-<!-- // Dropzone section end -->
 
-<section id="configuration">
-    <div class="row">
+    <div class="row" id="errorCurriculumn_section" style="display: none">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -108,7 +105,7 @@
         </div>
     </div>
 </section>
-<!--/ Zero configuration table -->
+<!-- // Dropzone section end -->
 
 <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/dropzone.min.css">
 <link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
@@ -211,62 +208,56 @@
                     }
                     else {
 
-                        var studentCourseId = $('#comboboxStudentCourse').val();
+                        swal.close();
 
-                        // Show waiting message while delete
-                        swal({
-                            title: 'Đang xoá dữ liệu cũ...',
-                            allowEscapeKey: false,
-                            allowOutsideClick: false,
-                            onOpen: () => {
-                                swal.showLoading();
-                            }
-                        })
+                        // Begin import file
+                        myDropzone.processQueue();
 
-                        // Ajax call to delete previous study results of student course
-                        $.ajax({
-                            type: 'POST',
-                            url: '@Url.Action("Delete", "StudyResult")',
-                            data: { 'id': studentCourseId },
-                            success: function (data) {
-                                if (data.success) {
+                        myDropzone.on("success", function (response, data) {
 
-                                    swal.close();
+                            window.onbeforeunload = null;
 
-                                    myDropzone.processQueue();
+                            data = JSON.parse(data);
 
-                                    myDropzone.on("success", function (response, data) {
-                                        swal("Thông báo", "Import thành công!", "success").done();
-                                        window.onbeforeunload = null;
+                            if (data.length != 0) {
 
-                                        data = JSON.parse(data);
+                                swal("Thông báo!", "Import thành công! Tuy nhiên, có một số học phần không nằm trong chương trình đào tạo nên hệ thống không import, bạn có thể xem chi tiết ở cuối trang", "info").done();
 
-                                        var dataTable;
+                                $('#errorCurriculumn_section').show();
 
-                                        dataTable = $('#tblErrorRows').DataTable({
-                                            data: data,
-                                            columns: [
-                                                {
-                                                    'data': null,
-                                                    searchable: false,
-                                                    orderable: false,
-                                                    className: 'text-center',
-                                                    width: '20px'
-                                                },
-                                                { "data": "curriculumId" },
-                                                { "data": "curriculumName" },
-                                                { "data": "credits" },
-                                            ]
-                                        });
+                                var dataTable;
 
-                                        // Create Index column datatable
-                                        dataTable.on('order.dt search.dt', function () {
-                                            dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                                                cell.innerHTML = i + 1;
-                                            });
-                                        }).draw();
+                                // Populate datatable showing the error curriculums
+                                dataTable = $('#tblErrorRows').DataTable({
+                                    data: data,
+                                    destroy: true,
+                                    columns: [
+                                        {
+                                            'data': null,
+                                            searchable: false,
+                                            orderable: false,
+                                            className: 'text-center',
+                                            width: '20px'
+                                        },
+                                        { "data": "curriculumId" },
+                                        { "data": "curriculumName" },
+                                        { "data": "credits" },
+                                    ],
+                                    language: {
+                                        'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>"
+                                    },
+                                });
+
+                                // Create Index column datatable
+                                dataTable.on('order.dt search.dt', function () {
+                                    dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                                        cell.innerHTML = i + 1;
                                     });
-                                }
+                                }).draw();
+                            }
+                            else {
+                                swal("Thông báo", "Import thành công!", "success").done();
+                                $('#errorCurriculumn_section').hide();
                             }
                         });
                     }
@@ -306,53 +297,7 @@
                         // Show message if the file is not in the right format (like missing columns, etc, ...)
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
                         errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi, vui lòng kiểm tra lại tệp tin';
-                    }
-                    @*else if (errorMessage.indexOf('Error 400') !== -1) {
-                        // Show message if this student course already has study program
-                        var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
-                        errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi';
-
-                        swal({
-                            title: 'Thông báo',
-                            text: 'Ngành này đã có chương trình đào tạo, bạn có muốn import lại?',
-                            type: 'warning',
-                            showCancelButton: true,
-                            cancelButtonText: 'Huỷ',
-                            confirmButtonText: 'Import lại',
-
-                        }).then(function () {
-
-                            var studentCourseId = $('#comboboxStudentCourse').val();
-
-                            // Ajax call to delete study program of that student course
-                            $.ajax({
-                                type: 'POST',
-                                url: '@Url.Action("Delete", "StudyProgram")',
-                                data: { 'id': studentCourseId },
-                                success: function (data) {
-                                    if (data.success) {
-
-                                        // Re-import file after delete successfully
-                                        $.each(myDropzone.files, function (i, file) {
-                                            file.status = Dropzone.QUEUED
-                                            file.previewElement.classList.remove("dz-error");
-                                            return file.previewElement.classList.add("dz-success");
-                                        });
-                                        myDropzone.processQueue();
-
-                                        myDropzone.on("success", function (file) {
-                                            swal("Thông báo", "Import lại CTĐT thành công!", "success").done();
-                                        });
-                                    }
-                                }
-                            });
-
-                            }, function (dismiss) {
-                                if (dismiss === 'cancel' || dismiss === 'close') {
-                                    // Ignore
-                                }
-                            })
-                    }*@
+                    }                    
                 });
             }
         };

@@ -8,6 +8,7 @@ using System.Data.OleDb;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -101,7 +102,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
 
                 int itemsCount = dt.Rows.Count;
 
-                // Create a datatable
+                // Create a datatable for error curriculums
                 DataTable errorCurriculums = new DataTable("Grid");
                 errorCurriculums.Columns.AddRange(
                     new DataColumn[3]{
@@ -110,142 +111,179 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         new DataColumn("credits")
                     });
 
-                /*try
-                {*/
-                //Insert records to database table.
-                foreach (DataRow row in dt.Rows)
+                // Validate all columns and then delete
+                bool isValid = ValidateColumns(dt);
+                if (isValid)
                 {
-                    // Declare all columns
-                    string studentId = row["StudentID"].ToString();
-                    string studentName = row["StudentName"].ToString();
-                    string birthDay = row["BirthDay"].ToString();
-                    string birthPlace = row["BirthPlace"].ToString();
-                    string classStudentId = row["ClassStudentID"].ToString();
-                    string classStudentName = row["ClassStudentName"].ToString();
-                    string yearStudy = row["YearStudy"].ToString();
-                    string oldTermId = row["TermID"].ToString();
-                    string termName = row["TermName"].ToString();
-                    string curriculumId = row["CurriculumID"].ToString();
-                    string studyUnitId = row["StudyUnitID"].ToString();
-                    string studyUnitAlias = row["StudyUnitAlias"].ToString();
-                    string curriculumName = row["CurriculumName"].ToString();
-                    string credits = row["Credits"].ToString();
-                    string mark10 = row["Mark10"].ToString();
-                    string mark10_2 = row["Mark10_2"].ToString();
-                    string mark10_3 = row["Mark10_3"].ToString();
-                    string mark10_4 = row["Mark10_4"].ToString();
-                    string mark10_5 = row["Mark10_5"].ToString();
-                    string maxMark10 = row["MaxMark10"].ToString();
-                    string maxMark4 = row["maxMark4"].ToString();
-                    string maxMarkLetter = row["MaxMarkLetter"].ToString();
-                    string isPass = row["IsPass"].ToString();
+                    // Delete all study results
+                    Delete(studentCourseId);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.ExpectationFailed);
+                }
 
-
-                    var newTermId = "HK" + SplitYearStudyString(yearStudy) + SplitTermString(oldTermId);
-
-
-                    var query_classstudent = db.class_student.Where(s => s.id == classStudentId).FirstOrDefault();
-                    if (query_classstudent == null)
+                try
+                {
+                    //Insert records to database table.
+                    foreach (DataRow row in dt.Rows)
                     {
-                        // Add class student
-                        db.class_student.Add(new class_student
+                        // Declare all columns
+                        string studentId = row["StudentID"].ToString();
+                        string studentName = row["StudentName"].ToString();
+                        string birthDay = row["BirthDay"].ToString();
+                        string birthPlace = row["BirthPlace"].ToString();
+                        string classStudentId = row["ClassStudentID"].ToString();
+                        string classStudentName = row["ClassStudentName"].ToString();
+                        string yearStudy = row["YearStudy"].ToString();
+                        string oldTermId = row["TermID"].ToString();
+                        string termName = row["TermName"].ToString();
+                        string curriculumId = row["CurriculumID"].ToString();
+                        string studyUnitId = row["StudyUnitID"].ToString();
+                        string studyUnitAlias = row["StudyUnitAlias"].ToString();
+                        string curriculumName = row["CurriculumName"].ToString();
+                        string credits = row["Credits"].ToString();
+                        string mark10 = row["Mark10"].ToString();
+                        string mark10_2 = row["Mark10_2"].ToString();
+                        string mark10_3 = row["Mark10_3"].ToString();
+                        string mark10_4 = row["Mark10_4"].ToString();
+                        string mark10_5 = row["Mark10_5"].ToString();
+                        string maxMark10 = row["MaxMark10"].ToString();
+                        string maxMark4 = row["maxMark4"].ToString();
+                        string maxMarkLetter = row["MaxMarkLetter"].ToString();
+                        string isPass = row["IsPass"].ToString();
+
+
+                        var newTermId = "HK" + SplitYearStudyString(yearStudy) + SplitTermString(oldTermId);
+
+                        var query_classstudent = db.class_student.Where(s => s.id == classStudentId).FirstOrDefault();
+                        if (query_classstudent == null)
                         {
-                            id = classStudentId,
-                            name = classStudentName
-                        });
-                        db.SaveChanges();
-                    }
+                            // Add class student
+                            db.class_student.Add(new class_student
+                            {
+                                id = classStudentId,
+                                name = classStudentName
+                            });
+                            db.SaveChanges();
+                        }
 
-                    var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
-                    if (query_student == null)
-                    {
-                        db.students.Add(new student
+                        var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
+                        if (query_student == null)
                         {
                             // Add student
-                            id = studentId,
-                            full_name = SetNullOnEmpty(studentName),
-                            birth_date = DateTime.ParseExact(birthDay, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                            birth_place = SetNullOnEmpty(birthPlace),
-                            class_student_id = SetNullOnEmpty(classStudentId),
-                            student_course_id = studentCourseId
-                        });
-                        db.SaveChanges();
-                    }
+                            db.students.Add(new student
+                            {
+                                id = studentId,
+                                full_name = SetNullOnEmpty(studentName),
+                                birth_date = DateTime.ParseExact(birthDay, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                                birth_place = SetNullOnEmpty(birthPlace),
+                                class_student_id = SetNullOnEmpty(classStudentId),
+                                student_course_id = studentCourseId
+                            });
+                            db.SaveChanges();
+                        }
 
-                    var query_term = db.terms.Where(t => t.id == newTermId).FirstOrDefault();
-                    if (query_term == null)
-                    {
-                        db.terms.Add(new term
+                        var query_term = db.terms.Where(t => t.id == newTermId).FirstOrDefault();
+                        if (query_term == null)
                         {
-                            id = newTermId,
-                            name = termName
-                        });
-                        db.SaveChanges();
-                    }
+                            // Add term
+                            db.terms.Add(new term
+                            {
+                                id = newTermId,
+                                name = termName
+                            });
+                            db.SaveChanges();
+                        }
 
-                    var query_study_unit = db.study_unit.Where(s => s.id == studyUnitId).FirstOrDefault();
-                    if (query_study_unit == null)
-                    {
-                        db.study_unit.Add(new study_unit
+                        var query_study_unit = db.study_unit.Where(s => s.id == studyUnitId).FirstOrDefault();
+                        if (query_study_unit == null)
                         {
-                            id = studyUnitId,
-                            alias = studyUnitAlias
-                        });
-                        db.SaveChanges();
-                    }
+                            // Add study unit
+                            db.study_unit.Add(new study_unit
+                            {
+                                id = studyUnitId,
+                                alias = studyUnitAlias
+                            });
+                            db.SaveChanges();
+                        }
 
-                    var query_curriculum = db.curricula.Where(c => c.curriculum_id ==
-                    curriculumId && c.student_course_id == studentCourseId).FirstOrDefault();
+                        var query_curriculum = db.curricula.Where(c => c.curriculum_id ==
+                        curriculumId && c.student_course_id == studentCourseId).FirstOrDefault();
 
-                    if (query_curriculum != null)
-                    {
-                        db.study_results.Add(new study_results
+                        if (query_curriculum != null)
                         {
-                            mark10 = SetNullOnEmpty(mark10),
-                            mark10_2 = SetNullOnEmpty(mark10_2),
-                            mark10_3 = SetNullOnEmpty(mark10_3),
-                            mark10_4 = SetNullOnEmpty(mark10_4),
-                            mark10_5 = SetNullOnEmpty(mark10_5),
-                            max_mark_10 = SetNullOnEmpty(maxMark10),
-                            max_mark_4 = SetNullOnEmpty(maxMark4),
-                            max_mark_letter = SetNullOnEmpty(maxMarkLetter),
-                            is_pass = SetNullOnEmpty(isPass),
-                            year_study = yearStudy,
-                            term_id = newTermId,
-                            curriculum_id = query_curriculum.id,
-                            study_unit_id = studyUnitId,
-                            student_id = studentId,
-                            student_course_id = studentCourseId
-                        });
-                    }
-                    else
-                    {
-                        // Add error curriculums which are not in study program
-                        errorCurriculums.Rows.Add(curriculumId, curriculumName, credits);
-                    }
+                            // Add study results
+                            db.study_results.Add(new study_results
+                            {
+                                mark10 = SetNullOnEmpty(mark10),
+                                mark10_2 = SetNullOnEmpty(mark10_2),
+                                mark10_3 = SetNullOnEmpty(mark10_3),
+                                mark10_4 = SetNullOnEmpty(mark10_4),
+                                mark10_5 = SetNullOnEmpty(mark10_5),
+                                max_mark_10 = SetNullOnEmpty(maxMark10),
+                                max_mark_4 = SetNullOnEmpty(maxMark4),
+                                max_mark_letter = SetNullOnEmpty(maxMarkLetter),
+                                is_pass = SetNullOnEmpty(isPass),
+                                year_study = yearStudy,
+                                term_id = newTermId,
+                                curriculum_id = query_curriculum.id,
+                                study_unit_id = studyUnitId,
+                                student_id = studentId,
+                                student_course_id = studentCourseId
+                            });
+                        }
+                        else
+                        {
+                            // Add error curriculums which are not in study program
+                            errorCurriculums.Rows.Add(curriculumId, curriculumName, credits);
+                        }
 
-                    // Send progress to progress bar
-                    Functions.SendProgress("Đang import...", dt.Rows.IndexOf(row), itemsCount);
+                        // Send progress to progress bar
+                        Functions.SendProgress("Đang import...", dt.Rows.IndexOf(row), itemsCount);
 
+                    }
+                    db.SaveChanges();
+
+                    // Remove duplicate values
+                    DataTable distinctTable = errorCurriculums.DefaultView.ToTable( /*distinct*/ true);
+                    return DataTableToJson(distinctTable);
                 }
-                db.SaveChanges();
-
-                // Remove duplicate values
-                DataTable distinctTable = errorCurriculums.AsEnumerable()
-                 .GroupBy(x => x.Field<string>("curriculumId"))
-                 .Select(y => y.First())
-                 .CopyToDataTable(); ;
-                return DataTableToJson(distinctTable);
-
-
-                /*}
                 catch (Exception)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.ExpectationFailed);
-                }*/
+                }
             }
             ViewBag.majors = db.majors.ToList();
             return View();
+        }
+
+        public bool ValidateColumns(DataTable dt)
+        {
+            // Validate all columns in excel file
+            if (ContainColumn("StudentID", dt) && ContainColumn("StudentName", dt) && ContainColumn("BirthDay", dt)
+                    && ContainColumn("BirthPlace", dt) && ContainColumn("ClassStudentID", dt) && ContainColumn("ClassStudentName", dt)
+                    && ContainColumn("YearStudy", dt) && ContainColumn("TermID", dt) && ContainColumn("TermName", dt)
+                    && ContainColumn("CurriculumID", dt) && ContainColumn("StudyUnitID", dt) && ContainColumn("StudyUnitAlias", dt)
+                    && ContainColumn("CurriculumName", dt) && ContainColumn("Credits", dt) && ContainColumn("Mark10", dt)
+                    && ContainColumn("Mark10_2", dt) && ContainColumn("Mark10_3", dt) && ContainColumn("Mark10_4", dt)
+                    && ContainColumn("Mark10_5", dt) && ContainColumn("MaxMark10", dt) && ContainColumn("maxMark4", dt)
+                    && ContainColumn("MaxMarkLetter", dt) && ContainColumn("IsPass", dt))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool ContainColumn(string columnName, DataTable table)
+        {
+            // Action to check if datatable contain some columns
+            DataColumnCollection columns = table.Columns;
+            if (columns.Contains(columnName))
+            {
+                return true;
+            }
+            return false;
         }
 
         public JsonResult DataTableToJson(DataTable table)

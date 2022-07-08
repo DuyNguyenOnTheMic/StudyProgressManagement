@@ -1,66 +1,48 @@
 ﻿
 @{
-    ViewBag.Title = "Xem chương trình đào tạo";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!--Bootstrap Grid options Starts-->
-<section id="grid-option">
+<!-- Section start -->
+<section>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title-wrap bar-success">
-                        <h4 class="card-title">Xem chương trình đào tạo</h4>
+                    <div class="card-title-wrap bar-pink">
+                        <h4 class="card-title mb-0">Xem kết quả học tập</h4>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="card-block">
-                        <form>
-                            <div class="form-body">
-                                <div class="row justify-content-center">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Ngành: </label>
-                                            <select class="form-control" id="comboboxMajor" name="major" required onkeypress="document.getElementById('resp1').innerHTML=''">
-                                                <option value="" selected="selected" disabled="disabled"> ----------- Chọn ngành ----------- </option>
-                                                @foreach (var major in ViewBag.majors)
-                                                {
-                                                    <option value="@major.id">@major.name</option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Khoá: </label>
-                                            <select class="form-control" id="comboboxStudentCourse" name="student_course" required>
-                                                <option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
-                                            </select>
-                                        </div>
-                                    </div>
+                        <fieldset>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Nhập MSSV...(VD: 197PM21905)" id="txtStudentId">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button" id="btnViewStudyResult">Xem kết quả</button>
                                 </div>
                             </div>
-                        </form>
+                        </fieldset>
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="tblStudyProgram" cellspacing="0" width="100%" style="display: none">
+                            <h4 class="card-title" id="lblStudentName" style="text-align: center; margin-top: 50px; display: none"></h4>
+                            <table class="table table-bordered" id="tblStudyResult" cellspacing="0" width="100%" style="display: none">
                                 <thead style="text-align: center; background-color: #FFC8A4; color: rgba(0, 0, 0, 0.87) ">
                                     <tr>
                                         <th rowspan="2"> STT </th>
                                         <th rowspan="2"> MÃ HỌC PHẦN </th>
                                         <th rowspan="2"> TÊN HỌC PHẦN </th>
-                                        <th rowspan="2"> TÊN HỌC PHẦN (TA) </th>
                                         <th rowspan="2"> TC </th>
                                         <th colspan="4"> SỐ TIẾT </th>
                                         <th rowspan="2"> BB/ TC </th>
-                                        <th rowspan="2"> HỌC PHẦN TIÊN QUYẾT </th>
-                                        <th rowspan="2"> HỌC PHẦN HỌC TRƯỚC </th>
-                                        <th rowspan="2"> GHI CHÚ CHỈNH SỬA </th>
                                         <th rowspan="2" style="display: none"></th>
                                         <th rowspan="2" style="display: none"></th>
                                         <th rowspan="2" style="display: none"></th>
                                         <th rowspan="2" style="display: none"></th>
                                         <th rowspan="2" style="display: none"></th>
+                                        <th rowspan="2"> ĐIỂM 1 </th>
+                                        <th rowspan="2"> ĐIỂM 2 </th>
+                                        <th rowspan="2"> ĐIỂM MÔN </th>
                                     </tr>
                                     <tr>
                                         <th> LT </th>
@@ -71,9 +53,9 @@
                                 </thead>
                                 <tbody></tbody>
                             </table>
-                            <div class="container" id="viewStudyProgram_instruction">
-                                <h4 class="card-title" style="text-align: center; margin-top: 50px;">Chọn ngành và khoá để xem chương trình đào tạo</h4>
-                                <img style="display: block; margin-left: auto; margin-right: auto; width: 60%;" alt="Instruction" src="~/assets/images/img_viewing.svg" />
+                            <div class="container" id="viewStudyResult_instruction">
+                                <h4 class="card-title" style="text-align: center; margin-top: 50px;">Nhập mã số sinh viên để xem kết quả học tập</h4>
+                                <img style="display: block; margin-left: auto; margin-right: auto; width: 60%;" alt="Instruction" src="~/assets/images/img_viewscore.svg" />
                             </div>
                         </div>
                     </div>
@@ -82,79 +64,59 @@
         </div>
     </div>
 </section>
-<!--Bootstrap Grid options Ends-->
-
+<!-- Section end -->
 
 <link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
 <link href="~/app-assets/vendors/css/tables/datatable/rowGroup.dataTables.min.css" rel="stylesheet" />
 
 @section scripts {
-
     <script src="~/app-assets/vendors/js/datatable/jquery.dataTables.min.js"></script>
     <script src="~/app-assets/vendors/js/datatable/dataTables.rowGroup.min.js"></script>
 
     <script type="text/javascript">
 
-        $(document).ready(function () {
+        $("#btnViewStudyResult").click(function (event) {
 
-            // Load cascading dropdown between majors and student courses
-             $("#comboboxMajor").change(function () {
-                $("#comboboxStudentCourse").empty();
-                var majorId = $('#comboboxMajor option:selected').val();
-                $.ajax({
-                    type: 'GET',
-                    url: '@Url.Action("LoadStudentCourses", "StudyProgram")',
-                    dataType: 'json',
-                    data: { majorId: majorId },
-                    success: function (results) {
-                        $("#comboboxStudentCourse").append('<option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>');
-                        $.each(results, function (i, result) {
-                            $("#comboboxStudentCourse").append('<option value="' + result.id + '">' + result.course + '</option>');
-                        });
-                    },
-                    error: function (ex) {
-                        alert('Failed to retrieve states.' + ex);
-                    }
-                });
-                return false;
-             }).change();
-
-            $("#comboboxStudentCourse").change(function () {
-                var studentCourseId = $('#comboboxStudentCourse option:selected').val();
-                if (studentCourseId != null) {
-                    PopulateStudyProgram(studentCourseId);
-                }
-                else
-                {
-                }
-            }).change();
-        });
-
-        function PopulateStudyProgram(studentCourseId) {
-
-            $('#tblStudyProgram').show();
-            $('#viewStudyProgram_instruction').hide();
-
+            var studentId = $('#txtStudentId').val();
             var dataTable;
 
-            // Populate Study Program datatable
-            dataTable = $('#tblStudyProgram').DataTable(
+            $('#tblStudyResult').show();
+            $('#viewStudyResult_instruction').hide();
+
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetStudentInfo", "StudyResult")',
+                data: { 'studentId': studentId },
+                success: function (response) {
+                    if (response) {
+                        $('#lblStudentName').text('Kết quả học tập của ' + response + ' (' + studentId + ')');
+                        $('#lblStudentName').show();
+                    }
+                    else {
+                        $('#lblStudentName').show();
+                    }
+                }                
+            });
+
+
+            dataTable = $('#tblStudyResult').DataTable(
                 {
                     ajax: {
                     dataSrc: '',
                     type: 'POST',
-                    url: '@Url.Action("GetData", "StudyProgram")',
-                    data: { 'id': studentCourseId },
+                    url: '@Url.Action("GetData", "StudyResult")',
+                    data: { 'studentId': studentId },
                     dataType: 'json',
                     },
-
+                    
                     paging: false,
                     ordering: false,
                     info: false,
                     destroy: true,
 
                     // Row grouping of knowledge type name
-                    order: [[13, 'asc'], [14, 'asc'], [15, 'asc']],
+                    order: [[9, 'asc'], [10, 'asc'], [11, 'asc']],
                     rowGroup: {
                         startRender: function (rows, group, level) {
 
@@ -218,8 +180,8 @@
                         dataSrc: ['knowledge_type_group_1', 'knowledge_type_group_2', 'knowledge_type_group_3' ]
                     },
                     columnDefs: [
-                        { visible: false, targets: [13, 14, 15, 16, 17] },
-                        { className: "text-center", targets: [4, 5, 6, 7, 8, 9] }
+                        { visible: false, targets: [9, 10, 11, 12, 13] },
+                        { className: "text-center", targets: [4, 5, 6, 7, 8, 9, 14, 15, 16] }
                     ],
 
                     // Declare columns
@@ -232,26 +194,34 @@
                             width: '20px'
                         },
                         { 'data': 'curriculum_id' },
-                        { 'data': 'name' },
-                        { 'data': 'name_english' },
+                        { 'data': 'curriculum_name' },
                         { 'data': 'credits' },
                         { 'data': 'theoretical_hours' },
                         { 'data': 'practice_hours' },
                         { 'data': 'internship_hours' },
                         { 'data': 'project_hours' },
                         { 'data': 'compulsory_or_optional' },
-                        { 'data': 'prerequisites' },
-                        { 'data': 'learn_before' },
-                        { 'data': 'editing_notes' },
                         { 'data': 'knowledge_type_group_1' },
                         { 'data': 'knowledge_type_group_2' },
                         { 'data': 'knowledge_type_group_3' },
                         { 'data': 'compulsory_credits' },
-                        { 'data': 'optional_credits' }
+                        { 'data': 'optional_credits' },
+                        {
+                            'data': 'mark10',
+                            width: '20px'
+                        },
+                        {
+                            'data': 'mark10_2',
+                            width: '20px'
+                        },
+                        {
+                            'data': 'max_mark_10',
+                            width: '20px'
+                        }
                     ],
 
                     language: {
-                        'emptyTable': "Khoá sinh viên này chưa có dữ liệu <i class='ft-help-circle' style='vertical-align:middle'></i>",
+                        'emptyTable': "Sinh viên này chưa có dữ liệu <i class='ft-help-circle' style='vertical-align:middle'></i>",
                         'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>",
                         'loadingRecords': 'Đang lấy dữ liệu...'
                     },
@@ -265,7 +235,15 @@
                     cell.innerHTML = i + 1 + info.start;
                 });
             });
-        }
+
+            // Return nothing on ajax error
+            $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
+                return;
+            };
+
+        });
 
     </script>
+
 }
+

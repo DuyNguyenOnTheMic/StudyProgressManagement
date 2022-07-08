@@ -24,6 +24,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return View();
         }
 
+        [HttpPost]
         public JsonResult GetData(int id)
         {
             // Get curriculum of student courses data from datatabse

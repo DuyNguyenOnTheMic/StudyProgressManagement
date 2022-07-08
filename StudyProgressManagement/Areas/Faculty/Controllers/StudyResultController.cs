@@ -25,6 +25,52 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return View();
         }
 
+        [HttpPost]
+        public string GetStudentInfo(string studentId)
+        {
+            // Get student name
+            var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
+            if (query_student != null)
+            {
+                return query_student.full_name;
+            }
+            return null;
+        }
+
+        [HttpPost]
+        public JsonResult GetData(string studentId)
+        {
+            var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
+            // Get study results of student
+            if (query_student != null)
+            {
+                return Json(db.curricula.Where(s => s.student_course_id == query_student.student_course_id).Select(s => new
+                {
+                    curriculum_id = s.curriculum_id,
+                    curriculum_name = s.name,
+                    credits = s.credits,
+                    theoretical_hours = s.theoretical_hours,
+                    practice_hours = s.practice_hours,
+                    internship_hours = s.internship_hours,
+                    project_hours = s.project_hours,
+                    compulsory_or_optional = s.compulsory_or_optional,
+                    knowledge_type_group_1 = s.knowledge_type.group_1,
+                    knowledge_type_group_2 = s.knowledge_type.group_2,
+                    knowledge_type_group_3 = s.knowledge_type.group_3,
+                    compulsory_credits = s.knowledge_type.compulsory_credits,
+                    optional_credits = s.knowledge_type.optional_credits,
+                    mark10 = db.study_results.Where(d => d.student_id == studentId && d.curriculum_id == s.id)
+                    .Select(d => d.mark10).FirstOrDefault().ToString(),
+                    mark10_2 = db.study_results.Where(d => d.student_id == studentId && d.curriculum_id == s.id)
+                    .Select(d => d.mark10_2).FirstOrDefault().ToString(),
+                    max_mark_10 = db.study_results.Where(d => d.student_id == studentId && d.curriculum_id == s.id)
+                    .Select(d => d.max_mark_10).FirstOrDefault().ToString()
+
+                }).ToList(), JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { error = true }, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult LoadStudentCourses(string majorId)
         {
             // get student courses data from database
@@ -61,7 +107,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 string extension = Path.GetExtension(postedFile.FileName);
                 postedFile.SaveAs(filePath);
 
-                string conString = ConfigurationManager.ConnectionStrings["ExcelConString"].ConnectionString;                
+                string conString = ConfigurationManager.ConnectionStrings["ExcelConString"].ConnectionString;
 
                 DataTable dt = new DataTable();
                 conString = string.Format(conString, filePath);

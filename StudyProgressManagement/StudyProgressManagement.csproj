@@ -793,6 +793,7 @@
     <Content Include="app-assets\vendors\js\vertical-timeline.js" />
     <Content Include="app-assets\vendors\js\wizard-steps.js" />
     <Content Include="assets\images\img_excel.svg" />
+    <Content Include="assets\images\img_viewscore.svg" />
     <Content Include="assets\js\scripts.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -866,6 +867,7 @@
     </Content>
     <Content Include="assets\files\CTDT_K3_CNTT_Mau.xlsx" />
     <Content Include="assets\files\KQHT_K3_CNTT_Mau.xlsx" />
+    <Content Include="Areas\Faculty\Views\StudyResult\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

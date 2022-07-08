@@ -86,16 +86,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 string extension = Path.GetExtension(postedFile.FileName);
                 postedFile.SaveAs(filePath);
 
-                string conString = string.Empty;
-                switch (extension)
-                {
-                    case ".xls": //Excel 97-03.
-                        conString = ConfigurationManager.ConnectionStrings["Excel03ConString"].ConnectionString;
-                        break;
-                    case ".xlsx": //Excel 07 and above.
-                        conString = ConfigurationManager.ConnectionStrings["Excel07ConString"].ConnectionString;
-                        break;
-                }
+                string conString = ConfigurationManager.ConnectionStrings["ExcelConString"].ConnectionString;               
 
                 DataTable dt = new DataTable();
                 conString = string.Format(conString, filePath);

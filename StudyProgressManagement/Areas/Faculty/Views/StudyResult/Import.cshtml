@@ -63,13 +63,13 @@
                     <div class="card-title-wrap bar-success">
                         <h4 class="card-title">Tips</h4>
                     </div>
-                    <div class="card-body">
-                        <div class="card-block">
-                            <h4 class="card-title" style="text-align:center">Chọn hình dưới để tải tệp tin import mẫu</h4>
-                            <a href="~/assets/files/KQHT_K3_CNTT_Mau.xlsx" download>
-                                <img style="display: block; margin-left: auto; margin-right: auto; margin-top: 50px; width: 100px; filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));" alt="img_downloadIcon" src="~/assets/images/img_excel.svg" />
-                            </a>
-                        </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block">
+                        <h4 class="card-title" style="text-align:center">Chọn hình dưới để tải tệp tin import mẫu</h4>
+                        <a href="@Url.Content("~/assets/files/KQHT_K3_CNTT_Mau.xlsx")" download>
+                            <img style="display: block; margin-left: auto; margin-right: auto; margin-top: 50px; width: 100px; filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));" alt="img_downloadIcon" src="~/assets/images/img_excel.svg" />
+                        </a>
                     </div>
                 </div>
             </div>
@@ -87,10 +87,10 @@
                 <div class="card-body collapse show">
                     <div class="card-block card-dashboard">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered" id="tblErrorRows" width="100%">
+                            <table class="table table-striped table-bordered file-export" id="tblErrorRows" width="100%">
                                 <thead>
                                     <tr>
-                                        <th> STT </th>
+                                        <th></th>
                                         <th> Mã học phần </th>
                                         <th> Tên học phần </th>
                                         <th> Số tín chỉ </th>
@@ -113,6 +113,7 @@
 @section scripts {
     <script src="~/app-assets/vendors/js/dropzone.min.js"></script>
     <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
+    <script src="~/app-assets/vendors/js/datatable/dataTables.buttons.min.js"></script>
     <script src="~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js"></script>
     <script src="~/signalr/hubs"></script>
 
@@ -226,22 +227,51 @@
                                 $('#errorCurriculumn_section').show();
 
                                 var dataTable;
+                                var colsToExport = [1, 2, 3];
 
                                 // Populate datatable showing the error curriculums
-                                dataTable = $('#tblErrorRows').DataTable({
+                                dataTable = $('#tblErrorRows').DataTable({                                   
                                     data: data,
+                                    paging: false,
+                                    info: false,
                                     destroy: true,
-                                    columns: [
+                                    dom: 'Bfrtip',
+                                    buttons: [
                                         {
-                                            'data': null,
-                                            searchable: false,
-                                            orderable: false,
-                                            className: 'text-center',
-                                            width: '20px'
+                                            extend: 'copy',
+                                            title: 'KQHT-HocPhanBiLoi',
+                                            exportOptions: {
+                                                columns: colsToExport
+                                            }
                                         },
-                                        { "data": "curriculumId" },
-                                        { "data": "curriculumName" },
-                                        { "data": "credits" },
+                                        {
+                                            extend: 'excel',
+                                            title: 'KQHT-HocPhanBiLoi',
+                                            exportOptions: {
+                                                columns: colsToExport
+                                            }
+                                        },
+                                        {
+                                            extend: 'print',
+                                            title: 'KQHT-HocPhanBiLoi',
+                                            exportOptions: {
+                                                columns: colsToExport
+                                            }
+                                        }
+                                    ],
+                                    columnDefs: [{
+                                        searchable: false,
+                                        orderable: false,
+                                        className: 'text-center',
+                                        width: '20px',
+                                        targets: 0,                                        
+                                    }],
+                                    order: [[1, 'asc']],
+                                    columns: [
+                                        { 'data': null },
+                                        { 'data': 'curriculumId' },
+                                        { 'data': 'curriculumName' },
+                                        { 'data': 'credits' },
                                     ],
                                     language: {
                                         'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>"
@@ -254,6 +284,8 @@
                                         cell.innerHTML = i + 1;
                                     });
                                 }).draw();
+
+                                $('.buttons-copy, .buttons-print, .buttons-excel').addClass('btn btn-outline-primary mr-1');
                             }
                             else {
                                 swal("Thông báo", "Import thành công!", "success").done();
@@ -297,7 +329,7 @@
                         // Show message if the file is not in the right format (like missing columns, etc, ...)
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
                         errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi, vui lòng kiểm tra lại tệp tin';
-                    }                    
+                    }
                 });
             }
         };

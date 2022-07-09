@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Xem kết quả học tập";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -16,16 +16,18 @@
                 </div>
                 <div class="card-body">
                     <div class="card-block">
-                        <fieldset>
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Nhập MSSV...(VD: 197PM21905)" id="txtStudentId">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button" id="btnViewStudyResult">Xem kết quả</button>
+                        <form id="frmViewStudyResult">
+                            <fieldset>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Nhập MSSV..." id="txtStudentId" required oninvalid="this.setCustomValidity('Bạn chưa nhập MSSV')" oninput="this.setCustomValidity('')">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit" id="mybutton">Xem kết quả</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </fieldset>
+                            </fieldset>
+                        </form>                        
                         <div class="table-responsive">
-                            <h4 class="card-title" id="lblStudentName" style="text-align: center; margin-top: 50px; display: none"></h4>
+                            <h4 class="card-title" id="lblStudentName" style="text-align: center; margin: 30px; display: none"></h4>
                             <table class="table table-bordered" id="tblStudyResult" cellspacing="0" width="100%" style="display: none">
                                 <thead style="text-align: center; background-color: #FFC8A4; color: rgba(0, 0, 0, 0.87) ">
                                     <tr>
@@ -43,6 +45,8 @@
                                         <th rowspan="2"> ĐIỂM 1 </th>
                                         <th rowspan="2"> ĐIỂM 2 </th>
                                         <th rowspan="2"> ĐIỂM MÔN </th>
+                                        <th rowspan="2"> ĐIỂM CHỮ </th>
+                                        <th rowspan="2"> TRẠNG THÁI </th>
                                     </tr>
                                     <tr>
                                         <th> LT </th>
@@ -54,7 +58,7 @@
                                 <tbody></tbody>
                             </table>
                             <div class="container" id="viewStudyResult_instruction">
-                                <h4 class="card-title" style="text-align: center; margin-top: 50px;">Nhập mã số sinh viên để xem kết quả học tập</h4>
+                                <h4 class="card-title-wrap bar-pink" style="text-align: center; margin-top: 50px;">Nhập mã số sinh viên để xem kết quả học tập</h4>
                                 <img style="display: block; margin-left: auto; margin-right: auto; width: 60%;" alt="Instruction" src="~/assets/images/img_viewscore.svg" />
                             </div>
                         </div>
@@ -75,7 +79,13 @@
 
     <script type="text/javascript">
 
-        $("#btnViewStudyResult").click(function (event) {
+        $("#frmViewStudyResult").submit(function (event) {
+
+            var mybutton = document.getElementById("mybutton");
+            mybutton.disabled = true;
+            setTimeout(function () {
+                mybutton.disabled = false;
+            }, 2000);
 
             var studentId = $('#txtStudentId').val();
             var dataTable;
@@ -90,11 +100,11 @@
                 data: { 'studentId': studentId },
                 success: function (response) {
                     if (response) {
-                        $('#lblStudentName').text('Kết quả học tập của ' + response + ' (' + studentId + ')');
+                        $('#lblStudentName').text(response);
                         $('#lblStudentName').show();
                     }
                     else {
-                        $('#lblStudentName').show();
+                        $('#lblStudentName').hide();
                     }
                 }                
             });
@@ -146,34 +156,34 @@
                                     // Return total count of compulsory credits and optional credits
                                     var total_credits = rows.data()[0].compulsory_credits + rows.data()[0].optional_credits;
                                     return $('<tr/>')
-                                        .append('<th colspan="4">' + group + ' (' + total_credits + ' tín chỉ: ' + rows.data()[0].compulsory_credits + ' bắt buộc + ' + rows.data()[0].optional_credits + ' tự chọn)' + '</td>')
+                                        .append('<th colspan="3">' + group + ' (' + total_credits + ' tín chỉ: ' + rows.data()[0].compulsory_credits + ' bắt buộc + ' + rows.data()[0].optional_credits + ' tự chọn)' + '</td>')
                                         .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
-                                        .append('<th colspan="8"></td>')
+                                        .append('<th colspan="10"></td>')
                                 }
                                 else if (rows.data()[0].compulsory_credits != null)
                                 {
                                     // Return compulsory cresits
                                     return $('<tr/>')
-                                        .append('<th colspan="4">' + group + ' (' + rows.data()[0].compulsory_credits + ' TC bắt buộc)'+ '</td>')
+                                        .append('<th colspan="3">' + group + ' (' + rows.data()[0].compulsory_credits + ' TC bắt buộc)'+ '</td>')
                                         .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
-                                        .append('<th colspan="8"></td>')
+                                        .append('<th colspan="10"></td>')
                                 }
                                 else
                                 {
                                     // Return optional credits
                                     return $('<tr/>')
-                                        .append('<th colspan="4">' + group + ' (' + rows.data()[0].optional_credits + ' TC tự chọn)' + '</td>')
+                                        .append('<th colspan="3">' + group + ' (' + rows.data()[0].optional_credits + ' TC tự chọn)' + '</td>')
                                         .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
-                                        .append('<th colspan="8"></td>')
+                                        .append('<th colspan="10"></td>')
                                 }
                             }
                             else
                             {
                                 // Return level 0 knowledge group
                                 return $('<tr/>')
-                                    .append('<th colspan="4">' + group + '</td>')
+                                    .append('<th colspan="3">' + group + '</td>')
                                     .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
-                                    .append('<th colspan="8"></td>')
+                                    .append('<th colspan="10"></td>')
                             }
                         },
                         emptyDataGroup: null,
@@ -181,7 +191,7 @@
                     },
                     columnDefs: [
                         { visible: false, targets: [9, 10, 11, 12, 13] },
-                        { className: "text-center", targets: [4, 5, 6, 7, 8, 9, 14, 15, 16] }
+                        { className: "text-center", targets: [3, 4, 5, 6, 7, 8, 14, 15, 16, 17, 18] }
                     ],
 
                     // Declare columns
@@ -208,15 +218,26 @@
                         { 'data': 'optional_credits' },
                         {
                             'data': 'mark10',
-                            width: '20px'
+                            width: '10px'
                         },
                         {
                             'data': 'mark10_2',
-                            width: '20px'
+                            width: '10px'
                         },
                         {
                             'data': 'max_mark_10',
-                            width: '20px'
+                            width: '10px',
+                            className: 'font-weight-bold',
+                        },
+                        {
+                            'data': 'max_mark_letter',
+                            width: '10px',
+                            className: 'font-weight-bold',
+                        },
+                        {
+                            'data': 'is_pass',
+                            width: '10px',
+                            className: 'font-weight-bold',
                         }
                     ],
 
@@ -240,6 +261,8 @@
             $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
                 return;
             };
+
+            event.preventDefault();
 
         });
 

@@ -190,6 +190,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Faculty\Controllers\MajorController.cs" />
+    <Compile Include="Areas\Faculty\Controllers\RegistrationResultController.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudentCourseController.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudyProgramController.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudyResultController.cs" />
@@ -868,6 +869,7 @@
     <Content Include="assets\files\CTDT_K3_CNTT_Mau.xlsx" />
     <Content Include="assets\files\KQHT_K3_CNTT_Mau.xlsx" />
     <Content Include="Areas\Faculty\Views\StudyResult\Index.cshtml" />
+    <Content Include="Areas\Faculty\Views\RegistrationResult\Import.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

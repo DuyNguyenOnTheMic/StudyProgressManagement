@@ -218,10 +218,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             db.students.Add(new student
                             {
                                 id = studentId,
-                                full_name = SetNullOnEmpty(studentName),
+                                full_name = studentName,
                                 birth_date = DateTime.ParseExact(birthDay, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                                birth_place = SetNullOnEmpty(birthPlace),
-                                class_student_id = SetNullOnEmpty(classStudentId),
+                                birth_place = birthPlace,
+                                class_student_id = classStudentId,
                                 student_course_id = studentCourseId
                             });
                             db.SaveChanges();
@@ -350,12 +350,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 return Json(new { error = true }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-        }
-
-        public static int? ToNullableInt(string value)
-        {
-            // Convert string to nullable int
-            return value != null && string.IsNullOrEmpty(value.Trim()) ? (int?)null : int.Parse(value);
         }
 
         public static string SetNullOnEmpty(string value)

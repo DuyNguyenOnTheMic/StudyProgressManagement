@@ -197,7 +197,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         string isPass = row["IsPass"].ToString();
 
 
-                        var newTermId = "HK" + SplitYearStudyString(yearStudy) + SplitTermString(oldTermId);
+                        var newTermId = "HK" + studyUnitId.Substring(0, 3);
 
                         var query_classstudent = db.class_student.Where(s => s.id == classStudentId).FirstOrDefault();
                         if (query_classstudent == null)
@@ -356,18 +356,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         {
             // Check if string is empty
             return value != null && string.IsNullOrEmpty(value.Trim()) ? null : value;
-        }
-
-        public static string SplitYearStudyString(string value)
-        {
-            // Split year study
-            return value.Split('-')[0].Substring(value.Split('-')[0].Length - 2);
-        }
-
-        public static string SplitTermString(string value)
-        {
-            // Split team
-            return value.Substring(value.Length - 1);
         }
     }
 }

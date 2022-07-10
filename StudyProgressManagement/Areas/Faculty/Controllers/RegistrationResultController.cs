@@ -42,7 +42,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public ActionResult Import(HttpPostedFileBase postedFile)
         {
             var postedStudentCourse = Request.Form["student_course"];
+            var postedTerm = Request.Form["term"];
             int studentCourseId = int.Parse(postedStudentCourse);
+            string termId = postedTerm.ToString();
 
 
             string filePath = string.Empty;
@@ -139,7 +141,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         {
                             id = studentClassId
                         });
-                        db.SaveChanges();
                     }
 
                     var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
@@ -157,7 +158,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             class_student_id = studentClassId,
                             student_course_id = studentCourseId
                         });
-                        db.SaveChanges();
                     }
 
                     var query_curriculum_class = db.curriculum_class.Where(c => c.id == curriculumClassId).FirstOrDefault();
@@ -171,6 +171,17 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         });
                     }
 
+                    var query_lecturer = db.lecturers.Where(l => l.id == lecturerId).FirstOrDefault();
+                    if (query_lecturer == null)
+                    {
+                        // Add lecturer
+                        db.lecturers.Add(new lecturer
+                        {
+                            id = lecturerId,
+                            name = lecturerName
+                        });
+                    }
+
                     var query_curriculum = db.curricula.Where(c => c.curriculum_id ==
                        curriculumId && c.student_course_id == studentCourseId).FirstOrDefault();
 
@@ -180,7 +191,11 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         db.registration_results.Add(new registration_results
                         {
                             registration_type = registrationType,
+                            registration_date = DateTime.ParseExact(registrationDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            registration_person = SetNullOnEmpty(registrationPerson),
+                            term_id = termId,
                             curriculum_id = query_curriculum.id,
+                            curriculum_class_id = curriculumClassId,
                             student_id = studentId,
                             student_course_id = studentCourseId
                         });

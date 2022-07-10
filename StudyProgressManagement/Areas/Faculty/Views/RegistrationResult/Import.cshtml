@@ -37,6 +37,10 @@
                                                 <option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
                                             </select>
                                         </div>
+                                        <div class="form-group">
+                                            <label>Học kỳ: </label>
+                                            <input type="text" class="form-control" id="txtTerm" name="term" placeholder="Nhập học kỳ" required">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="dropzone" id="my-dropzone">
@@ -170,6 +174,10 @@
                     else if (document.getElementById("comboboxStudentCourse").value == '') {
                         toastr.options.positionClass = 'toast-bottom-right';
                         toastr.warning('Bạn chưa chọn khoá');
+                    }
+                    else if (document.getElementById("txtTerm").value == '') {
+                        toastr.options.positionClass = 'toast-bottom-right';
+                        toastr.warning('Bạn chưa nhập học kỳ');
                     }
                     else if (count == 0) {
                         toastr.options.positionClass = 'toast-bottom-right';

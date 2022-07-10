@@ -57,14 +57,13 @@
                                 <a href="#"><i class="icon-book-open"></i><span data-i18n="" class="menu-title">KQ học tập</span></a>
                                 <ul class="menu-content">
                                     <li class="@(ViewBag.Title == "Xem kết quả học tập" ? "active" : "")">
-                                        <a href="@Url.Action("Index", "StudyResult", new { area = "Faculty" })" class="menu-item">Xem KQ học tập</a>
+                                        <a href="#" class="menu-item">Xem KQ học tập</a>
                                     </li>
                                     <li class="@(ViewBag.Title == "Import kết quả học tập" ? "active" : "")">
                                         <a href="@Url.Action("Import", "StudyResult", new { area = "Faculty" })" class="menu-item">Import KQ học tập</a>
                                     </li>
                                 </ul>
-                            </li>
-
+                            </li>                          
                             <li class="nav-item">
                                 <a href="#"><i class="icon-note"></i><span data-i18n="" class="menu-title">Kết quả ĐK học tập</span></a>
                             </li>
@@ -102,7 +101,7 @@
                             </li>
                             <li class="dropdown nav-item mr-0">
                                 <a id="dropdownBasic3" href="#" data-toggle="dropdown" class="nav-link position-relative dropdown-user-link dropdown-toggle">
-                                    <span class="avatar avatar-online"><img id="navbar-avatar" src="~/assets/images/img_user_avatar.png" alt="avatar" style="-webkit-box-shadow: 5px 5px 5px #ccc" /></span>
+                                    <span class="avatar avatar-online"><img id="navbar-avatar" src="~/assets/images/img_user_avatar.png" alt="avatar" style="-webkit-box-shadow: 5px 5px 5px #ccc"/></span>
                                     <p class="d-none">User Settings</p>
                                 </a>
                                 @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
@@ -300,7 +299,7 @@
             </div>
         </div>
     </aside>
-
+    
     @Scripts.Render("~/bundles/vendorJs")
     @RenderSection("scripts", required: false)
     @Scripts.Render("~/bundles/sidebarJs")

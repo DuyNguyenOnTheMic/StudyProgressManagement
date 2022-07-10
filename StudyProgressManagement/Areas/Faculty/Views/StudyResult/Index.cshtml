@@ -25,7 +25,7 @@
                                     </div>
                                 </div>
                             </fieldset>
-                        </form>
+                        </form>                        
                         <div class="table-responsive">
                             <h4 class="card-title" id="lblStudentName" style="text-align: center; margin: 30px; display: none"></h4>
                             <table class="table table-bordered" id="tblStudyResult" cellspacing="0" width="100%" style="display: none">
@@ -58,7 +58,7 @@
                                 <tbody></tbody>
                             </table>
                             <div class="container" id="viewStudyResult_instruction">
-                                <h4 class="card-title" style="text-align: center; margin-top: 50px;">Nhập mã số sinh viên để xem kết quả học tập</h4>
+                                <h4 class="card-title-wrap bar-pink" style="text-align: center; margin-top: 50px;">Nhập mã số sinh viên để xem kết quả học tập</h4>
                                 <img style="display: block; margin-left: auto; margin-right: auto; width: 60%;" alt="Instruction" src="~/assets/images/img_viewscore.svg" />
                             </div>
                         </div>
@@ -106,7 +106,7 @@
                     else {
                         $('#lblStudentName').hide();
                     }
-                }
+                }                
             });
 
 
@@ -119,7 +119,7 @@
                     data: { 'studentId': studentId },
                     dataType: 'json',
                     },
-
+                    
                     paging: false,
                     ordering: false,
                     info: false,
@@ -191,10 +191,7 @@
                     },
                     columnDefs: [
                         { visible: false, targets: [9, 10, 11, 12, 13] },
-                        { className: 'text-center', targets: [3, 4, 5, 6, 7, 8, 14, 15, 16, 17, 18] },
-                        { className: 'font-weight-bold', targets: [16, 17, 18] },
-                        { className: 'text-nowrap', targets: [18] },
-                        { width: '5%', targets: [0, 3, 4, 5, 6, 7, 8, 14, 15, 16, 17] }
+                        { className: "text-center", targets: [3, 4, 5, 6, 7, 8, 14, 15, 16, 17, 18] }
                     ],
 
                     // Declare columns
@@ -219,24 +216,28 @@
                         { 'data': 'knowledge_type_group_3' },
                         { 'data': 'compulsory_credits' },
                         { 'data': 'optional_credits' },
-                        { 'data': 'mark10' },
-                        { 'data': 'mark10_2' },
-                        { 'data': 'max_mark_10' },
-                        { 'data': 'max_mark_letter' },
+                        {
+                            'data': 'mark10',
+                            width: '10px'
+                        },
+                        {
+                            'data': 'mark10_2',
+                            width: '10px'
+                        },
+                        {
+                            'data': 'max_mark_10',
+                            width: '10px',
+                            className: 'font-weight-bold',
+                        },
+                        {
+                            'data': 'max_mark_letter',
+                            width: '10px',
+                            className: 'font-weight-bold',
+                        },
                         {
                             'data': 'is_pass',
-                            'render': function (data, type, row, meta) {
-                                if (data == 'x') {
-                                    return '<p class="text-success">Hoàn thành <i class="ft-check-circle" style="vertical-align:middle"></i></p>';
-                                }
-                                else if (row.max_mark_10) {
-                                    return '<p class="text-danger">Rớt môn <i class="ft-x-circle" style="vertical-align:middle"></i></p>';
-                                }
-                                else
-                                {
-                                    return '<p class="text-warning">Chưa học <i class="ft-help-circle" style="vertical-align:middle"></i></p>';
-                                }
-                            }
+                            width: '10px',
+                            className: 'font-weight-bold',
                         }
                     ],
 

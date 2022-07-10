@@ -90,6 +90,21 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     }
                 }
 
+                // Generate term name
+                string termName = "Học kỳ " + termId[termId.Length - 1];
+
+                var query_term = db.terms.Where(t => t.id == termId).FirstOrDefault();
+                if (query_term == null)
+                {
+                    // Add term
+                    db.terms.Add(new term
+                    {
+                        id = termId,
+                        name = termName
+                    });
+                    db.SaveChanges();
+                }
+
                 var query_studentcourse_curriculum = db.curricula.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
                 int itemsCount = dt.Rows.Count;
 
@@ -141,6 +156,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         {
                             id = studentClassId
                         });
+                        db.SaveChanges();
                     }
 
                     var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
@@ -158,6 +174,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             class_student_id = studentClassId,
                             student_course_id = studentCourseId
                         });
+                        db.SaveChanges();
                     }
 
                     var query_curriculum_class = db.curriculum_class.Where(c => c.id == curriculumClassId).FirstOrDefault();
@@ -169,6 +186,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             id = curriculumClassId,
                             schedule = SetNullOnEmpty(curriculumClassSchedule)
                         });
+                        db.SaveChanges();
                     }
 
                     var query_lecturer = db.lecturers.Where(l => l.id == lecturerId).FirstOrDefault();
@@ -177,9 +195,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         // Add lecturer
                         db.lecturers.Add(new lecturer
                         {
-                            id = lecturerId,
-                            name = lecturerName
+                            id = SetNullOnEmpty(lecturerId),
+                            name = SetNullOnEmpty(lecturerName)
                         });
+                        db.SaveChanges();
                     }
 
                     var query_curriculum = db.curricula.Where(c => c.curriculum_id ==
@@ -191,7 +210,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         db.registration_results.Add(new registration_results
                         {
                             registration_type = registrationType,
-                            registration_date = DateTime.ParseExact(registrationDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                            registration_date = DateTime.Parse(registrationDate),
                             registration_person = SetNullOnEmpty(registrationPerson),
                             term_id = termId,
                             curriculum_id = query_curriculum.id,
@@ -222,12 +241,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             }
             ViewBag.majors = db.majors.ToList();
             return View();
-        }
-
-        public static int? ToNullableInt(string value)
-        {
-            // Convert string to nullable int
-            return value != null && string.IsNullOrEmpty(value.Trim()) ? (int?)null : int.Parse(value);
         }
 
         public static string SetNullOnEmpty(string value)

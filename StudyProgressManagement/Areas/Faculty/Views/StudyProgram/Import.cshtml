@@ -235,6 +235,16 @@
 
                         }).then(function () {
 
+                            // Show waiting message while delete
+                            swal({
+                                title: 'Đang xoá dữ liệu...',
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                                onOpen: () => {
+                                    swal.showLoading();
+                                }
+                            })
+
                             var studentCourseId = $('#comboboxStudentCourse').val();
 
                             // Ajax call to delete study program of that student course

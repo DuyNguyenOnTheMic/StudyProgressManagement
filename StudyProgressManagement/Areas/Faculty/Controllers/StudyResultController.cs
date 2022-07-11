@@ -226,6 +226,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             });
                             db.SaveChanges();
                         }
+                        else if (query_student.birth_place == null)
+                        {
+                            query_student.birth_place = birthPlace;
+                            db.Entry(query_student).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
 
                         var query_term = db.terms.Where(t => t.id == newTermId).FirstOrDefault();
                         if (query_term == null)
@@ -318,7 +324,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return false;
         }
 
-        private bool ContainColumn(string columnName, DataTable table)
+        public bool ContainColumn(string columnName, DataTable table)
         {
             // Action to check if datatable contain some columns
             DataColumnCollection columns = table.Columns;

@@ -43,7 +43,7 @@
                         @if (User.IsInRole("Faculty"))
                         {
                             <li class="has-sub nav-item">
-                                <a href="#"><i class="icon-layers"></i><span data-i18n="" class="menu-title">CTĐT</span></a>
+                                <a><i class="icon-layers"></i><span data-i18n="" class="menu-title">CTĐT</span></a>
                                 <ul class="menu-content">
                                     <li class="@(ViewBag.Title == "Xem chương trình đào tạo" ? "active" : "")">
                                         <a href="@Url.Action("Index", "StudyProgram", new { area = "Faculty" })" class="menu-item">Xem CTĐT</a>
@@ -54,7 +54,7 @@
                                 </ul>
                             </li>
                             <li class="has-sub nav-item">
-                                <a href="#"><i class="icon-book-open"></i><span data-i18n="" class="menu-title">KQ học tập</span></a>
+                                <a><i class="icon-book-open"></i><span data-i18n="" class="menu-title">KQ học tập</span></a>
                                 <ul class="menu-content">
                                     <li class="@(ViewBag.Title == "Xem kết quả học tập" ? "active" : "")">
                                         <a href="@Url.Action("Index", "StudyResult", new { area = "Faculty" })" class="menu-item">Xem KQ học tập</a>
@@ -65,8 +65,16 @@
                                 </ul>
                             </li>
 
-                            <li class="nav-item">
-                                <a href="#"><i class="icon-note"></i><span data-i18n="" class="menu-title">Kết quả ĐK học tập</span></a>
+                            <li class="has-sub nav-item">
+                                <a><i class="icon-note"></i><span data-i18n="" class="menu-title">KQĐK học tập</span></a>
+                                <ul class="menu-content">
+                                    <li class="@(ViewBag.Title == "Xem kết quả đăng ký học tập" ? "active" : "")">
+                                        <a href="#" class="menu-item">Xem KQĐK học tập</a>
+                                    </li>
+                                    <li class="@(ViewBag.Title == "Import kết quả đăng ký học tập" ? "active" : "")">
+                                        <a href="@Url.Action("Import", "RegistrationResult", new { area = "Faculty" })" class="menu-item">Import KQĐK học tập</a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="@(ViewBag.Title == "Quản lý khoá sinh viên" ? "active" : "nav-item")">
                                 <a href="@Url.Action("Index", "StudentCourse", new { Area = "Faculty" })"><i class="icon-user"></i><span data-i18n="" class="menu-title">Khoá</span></a>

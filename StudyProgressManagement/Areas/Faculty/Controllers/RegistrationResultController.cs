@@ -1,4 +1,5 @@
-﻿using SignalRProgressBarSimpleExample.Util;
+﻿using Newtonsoft.Json;
+using SignalRProgressBarSimpleExample.Util;
 using StudyProgressManagement.Models;
 using System;
 using System.Configuration;
@@ -7,11 +8,13 @@ using System.Data.OleDb;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
 namespace StudyProgressManagement.Areas.Faculty.Controllers
 {
+    [Authorize(Roles = "Faculty")]
     public class RegistrationResultController : Controller
     {
         SEP25Team03Entities db = new SEP25Team03Entities();
@@ -105,7 +108,14 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     db.SaveChanges();
                 }
 
-                var query_studentcourse_curriculum = db.curricula.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
+                // Check if term already imported of this student course
+                var query_registrationresults_term = db.registration_results.Where(s => s.term_id
+                == termId && s.student_course_id == studentCourseId).FirstOrDefault();
+                if (query_registrationresults_term != null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
                 int itemsCount = dt.Rows.Count;
 
                 // Create a datatable for error curriculums
@@ -118,138 +128,162 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     });
 
 
-                /*try
-                {*/
-                //Insert records to database table.
-                foreach (DataRow row in dt.Rows)
+                try
                 {
-                    // Declare all columns
-                    string studentId = row["Mã SV"].ToString();
-                    string studentName = row["Họ tên SV"].ToString();
-                    string studentEmail = row["Email SV"].ToString();
-                    string studentBirthDate = row["Ngày sinh"].ToString();
-                    string studentGender = row["Giới tính"].ToString();
-                    string studentClassId = row["Thuộc Lớp"].ToString();
-                    string studentFaculty = row["Thuộc Khoa"].ToString();
-                    string curriculumId = row["Mã HP"].ToString();
-                    string curriculumClassId = row["Mã LHP"].ToString();
-                    string curriculumName = row["Tên HP"].ToString();
-                    string credits = row["Số TC"].ToString();
-                    string registrationType = row["HT Đăng Ký"].ToString();
-                    string registrationDate = row["Ngày ĐK"].ToString();
-                    string registrationPerson = row["Người ĐK"].ToString();
-                    string lecturerId = row["Mã giảng viên"].ToString();
-                    string lecturerName = row["Giảng viên"].ToString();
-                    string curriculumClassSchedule = row["Thời khóa biểu"].ToString();
-
-                    // Check if student course already has study program
-                    /*if (query_studentcourse_curriculum != null)
+                    //Insert records to database table.
+                    foreach (DataRow row in dt.Rows)
                     {
-                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                    }*/
+                        // Declare all columns
+                        string studentId = row["Mã SV"].ToString();
+                        string studentName = row["Họ tên SV"].ToString();
+                        string studentEmail = row["Email SV"].ToString();
+                        string studentBirthDate = row["Ngày sinh"].ToString();
+                        string studentGender = row["Giới tính"].ToString();
+                        string studentClassId = row["Thuộc Lớp"].ToString();
+                        string studentFaculty = row["Thuộc Khoa"].ToString();
+                        string curriculumId = row["Mã HP"].ToString();
+                        string curriculumClassId = row["Mã LHP"].ToString();
+                        string curriculumName = row["Tên HP"].ToString();
+                        string credits = row["Số TC"].ToString();
+                        string registrationType = row["HT Đăng Ký"].ToString();
+                        string registrationDate = row["Ngày ĐK"].ToString();
+                        string registrationPerson = row["Người ĐK"].ToString();
+                        string lecturerId = row["Mã giảng viên"].ToString();
+                        string lecturerName = row["Giảng viên"].ToString();
+                        string curriculumClassSchedule = row["Thời khóa biểu"].ToString();
 
-                    var query_classstudent = db.class_student.Where(s => s.id == studentClassId).FirstOrDefault();
-                    if (query_classstudent == null)
-                    {
-                        // Add class student
-                        db.class_student.Add(new class_student
+                        var query_classstudent = db.class_student.Where(s => s.id == studentClassId).FirstOrDefault();
+                        if (query_classstudent == null)
                         {
-                            id = studentClassId
-                        });
-                        db.SaveChanges();
-                    }
-
-                    var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
-                    if (query_student == null)
-                    {
-                        // Add student
-                        db.students.Add(new student
-                        {
-                            id = studentId,
-                            full_name = studentName,
-                            birth_date = DateTime.ParseExact(studentBirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                            email = studentEmail,
-                            gender = studentGender,
-                            faculty = studentFaculty,
-                            class_student_id = studentClassId,
-                            student_course_id = studentCourseId
-                        });
-                        db.SaveChanges();
-                    }
-                    else if (query_student.email == null)
-                    {
-                        query_student.email = studentEmail;
-                        db.Entry(query_student).State = System.Data.Entity.EntityState.Modified;
-                        db.SaveChanges();
-                    }
-
-                    var query_curriculum_class = db.curriculum_class.Where(c => c.id == curriculumClassId).FirstOrDefault();
-                    if (query_curriculum_class == null)
-                    {
-                        // Add curriculum class
-                        db.curriculum_class.Add(new curriculum_class
-                        {
-                            id = curriculumClassId,
-                            schedule = SetNullOnEmpty(curriculumClassSchedule)
-                        });
-                        db.SaveChanges();
-                    }
-
-
-                    var query_curriculum = db.curricula.Where(c => c.curriculum_id ==
-                    curriculumId && c.student_course_id == studentCourseId).FirstOrDefault();
-
-                    // Check if lecturer is null
-                    if (!string.IsNullOrEmpty(lecturerId))
-                    {
-                        var query_lecturer = db.lecturers.Where(l => l.id == lecturerId).FirstOrDefault();
-                        if (query_lecturer == null)
-                        {
-                            // Add lecturer
-                            db.lecturers.Add(new lecturer
+                            // Add class student
+                            db.class_student.Add(new class_student
                             {
-                                id = lecturerId,
-                                name = lecturerName
+                                id = studentClassId
                             });
                             db.SaveChanges();
                         }
-                    }
 
-                    if (query_curriculum != null)
-                    {
-                        // Add study results
-                        db.registration_results.Add(new registration_results
+                        var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
+                        if (query_student == null)
                         {
-                            registration_type = registrationType,
-                            registration_date = DateTime.ParseExact(registrationDate, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture),
-                            registration_person = SetNullOnEmpty(registrationPerson),
-                            term_id = termId,
-                            curriculum_id = query_curriculum.id,
-                            curriculum_class_id = curriculumClassId,
-                            lecturer_id = SetNullOnEmpty(lecturerId),
-                            student_id = studentId,
-                            student_course_id = studentCourseId
-                        });
-                    }
-                    else
-                    {
-                        // Add error curriculums which are not in study program
-                        errorCurriculums.Rows.Add(curriculumId, curriculumName, credits);
-                    }
+                            // Add student
+                            db.students.Add(new student
+                            {
+                                id = studentId,
+                                full_name = studentName,
+                                birth_date = DateTime.ParseExact(studentBirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
+                                email = studentEmail,
+                                gender = studentGender,
+                                faculty = studentFaculty,
+                                class_student_id = studentClassId,
+                                student_course_id = studentCourseId
+                            });
+                            db.SaveChanges();
+                        }
+                        else if (query_student.email == null)
+                        {
+                            query_student.email = studentEmail;
+                            query_student.gender = studentGender;
+                            query_student.faculty = studentFaculty;
+                            db.Entry(query_student).State = System.Data.Entity.EntityState.Modified;
+                            db.SaveChanges();
+                        }
 
-                    // Send progress to progress bar
-                    Functions.SendProgress("Đang import...", dt.Rows.IndexOf(row), itemsCount);
+                        var query_curriculum_class = db.curriculum_class.Where(c => c.id == curriculumClassId).FirstOrDefault();
+                        if (query_curriculum_class == null)
+                        {
+                            // Add curriculum class
+                            db.curriculum_class.Add(new curriculum_class
+                            {
+                                id = curriculumClassId,
+                                schedule = SetNullOnEmpty(curriculumClassSchedule)
+                            });
+                            db.SaveChanges();
+                        }
 
+
+                        var query_curriculum = db.curricula.Where(c => c.curriculum_id ==
+                        curriculumId && c.student_course_id == studentCourseId).FirstOrDefault();
+
+                        // Check if lecturer is null
+                        if (!string.IsNullOrEmpty(lecturerId))
+                        {
+                            var query_lecturer = db.lecturers.Where(l => l.id == lecturerId).FirstOrDefault();
+                            if (query_lecturer == null)
+                            {
+                                // Add lecturer
+                                db.lecturers.Add(new lecturer
+                                {
+                                    id = lecturerId,
+                                    name = lecturerName
+                                });
+                                db.SaveChanges();
+                            }
+                        }
+
+                        if (query_curriculum != null)
+                        {
+                            // Add study results
+                            db.registration_results.Add(new registration_results
+                            {
+                                registration_type = registrationType,
+                                registration_date = DateTime.ParseExact(registrationDate, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture),
+                                registration_person = SetNullOnEmpty(registrationPerson),
+                                term_id = termId,
+                                curriculum_id = query_curriculum.id,
+                                curriculum_class_id = curriculumClassId,
+                                lecturer_id = SetNullOnEmpty(lecturerId),
+                                student_id = studentId,
+                                student_course_id = studentCourseId
+                            });
+                        }
+                        else
+                        {
+                            // Add error curriculums which are not in study program
+                            errorCurriculums.Rows.Add(curriculumId, curriculumName, credits);
+                        }
+
+                        // Send progress to progress bar
+                        Functions.SendProgress("Đang import...", dt.Rows.IndexOf(row), itemsCount);
+
+                    }
+                    db.SaveChanges();
+
+                    // Remove duplicate values
+                    DataTable distinctTable = errorCurriculums.DefaultView.ToTable( /*distinct*/ true);
+                    return DataTableToJson(distinctTable);
                 }
-                db.SaveChanges();
-                /* }
-                 catch (Exception)
-                 {
-                     return new HttpStatusCodeResult(HttpStatusCode.ExpectationFailed);
-                 }*/
+                catch (Exception)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.ExpectationFailed);
+                }
             }
             ViewBag.majors = db.majors.ToList();
             return View();
+        }
+
+        public ActionResult DataTableToJson(DataTable table)
+        {
+            // Convert datatable to Json
+            string jsonString = JsonConvert.SerializeObject(table);
+            return Json(jsonString, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int studentCourseId, string termId)
+        {
+            try
+            {
+                // Delete all records for re-import
+                db.registration_results.RemoveRange(db.registration_results.Where(c => c.term_id
+                == termId && c.student_course_id == studentCourseId));
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return Json(new { error = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
         public static string SetNullOnEmpty(string value)

@@ -140,7 +140,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     string registrationPerson = row["Người ĐK"].ToString();
                     string lecturerId = row["Mã giảng viên"].ToString();
                     string lecturerName = row["Giảng viên"].ToString();
-                    string curriculumClassSchedule = row["Thời khóa biểu"].ToString();
+                    string curriculumClassSchedule = row["Thời khóa biểu"].ToString();                  
 
                     // Check if student course already has study program
                     /*if (query_studentcourse_curriculum != null)
@@ -176,6 +176,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         });
                         db.SaveChanges();
                     }
+                    else if (query_student.email == null)
+                    {
+                        query_student.email = studentEmail;
+                        db.Entry(query_student).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
 
                     var query_curriculum_class = db.curriculum_class.Where(c => c.id == curriculumClassId).FirstOrDefault();
                     if (query_curriculum_class == null)
@@ -188,44 +194,71 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         });
                         db.SaveChanges();
                     }
-
-                    var query_lecturer = db.lecturers.Where(l => l.id == lecturerId).FirstOrDefault();
-                    if (query_lecturer == null)
-                    {
-                        // Add lecturer
-                        db.lecturers.Add(new lecturer
-                        {
-                            id = SetNullOnEmpty(lecturerId),
-                            name = SetNullOnEmpty(lecturerName)
-                        });
-                        db.SaveChanges();
-                    }
+                   
 
                     var query_curriculum = db.curricula.Where(c => c.curriculum_id ==
-                       curriculumId && c.student_course_id == studentCourseId).FirstOrDefault();
+                    curriculumId && c.student_course_id == studentCourseId).FirstOrDefault();
 
-                    if (query_curriculum != null)
+                    // Check if lecturer is null
+                    if (string.IsNullOrEmpty(lecturerId))
                     {
-                        // Add study results
-                        db.registration_results.Add(new registration_results
+                        if (query_curriculum != null)
                         {
-                            registration_type = registrationType,
-                            registration_date = DateTime.Parse(registrationDate),
-                            registration_person = SetNullOnEmpty(registrationPerson),
-                            term_id = termId,
-                            curriculum_id = query_curriculum.id,
-                            curriculum_class_id = curriculumClassId,
-                            student_id = studentId,
-                            student_course_id = studentCourseId
-                        });
+                            // Add study results
+                            db.registration_results.Add(new registration_results
+                            {
+                                registration_type = registrationType,
+                                registration_date = DateTime.Parse(registrationDate),
+                                registration_person = SetNullOnEmpty(registrationPerson),
+                                term_id = termId,
+                                curriculum_id = query_curriculum.id,
+                                curriculum_class_id = curriculumClassId,
+                                student_id = studentId,
+                                student_course_id = studentCourseId
+                            });
+                        }
+                        else
+                        {
+                            // Add error curriculums which are not in study program
+                            errorCurriculums.Rows.Add(curriculumId, curriculumName, credits);
+                        }
                     }
                     else
                     {
-                        // Add error curriculums which are not in study program
-                        errorCurriculums.Rows.Add(curriculumId, curriculumName, credits);
+                        var query_lecturer = db.lecturers.Where(l => l.id == lecturerId).FirstOrDefault();
+                        if (query_lecturer == null)
+                        {
+                            // Add lecturer
+                            db.lecturers.Add(new lecturer
+                            {
+                                id = lecturerId,
+                                name = lecturerName
+                            });
+                            db.SaveChanges();
+                        }
+
+                        if (query_curriculum != null)
+                        {
+                            // Add study results
+                            db.registration_results.Add(new registration_results
+                            {
+                                registration_type = registrationType,
+                                registration_date = DateTime.Parse(registrationDate),
+                                registration_person = SetNullOnEmpty(registrationPerson),
+                                term_id = termId,
+                                curriculum_id = query_curriculum.id,
+                                curriculum_class_id = curriculumClassId,
+                                lecturer_id = lecturerId,
+                                student_id = studentId,
+                                student_course_id = studentCourseId
+                            });
+                        }
+                        else
+                        {
+                            // Add error curriculums which are not in study program
+                            errorCurriculums.Rows.Add(curriculumId, curriculumName, credits);
+                        }
                     }
-
-
 
 
                     // Send progress to progress bar

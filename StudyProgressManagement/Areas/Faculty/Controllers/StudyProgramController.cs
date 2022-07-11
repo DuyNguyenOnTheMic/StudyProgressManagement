@@ -87,7 +87,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 string extension = Path.GetExtension(postedFile.FileName);
                 postedFile.SaveAs(filePath);
 
-                string conString = ConfigurationManager.ConnectionStrings["ExcelConString"].ConnectionString;               
+                string conString = ConfigurationManager.ConnectionStrings["ExcelConString"].ConnectionString;
 
                 DataTable dt = new DataTable();
                 conString = string.Format(conString, filePath);
@@ -153,50 +153,43 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         knowledgeTypeAlias && k.student_course_id == studentCourseId).FirstOrDefault();
                         if (query_knowledge_type == null)
                         {
+                            // Add new knowledge type
+                            query_knowledge_type = new knowledge_type();
                             if (knowledgeTypeAlias.StartsWith("DC"))
                             {
-                                db.knowledge_type.Add(new knowledge_type
-                                {
-                                    // Add general knowledge type
-                                    knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
-                                    group_1 = "Kiến thức giáo dục đại cương",
-                                    group_2 = SetNullOnEmpty(knowledgeTypeName),
-                                    compulsory_credits = ToNullableInt(compulsoryCredits),
-                                    optional_credits = ToNullableInt(optionalCredits),
-                                    student_course_id = studentCourseId
-                                });
+                                // Add general knowledge type
+                                query_knowledge_type.knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias);
+                                query_knowledge_type.group_1 = "Kiến thức giáo dục đại cương";
+                                query_knowledge_type.group_2 = SetNullOnEmpty(knowledgeTypeName);
+                                query_knowledge_type.compulsory_credits = ToNullableInt(compulsoryCredits);
+                                query_knowledge_type.optional_credits = ToNullableInt(optionalCredits);
+                                query_knowledge_type.student_course_id = studentCourseId;
                             }
                             else if (knowledgeTypeAlias.StartsWith("CSN"))
                             {
-                                db.knowledge_type.Add(new knowledge_type
-                                {
-                                    // Add major base knowledge type
-                                    knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
-                                    group_1 = "Kiến thức giáo dục chuyên nghiệp",
-                                    group_2 = SetNullOnEmpty(knowledgeTypeName),
-                                    compulsory_credits = ToNullableInt(compulsoryCredits),
-                                    optional_credits = ToNullableInt(optionalCredits),
-                                    student_course_id = studentCourseId
-                                });
+
+                                // Add major base knowledge type
+                                query_knowledge_type.knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias);
+                                query_knowledge_type.group_1 = "Kiến thức giáo dục chuyên nghiệp";
+                                query_knowledge_type.group_2 = SetNullOnEmpty(knowledgeTypeName);
+                                query_knowledge_type.compulsory_credits = ToNullableInt(compulsoryCredits);
+                                query_knowledge_type.optional_credits = ToNullableInt(optionalCredits);
+                                query_knowledge_type.student_course_id = studentCourseId;
                             }
                             else
                             {
-                                db.knowledge_type.Add(new knowledge_type
-                                {
-                                    // Add major specialized knowledge type
-                                    knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias),
-                                    group_1 = "Kiến thức giáo dục chuyên nghiệp",
-                                    group_2 = "Kiến thức chuyên ngành",
-                                    group_3 = SetNullOnEmpty(knowledgeTypeName),
-                                    compulsory_credits = ToNullableInt(compulsoryCredits),
-                                    optional_credits = ToNullableInt(optionalCredits),
-                                    student_course_id = studentCourseId
-                                });
+                                // Add major specialized knowledge type
+                                query_knowledge_type.knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias);
+                                query_knowledge_type.group_1 = "Kiến thức giáo dục chuyên nghiệp";
+                                query_knowledge_type.group_2 = "Kiến thức chuyên ngành";
+                                query_knowledge_type.group_3 = SetNullOnEmpty(knowledgeTypeName);
+                                query_knowledge_type.compulsory_credits = ToNullableInt(compulsoryCredits);
+                                query_knowledge_type.optional_credits = ToNullableInt(optionalCredits);
+                                query_knowledge_type.student_course_id = studentCourseId;
                             }
+                            db.knowledge_type.Add(query_knowledge_type);
                             db.SaveChanges();
                         }
-
-                        int lastKnowledgeId = db.knowledge_type.Max(item => item.id);
 
                         db.curricula.Add(new curriculum
                         {
@@ -214,7 +207,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             learn_before = SetNullOnEmpty(learnBefore),
                             editing_notes = SetNullOnEmpty(editingNotes),
                             student_course_id = studentCourseId,
-                            knowledge_type_id = lastKnowledgeId
+                            knowledge_type_id = query_knowledge_type.id
                         });
 
                         // Send progress to progress bar

@@ -140,7 +140,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     string registrationPerson = row["Người ĐK"].ToString();
                     string lecturerId = row["Mã giảng viên"].ToString();
                     string lecturerName = row["Giảng viên"].ToString();
-                    string curriculumClassSchedule = row["Thời khóa biểu"].ToString();                  
+                    string curriculumClassSchedule = row["Thời khóa biểu"].ToString();
 
                     // Check if student course already has study program
                     /*if (query_studentcourse_curriculum != null)
@@ -194,36 +194,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         });
                         db.SaveChanges();
                     }
-                   
+
 
                     var query_curriculum = db.curricula.Where(c => c.curriculum_id ==
                     curriculumId && c.student_course_id == studentCourseId).FirstOrDefault();
 
                     // Check if lecturer is null
-                    if (string.IsNullOrEmpty(lecturerId))
-                    {
-                        if (query_curriculum != null)
-                        {
-                            // Add study results
-                            db.registration_results.Add(new registration_results
-                            {
-                                registration_type = registrationType,
-                                registration_date = DateTime.Parse(registrationDate),
-                                registration_person = SetNullOnEmpty(registrationPerson),
-                                term_id = termId,
-                                curriculum_id = query_curriculum.id,
-                                curriculum_class_id = curriculumClassId,
-                                student_id = studentId,
-                                student_course_id = studentCourseId
-                            });
-                        }
-                        else
-                        {
-                            // Add error curriculums which are not in study program
-                            errorCurriculums.Rows.Add(curriculumId, curriculumName, credits);
-                        }
-                    }
-                    else
+                    if (!string.IsNullOrEmpty(lecturerId))
                     {
                         var query_lecturer = db.lecturers.Where(l => l.id == lecturerId).FirstOrDefault();
                         if (query_lecturer == null)
@@ -236,30 +213,29 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             });
                             db.SaveChanges();
                         }
-
-                        if (query_curriculum != null)
-                        {
-                            // Add study results
-                            db.registration_results.Add(new registration_results
-                            {
-                                registration_type = registrationType,
-                                registration_date = DateTime.Parse(registrationDate),
-                                registration_person = SetNullOnEmpty(registrationPerson),
-                                term_id = termId,
-                                curriculum_id = query_curriculum.id,
-                                curriculum_class_id = curriculumClassId,
-                                lecturer_id = lecturerId,
-                                student_id = studentId,
-                                student_course_id = studentCourseId
-                            });
-                        }
-                        else
-                        {
-                            // Add error curriculums which are not in study program
-                            errorCurriculums.Rows.Add(curriculumId, curriculumName, credits);
-                        }
                     }
 
+                    if (query_curriculum != null)
+                    {
+                        // Add study results
+                        db.registration_results.Add(new registration_results
+                        {
+                            registration_type = registrationType,
+                            registration_date = DateTime.ParseExact(registrationDate, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture),
+                            registration_person = SetNullOnEmpty(registrationPerson),
+                            term_id = termId,
+                            curriculum_id = query_curriculum.id,
+                            curriculum_class_id = curriculumClassId,
+                            lecturer_id = SetNullOnEmpty(lecturerId),
+                            student_id = studentId,
+                            student_course_id = studentCourseId
+                        });
+                    }
+                    else
+                    {
+                        // Add error curriculums which are not in study program
+                        errorCurriculums.Rows.Add(curriculumId, curriculumName, credits);
+                    }
 
                     // Send progress to progress bar
                     Functions.SendProgress("Đang import...", dt.Rows.IndexOf(row), itemsCount);

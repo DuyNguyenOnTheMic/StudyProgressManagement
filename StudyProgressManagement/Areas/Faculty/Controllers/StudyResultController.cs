@@ -143,17 +143,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     }
                 }
 
-                int itemsCount = dt.Rows.Count;
-
-                // Create a datatable for error curriculums
-                DataTable errorCurriculums = new DataTable("Grid");
-                errorCurriculums.Columns.AddRange(
-                    new DataColumn[3]{
-                        new DataColumn("curriculumId"),
-                        new DataColumn("curriculumName"),
-                        new DataColumn("credits")
-                    });
-
                 // Validate all columns and then delete
                 bool isValid = ValidateColumns(dt);
                 if (isValid)
@@ -165,6 +154,17 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.ExpectationFailed);
                 }
+
+                int itemsCount = dt.Rows.Count;
+
+                // Create a datatable for error curriculums
+                DataTable errorCurriculums = new DataTable("Grid");
+                errorCurriculums.Columns.AddRange(
+                    new DataColumn[3]{
+                        new DataColumn("curriculumId"),
+                        new DataColumn("curriculumName"),
+                        new DataColumn("credits")
+                    });               
 
                 try
                 {

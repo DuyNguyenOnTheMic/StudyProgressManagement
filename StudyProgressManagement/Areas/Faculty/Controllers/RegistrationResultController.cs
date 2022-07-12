@@ -93,6 +93,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     }
                 }
 
+                // Validate all columns
+                bool isValid = ValidateColumns(dt);
+                if (!isValid)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.ExpectationFailed);
+                }
+
                 // Generate term name
                 string termName = "Học kỳ " + termId[termId.Length - 1];
 
@@ -126,7 +133,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         new DataColumn("curriculumName"),
                         new DataColumn("credits")
                     });
-
 
                 try
                 {
@@ -260,6 +266,32 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             }
             ViewBag.majors = db.majors.ToList();
             return View();
+        }
+
+        public bool ValidateColumns(DataTable dt)
+        {
+            // Validate all columns in excel file
+            if (ContainColumn("Mã SV", dt) && ContainColumn("Họ tên SV", dt) && ContainColumn("Email SV", dt)
+                    && ContainColumn("Ngày sinh", dt) && ContainColumn("Giới tính", dt) && ContainColumn("Thuộc Lớp", dt)
+                    && ContainColumn("Thuộc Khoa", dt) && ContainColumn("Mã HP", dt) && ContainColumn("Mã LHP", dt)
+                    && ContainColumn("Tên HP", dt) && ContainColumn("Số TC", dt) && ContainColumn("HT Đăng Ký", dt)
+                    && ContainColumn("Ngày ĐK", dt) && ContainColumn("Người ĐK", dt) && ContainColumn("Mã giảng viên", dt)
+                    && ContainColumn("Giảng viên", dt) && ContainColumn("Thời khóa biểu", dt))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool ContainColumn(string columnName, DataTable table)
+        {
+            // Action to check if datatable contain some columns
+            DataColumnCollection columns = table.Columns;
+            if (columns.Contains(columnName))
+            {
+                return true;
+            }
+            return false;
         }
 
         public ActionResult DataTableToJson(DataTable table)

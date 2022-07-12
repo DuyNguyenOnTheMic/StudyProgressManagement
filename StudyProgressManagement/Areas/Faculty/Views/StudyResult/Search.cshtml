@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "Tìm kết quả học tập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Section start -->
+<section>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-pink">
+                        <h4 class="card-title mb-0">Tìm kiếm kết quả học tập</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block">
+                        <form id="frmSearchStudyResult">
+                            <div class="form-body">
+                                <div class="row justify-content-center">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Ngành: </label>
+                                            <select class="form-control" id="comboboxMajor" name="major" required">
+                                                <option value="" selected="selected" disabled="disabled"> ----------- Chọn ngành ----------- </option>
+                                                @foreach (var major in ViewBag.majors)
+                                                {
+                                                    <option value="@major.id">@major.name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Khoá: </label>
+                                            <select class="form-control" id="comboboxStudentCourse" name="student_course" required>
+                                                <option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Lớp: </label>
+                                            <select class="form-control" id="comboboxClassStudent" name="class_student" required>
+                                                <option value="" selected="selected" disabled="disabled"> ----------- Chọn lớp ----------- </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Tên: </label>
+                                            <input type="text" class="form-control" id="txtName" name="student_name" placeholder="Nhập tên sinh viên" required oninput="this.value = this.value.toUpperCase()">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit-all">
+                                    Tìm kiếm
+                                    <i class="ft-search position-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                        <div class="table-responsive">
+                            <h4 class="card-title" id="lblStudentName" style="text-align: center; margin: 30px; display: none"></h4>
+                            <table class="table table-bordered" id="tblStudyResult" cellspacing="0" width="100%" style="display: none">
+                                <thead style="text-align: center; background-color: #FFC8A4; color: rgba(0, 0, 0, 0.87) ">
+                                    <tr>
+                                        <th rowspan="2"> STT </th>
+                                        <th rowspan="2"> MÃ HỌC PHẦN </th>
+                                        <th rowspan="2"> TÊN HỌC PHẦN </th>
+                                        <th rowspan="2"> TC </th>
+                                        <th colspan="4"> SỐ TIẾT </th>
+                                        <th rowspan="2"> BB/ TC </th>
+                                        <th rowspan="2" style="display: none"></th>
+                                        <th rowspan="2" style="display: none"></th>
+                                        <th rowspan="2" style="display: none"></th>
+                                        <th rowspan="2" style="display: none"></th>
+                                        <th rowspan="2" style="display: none"></th>
+                                        <th rowspan="2"> ĐIỂM 1 </th>
+                                        <th rowspan="2"> ĐIỂM 2 </th>
+                                        <th rowspan="2"> ĐIỂM MÔN </th>
+                                        <th rowspan="2"> ĐIỂM CHỮ </th>
+                                        <th rowspan="2"> TRẠNG THÁI </th>
+                                    </tr>
+                                    <tr>
+                                        <th> LT </th>
+                                        <th> TH </th>
+                                        <th> TT </th>
+                                        <th> DA </th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <div class="container" id="viewStudyResult_instruction">
+                                <h4 class="card-title" style="text-align: center; margin-top: 50px;">Nhập mã số sinh viên để xem kết quả học tập</h4>
+                                <img style="display: block; margin-left: auto; margin-right: auto; width: 60%;" alt="Instruction" src="~/assets/images/img_viewscore.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section end -->
+
+<link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
+<link href="~/app-assets/vendors/css/tables/datatable/rowGroup.dataTables.min.css" rel="stylesheet" />
+
+@section scripts {
+    <script src="~/app-assets/vendors/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/app-assets/vendors/js/datatable/dataTables.rowGroup.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            // Load cascading dropdown between majors and student courses
+            $("#comboboxMajor").change(function () {
+                $("#comboboxStudentCourse").empty();
+                var majorId = $('#comboboxMajor option:selected').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("LoadStudentCourses", "StudyResult")',
+                    dataType: 'json',
+                    data: { majorId: majorId },
+                    success: function (results) {
+                        $("#comboboxStudentCourse").append('<option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>');
+                        $.each(results, function (i, result) {
+                            $("#comboboxStudentCourse").append('<option value="' + result.id + '">' + result.course + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            });
+
+            // Load cascading dropdown between student courses and class students
+            $("#comboboxStudentCourse").change(function () {
+                $("#comboboxClassStudent").empty();
+                var StudentCourseId = $('#comboboxStudentCourse option:selected').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("LoadClassStudents", "StudyResult")',
+                    dataType: 'json',
+                    data: { StudentCourseId: StudentCourseId },
+                    success: function (results) {
+                        $("#comboboxClassStudent").append('<option value="" selected="selected" disabled="disabled"> ----------- Chọn lớp ----------- </option>');
+                        $.each(results, function (i, result) {
+                            $("#comboboxClassStudent").append('<option value="' + result.id + '">' + result.id + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            });
+
+        });
+
+    </script>
+
+}

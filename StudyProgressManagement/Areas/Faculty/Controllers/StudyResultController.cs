@@ -25,6 +25,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return View();
         }
 
+        public ActionResult Search()
+        {
+            ViewBag.majors = db.majors.ToList();
+            return View();
+        }
+
         [HttpPost]
         public string GetStudentInfo(string studentId)
         {
@@ -84,6 +90,15 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             {
                 id = s.id,
                 course = s.course
+            }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult LoadClassStudents(int StudentCourseId)
+        {
+            // get student courses data from database
+            return Json(db.class_student.Where(s => s.student_course_id == StudentCourseId).Select(s => new
+            {
+                id = s.id
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 

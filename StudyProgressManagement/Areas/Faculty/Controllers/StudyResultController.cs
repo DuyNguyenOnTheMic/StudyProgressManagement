@@ -32,6 +32,17 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         }
 
         [HttpPost]
+        public JsonResult Search(int studentCourseId, string classStudentId, string studentName)
+        {
+            return Json(db.students.Where(s => s.student_course_id == studentCourseId &&
+            s.class_student_id == classStudentId && s.full_name.Contains(studentName)).Select(s => new
+            {
+                id = s.id,
+                full_name = s.full_name
+            }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public string GetStudentInfo(string studentId)
         {
             // Get student information
@@ -95,7 +106,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
 
         public JsonResult LoadClassStudents(int StudentCourseId)
         {
-            // get student courses data from database
+            // get class students data from database
             return Json(db.class_student.Where(s => s.student_course_id == StudentCourseId).Select(s => new
             {
                 id = s.id

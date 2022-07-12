@@ -21,7 +21,7 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Nhập MSSV..." id="txtStudentId" required oninvalid="this.setCustomValidity('Bạn chưa nhập MSSV')" oninput="this.setCustomValidity('')">
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit" id="mybutton">Xem kết quả</button>
+                                        <button class="btn btn-primary" type="submit" id="btnSubmit">Xem kết quả</button>
                                     </div>
                                 </div>
                             </fieldset>
@@ -81,7 +81,7 @@
 
         $("#frmViewStudyResult").submit(function (event) {
 
-            var mybutton = document.getElementById("mybutton");
+            var mybutton = document.getElementById("btnSubmit");
             mybutton.disabled = true;
             setTimeout(function () {
                 mybutton.disabled = false;

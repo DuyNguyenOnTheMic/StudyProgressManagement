@@ -164,7 +164,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         new DataColumn("curriculumId"),
                         new DataColumn("curriculumName"),
                         new DataColumn("credits")
-                    });               
+                    });
 
                 try
                 {
@@ -311,13 +311,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         {
             // Validate all columns in excel file
             if (ContainColumn("StudentID", dt) && ContainColumn("StudentName", dt) && ContainColumn("BirthDay", dt)
-                    && ContainColumn("BirthPlace", dt) && ContainColumn("ClassStudentID", dt) && ContainColumn("ClassStudentName", dt)
-                    && ContainColumn("YearStudy", dt) && ContainColumn("TermID", dt) && ContainColumn("TermName", dt)
-                    && ContainColumn("CurriculumID", dt) && ContainColumn("StudyUnitID", dt) && ContainColumn("StudyUnitAlias", dt)
-                    && ContainColumn("CurriculumName", dt) && ContainColumn("Credits", dt) && ContainColumn("Mark10", dt)
-                    && ContainColumn("Mark10_2", dt) && ContainColumn("Mark10_3", dt) && ContainColumn("Mark10_4", dt)
-                    && ContainColumn("Mark10_5", dt) && ContainColumn("MaxMark10", dt) && ContainColumn("maxMark4", dt)
-                    && ContainColumn("MaxMarkLetter", dt) && ContainColumn("IsPass", dt))
+                && ContainColumn("BirthPlace", dt) && ContainColumn("ClassStudentID", dt) && ContainColumn("ClassStudentName", dt)
+                && ContainColumn("YearStudy", dt) && ContainColumn("TermID", dt) && ContainColumn("TermName", dt)
+                && ContainColumn("CurriculumID", dt) && ContainColumn("StudyUnitID", dt) && ContainColumn("StudyUnitAlias", dt)
+                && ContainColumn("CurriculumName", dt) && ContainColumn("Credits", dt) && ContainColumn("Mark10", dt)
+                && ContainColumn("Mark10_2", dt) && ContainColumn("Mark10_3", dt) && ContainColumn("Mark10_4", dt)
+                && ContainColumn("Mark10_5", dt) && ContainColumn("MaxMark10", dt) && ContainColumn("maxMark4", dt)
+                && ContainColumn("MaxMarkLetter", dt) && ContainColumn("IsPass", dt))
             {
                 return true;
             }

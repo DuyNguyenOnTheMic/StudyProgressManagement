@@ -117,6 +117,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     }
                 }
 
+                // Validate all columns
+                bool isValid = ValidateColumns(dt);
+                if (!isValid)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.ExpectationFailed);
+                }
+
                 // Check if student course already has study program
                 var query_studentcourse_curriculum = db.curricula.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
                 if (query_studentcourse_curriculum != null)
@@ -148,7 +155,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         string compulsoryOrOptional = row["Bắt buộc/ Tự chọn"].ToString();
                         string prerequisites = row["Điều kiện tiên quyết"].ToString();
                         string learnBefore = row["Học trước – học sau"].ToString();
-                        string editingNotes = row["Ghi chú chỉnh sửa"].ToString();                      
+                        string editingNotes = row["Ghi chú chỉnh sửa"].ToString();
 
                         var query_knowledge_type = db.knowledge_type.Where(k => k.knowledge_type_alias ==
                         knowledgeTypeAlias && k.student_course_id == studentCourseId).FirstOrDefault();
@@ -262,6 +269,31 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
+        public bool ValidateColumns(DataTable dt)
+        {
+            // Validate all columns in excel file
+            if (ContainColumn("Mã loại kiến thức", dt) && ContainColumn("Tên loại kiến thức", dt)
+                && ContainColumn("Số chỉ BB", dt) && ContainColumn("Số chỉ TC", dt) && ContainColumn("Mã học phần", dt)
+                && ContainColumn("Tên học phần (Tiếng Việt)", dt) && ContainColumn("Tên học phần (Tiếng Anh)", dt)
+                && ContainColumn("TC", dt) && ContainColumn("LT", dt) && ContainColumn("TH", dt) && ContainColumn("TT", dt)
+                && ContainColumn("DA", dt) && ContainColumn("Bắt buộc/ Tự chọn", dt) && ContainColumn("Điều kiện tiên quyết", dt)
+                && ContainColumn("Học trước – học sau", dt) && ContainColumn("Ghi chú chỉnh sửa", dt))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool ContainColumn(string columnName, DataTable table)
+        {
+            // Action to check if datatable contain some columns
+            DataColumnCollection columns = table.Columns;
+            if (columns.Contains(columnName))
+            {
+                return true;
+            }
+            return false;
+        }
 
         public static int? ToNullableInt(string value)
         {

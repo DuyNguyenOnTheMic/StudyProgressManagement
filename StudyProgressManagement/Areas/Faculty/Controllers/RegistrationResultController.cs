@@ -272,11 +272,11 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         {
             // Validate all columns in excel file
             if (ContainColumn("Mã SV", dt) && ContainColumn("Họ tên SV", dt) && ContainColumn("Email SV", dt)
-                    && ContainColumn("Ngày sinh", dt) && ContainColumn("Giới tính", dt) && ContainColumn("Thuộc Lớp", dt)
-                    && ContainColumn("Thuộc Khoa", dt) && ContainColumn("Mã HP", dt) && ContainColumn("Mã LHP", dt)
-                    && ContainColumn("Tên HP", dt) && ContainColumn("Số TC", dt) && ContainColumn("HT Đăng Ký", dt)
-                    && ContainColumn("Ngày ĐK", dt) && ContainColumn("Người ĐK", dt) && ContainColumn("Mã giảng viên", dt)
-                    && ContainColumn("Giảng viên", dt) && ContainColumn("Thời khóa biểu", dt))
+                && ContainColumn("Ngày sinh", dt) && ContainColumn("Giới tính", dt) && ContainColumn("Thuộc Lớp", dt)
+                && ContainColumn("Thuộc Khoa", dt) && ContainColumn("Mã HP", dt) && ContainColumn("Mã LHP", dt)
+                && ContainColumn("Tên HP", dt) && ContainColumn("Số TC", dt) && ContainColumn("HT Đăng Ký", dt)
+                && ContainColumn("Ngày ĐK", dt) && ContainColumn("Người ĐK", dt) && ContainColumn("Mã giảng viên", dt)
+                && ContainColumn("Giảng viên", dt) && ContainColumn("Thời khóa biểu", dt))
             {
                 return true;
             }

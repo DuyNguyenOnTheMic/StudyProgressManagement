@@ -21,8 +21,9 @@ namespace StudyProgressManagement.Models
         }
     
         public string id { get; set; }
-        public string name { get; set; }
+        public int student_course_id { get; set; }
     
+        public virtual student_course student_course { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<student> students { get; set; }
     }

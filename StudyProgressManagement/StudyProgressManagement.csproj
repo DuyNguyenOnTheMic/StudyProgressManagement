@@ -859,6 +859,10 @@
     <Content Include="Areas\Faculty\Views\StudyProgram\Import.cshtml" />
     <Content Include="Areas\Faculty\Views\StudyProgram\Index.cshtml" />
     <Content Include="Areas\Faculty\Views\StudyResult\Import.cshtml" />
+    <Content Include="assets\files\CTDT_K3_CNTT_Mau.xlsx" />
+    <Content Include="assets\files\KQHT_K3_CNTT_Mau.xlsx" />
+    <Content Include="Areas\Faculty\Views\StudyResult\Index.cshtml" />
+    <Content Include="Areas\Faculty\Views\RegistrationResult\Import.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -866,10 +870,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="assets\files\CTDT_K3_CNTT_Mau.xlsx" />
-    <Content Include="assets\files\KQHT_K3_CNTT_Mau.xlsx" />
-    <Content Include="Areas\Faculty\Views\StudyResult\Index.cshtml" />
-    <Content Include="Areas\Faculty\Views\RegistrationResult\Import.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

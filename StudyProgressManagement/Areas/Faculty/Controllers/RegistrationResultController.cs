@@ -171,7 +171,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             // Add class student
                             db.class_student.Add(new class_student
                             {
-                                id = studentClassId
+                                id = studentClassId,
+                                student_course_id = studentCourseId
                             });
                             db.SaveChanges();
                         }

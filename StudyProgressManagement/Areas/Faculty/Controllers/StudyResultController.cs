@@ -213,7 +213,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             db.class_student.Add(new class_student
                             {
                                 id = classStudentId,
-                                name = classStudentName
+                                student_course_id = studentCourseId
                             });
                             db.SaveChanges();
                         }

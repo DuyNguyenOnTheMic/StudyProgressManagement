@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SEP25Team03Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SEP25Team03Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -71,7 +71,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="student_course_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="curriculum">
           <Key>
@@ -210,6 +210,18 @@
           <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <Association Name="FK_class_student_student_course">
+          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
+          <End Role="class_student" Type="Self.class_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="class_student">
+              <PropertyRef Name="student_course_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_curriculum_knowledge_type">
           <End Role="knowledge_type" Type="Self.knowledge_type" Multiplicity="1" />
           <End Role="curriculum" Type="Self.curriculum" Multiplicity="*" />
@@ -478,6 +490,10 @@
           <EntitySet Name="study_unit" EntityType="Self.study_unit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="term" EntityType="Self.term" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_class_student_student_course" Association="Self.FK_class_student_student_course">
+            <End Role="student_course" EntitySet="student_course" />
+            <End Role="class_student" EntitySet="class_student" />
+          </AssociationSet>
           <AssociationSet Name="FK_curriculum_knowledge_type" Association="Self.FK_curriculum_knowledge_type">
             <End Role="knowledge_type" EntitySet="knowledge_type" />
             <End Role="curriculum" EntitySet="curriculum" />
@@ -559,7 +575,8 @@
             <End Role="study_results" EntitySet="study_results" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SEP25Team03Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -627,7 +644,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="student_course_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="student_course" Relationship="Self.FK_class_student_student_course" FromRole="class_student" ToRole="student_course" />
           <NavigationProperty Name="students" Relationship="Self.FK_student_class_student" FromRole="class_student" ToRole="student" />
         </EntityType>
         <EntityType Name="curriculum">
@@ -739,6 +757,7 @@
           <Property Name="course" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="year_study" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="major_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="class_student" Relationship="Self.FK_class_student_student_course" FromRole="student_course" ToRole="class_student" />
           <NavigationProperty Name="curricula" Relationship="Self.FK_curriculum_student_course" FromRole="student_course" ToRole="curriculum" />
           <NavigationProperty Name="major" Relationship="Self.FK_student_course_major" FromRole="student_course" ToRole="major" />
           <NavigationProperty Name="registration_results" Relationship="Self.FK_registration_results_student_course" FromRole="student_course" ToRole="registration_results" />
@@ -823,6 +842,18 @@
             </Principal>
             <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_class_student_student_course">
+          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
+          <End Role="class_student" Type="Self.class_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="student_course">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="class_student">
+              <PropertyRef Name="student_course_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1049,6 +1080,10 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
+          <AssociationSet Name="FK_class_student_student_course" Association="Self.FK_class_student_student_course">
+            <End Role="student_course" EntitySet="student_course" />
+            <End Role="class_student" EntitySet="class_student" />
+          </AssociationSet>
           <AssociationSet Name="FK_student_class_student" Association="Self.FK_student_class_student">
             <End Role="class_student" EntitySet="class_student" />
             <End Role="student" EntitySet="students" />
@@ -1183,7 +1218,7 @@
             <EntityTypeMapping TypeName="SEP25Team03Model.class_student">
               <MappingFragment StoreEntitySet="class_student">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="student_course_id" ColumnName="student_course_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

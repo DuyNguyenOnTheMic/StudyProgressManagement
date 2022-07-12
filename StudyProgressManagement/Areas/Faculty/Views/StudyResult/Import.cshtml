@@ -146,7 +146,7 @@
         $(document).ready(function () {
 
             // Load cascading dropdown between majors and student courses
-             $("#comboboxMajor").change(function () {
+            $("#comboboxMajor").change(function () {
                 $("#comboboxStudentCourse").empty();
                 var majorId = $('#comboboxMajor option:selected').val();
                 $.ajax({
@@ -194,12 +194,15 @@
 
                     var count = myDropzone.getQueuedFiles().length;
 
+                    var majorId = document.getElementById("comboboxMajor").value;
+                    var studentCourseId = document.getElementById("comboboxStudentCourse").value;
+
                     // Validation for form
-                    if (document.getElementById("comboboxMajor").value == '') {
+                    if (majorId == '') {
                         toastr.options.positionClass = 'toast-bottom-right';
                         toastr.warning('Bạn chưa chọn ngành và khoá');
                     }
-                    else if (document.getElementById("comboboxStudentCourse").value == '') {
+                    else if (studentCourseId == '') {
                         toastr.options.positionClass = 'toast-bottom-right';
                         toastr.warning('Bạn chưa chọn khoá');
                     }

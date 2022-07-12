@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Học kỳ: </label>
-                                            <input type="text" class="form-control" id="txtTerm" name="term" placeholder="Nhập học kỳ" required oninput="this.value = this.value.toUpperCase()">
+                                            <input type="text" class="form-control" id="txtTerm" name="term" placeholder="Nhập học kỳ (VD: HK223)" required oninput="this.value = this.value.toUpperCase()">
                                         </div>
                                     </div>
                                 </div>
@@ -202,7 +202,9 @@
                     var studentCourseId = document.getElementById("comboboxStudentCourse").value;
                     var termId = document.getElementById("txtTerm").value;
 
-                    const last2 = new Date().getFullYear().toString().slice(-2);
+                    var termStructure = /^HK\d{3}$/;
+                    const last2TermYear = termId.substring(2, 4);
+                    const last2CurrentYear = new Date().getFullYear().toString().slice(-2);
 
                     // Validation for form
                     if (majorId == '') {
@@ -216,7 +218,23 @@
                     else if (termId == '') {
                         toastr.options.positionClass = 'toast-bottom-right';
                         toastr.warning('Bạn chưa nhập học kỳ');
-                    }                 
+                    }
+                    else if (termId.length != 5) {
+                        toastr.options.positionClass = 'toast-bottom-right';
+                        toastr.warning('Học kỳ phải đúng 5 kí tự');
+                    }
+                    else if (termStructure.test(termId) == false) {
+                        toastr.options.positionClass = 'toast-bottom-right';
+                        toastr.warning('Học kỳ phải đúng cấu trúc (VD: HK223)');
+                    }
+                    else if (last2TermYear > last2CurrentYear) {
+                        toastr.options.positionClass = 'toast-bottom-right';
+                        toastr.warning('Năm không được lớn hơn năm hiện tại');
+                    }
+                    else if (termId.slice(-1) > 3) {
+                        toastr.options.positionClass = 'toast-bottom-right';
+                        toastr.warning('Học kỳ chỉ từ 1 đến 3');
+                    }
                     else if (count == 0) {
                         toastr.options.positionClass = 'toast-bottom-right';
                         toastr.warning('File chưa được upload hoặc sai định dạng ');

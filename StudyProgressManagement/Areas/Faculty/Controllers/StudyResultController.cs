@@ -143,7 +143,14 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     }
                 }
 
-                // Validate all columns and then delete
+                // Check if student course has study program
+                var query_studentcourse_curriculum = db.curricula.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
+                if (query_studentcourse_curriculum == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+                }
+
+                // Validate all columns before delete
                 bool isValid = ValidateColumns(dt);
                 if (isValid)
                 {

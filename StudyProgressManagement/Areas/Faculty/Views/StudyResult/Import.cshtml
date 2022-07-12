@@ -333,6 +333,13 @@
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
                         errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi, vui lòng kiểm tra lại tệp tin';
                     }
+                    else if (errorMessage.indexOf('Error 409') !== -1) {
+                        // Show message if student course has not had study program yet
+                        var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
+                        errorDisplay[errorDisplay.length - 1].innerHTML = 'Khoá này chưa có chương trình đào tạo';
+
+                        swal("Thông báo", "Khoá sinh viên này chưa có chương trình đào tạo!", "error").done();
+                    }
                 });
             }
         };

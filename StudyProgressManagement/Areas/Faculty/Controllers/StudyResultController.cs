@@ -185,7 +185,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
 
                 // Check if student course already has study result
                 var query_studentcourse_studyresult = db.study_results.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
-                if (query_studentcourse_curriculum != null)
+                if (query_studentcourse_studyresult != null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }

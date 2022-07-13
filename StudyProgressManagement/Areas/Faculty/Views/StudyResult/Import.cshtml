@@ -341,7 +341,7 @@
                         swal("Thông báo", "Khoá sinh viên này chưa có chương trình đào tạo!", "error").done();
                     }
                     else if (errorMessage.indexOf('Error 400') !== -1) {
-                        // Show message if this student course already has study program
+                        // Show message if this student course already has study results
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
                         errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi';
 
@@ -367,7 +367,7 @@
 
                             var studentCourseId = $('#comboboxStudentCourse').val();
 
-                            // Ajax call to delete study program of that student course
+                            // Ajax call to delete study results of that student course
                             $.ajax({
                                 type: 'POST',
                                 url: '@Url.Action("Delete", "StudyResult")',

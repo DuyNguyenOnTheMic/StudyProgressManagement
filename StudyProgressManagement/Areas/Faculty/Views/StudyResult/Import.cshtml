@@ -340,6 +340,64 @@
 
                         swal("Thông báo", "Khoá sinh viên này chưa có chương trình đào tạo!", "error").done();
                     }
+                    else if (errorMessage.indexOf('Error 400') !== -1) {
+                        // Show message if this student course already has study program
+                        var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
+                        errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi';
+
+                        swal({
+                            title: 'Thông báo',
+                            text: 'Ngành này đã có kết quả học tập, bạn có muốn import lại?',
+                            type: 'warning',
+                            showCancelButton: true,
+                            cancelButtonText: 'Huỷ',
+                            confirmButtonText: 'Import lại',
+
+                        }).then(function () {
+
+                            // Show waiting message while delete
+                            swal({
+                                title: 'Đang xoá dữ liệu...',
+                                allowEscapeKey: false,
+                                allowOutsideClick: false,
+                                onOpen: () => {
+                                    swal.showLoading();
+                                }
+                            })
+
+                            var studentCourseId = $('#comboboxStudentCourse').val();
+
+                            // Ajax call to delete study program of that student course
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("Delete", "StudyResult")',
+                                data: { 'id': studentCourseId },
+                                success: function (data) {
+                                    if (data.success) {
+
+                                        swal.close();
+
+                                        // Re-import file after delete successfully
+                                        $.each(myDropzone.files, function (i, file) {
+                                            file.status = Dropzone.QUEUED
+                                            file.previewElement.classList.remove("dz-error");
+                                            return file.previewElement.classList.add("dz-success");
+                                        });
+                                        myDropzone.processQueue();
+
+                                        myDropzone.on("success", function (file) {
+                                            swal("Thông báo", "Import lại kết quả học tập thành công!", "success").done();
+                                        });
+                                    }
+                                }
+                            });
+
+                            }, function (dismiss) {
+                                if (dismiss === 'cancel' || dismiss === 'close') {
+                                    // Ignore
+                                }
+                            })
+                    }
                 });
             }
         };

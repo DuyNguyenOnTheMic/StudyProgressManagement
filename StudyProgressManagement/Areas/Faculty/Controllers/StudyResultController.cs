@@ -178,14 +178,16 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
 
                 // Validate all columns before delete
                 bool isValid = ValidateColumns(dt);
-                if (isValid)
-                {
-                    // Delete all study results
-                    Delete(studentCourseId);
-                }
-                else
+                if (!isValid)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.ExpectationFailed);
+                }
+
+                // Check if student course already has study result
+                var query_studentcourse_studyresult = db.study_results.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
+                if (query_studentcourse_curriculum != null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
                 int itemsCount = dt.Rows.Count;

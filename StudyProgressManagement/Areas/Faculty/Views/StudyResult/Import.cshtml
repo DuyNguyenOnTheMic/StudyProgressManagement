@@ -225,7 +225,7 @@
 
                             if (data.length != 0) {
 
-                                swal("Thông báo!", "Import thành công! Tuy nhiên, có một số học phần không nằm trong chương trình đào tạo nên hệ thống không import, bạn có thể xem chi tiết ở cuối trang", "info").done();
+                                swal("Thông báo!", "Đã import dữ liệu! \nCó một số học phần không nằm trong chương trình đào tạo, vui lòng xem chi tiết ở cuối trang", "error").done();
 
                                 $('#errorCurriculumn_section').show();
 
@@ -385,8 +385,16 @@
                                         });
                                         myDropzone.processQueue();
 
-                                        myDropzone.on("success", function (file) {
-                                            swal("Thông báo", "Import lại kết quả học tập thành công!", "success").done();
+                                        myDropzone.on("success", function (response, data) {
+
+                                            data = JSON.parse(data);
+
+                                            if (data.length != 0) {
+                                                swal("Thông báo", "Đã import lại dữ liệu! \nCó một số học phần không nằm trong chương trình đào tạo, vui lòng xem chi tiết ở cuối trang", "error").done();
+                                            }
+                                            else {
+                                                swal("Thông báo", "Import lại kết quả đăng ký học tập thành công!", "success").done();
+                                            }
                                         });
                                     }
                                 }

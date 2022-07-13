@@ -81,6 +81,8 @@
 
         $("#frmViewStudyResult").submit(function (event) {
 
+            event.preventDefault();
+
             var mybutton = document.getElementById("btnSubmit");
             mybutton.disabled = true;
             setTimeout(function () {
@@ -113,11 +115,11 @@
             dataTable = $('#tblStudyResult').DataTable(
                 {
                     ajax: {
-                    dataSrc: '',
-                    type: 'POST',
-                    url: '@Url.Action("GetData", "StudyResult")',
-                    data: { 'studentId': studentId },
-                    dataType: 'json',
+                        dataSrc: '',
+                        type: 'POST',
+                        url: '@Url.Action("GetData", "StudyResult")',
+                        data: { 'studentId': studentId },
+                        dataType: 'json',
                     },
 
                     paging: false,
@@ -260,8 +262,6 @@
             $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
                 return;
             };
-
-            event.preventDefault();
 
         });
 

@@ -63,7 +63,8 @@
                             </div>
                         </form>
                         <div class="table-responsive">
-                            <table class="table table-bordered" id="tblSearchStudents" width="100%" @* style="display: none"*@>
+                            <h4 class="card-title text-center" id="lblSearchStudents" style="margin: 30px; display: none">Kết quả tìm kiếm <i class="icon-magic-wand"></i></h4>
+                            <table class="table table-bordered" id="tblSearchStudents" width="100%" style="display: none">
                                 <thead>
                                     <tr>
                                         <th></th>
@@ -73,18 +74,10 @@
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th></th>
-                                        <th> MSSV </th>
-                                        <th> Họ và tên </th>
-                                        <th></th>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div>
-                        <div class="table-responsive">
-                            <h4 class="card-title" id="lblStudentName" style="text-align: center; margin: 30px; display: none"></h4>
+                        <div class="table-responsive" style="margin-top: 50px">
+                            <h4 class="card-title text-center" id="lblStudentName" style="margin: 30px; display: none"></h4>
                             <table class="table table-bordered" id="tblStudyResult" cellspacing="0" width="100%" style="display: none">
                                 <thead style="text-align: center; background-color: #FFC8A4; color: rgba(0, 0, 0, 0.87) ">
                                     <tr>
@@ -114,8 +107,8 @@
                                 </thead>
                                 <tbody></tbody>
                             </table>
-                            <div class="container" id="viewStudyResult_instruction">
-                                <h4 class="card-title" style="text-align: center; margin-top: 50px;">Nhập mã số sinh viên để xem kết quả học tập</h4>
+                            <div class="container" id="searchStudyResult_instruction">
+                                <h4 class="card-title text-center" style="margin-top: 50px;">Nhập mã số sinh viên để xem kết quả học tập</h4>
                                 <img style="display: block; margin-left: auto; margin-right: auto; width: 60%;" alt="Instruction" src="~/assets/images/img_viewscore.svg" />
                             </div>
                         </div>
@@ -187,20 +180,22 @@
 
             event.preventDefault();
 
+            $('#lblSearchStudents').show();
+            $('#tblSearchStudents').show();
+            $('#searchStudyResult_instruction').hide();
+
             var mybutton = document.getElementById("btnSubmit");
             mybutton.disabled = true;
             setTimeout(function () {
                 mybutton.disabled = false;
             }, 2000);
 
+            // Get form's data
             var studentCourseId = document.getElementById("comboboxStudentCourse").value;
             var classStudentId = document.getElementById("comboboxClassStudent").value;
             var studentName = document.getElementById("txtName").value;
 
             var tblSearchStudents;
-
-            $('#tblStudyResult').show();
-            $('#viewStudyResult_instruction').hide();
 
             // Populate search student datatable
             tblSearchStudents = $('#tblSearchStudents').DataTable(
@@ -242,6 +237,7 @@
                     },
 
                     paging: false,
+                    searching: false,
                     ordering: false,
                     info: false,
                     destroy: true,
@@ -258,6 +254,8 @@
         });
 
         function PopulateStudyResult(studentId) {
+
+            $('#tblStudyResult').show();
 
             var dataTable;
 
@@ -428,10 +426,6 @@
                 $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
                     return;
                 };
-
             }
-
-
     </script>
-
 }

@@ -184,6 +184,7 @@
             $('#tblSearchStudents').show();
             $('#searchStudyResult_instruction').hide();
 
+            // Prevent user from submit multiple times
             var mybutton = document.getElementById("btnSubmit");
             mybutton.disabled = true;
             setTimeout(function () {

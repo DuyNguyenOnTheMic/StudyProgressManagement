@@ -83,6 +83,10 @@
 
             event.preventDefault();
 
+            $('#tblStudyResult').show();
+            $('#viewStudyResult_instruction').hide();
+
+            // Prevent user from submit multiple times
             var mybutton = document.getElementById("btnSubmit");
             mybutton.disabled = true;
             setTimeout(function () {
@@ -91,10 +95,6 @@
 
             var studentId = $('#txtStudentId').val();
             var dataTable;
-
-            $('#tblStudyResult').show();
-            $('#viewStudyResult_instruction').hide();
-
 
             $.ajax({
                 type: 'POST',

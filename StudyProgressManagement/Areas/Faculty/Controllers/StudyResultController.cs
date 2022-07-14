@@ -34,6 +34,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public JsonResult Search(int studentCourseId, string classStudentId, string studentName)
         {
+            // Search student study results
             return Json(db.students.Where(s => s.student_course_id == studentCourseId &&
             s.class_student_id == classStudentId && s.full_name.Contains(studentName)).Select(s => new
             {

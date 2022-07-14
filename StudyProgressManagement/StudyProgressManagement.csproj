@@ -794,6 +794,7 @@
     <Content Include="app-assets\vendors\js\vertical-timeline.js" />
     <Content Include="app-assets\vendors\js\wizard-steps.js" />
     <Content Include="assets\images\img_excel.svg" />
+    <Content Include="assets\images\img_search_engines.svg" />
     <Content Include="assets\images\img_viewscore.svg" />
     <Content Include="assets\js\scripts.js" />
     <Content Include="favicon.ico" />

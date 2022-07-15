@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Section start -->
+<section>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-indigo">
+                        <h4 class="card-title mb-0">Tìm kiếm kết quả đăng ký học tập</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block">
+                        <form id="frmSearchStudyResult">
+                            <div class="form-body">
+                                <div class="row justify-content-center">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Ngành: </label>
+                                            <select class="form-control" id="comboboxMajor" name="major" required">
+                                                <option value="" selected="selected" disabled="disabled"> ----------- Chọn ngành ----------- </option>
+                                                @foreach (var major in ViewBag.majors)
+                                                {
+                                                    <option value="@major.id">@major.name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Khoá: </label>
+                                            <select class="form-control" id="comboboxStudentCourse" name="student_course" required>
+                                                <option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Lớp: </label>
+                                            <select class="form-control" id="comboboxClassStudent" name="class_student" required>
+                                                <option value="" selected="selected" disabled="disabled"> ----------- Chọn lớp ----------- </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label>Tên: </label>
+                                            <input type="text" class="form-control" id="txtName" name="student_name" placeholder="Nhập tên sinh viên" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit">
+                                    Tìm kiếm
+                                    <i class="ft-search position-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                        <div class="table-responsive">
+                            <h4 class="card-title text-center" id="lblSearchStudents" style="margin: 30px; display: none">Kết quả tìm kiếm <i class="ft-file-text"></i></h4>
+                            <table class="table table-striped table-bordered" id="tblSearchStudents" width="100%" style="display: none">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th> MSSV </th>
+                                        <th> Họ và tên </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive" style="margin-top: 50px">
+                            <h4 class="card-title text-center" id="lblStudentName" style="margin: 30px; display: none"></h4>
+                            <table class="table table-bordered" id="tblStudyResult" cellspacing="0" width="100%" style="display: none">
+                                <thead style="text-align: center; background-color: #FFC8A4; color: rgba(0, 0, 0, 0.87) ">
+                                    <tr>
+                                        <th> STT </th>
+                                        <th> MÃ HỌC PHẦN </th>
+                                        <th> TÊN HỌC PHẦN </th>
+                                        <th> TC </th>
+                                        <th> HT ĐĂNG KÝ </th>
+                                        <th> NGÀY ĐK </th>
+                                        <th> MÃ LHP </th>
+                                        <th> THỜI KHOÁ BIỂU </th>
+                                        <th> MÃ GIẢNG VIÊN </th>
+                                        <th> TÊN GIẢNG VIÊN </th>
+                                        <th> HỌC KỲ </th>
+                                    </tr>                                   
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <div class="container" id="searchStudyResult_instruction">
+                                <h4 class="card-title text-center">Nhập thông tin để tìm kiếm sinh viên</h4>
+                                <img class="mx-auto d-block" style="width: 60%;" alt="Instruction" src="~/assets/images/img_search_engines.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section end -->

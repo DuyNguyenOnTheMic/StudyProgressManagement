@@ -25,6 +25,24 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return View();
         }
 
+        public ActionResult Search()
+        {
+            ViewBag.majors = db.majors.ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult Search(int studentCourseId, string classStudentId, string studentName)
+        {
+            // Search student study results
+            return Json(db.students.Where(s => s.student_course_id == studentCourseId &&
+            s.class_student_id == classStudentId && s.full_name.Contains(studentName)).Select(s => new
+            {
+                id = s.id,
+                full_name = s.full_name
+            }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public string GetStudentInfo(string studentId)
         {

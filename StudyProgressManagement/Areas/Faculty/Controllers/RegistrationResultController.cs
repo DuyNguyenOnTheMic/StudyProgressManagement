@@ -91,6 +91,15 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult LoadClassStudents(int StudentCourseId)
+        {
+            // get class students data from database
+            return Json(db.class_student.Where(s => s.student_course_id == StudentCourseId).Select(s => new
+            {
+                id = s.id
+            }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Import()
         {
             ViewBag.majors = db.majors.ToList();

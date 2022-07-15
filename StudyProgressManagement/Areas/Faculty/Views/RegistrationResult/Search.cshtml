@@ -63,7 +63,7 @@
                             </div>
                         </form>
                         <div class="table-responsive">
-                            <h4 class="card-title text-center" id="lblSearchStudents" style="margin: 30px; display: none">Kết quả tìm kiếm <i class="ft-file-text"></i></h4>
+                            <h4 class="card-title text-center m-3" id="lblSearchStudents" style="display: none">Kết quả tìm kiếm <i class="ft-file-text"></i></h4>
                             <table class="table table-striped table-bordered" id="tblSearchStudents" width="100%" style="display: none">
                                 <thead>
                                     <tr>
@@ -76,9 +76,9 @@
                                 <tbody></tbody>
                             </table>
                         </div>
-                        <div class="table-responsive" style="margin-top: 50px">
-                            <h4 class="card-title text-center" id="lblStudentName" style="margin: 30px; display: none"></h4>
-                            <table class="table table-bordered" id="tblStudyResult" cellspacing="0" width="100%" style="display: none">
+                        <div class="table-responsive mt-4" style="display: none" id="divRegistrationResult">
+                            <h4 class="card-title text-center m-3" id="lblStudentName"></h4>
+                            <table class="table table-bordered" id="tblRegistrationResult" cellspacing="0" width="100%">
                                 <thead style="text-align: center; background-color: #FFC8A4; color: rgba(0, 0, 0, 0.87) ">
                                     <tr>
                                         <th> STT </th>
@@ -92,14 +92,14 @@
                                         <th> MÃ GIẢNG VIÊN </th>
                                         <th> TÊN GIẢNG VIÊN </th>
                                         <th> HỌC KỲ </th>
-                                    </tr>                                   
+                                    </tr>
                                 </thead>
                                 <tbody></tbody>
                             </table>
-                            <div class="container" id="searchStudyResult_instruction">
-                                <h4 class="card-title text-center">Nhập thông tin để tìm kiếm sinh viên</h4>
-                                <img class="mx-auto d-block" style="width: 60%;" alt="Instruction" src="~/assets/images/img_search_engines.svg" />
-                            </div>
+                        </div>
+                        <div class="container mt-3" id="searchRegistrationResult_instruction">
+                            <h4 class="card-title text-center">Nhập thông tin để tìm kiếm sinh viên</h4>
+                            <img class="mx-auto d-block" style="width: 50%;" alt="Instruction" src="~/assets/images/img_search_engines.svg" />
                         </div>
                     </div>
                 </div>
@@ -108,3 +108,269 @@
     </div>
 </section>
 <!-- Section end -->
+
+<link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
+
+@section scripts {
+    <script src="~/app-assets/vendors/js/moment.min.js"></script>
+    <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            // Load cascading dropdown between majors and student courses
+            $("#comboboxMajor").change(function () {
+                $("#comboboxStudentCourse").empty();
+                var majorId = $('#comboboxMajor option:selected').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("LoadStudentCourses", "RegistrationResult")',
+                    dataType: 'json',
+                    data: { majorId: majorId },
+                    success: function (results) {
+                        $("#comboboxStudentCourse").append('<option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>');
+                        $.each(results, function (i, result) {
+                            $("#comboboxStudentCourse").append('<option value="' + result.id + '">' + result.course + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            });
+
+            // Load cascading dropdown between student courses and class students
+            $("#comboboxStudentCourse").change(function () {
+                $("#comboboxClassStudent").empty();
+                var StudentCourseId = $('#comboboxStudentCourse option:selected').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("LoadClassStudents", "RegistrationResult")',
+                    dataType: 'json',
+                    data: { StudentCourseId: StudentCourseId },
+                    success: function (results) {
+                        $("#comboboxClassStudent").append('<option value="" selected="selected" disabled="disabled"> ----------- Chọn lớp ----------- </option>');
+                        $.each(results, function (i, result) {
+                            $("#comboboxClassStudent").append('<option value="' + result.id + '">' + result.id + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            });
+        });
+
+
+        $("#btnSubmit").click(function (event) {
+
+            event.preventDefault();
+
+            // Get form's data
+            var majorId = document.getElementById("comboboxMajor").value;
+            var studentCourseId = document.getElementById("comboboxStudentCourse").value;
+            var classStudentId = document.getElementById("comboboxClassStudent").value;
+            var studentName = document.getElementById("txtName").value;
+
+
+            // Validation for form
+            if (majorId == '') {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Bạn chưa chọn ngành và khoá');
+            }
+            else if (studentCourseId == '') {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Bạn chưa chọn khoá');
+            }
+            else if (classStudentId == '') {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Bạn chưa chọn lớp');
+            }
+            else if (studentName == '') {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Bạn chưa nhập tên sinh viên');
+            }
+            else {
+
+                $('#divRegistrationResult').hide();
+                $('#lblSearchStudents').show();
+                $('#tblSearchStudents').show();
+                $('#searchRegistrationResult_instruction').hide();
+
+                // Prevent user from submit multiple times
+                var mybutton = document.getElementById("btnSubmit");
+                mybutton.disabled = true;
+                setTimeout(function () {
+                    mybutton.disabled = false;
+                }, 2000);
+
+                var tblSearchStudents;
+
+                // Populate search student datatable
+                tblSearchStudents = $('#tblSearchStudents').DataTable(
+                    {
+                        ajax: {
+                            dataSrc: '',
+                            type: 'POST',
+                            url: '@Url.Action("Search", "RegistrationResult")',
+                            data: { 'studentCourseId': studentCourseId, 'classStudentId': classStudentId, 'studentName': studentName },
+                            dataType: "json",
+                        },
+
+                        columns: [
+                            {
+                                'data': null,
+                                searchable: false,
+                                orderable: false,
+                                className: 'text-center',
+                                width: '20px'
+                            },
+                            { 'data': 'id' },
+                            { 'data': 'full_name' },
+                            {
+                                'data': 'id', 'render': function (data)
+                                {
+                                    return "<a class='viewRegistrationResult success p - 0' data-original-title='' title='' onclick=PopulateStudyResult('"+ data + "')><i class='fa fa-info-circle font-medium-3 mr-2'></i></a>";
+                                },
+                                orderable: false,
+                                searchable: false,
+                                width: '10px',
+                                className: 'text-center'
+                            }
+                        ],
+
+                        language: {
+                            'emptyTable': "Không tìm thấy sinh viên <i class='ft-help-circle' style='vertical-align:middle'></i>",
+                            'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>",
+                            'loadingRecords': 'Đang lấy dữ liệu...'
+                        },
+
+                        paging: false,
+                        searching: false,
+                        ordering: false,
+                        info: false,
+                        destroy: true,
+
+                    });
+
+                // Create Index column datatable
+                tblSearchStudents.on('draw.dt', function () {
+                    var info = tblSearchStudents.page.info();
+                    tblSearchStudents.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1 + info.start;
+                    });
+                });
+            }
+        });
+
+        function PopulateStudyResult(studentId) {
+
+            // Prevent user from submit multiple times
+            $('.viewRegistrationResult').each(function () {
+                $(this).removeClass('success');
+                this.style.pointerEvents = 'none';
+            });
+            setTimeout(function () {
+                $('.viewRegistrationResult').each(function () {
+                    $(this).addClass('success');
+                    this.style.pointerEvents = 'auto';
+                });
+            }, 1000);
+
+            $('#divRegistrationResult').show();
+
+            var dataTable;
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetStudentInfo", "RegistrationResult")',
+                    data: { 'studentId': studentId },
+                    success: function (response) {
+                        if (response) {
+                            $('#lblStudentName').text(response);
+                            $('#lblStudentName').show();
+                        }
+                        else {
+                            $('#lblStudentName').hide();
+                        }
+                    }
+            });
+
+
+            dataTable = $('#tblRegistrationResult').DataTable(
+                {
+                    ajax: {
+                        dataSrc: '',
+                        type: 'POST',
+                        url: '@Url.Action("GetData", "RegistrationResult")',
+                        data: { 'studentId': studentId },
+                        dataType: 'json',
+                    },
+
+                    paging: false,
+                    ordering: false,
+                    info: false,
+                    destroy: true,
+
+                    // Row grouping of term
+                    order: [[10, 'asc']],
+                    rowGroup: {
+                        dataSrc: ['term_id']
+                    },
+                    columnDefs: [
+                        { visible: false, targets: [10] },
+                        { width: '20%', targets: [2] },
+                        { width: '5%', targets: [3] },
+                    ],
+
+                    // Declare columns
+                    columns: [
+                        {
+                            'data': null,
+                            searchable: false,
+                            orderable: false,
+                            className: 'text-center',
+                            width: '20px'
+                        },
+                        { 'data': 'curriculum_id' },
+                        { 'data': 'curriculum_name' },
+                        { 'data': 'credits' },
+                        { 'data': 'registration_type' },
+                        {
+                            'data': 'registration_date',
+                            render: function (data) {
+                                return moment(data).format('DD/MM/YYYY HH:mm:ss');
+                            }
+                        },
+                        { 'data': 'curriculum_class_id' },
+                        { 'data': 'curriculum_class_schedule' },
+                        { 'data': 'lecturer_id' },
+                        { 'data': 'lecturer_name' },
+                        { 'data': 'term_id' }
+                    ],
+
+                    language: {
+                        'emptyTable': "Sinh viên này chưa có dữ liệu <i class='ft-help-circle' style='vertical-align:middle'></i>",
+                        'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>",
+                        'loadingRecords': 'Đang lấy dữ liệu...'
+                    },
+
+                });
+
+                // Create Index column datatable
+                dataTable.on('draw.dt', function () {
+                    var info = dataTable.page.info();
+                    dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1 + info.start;
+                    });
+                });
+
+                // Return nothing on ajax error
+                $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
+                    return;
+                };
+            }
+    </script>
+}

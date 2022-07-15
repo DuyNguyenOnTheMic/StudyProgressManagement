@@ -87,7 +87,7 @@
                 mybutton.disabled = true;
                 setTimeout(function () {
                     mybutton.disabled = false;
-                }, 1500);
+                }, 1000);
 
                 var studentId = $('#txtStudentId').val();
                 var dataTable;
@@ -129,7 +129,8 @@
                             dataSrc: ['term_id']
                         },
                         columnDefs: [
-                            { visible: false, targets: [10]},
+                            { visible: false, targets: [10] },
+                            { className: 'text-center', targets: [3] },
                             { width: '20%', targets: [2] },
                             { width: '5%', targets: [3] },
                         ],

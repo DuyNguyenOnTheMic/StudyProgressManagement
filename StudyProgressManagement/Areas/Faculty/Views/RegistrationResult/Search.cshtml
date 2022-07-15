@@ -204,7 +204,7 @@
                 mybutton.disabled = true;
                 setTimeout(function () {
                     mybutton.disabled = false;
-                }, 2000);
+                }, 1000);
 
                 var tblSearchStudents;
 
@@ -321,6 +321,7 @@
                     },
                     columnDefs: [
                         { visible: false, targets: [10] },
+                        { className: 'text-center', targets: [3] },
                         { width: '20%', targets: [2] },
                         { width: '5%', targets: [3] },
                     ],

@@ -74,6 +74,9 @@
                                     <li class="@(ViewBag.Title == "Xem kết quả đăng ký học tập" ? "active" : "")">
                                         <a href="@Url.Action("Index", "RegistrationResult", new { area = "Faculty" })" class="menu-item">Xem KQĐK học tập</a>
                                     </li>
+                                    <li class="@(ViewBag.Title == "Tìm kết quả đăng ký học tập" ? "active" : "")">
+                                        <a href="@Url.Action("Search", "RegistrationResult", new { area = "Faculty" })" class="menu-item">Tìm KQĐK học tập</a>
+                                    </li>
                                     <li class="@(ViewBag.Title == "Import kết quả đăng ký học tập" ? "active" : "")">
                                         <a href="@Url.Action("Import", "RegistrationResult", new { area = "Faculty" })" class="menu-item">Import KQĐK học tập</a>
                                     </li>

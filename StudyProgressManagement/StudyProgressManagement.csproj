@@ -797,6 +797,7 @@
     <Content Include="assets\images\img_happy_students.svg" />
     <Content Include="assets\images\img_search_engines.svg" />
     <Content Include="assets\images\img_viewscore.svg" />
+    <Content Include="assets\images\img_view_information.svg" />
     <Content Include="assets\js\scripts.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

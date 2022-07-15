@@ -18,7 +18,14 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title mt-4 ml-4">Chào <span style="color: #666EE8 ">@User.Identity.Name</span>,<br />Chọn mục để quản lý ở thanh tác vụ bên trái</h4>
+                    @if (User.IsInRole("Faculty"))
+                    {
+                        <h4 class="card-title mt-4 ml-4">Chào <span class="text-primary">@User.Identity.Name</span>,<br />Chọn mục để quản lý ở thanh tác vụ bên trái</h4>
+                    }
+                    else if (User.IsInRole("Student"))
+                    {
+                        <h4 class="card-title mt-4 ml-4">Chào <span class="text-primary">@User.Identity.Name</span>,<br />Chúc bạn có một ngày tốt lành</h4>
+                    }
                 </div>
                 <div class="card-body" style="margin-top: -2.25rem">
                     <div class="card-block">

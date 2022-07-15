@@ -34,7 +34,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public JsonResult Search(int studentCourseId, string classStudentId, string studentName)
         {
-            // Search student study results
+            // Search student registration results
             return Json(db.students.Where(s => s.student_course_id == studentCourseId &&
             s.class_student_id == classStudentId && s.full_name.Contains(studentName)).Select(s => new
             {
@@ -302,7 +302,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
 
                         if (query_curriculum != null)
                         {
-                            // Add study results
+                            // Add registration results
                             db.registration_results.Add(new registration_results
                             {
                                 registration_type = registrationType,

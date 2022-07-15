@@ -25,6 +25,44 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return View();
         }
 
+        [HttpPost]
+        public string GetStudentInfo(string studentId)
+        {
+            // Get student information
+            var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
+            if (query_student != null)
+            {
+                var studentInfo = query_student.full_name + " - " + studentId + " - " + query_student.student_course.course + " Ngành " + query_student.student_course.major.name;
+                return studentInfo;
+            }
+            return null;
+        }
+
+        [HttpPost]
+        public JsonResult GetData(string studentId)
+        {
+            var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
+            if (query_student != null)
+            {
+                // Get registration results of student
+                return Json(db.registration_results.Where(s => s.student_id == studentId).Select(s => new
+                {
+                    curriculum_id = s.curriculum.curriculum_id,
+                    curriculum_name = s.curriculum.name,
+                    credits = s.curriculum.credits,
+                    registration_type = s.registration_type,
+                    registration_date = s.registration_date,
+                    curriculum_class_id = s.curriculum_class.id,
+                    curriculum_class_schedule = s.curriculum_class.schedule,
+                    lecturer_id = s.lecturer.id,
+                    lecturer_name = s.lecturer.name,
+                    term_id = s.term_id
+
+                }).OrderBy(s => s.term_id).ToList(), JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { error = true }, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult LoadStudentCourses(string majorId)
         {
             // get student courses data from database

@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "Xem kết quả đăng ký học tập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Section start -->
+<section>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-indigo">
+                        <h4 class="card-title mb-0">Xem kết quả đăng ký học tập</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block">
+                        <form id="frmViewRegistrationResult">
+                            <fieldset>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Nhập MSSV..." id="txtStudentId" required oninvalid="this.setCustomValidity('Bạn chưa nhập MSSV')" oninput="this.setCustomValidity('')">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit" id="btnSubmit">Xem kết quả</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                        <div class="table-responsive">
+                            <h4 class="card-title text-center" id="lblStudentName" style="margin: 30px; display: none"></h4>
+                            <table class="table table-bordered" id="tblRegistrationResult" cellspacing="0" width="100%" style="display: none">
+                                <thead style="text-align: center; background-color: #FFC8A4; color: rgba(0, 0, 0, 0.87) ">
+                                    <tr>
+                                        <th> STT </th>
+                                        <th> MÃ HỌC PHẦN </th>
+                                        <th> TÊN HỌC PHẦN </th>
+                                        <th> TC </th>
+                                        <th> HT ĐĂNG KÝ </th>
+                                        <th> NGÀY ĐK </th>
+                                        <th> MÃ LHP </th>
+                                        <th> THỜI KHOÁ BIỂU </th>
+                                        <th> MÃ GIẢNG VIÊN </th>
+                                        <th> TÊN GIẢNG VIÊN </th>
+                                        <th> HỌC KỲ </th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <div class="container" id="viewStudyResult_instruction">
+                                <h4 class="card-title text-center" style="margin-top: 50px;">Nhập mã số sinh viên để xem kết quả đăng ký học tập</h4>
+                                <img style="display: block; margin-left: auto; margin-right: auto; width: 60%;" alt="Instruction" src="~/assets/images/img_viewscore.svg" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section end -->
+
+<link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
+
+@section scripts {
+    <script src="~/app-assets/vendors/js/moment.min.js"></script>
+    <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
+
+    <script type="text/javascript">
+
+        $("#frmViewRegistrationResult").submit(function (event) {
+
+            event.preventDefault();
+
+            $('#tblRegistrationResult').show();
+            $('#viewStudyResult_instruction').hide();
+
+            // Prevent user from submit multiple times
+            var mybutton = document.getElementById("btnSubmit");
+            mybutton.disabled = true;
+            setTimeout(function () {
+                mybutton.disabled = false;
+            }, 2000);
+
+            var studentId = $('#txtStudentId').val();
+            var dataTable;
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetStudentInfo", "RegistrationResult")',
+                data: { 'studentId': studentId },
+                success: function (response) {
+                    if (response) {
+                        $('#lblStudentName').text(response);
+                        $('#lblStudentName').show();
+                    }
+                    else {
+                        $('#lblStudentName').hide();
+                    }
+                }
+            });
+
+
+            dataTable = $('#tblRegistrationResult').DataTable(
+                {
+                    ajax: {
+                        dataSrc: '',
+                        type: 'POST',
+                        url: '@Url.Action("GetData", "RegistrationResult")',
+                        data: { 'studentId': studentId },
+                        dataType: 'json',
+                    },
+
+                    paging: false,
+                    ordering: false,
+                    info: false,
+                    destroy: true,
+
+                    // Row grouping of term
+                    order: [[10, 'asc']],
+                    rowGroup: {
+                        dataSrc: ['term_id']
+                    },
+                    columnDefs: [
+                        { visible: false, targets: [10]},
+                        { width: '20%', targets: [2] },
+                        { width: '5%', targets: [3] },
+                    ],
+
+                    // Declare columns
+                    columns: [
+                        {
+                            'data': null,
+                            searchable: false,
+                            orderable: false,
+                            className: 'text-center',
+                            width: '20px'
+                        },
+                        { 'data': 'curriculum_id' },
+                        { 'data': 'curriculum_name' },
+                        { 'data': 'credits' },
+                        { 'data': 'registration_type' },
+                        {
+                            'data': 'registration_date',
+                             render: function (data) {
+                                 return moment(data).format('DD/MM/YYYY HH:mm:ss');
+                            }
+                        },
+                        { 'data': 'curriculum_class_id' },
+                        { 'data': 'curriculum_class_schedule' },
+                        { 'data': 'lecturer_id' },
+                        { 'data': 'lecturer_name' },
+                        { 'data': 'term_id' }
+                    ],
+
+                    language: {
+                        'emptyTable': "Sinh viên này chưa có dữ liệu <i class='ft-help-circle' style='vertical-align:middle'></i>",
+                        'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>",
+                        'loadingRecords': 'Đang lấy dữ liệu...'
+                    },
+
+                });
+
+            // Create Index column datatable
+            dataTable.on('draw.dt', function () {
+                var info = dataTable.page.info();
+                dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1 + info.start;
+                });
+            });
+
+            // Return nothing on ajax error
+            $.fn.dataTable.ext.errMode = function (settings, helpPage, message) {
+                return;
+            };
+        });
+    </script>
+}

@@ -88,7 +88,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     max_mark_letter = query_studyResult.Where(d => d.student_id == studentId && d.curriculum_id == s.id)
                     .Select(d => d.max_mark_letter).FirstOrDefault().ToString(),
                     is_pass = query_studyResult.Where(d => d.student_id == studentId && d.curriculum_id == s.id)
-                    .Select(d => d.is_pass).FirstOrDefault().ToString(),
+                    .Select(d => d.is_pass).FirstOrDefault().ToString()
 
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }

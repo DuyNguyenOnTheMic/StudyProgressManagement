@@ -873,6 +873,7 @@
     </Content>
     <Content Include="assets\files\KQDKHT_K3_CNTT_Mau.xlsx" />
     <Content Include="Areas\Faculty\Views\StudyResult\Search.cshtml" />
+    <Content Include="Areas\Faculty\Views\RegistrationResult\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

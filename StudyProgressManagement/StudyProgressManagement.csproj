@@ -186,6 +186,8 @@
     <Compile Include="Areas\Faculty\Controllers\StudyProgramController.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudyResultController.cs" />
     <Compile Include="Areas\Faculty\FacultyAreaRegistration.cs" />
+    <Compile Include="Areas\Student\Controllers\LearningProgressController.cs" />
+    <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -866,6 +868,7 @@
     <Content Include="Areas\Faculty\Views\StudyResult\Search.cshtml" />
     <Content Include="Areas\Faculty\Views\RegistrationResult\Index.cshtml" />
     <Content Include="Areas\Faculty\Views\RegistrationResult\Search.cshtml" />
+    <Content Include="Areas\Student\Views\web.config" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1122,6 +1125,9 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Faculty\Data\" />
     <Folder Include="Areas\Faculty\Views\Shared\" />
+    <Folder Include="Areas\Student\Data\" />
+    <Folder Include="Areas\Student\Views\LearningProgress\" />
+    <Folder Include="Areas\Student\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

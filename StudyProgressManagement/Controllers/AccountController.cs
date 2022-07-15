@@ -14,6 +14,7 @@ namespace StudyProgressManagement.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private SEP25Team03Entities db = new SEP25Team03Entities();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -168,13 +169,28 @@ namespace StudyProgressManagement.Controllers
                 case SignInStatus.Success:
 
                     var currentUser = UserManager.FindByEmail(loginInfo.Email);
-
                     if (currentUser.Roles.FirstOrDefault() == null)
                     {
-                        // Set user role as Student
+                        // Set default user role as Student
                         string rolename = "Student";
                         UserManager.AddToRole(currentUser.Id, rolename);
                     }
+
+                    if (await UserManager.IsInRoleAsync(currentUser.Id, "Student"))
+                    {
+                        // Get student id through email
+                        string studentEmail = loginInfo.Email;
+                        int pFrom = studentEmail.IndexOf(".") + 1;
+                        int pTo = studentEmail.LastIndexOf("@");
+                        string studentId = studentEmail.Substring(pFrom, pTo - pFrom);
+
+                        var check_email = db.students.FirstOrDefault(s => s.email == loginInfo.Email);
+                        if (check_email == null)
+                        {
+
+                        }
+                    }
+
 
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:

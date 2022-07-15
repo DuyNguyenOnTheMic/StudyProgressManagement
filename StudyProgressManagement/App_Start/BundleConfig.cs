@@ -23,7 +23,8 @@ namespace StudyProgressManagement
                 "~/app-assets/vendors/js/sweetalert2.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/sidebarJs").Include(
-               "~/app-assets/js/app-sidebar.min.js"));
+               "~/app-assets/js/app-sidebar.min.js",
+               "~/app-assets/js/notification-sidebar.min.js"));
 
             // Style Bundles
             bundles.Add(new StyleBundle("~/Content/css").Include(

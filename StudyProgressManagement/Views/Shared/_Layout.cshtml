@@ -92,6 +92,17 @@
                                 <a href="#"><i class="icon-pie-chart"></i><span data-i18n="" class="menu-title">Thống kê</span></a>
                             </li>
                         }
+                        else if (User.IsInRole("Student"))
+                        {
+                            <li class="has-sub nav-item">
+                                <a><i class="icon-layers"></i><span data-i18n="" class="menu-title">Tiến độ học tập</span></a>
+                                <ul class="menu-content">
+                                    <li class="@(ViewBag.Title == "Tiến độ học tập" ? "active" : "")">
+                                        <a href="@Url.Action("Index", "LearningProgress", new { area = "Student" })" class="menu-item">Xem tiến độ học tập</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
 
                     </ul>
                 </div>
@@ -103,7 +114,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-faded">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" data-toggle="collapse" class="navbar-toggle d-lg-none float-left"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><span class="d-lg-none navbar-right navbar-collapse-toggle"><a class="open-navbar-container"><i class="ft-more-vertical"></i></a></span><a id="navbar-fullscreen" href="javascript:;" class="mr-2 display-inline-block apptogglefullscreen">
+                    <button type="button" data-toggle="collapse" class="navbar-toggle d-lg-none float-left"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><span class="d-lg-none navbar-right navbar-collapse-toggle"><a class="open-navbar-container"><i class="ft-more-vertical"></i></a></span><a href="javascript:;" class="mr-2 display-inline-block apptogglefullscreen">
                         <i class="ft-maximize blue-grey darken-4 toggleClass"></i>
                         <p class="d-none">fullscreen</p>
                     </a>
@@ -111,7 +122,7 @@
                 <div class="navbar-container">
                     <div id="navbarSupportedContent" class="collapse navbar-collapse">
                         <ul class="navbar-nav">
-                            <li class="mr-2" style="margin-top:10px">
+                            <li class="mr-2 mt-2">
                                 <strong>@User.Identity.Name</strong>
                             </li>
                             <li class="dropdown nav-item mr-0">

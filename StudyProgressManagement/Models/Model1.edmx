@@ -147,14 +147,14 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="full_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="birth_date" Type="datetime" />
           <Property Name="birth_place" Type="nvarchar" MaxLength="255" />
           <Property Name="email" Type="nvarchar" MaxLength="255" />
           <Property Name="gender" Type="nvarchar" MaxLength="50" />
           <Property Name="faculty" Type="nvarchar" MaxLength="100" />
-          <Property Name="class_student_id" Type="varchar" MaxLength="50" />
-          <Property Name="student_course_id" Type="int" />
+          <Property Name="class_student_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="student_course_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="student_course">
           <Key>
@@ -375,7 +375,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_student_class_student">
-          <End Role="class_student" Type="Self.class_student" Multiplicity="0..1" />
+          <End Role="class_student" Type="Self.class_student" Multiplicity="1" />
           <End Role="student" Type="Self.student" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="class_student">
@@ -399,7 +399,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_student_student_course">
-          <End Role="student_course" Type="Self.student_course" Multiplicity="0..1" />
+          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
           <End Role="student" Type="Self.student" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="student_course">
@@ -736,14 +736,14 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="birth_date" Type="DateTime" Precision="3" />
           <Property Name="birth_place" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="faculty" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="class_student_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="student_course_id" Type="Int32" />
+          <Property Name="class_student_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="student_course_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="class_student" Relationship="Self.FK_student_class_student" FromRole="student" ToRole="class_student" />
           <NavigationProperty Name="registration_results" Relationship="Self.FK_registration_results_student" FromRole="student" ToRole="registration_results" />
           <NavigationProperty Name="student_course" Relationship="Self.FK_student_student_course" FromRole="student" ToRole="student_course" />
@@ -858,7 +858,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_student_class_student">
-          <End Role="class_student" Type="Self.class_student" Multiplicity="0..1" />
+          <End Role="class_student" Type="Self.class_student" Multiplicity="1" />
           <End Role="student" Type="Self.student" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="class_student">
@@ -990,7 +990,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_student_student_course">
-          <End Role="student_course" Type="Self.student_course" Multiplicity="0..1" />
+          <End Role="student_course" Type="Self.student_course" Multiplicity="1" />
           <End Role="student" Type="Self.student" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="student_course">

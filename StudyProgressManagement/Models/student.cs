@@ -29,7 +29,7 @@ namespace StudyProgressManagement.Models
         public string gender { get; set; }
         public string faculty { get; set; }
         public string class_student_id { get; set; }
-        public Nullable<int> student_course_id { get; set; }
+        public int student_course_id { get; set; }
     
         public virtual class_student class_student { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

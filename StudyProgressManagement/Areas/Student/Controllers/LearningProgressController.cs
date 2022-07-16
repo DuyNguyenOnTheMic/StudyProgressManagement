@@ -85,7 +85,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers
             var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
             if (query_student != null)
             {
-                ViewBag.StudentID = studentId;
+                ViewBag.StudentID = "187IT06801";
             }
         }
     }

@@ -279,7 +279,7 @@
 
         function PopulateStudyResult(studentId) {
 
-            // Prevent user from submit multiple times            
+            // Prevent user from submit multiple times
             $('.viewStudyResult').each(function () {
                 $(this).removeClass('success');
                 this.style.pointerEvents = 'none';
@@ -295,19 +295,19 @@
 
             var dataTable;
 
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("GetStudentInfo", "StudyResult")',
-                    data: { 'studentId': studentId },
-                    success: function (response) {
-                        if (response) {
-                            $('#lblStudentName').text(response);
-                            $('#lblStudentName').show();
-                        }
-                        else {
-                            $('#lblStudentName').hide();
-                        }
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetStudentInfo", "StudyResult")',
+                data: { 'studentId': studentId },
+                success: function (response) {
+                    if (response) {
+                        $('#lblStudentName').text(response);
+                        $('#lblStudentName').show();
                     }
+                    else {
+                        $('#lblStudentName').hide();
+                    }
+                }
             });
 
 

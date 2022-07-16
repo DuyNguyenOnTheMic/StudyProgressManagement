@@ -38,15 +38,15 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Tín chỉ cần đạt: </label>
-                                            <input type="text" class="form-control" id="txtCredits" name="term" placeholder="Nhập số tín chỉ cần đạt tính đến hiện tại" required oninput="this.value = this.value.toUpperCase()">
+                                            <input type="number" class="form-control" id="txtCredits" name="term" placeholder="Nhập số tín chỉ cần đạt tính đến hiện tại" required oninput="this.value = this.value.toUpperCase()">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-actions">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit-all">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit">
                                     Thống kê
-                                    <i class="ft-thumbs-up position-right"></i>
+                                    <i class="ft-trending-up position-right"></i>
                                 </button>
                             </div>
                         </form>
@@ -55,5 +55,129 @@
             </div>
         </div>
     </div>
+
+    <!-- Pie Chart -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-success">
+                        <h4 class="card-title">Pie Chart</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block chartjs">
+                        <canvas id="simple-pie-chart" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- Section end -->
+
+@section scripts {
+    <script src="~/app-assets/vendors/js/chart.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            // Load cascading dropdown between majors and student courses
+            $("#comboboxMajor").change(function () {
+                $("#comboboxStudentCourse").empty();
+                var majorId = $('#comboboxMajor option:selected').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("LoadStudentCourses", "ProgressStatistics")',
+                    dataType: 'json',
+                    data: { majorId: majorId },
+                    success: function (results) {
+                        $("#comboboxStudentCourse").append('<option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>');
+                        $.each(results, function (i, result) {
+                            $("#comboboxStudentCourse").append('<option value="' + result.id + '">' + result.course + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            }).change();
+        });
+
+        //Get the context of the Chart canvas element we want to select
+        var ctx = $("#simple-pie-chart");
+
+        // Chart Options
+        var chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            responsiveAnimationDuration: 500,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Thống kê sinh viên đạt tín chỉ',
+                    font: {
+                        size: 25
+                    }
+                }
+            }
+        };
+
+        // Create the chart
+        var chart = new Chart(ctx, {
+            type: "pie",
+            data: {},
+            options: chartOptions
+        });
+
+        $("#btnSubmit").click(function (event) {
+
+            event.preventDefault();
+
+            // Get form's data
+            var majorId = document.getElementById("comboboxMajor").value;
+            var studentCourseId = document.getElementById("comboboxStudentCourse").value;
+            var credits = document.getElementById("txtCredits").value;
+
+
+            // Validation for form
+            if (majorId == '') {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Bạn chưa chọn ngành và khoá');
+            }
+            else if (studentCourseId == '') {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Bạn chưa chọn khoá');
+            }
+            else if (credits == '') {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Bạn chưa nhập tín chỉ cần đạt');
+            }
+            else {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetStatistics", "ProgressStatistics")',
+                    data: { 'studentCourseId': studentCourseId, 'credits': credits },
+                       success: function (response) {
+                           console.log(response);
+
+                           var chartData = {
+                               labels: ['Sinh viên đạt', 'Sinh viên chưa đạt'],
+                               datasets: [{
+                                   label: "My First dataset",
+                                   data: [response.Data.passStudents, response.Data.failStudents],
+                                   backgroundColor: ["rgba(102, 110, 232, 0.8)", "rgba(255, 95, 32, 0.8)"],
+                               }]
+                           };
+
+                           chart.options.plugins.title.text = 'Thống kê sinh viên đạt ' + credits + ' tín chỉ';
+                           chart.data = chartData;
+                           chart.update();
+                       }
+                });
+            }
+        });
+    </script>
+}

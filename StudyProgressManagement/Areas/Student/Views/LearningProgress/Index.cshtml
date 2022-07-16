@@ -248,6 +248,14 @@ else
                             'loadingRecords': 'Đang lấy dữ liệu...'
                         },
 
+                        createdRow: function (row, data, dataIndex) {
+                            if (data.is_pass == "x") {
+                                $(row).css('background-color', '#E5F9F2');
+                            }
+                            else if (data.max_mark_10) {
+                                $(row).css('background-color', '#FFE9EC');
+                            }
+                        }
                     });
 
                 // Create Index column datatable

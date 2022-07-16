@@ -95,10 +95,13 @@
                         else
                         {
                             <li class="has-sub nav-item">
-                                <a><i class="icon-layers"></i><span data-i18n="" class="menu-title">Tiến độ học tập</span></a>
+                                <a><i class="icon-book-open"></i><span data-i18n="" class="menu-title">Tiến độ học tập</span></a>
                                 <ul class="menu-content">
                                     <li class="@(ViewBag.Title == "Tiến độ học tập" ? "active" : "")">
-                                        <a href="@Url.Action("Index", "LearningProgress", new { area = "Student" })" class="menu-item">Xem tiến độ học tập</a>
+                                        <a href="@Url.Action("Index", "LearningProgress", new { area = "Student" })" class="menu-item">Xem tiến độ</a>
+                                    </li>
+                                    <li class="@(ViewBag.Title == "Thống kê tiến độ học tập" ? "active" : "")">
+                                        <a href="#" class="menu-item">Thống kê</a>
                                     </li>
                                 </ul>
                             </li>

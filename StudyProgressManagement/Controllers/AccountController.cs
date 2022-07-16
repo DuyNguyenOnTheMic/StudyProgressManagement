@@ -3,7 +3,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.VanLang;
 using StudyProgressManagement.Models;
-using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
@@ -167,31 +166,6 @@ namespace StudyProgressManagement.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-
-                    var currentUser = UserManager.FindByEmail(loginInfo.Email);
-                    if (currentUser.Roles.FirstOrDefault() == null)
-                    {
-                        // Set default user role as Student
-                        string rolename = "Student";
-                        UserManager.AddToRole(currentUser.Id, rolename);
-                    }
-
-                    if (await UserManager.IsInRoleAsync(currentUser.Id, "Student"))
-                    {
-                        // Get student id through email
-                        string studentEmail = loginInfo.Email;
-                        int pFrom = studentEmail.IndexOf(".") + 1;
-                        int pTo = studentEmail.LastIndexOf("@");
-                        string studentId = studentEmail.Substring(pFrom, pTo - pFrom);
-
-                        var check_email = db.students.FirstOrDefault(s => s.email == loginInfo.Email);
-                        if (check_email == null)
-                        {
-
-                        }
-                    }
-
-
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -214,7 +188,7 @@ namespace StudyProgressManagement.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Login", "Account");
-        }      
+        }
 
         protected override void Dispose(bool disposing)
         {

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace StudyProgressManagement.Areas.Student.Controllers
 {
-    [Authorize(Roles = "Student")]
+    [Authorize]
     public class LearningProgressController : Controller
     {
         // GET: Student/LearningProgress

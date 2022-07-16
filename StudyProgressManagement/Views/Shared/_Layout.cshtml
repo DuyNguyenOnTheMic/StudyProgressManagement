@@ -88,8 +88,8 @@
                             <li class="@(ViewBag.Title == "Quản lý ngành học" ? "active" : "nav-item")">
                                 <a href="@Url.Action("Index", "Major", new { Area = "Faculty" })"><i class="icon-graduation"></i><span data-i18n="" class="menu-title">Ngành</span></a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#"><i class="icon-pie-chart"></i><span data-i18n="" class="menu-title">Thống kê</span></a>
+                            <li class="@(ViewBag.Title == "Thống kê tiến độ học tập" ? "active" : "nav-item")">
+                                <a href="@Url.Action("Index", "ProgressStatistics", new { area = "Faculty" })"><i class="icon-pie-chart"></i><span data-i18n="" class="menu-title">Thống kê</span></a>
                             </li>
                         }
                         else

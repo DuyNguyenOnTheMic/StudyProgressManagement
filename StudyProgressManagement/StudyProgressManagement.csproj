@@ -181,6 +181,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Faculty\Controllers\MajorController.cs" />
+    <Compile Include="Areas\Faculty\Controllers\ProgressStatisticsController.cs" />
     <Compile Include="Areas\Faculty\Controllers\RegistrationResultController.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudentCourseController.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudyProgramController.cs" />
@@ -871,6 +872,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Faculty\Views\ProgressStatistics\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

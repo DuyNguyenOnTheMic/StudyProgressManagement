@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Thống kê tiến độ học tập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Section start -->
+<section>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-info">
+                        <h4 class="card-title mb-0">Thống kê tiến độ học tập</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block">
+                        <form>
+                            <div class="form-body">
+                                <div class="row justify-content-center">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Ngành: </label>
+                                            <select class="form-control" id="comboboxMajor" name="major" required">
+                                                <option value="" selected="selected" disabled="disabled"> ----------- Chọn ngành ----------- </option>
+                                                @foreach (var major in ViewBag.majors)
+                                                {
+                                                    <option value="@major.id">@major.name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Khoá: </label>
+                                            <select class="form-control" id="comboboxStudentCourse" name="student_course" required>
+                                                <option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tín chỉ cần đạt: </label>
+                                            <input type="text" class="form-control" id="txtCredits" name="term" placeholder="Nhập số tín chỉ cần đạt tính đến hiện tại" required oninput="this.value = this.value.toUpperCase()">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit-all">
+                                    Thống kê
+                                    <i class="ft-thumbs-up position-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section end -->

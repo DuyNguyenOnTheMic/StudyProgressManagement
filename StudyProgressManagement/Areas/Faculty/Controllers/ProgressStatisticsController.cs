@@ -31,9 +31,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         {
             int passStudents = 0, failStudents = 0;
 
-            // Get study results group by student
-            var query_studyResult = db.study_results.Where(s => s.student_course_id == studentCourseId && s.is_pass != null)
-                .GroupBy(s => s.student_id).Select(s => new { Id = s.Key, Sum = s.Sum(item => item.curriculum.credits) }).ToList();
+            // Get study results group by student (except for optional knowledge_type)
+            var query_studyResult = db.study_results.Where(s => s.student_course_id == studentCourseId && s.is_pass != null && s.curriculum.knowledge_type.knowledge_type_alias
+            != "DCKTL").GroupBy(s => s.student_id).Select(s => new { Id = s.Key, Sum = s.Sum(item => item.curriculum.credits) }).ToList();
 
             foreach (var result in query_studyResult)
             {

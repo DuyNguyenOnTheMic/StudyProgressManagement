@@ -38,7 +38,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Tín chỉ cần đạt: </label>
-                                            <input type="number" class="form-control" id="txtCredits" name="term" placeholder="Nhập số tín chỉ cần đạt tính đến hiện tại" required oninput="this.value = this.value.toUpperCase()">
+                                            <input type="number" min="0" class="form-control" id="txtCredits" name="term" placeholder="Nhập số tín chỉ cần đạt tính đến hiện tại" required oninput="this.value = this.value.toUpperCase()">
                                         </div>
                                     </div>
                                 </div>
@@ -51,23 +51,8 @@
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pie Chart -->
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title-wrap bar-success">
-                        <h4 class="card-title">Pie Chart</h4>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="card-block chartjs">
-                        <canvas id="simple-pie-chart" height="400"></canvas>
+                    <div class="card-block chartjs" style="display: none">
+                        <canvas id="simple-pie-chart"></canvas>
                     </div>
                 </div>
             </div>
@@ -116,10 +101,42 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'Thống kê sinh viên đạt tín chỉ',
                     font: {
                         size: 25
                     }
+                }
+            }
+        };
+
+        const plugin = {
+            id: 'emptyChart',
+            afterDraw(chart, args, options) {
+                const { datasets } = chart.data;
+                let hasData = false;
+
+                for (let dataset of datasets) {
+                    // Check if dataset is null
+                    if (dataset.data.length > 0 && dataset.data.some(item => item !== 0)) {
+                        hasData = true;
+                        break;
+                    }
+                }
+
+                if (!hasData) {
+                    // Show error message when null
+                    const { chartArea: { left, top, right, bottom }, ctx } = chart;
+                    const centerX = (left + right) / 2;
+                    const centerY = (top + bottom) / 2;
+
+                    chart.clear();
+                    ctx.save();
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.font = 'normal 20px Montserrat';
+                    ctx.fillText('Chưa có dữ liệu', centerX, centerY);
+                    ctx.font = 'normal 20px feather';
+                    ctx.fillText('\uE9ec', centerX + 95, centerY);
+                    ctx.restore();
                 }
             }
         };
@@ -128,7 +145,8 @@
         var chart = new Chart(ctx, {
             type: "pie",
             data: {},
-            options: chartOptions
+            options: chartOptions,
+            plugins: [plugin]
         });
 
         $("#btnSubmit").click(function (event) {
@@ -154,7 +172,13 @@
                 toastr.options.positionClass = 'toast-bottom-right';
                 toastr.warning('Bạn chưa nhập tín chỉ cần đạt');
             }
+            else if (credits < 0) {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Tín chỉ không được âm');
+            }
             else {
+
+                $('.chartjs').show();
 
                 $.ajax({
                     type: 'POST',

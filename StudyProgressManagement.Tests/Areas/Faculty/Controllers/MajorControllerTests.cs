@@ -45,10 +45,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         [TestMethod()]
         public void Major_Json_Data_Should_Convert_To_IEnumerable_Test()
         {
-            //Arrange
+            // Arrange
             var controller = new MajorController();
 
-            //Act
+            // Act
             var actionResult = controller.GetData();
             dynamic jsonCollection = actionResult.Data;
             int count = 0;
@@ -57,35 +57,35 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
                 count++;
             }
 
-            //Assert
+            // Assert
             Assert.IsTrue(count > 0);
         }
 
         [TestMethod]
         public void Major_Json_Data_Index_at_0_Should_Not_Be_Null_Test()
         {
-            //Arrange
+            // Arrange
             var controller = new MajorController();
 
-            //Act
+            // Act
             var actionResult = controller.GetData();
             dynamic jsonCollection = actionResult.Data;
 
-            //Assert                
+            // Assert                
             Assert.IsNotNull(jsonCollection[0]);
         }
 
         [TestMethod]
         public void Major_JSon_Data_Should_Be_Indexable_Test()
         {
-            //Arrange
+            // Arrange
             var controller = new MajorController();
 
-            //Act
+            // Act
             var actionResult = controller.GetData();
             dynamic jsonCollection = actionResult.Data;
 
-            //Assert
+            // Assert
             for (var i = 0; i < jsonCollection.Count; i++)
             {
 
@@ -95,26 +95,106 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
                 Assert.IsNotNull(json.id,
                    "JSON record does not contain \"id\" required property.");
                 Assert.IsNotNull(json.name,
-                    "JSON record does not contain \"name\" required property.");              
+                    "JSON record does not contain \"name\" required property.");
             }
         }
 
         [TestMethod]
         public void Major_JSon_Data_Count_Should_Be_Equal_Test()
         {
-            //Arrange
+            // Arrange
             var controller = new MajorController();
             var db = new SEP25Team03Entities();
 
-            //Act
+            // Act
             var actionResult = controller.GetData();
             var model = db.majors.ToList();
 
-            //Assert
+            // Assert
             dynamic jsonCollection = actionResult.Data;
 
             Assert.AreEqual(model.Count, jsonCollection.Count);
         }
 
+        [TestMethod]
+        public void Create_Major_Test()
+        {
+            // Arrange
+            var controller = new MajorController();
+            SEP25Team03Entities db = new SEP25Team03Entities();
+            major major = new major() { id = "7480104", name = "Hệ thống thông tin" };
+
+            // Act
+            controller.Create(major);
+            var createResult = controller.GetData();
+            dynamic jsonCollection = createResult.Data;
+
+            // Assert
+            Assert.AreEqual(db.majors.Count(), jsonCollection.Count);
+        }
+
+        [TestMethod]
+        public void Create_Shoud_Be_Failed_When_Major_Id_Over_50_Characters_Test()
+        {
+            // Arrange
+            var controller = new MajorController();
+            major major = new major() { id = "usposueremisedaccumsanliguladiamatdsdasdsaddasasadd", name = "Test" };
+
+            // Act
+            var result = controller.Create(major) as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert
+            Assert.AreEqual(true, jsonCollection.error);
+        }
+
+        [TestMethod]
+        public void Create_Shoud_Be_Failed_When_Major_Name_Over_255_Characters_Test()
+        {
+            // Arrange
+            var controller = new MajorController();
+            major major = new major() { id = "7480104", name = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris efficitur, massa non aliquet accumsan, ligula risus posuere mi, sed accumsan ligula diam at ante. Duis fermentum blandit ante, viverra convallis magna varius et. Sed congue ut elit vitae ufsa" };
+
+            // Act
+            var result = controller.Create(major) as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert
+            Assert.AreEqual(true, jsonCollection.error);
+        }
+
+        [TestMethod]
+        public void Create_Should_Be_Failed_When_Major_Exists_Test()
+        {
+            // Arrange
+            var controller = new MajorController();
+            major major = new major() { id = "7480104", name = "Hệ thống thông tin" };
+
+            // Act
+            var result = controller.Create(major) as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert
+            Assert.AreEqual(true, jsonCollection.error);
+            
+        }
+
+        [TestMethod]
+        public void Edit_Major_Test()
+        {
+            // Arrange...
+            var controller = new MajorController();
+            var major = new major();
+            major.id = "7480104";
+            major.name = "Hệ thống thông tin";
+
+            // Act...
+            var result = controller.Edit(major) as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert...
+            Assert.AreEqual(true, jsonCollection.success);
+
+        }
     }
 }

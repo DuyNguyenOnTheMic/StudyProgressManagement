@@ -116,6 +116,19 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             Assert.AreEqual(model.Count, jsonCollection.Count);
         }
 
+        [TestMethod()]
+        public void Create_View_Test()
+        {
+            // Arrange
+            var controller = new MajorController();
+
+            // Act
+            ViewResult result = controller.Create() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+        }
+
         [TestMethod]
         public void Create_Major_Test()
         {
@@ -176,7 +189,19 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
 
             // Assert
             Assert.AreEqual(true, jsonCollection.error);
-            
+        }
+
+        [TestMethod()]
+        public void Edit_View_Test()
+        {
+            // Arrange
+            var controller = new MajorController();
+
+            // Act
+            ViewResult result = controller.Edit("7480104") as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]

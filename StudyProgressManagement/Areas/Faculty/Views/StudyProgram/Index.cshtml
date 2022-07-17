@@ -179,8 +179,7 @@
                             }
                             else if (level != 0)
                             {
-                                if (rows.data()[0].compulsory_credits != null && rows.data()[0].optional_credits != null)
-                                {
+                                if (rows.data()[0].compulsory_credits != null && rows.data()[0].optional_credits != null) {
                                     // Return total count of compulsory credits and optional credits
                                     var total_credits = rows.data()[0].compulsory_credits + rows.data()[0].optional_credits;
                                     return $('<tr/>')
@@ -188,19 +187,24 @@
                                         .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
                                         .append('<th colspan="8"></td>')
                                 }
-                                else if (rows.data()[0].compulsory_credits != null)
-                                {
+                                else if (rows.data()[0].compulsory_credits != null) {
                                     // Return compulsory cresits
                                     return $('<tr/>')
-                                        .append('<th colspan="4">' + group + ' (' + rows.data()[0].compulsory_credits + ' TC bắt buộc)'+ '</td>')
+                                        .append('<th colspan="4">' + group + ' (' + rows.data()[0].compulsory_credits + ' TC bắt buộc)' + '</td>')
                                         .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
                                         .append('<th colspan="8"></td>')
                                 }
-                                else
-                                {
+                                else if (rows.data()[0].optional_credits != null) {
                                     // Return optional credits
                                     return $('<tr/>')
                                         .append('<th colspan="4">' + group + ' (' + rows.data()[0].optional_credits + ' TC tự chọn)' + '</td>')
+                                        .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
+                                        .append('<th colspan="8"></td>')
+                                }
+                                else {
+                                    // Return null
+                                    return $('<tr/>')
+                                        .append('<th colspan="4">' + group + ' (0 TC)' + '</td>')
                                         .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</td>')
                                         .append('<th colspan="8"></td>')
                                 }

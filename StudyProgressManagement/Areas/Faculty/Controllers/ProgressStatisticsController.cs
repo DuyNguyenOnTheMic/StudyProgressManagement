@@ -1,4 +1,5 @@
 ﻿using StudyProgressManagement.Models;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -50,6 +51,19 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
 
             var finalResult = Json(new { passStudents = passStudents, failStudents = failStudents });
             return Json(finalResult, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult GetSuccess(int studentCourseId, int credits)
+        {
+            // Get study results group by student (except for optional knowledge_type)
+            var query_studyResult = db.study_results.Where(s => s.student_course_id == studentCourseId && s.is_pass != null && s.curriculum.knowledge_type.knowledge_type_alias
+            != "DCKTL").GroupBy(s => s.student_id).Select(s => new { id = s.Key, full_name = s.Select(n => n.student.full_name).Distinct(), sum = s.Sum(item => item.curriculum.credits) });
+
+            // Query for success students
+            var query_successStudents = query_studyResult.Where(s => s.sum >= credits);
+
+            return Json(query_successStudents.ToList(), JsonRequestBehavior.AllowGet);
         }
     }
 }

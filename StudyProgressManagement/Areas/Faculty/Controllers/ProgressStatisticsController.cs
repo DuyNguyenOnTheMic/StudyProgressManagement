@@ -54,16 +54,26 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetSuccess(int studentCourseId, int credits)
+        public JsonResult GetStudentList(int studentCourseId, int credits, bool isTrue)
         {
             // Get study results group by student (except for optional knowledge_type)
             var query_studyResult = db.study_results.Where(s => s.student_course_id == studentCourseId && s.is_pass != null && s.curriculum.knowledge_type.knowledge_type_alias
             != "DCKTL").GroupBy(s => s.student_id).Select(s => new { id = s.Key, full_name = s.Select(n => n.student.full_name).Distinct(), sum = s.Sum(item => item.curriculum.credits) });
 
-            // Query for success students
-            var query_successStudents = query_studyResult.Where(s => s.sum >= credits);
+            // Query for student list
+            var query_studentList = query_studyResult;
+            if (isTrue)
+            {
+                // Get success students
+                query_studentList = query_studentList.Where(s => s.sum >= credits);
+            }
+            else
+            {
+                // Get fail students
+                query_studentList = query_studentList.Where(s => s.sum < credits);
+            }
 
-            return Json(query_successStudents.ToList(), JsonRequestBehavior.AllowGet);
+            return Json(query_studentList.ToList(), JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -51,7 +51,8 @@
                             </div>
                         </form>
                         <div class="card-block chartjs" style="display: none">
-                            <input type="hidden" id="inputCredits" value=""/>
+                            <input type="hidden" id="inputStudentCourse" value="" />
+                            <input type="hidden" id="inputCredits" value="" />
                             <canvas id="simple-pie-chart"></canvas>
                         </div>
                         <div class="form-actions" id="frmShowStudents" style="display: none">
@@ -69,7 +70,7 @@
                         <div class="table-responsive" id="divViewStudents" style="display: none">
                             <h4 class="card-title text-center m-4" id="lblViewStudents"></h4>
                             <table class="table table-striped table-bordered" id="tblViewStudents" width="100%">
-                                <thead class="bg-primary text-light">
+                                <thead>
                                     <tr>
                                         <th></th>
                                         <th> MSSV </th>
@@ -92,6 +93,7 @@
 
 @section scripts {
     <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
+    <script src="~/app-assets/vendors/js/datatable/dataTables.buttons.min.js"></script>
     <script src="~/app-assets/vendors/js/chart.min.js"></script>
     <script src="~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js"></script>
 
@@ -210,6 +212,7 @@
                         if (response.Data.passStudents != 0 && response.Data.failStudents != 0) {
 
                             // Add value to hidden input credits
+                            $('#inputStudentCourse').val(studentCourseId);
                             $('#inputCredits').val(credits);
 
                             // Update chart data
@@ -224,6 +227,7 @@
                         else {
                             $('#frmShowStudents').hide();
 
+                            // Show message chart has no data
                             chart.options.plugins.title.text = 'Chưa có dữ liệu...';
                             chart.data = chartData;
                             chart.update();
@@ -235,60 +239,99 @@
 
         $("#btnSuccessStudent").click(function (event) {
 
-            var studentCourseId = document.getElementById("comboboxStudentCourse").value;
-            var credits = document.getElementById("txtCredits").value;
+            var inputStudentCourse = $('#inputStudentCourse').val();
+            var inputCredits = $('#inputCredits').val();
 
             $('#divViewStudents').show();
-            $(".table thead").attr("class", "success");
 
-            PopulateDatatable(studentCourseId, credits);
+            // Create datatable for success students
+            $('#lblViewStudents').text('Danh sách sinh viên đạt ' + inputCredits + ' chỉ');
+            PopulateDatatable(inputStudentCourse, inputCredits, true);
 
         });
 
-        function PopulateDatatable(studentCourseId, credits) {
+        $("#btnFailStudent").click(function (event) {
 
-            var dataTable;
+            var inputStudentCourse = $('#inputStudentCourse').val();
             var inputCredits = $('#inputCredits').val();
 
-            $('#lblViewStudents').text('Danh sách sinh viên đạt ' + inputCredits + ' chỉ');
+            $('#divViewStudents').show();
+
+            // Create datatable for fail students
+            $('#lblViewStudents').text('Danh sách sinh viên chưa đạt ' + inputCredits + ' chỉ');
+            PopulateDatatable(inputStudentCourse, inputCredits, false);
+
+        });
+
+        function PopulateDatatable(inputStudentCourse, inputCredits, isTrue) {
+
+            var dataTable;
+            var colsToExport = [1, 2, 3];
+            var fileName, buttonClass;
+
+            if (isTrue) {
+                fileName = 'DSSV-Dat';
+                buttonClass = 'btn btn-outline-primary mr-1';
+            }
+            else {
+                fileName = 'DSSV-ChuaDat';
+                buttonClass = 'btn btn-outline-warning mr-1';
+            }
 
             dataTable = $('#tblViewStudents').DataTable(
-                    {
-                        ajax: {
-                            dataSrc: '',
-                            type: 'POST',
-                            url: '@Url.Action("GetSuccess", "ProgressStatistics")',
-                            data: { 'studentCourseId': studentCourseId, 'credits': inputCredits },
-                            dataType: "json",
-                        },
-
-                        order: [[3, 'desc']],
-                        columns: [
-                            {
-                                'data': null,
-                                searchable: false,
-                                orderable: false,
-                                className: 'text-center',
-                                width: '20px'
-                            },
-                            { 'data': 'id' },
-                            { 'data': 'full_name' },
-                            { 'data': 'sum' }
-                        ],
-
-                        language: {
-                            'emptyTable': "Không tìm thấy sinh viên <i class='ft-help-circle' style='vertical-align:middle'></i>",
-                            'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>",
-                            'loadingRecords': 'Đang lấy dữ liệu...'
-                        },
-
-                    lengthMenu: [
-                        [50, 100, -1],
-                        [50, 100, 'All'],
-                    ],
+                {
+                    ajax: {
+                        dataSrc: '',
+                        type: 'POST',
+                        url: '@Url.Action("GetStudentList", "ProgressStatistics")',
+                        data: { 'studentCourseId': inputStudentCourse, 'credits': inputCredits, 'isTrue': isTrue },
+                        dataType: "json",
+                    },
+                    lengthMenu: [[50, 100, -1], [50, 100, "All"]],
                     destroy: true,
-
-                    });
+                    order: [[3, 'desc']],
+                    columns: [
+                        {
+                            'data': null,
+                            searchable: false,
+                            orderable: false,
+                            className: 'text-center',
+                            width: '20px'
+                        },
+                        { 'data': 'id' },
+                        { 'data': 'full_name' },
+                        { 'data': 'sum' }
+                    ],                  
+                    dom: 'Blfrtip',
+                    buttons: [
+                        {
+                            extend: 'copy',
+                            title: fileName,
+                            exportOptions: {
+                                columns: colsToExport
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            title: fileName,
+                            exportOptions: {
+                                columns: colsToExport
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            title: fileName,
+                            exportOptions: {
+                                columns: colsToExport
+                            }
+                        }
+                    ],
+                    language: {
+                        'emptyTable': "Không tìm thấy sinh viên <i class='ft-help-circle' style='vertical-align:middle'></i>",
+                        'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>",
+                        'loadingRecords': 'Đang lấy dữ liệu...'
+                    },
+                });
 
             // Create Index column datatable
             dataTable.on('draw.dt', function () {
@@ -296,6 +339,8 @@
                     cell.innerHTML = i + 1;
                 });
             });
+
+            $('.buttons-copy, .buttons-print, .buttons-excel').addClass(buttonClass);
         };
     </script>
 }

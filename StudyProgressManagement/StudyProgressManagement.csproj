@@ -593,6 +593,7 @@
     <Content Include="app-assets\vendors\js\bootstrap-checkbox.min.js" />
     <Content Include="app-assets\vendors\js\chart.min.js" />
     <Content Include="app-assets\vendors\js\chartist.min.js" />
+    <Content Include="app-assets\vendors\js\chartjs-plugin-datalabels.min.js" />
     <Content Include="app-assets\vendors\js\core\bootstrap.min.js" />
     <Content Include="app-assets\vendors\js\core\jquery-3.6.0.min.js" />
     <Content Include="app-assets\vendors\js\core\popper.min.js" />

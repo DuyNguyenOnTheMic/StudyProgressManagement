@@ -66,9 +66,9 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="table-responsive">
+                        <div class="table-responsive" id="divViewStudents" style="display: none">
                             <h4 class="card-title text-center m-4" id="lblViewStudents"></h4>
-                            <table class="table table-striped table-bordered" id="tblViewStudents" width="100%" @*style="display: none"*@>
+                            <table class="table table-striped table-bordered" id="tblViewStudents" width="100%">
                                 <thead class="bg-primary text-light">
                                     <tr>
                                         <th></th>
@@ -152,47 +152,12 @@
             }
         };
 
-        // Plugin to check if chart data is null
-        const plugin = {
-            id: 'emptyChart',
-            afterDraw(chart, args, options) {
-                const { datasets } = chart.data;
-                let hasData = false;
-
-                for (let dataset of datasets) {
-                    // Check if dataset is null
-                    if (dataset.data.length > 0 && dataset.data.some(item => item !== 0)) {
-                        hasData = true;
-                        break;
-                    }
-                }
-
-                if (!hasData) {
-                    // Show error message when null
-                    const { chartArea: { left, top, right, bottom }, ctx } = chart;
-                    const centerX = (left + right) / 2;
-
-                    $('#frmShowStudents').hide();
-
-                    chart.clear();
-                    ctx.save();
-                    ctx.textAlign = 'center';
-                    ctx.font = 'bold 20px Montserrat';
-                    ctx.fillStyle = 'rgba(97,97,97,.87)';
-                    ctx.fillText('Chưa có dữ liệu', centerX, top);
-                    ctx.font = 'bold 20px feather';
-                    ctx.fillText('\uE9ec', centerX + 95, top);
-                    ctx.restore();
-                }
-            }
-        };
-
         // Create the chart
         var chart = new Chart(ctx, {
             type: "pie",
             data: {},
             options: chartOptions,
-            plugins: [plugin, ChartDataLabels]
+            plugins: [ChartDataLabels]
         });
 
         $("#btnSubmit").click(function (event) {
@@ -224,33 +189,46 @@
             }
             else {
 
+                $('#divViewStudents').hide();
                 $('.chartjs').show();
 
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("GetStatistics", "ProgressStatistics")',
                     data: { 'studentCourseId': studentCourseId, 'credits': credits },
-                       success: function (response) {
-                           var chartData = {
-                               labels: ['Sinh viên đạt', 'Sinh viên chưa đạt'],
-                               datasets: [{
-                                   label: "My First dataset",
-                                   data: [response.Data.passStudents, response.Data.failStudents],
-                                   backgroundColor: ["rgba(102, 110, 232, 0.8)", "rgba(255, 95, 32, 0.8)"],
-                               }]
-                           };
+                    success: function (response) {
 
-                           // Add value to hidden input credits
-                           $('#inputCredits').val(credits);
+                        var chartData = {
+                            labels: ['Sinh viên đạt', 'Sinh viên chưa đạt'],
+                            datasets: [{
+                                label: "My First dataset",
+                                data: [response.Data.passStudents, response.Data.failStudents],
+                                backgroundColor: ["rgba(102, 110, 232, 0.8)", "rgba(255, 95, 32, 0.8)"],
+                            }]
+                        };
 
-                           // Update chart data
-                           chart.options.plugins.title.text = 'Thống kê sinh viên đạt ' + credits + ' tín chỉ';
-                           chart.data = chartData;
-                           chart.update();
+                        if (response.Data.passStudents != 0 && response.Data.failStudents != 0) {
 
-                           // Show buttons to view list of students in statistics
-                           $('#frmShowStudents').show();
-                       }
+                            // Add value to hidden input credits
+                            $('#inputCredits').val(credits);
+
+                            // Update chart data
+                            chart.options.plugins.title.text = 'Thống kê sinh viên đạt ' + credits + ' tín chỉ';
+                            chart.data = chartData;
+                            chart.update();
+
+                            // Show buttons to view list of students in statistics
+                            $('#frmShowStudents').show();
+
+                        }
+                        else {
+                            $('#frmShowStudents').hide();
+
+                            chart.options.plugins.title.text = 'Chưa có dữ liệu...';
+                            chart.data = chartData;
+                            chart.update();
+                        }
+                    }
                 });
             }
         });
@@ -260,6 +238,9 @@
             var studentCourseId = document.getElementById("comboboxStudentCourse").value;
             var credits = document.getElementById("txtCredits").value;
 
+            $('#divViewStudents').show();
+            $(".table thead").attr("class", "success");
+
             PopulateDatatable(studentCourseId, credits);
 
         });
@@ -268,6 +249,8 @@
 
             var dataTable;
             var inputCredits = $('#inputCredits').val();
+
+            $('#lblViewStudents').text('Danh sách sinh viên đạt ' + inputCredits + ' chỉ');
 
             dataTable = $('#tblViewStudents').DataTable(
                     {

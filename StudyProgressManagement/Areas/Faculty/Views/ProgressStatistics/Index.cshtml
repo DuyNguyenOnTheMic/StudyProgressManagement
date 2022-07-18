@@ -63,6 +63,8 @@
 
 @section scripts {
     <script src="~/app-assets/vendors/js/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
 
     <script type="text/javascript">
 
@@ -98,12 +100,25 @@
             responsive: true,
             maintainAspectRatio: false,
             responsiveAnimationDuration: 500,
+            tooltips: {
+                enabled: false
+            },
             plugins: {
                 title: {
                     display: true,
                     font: {
                         size: 25
                     }
+                },
+                datalabels: {
+                    formatter: function (value, context) {
+                        return Math.round(value / context.chart.getDatasetMeta(0).total * 100) + "%";
+                    },
+                    color: '#FFFFFF',
+                    font: {
+                        weight: 'bold',
+                        size: 16,
+                    },
                 }
             }
         };
@@ -126,16 +141,15 @@
                     // Show error message when null
                     const { chartArea: { left, top, right, bottom }, ctx } = chart;
                     const centerX = (left + right) / 2;
-                    const centerY = (top + bottom) / 2;
 
                     chart.clear();
                     ctx.save();
                     ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.font = 'normal 20px Montserrat';
-                    ctx.fillText('Chưa có dữ liệu', centerX, centerY);
-                    ctx.font = 'normal 20px feather';
-                    ctx.fillText('\uE9ec', centerX + 95, centerY);
+                    ctx.font = 'bold 20px Montserrat';
+                    ctx.fillStyle = 'rgba(97,97,97,.87)';
+                    ctx.fillText('Chưa có dữ liệu', centerX, top);
+                    ctx.font = 'bold 20px feather';
+                    ctx.fillText('\uE9ec', centerX + 95, top);
                     ctx.restore();
                 }
             }
@@ -146,7 +160,7 @@
             type: "pie",
             data: {},
             options: chartOptions,
-            plugins: [plugin]
+            plugins: [plugin, ChartDataLabels]
         });
 
         $("#btnSubmit").click(function (event) {
@@ -185,8 +199,6 @@
                     url: '@Url.Action("GetStatistics", "ProgressStatistics")',
                     data: { 'studentCourseId': studentCourseId, 'credits': credits },
                        success: function (response) {
-                           console.log(response);
-
                            var chartData = {
                                labels: ['Sinh viên đạt', 'Sinh viên chưa đạt'],
                                datasets: [{

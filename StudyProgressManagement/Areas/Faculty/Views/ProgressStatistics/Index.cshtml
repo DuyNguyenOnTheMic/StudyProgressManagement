@@ -225,7 +225,7 @@
                             }]
                         };
 
-                        if (response.Data.passStudents != 0 && response.Data.failStudents != 0) {
+                        if (response.Data.passStudents != 0 || response.Data.failStudents != 0) {
 
                             // Add value to hidden input credits
                             $('#inputStudentCourse').val(studentCourseId);

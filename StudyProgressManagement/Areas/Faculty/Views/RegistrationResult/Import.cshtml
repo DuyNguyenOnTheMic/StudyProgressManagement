@@ -85,7 +85,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title-wrap bar-indigo">
-                        <h4 class="card-title">Những học phần không import được</h4>
+                        <h4 class="card-title" id="lblCantImport">Những học phần không import được</h4>
                     </div>
                 </div>
                 <div class="card-body collapse show">
@@ -259,7 +259,7 @@
                                 $('#errorCurriculumn_section').show();
 
                                 var dataTable;
-                                var colsToExport = [1, 2, 3];
+                                var fileName = $('#lblCantImport').text();
 
                                 // Populate datatable showing the error curriculums
                                 dataTable = $('#tblErrorRows').DataTable({
@@ -267,31 +267,23 @@
                                     paging: false,
                                     info: false,
                                     destroy: true,
-                                    dom: 'Bfrtip',
+                                    dom: 'Blfrtip',
                                     buttons: [
                                         {
                                             extend: 'copy',
-                                            title: 'KQDKHT-HocPhanBiLoi',
-                                            exportOptions: {
-                                                columns: colsToExport
-                                            }
+                                            title: fileName
                                         },
                                         {
                                             extend: 'excel',
-                                            title: 'KQDKHT-HocPhanBiLoi',
-                                            exportOptions: {
-                                                columns: colsToExport
-                                            }
+                                            title: fileName
                                         },
                                         {
                                             extend: 'print',
-                                            title: 'KQDKHT-HocPhanBiLoi',
-                                            exportOptions: {
-                                                columns: colsToExport
-                                            }
+                                            title: fileName
                                         }
                                     ],
                                     columnDefs: [{
+                                        defaultContent: '',
                                         searchable: false,
                                         orderable: false,
                                         className: 'text-center',
@@ -300,7 +292,7 @@
                                     }],
                                     order: [[1, 'asc']],
                                     columns: [
-                                        { 'data': null },
+                                        { 'data': '' },
                                         { 'data': 'curriculumId' },
                                         { 'data': 'curriculumName' },
                                         { 'data': 'credits' },
@@ -314,6 +306,7 @@
                                 dataTable.on('order.dt search.dt', function () {
                                     dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
                                         cell.innerHTML = i + 1;
+                                        dataTable.cell(cell).invalidate('dom');
                                     });
                                 }).draw();
 

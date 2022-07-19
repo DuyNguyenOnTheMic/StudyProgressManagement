@@ -204,6 +204,23 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             Assert.IsNotNull(result);
         }
 
+        [TestMethod()]
+        public void Edit_Major_Data_Should_Load_Correctly_Test()
+        {
+            // Arrange
+            var controller = new MajorController();
+
+            // Act
+            var result = controller.Edit("7480104") as ViewResult;
+            var model = result.Model as major;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(model);
+            Assert.AreEqual(model.id, "7480104");
+            Assert.AreEqual(model.name, "Hệ thống thông tin");
+        }
+
         [TestMethod]
         public void Edit_Major_Test()
         {

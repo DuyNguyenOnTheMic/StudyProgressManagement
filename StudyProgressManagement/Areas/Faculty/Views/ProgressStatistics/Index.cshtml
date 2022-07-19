@@ -77,20 +77,20 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title-wrap bar-info">
+                    <div class="card-title-wrap" id="cardTitle">
                         <h4 class="card-title" id="lblViewStudents"></h4>
                     </div>
                 </div>
                 <div class="card-body collapse show">
                     <div class="card-block card-dashboard">
                         <div class="table-responsive">
-                            <h4 class="card-title text-center m-4" id="lblViewStudents"></h4>
                             <table class="table table-striped table-bordered" id="tblViewStudents" width="100%">
                                 <thead>
                                     <tr>
                                         <th></th>
                                         <th> MSSV </th>
                                         <th> Họ và tên </th>
+                                        <th> Lớp </th>
                                         <th> Tín chỉ đã học (không tính DCKTL) </th>
                                     </tr>
                                 </thead>
@@ -286,9 +286,13 @@
             fileName = $('#lblViewStudents').text();
 
             if (isTrue) {
+                $("#cardTitle").removeClass("bar-warning");
+                $("#cardTitle").addClass("bar-primary");
                 buttonClass = 'btn btn-outline-primary mr-1';
             }
             else {
+                $("#cardTitle").removeClass("bar-primary");
+                $("#cardTitle").addClass("bar-warning");
                 buttonClass = 'btn btn-outline-warning mr-1';
             }
 
@@ -303,7 +307,7 @@
                     },
                     lengthMenu: [[50, 100, -1], [50, 100, "All"]],
                     destroy: true,
-                    order: [[3, 'desc']],
+                    order: [[4, 'desc']],
                     columns: [
                         {
                             'data': '',
@@ -315,6 +319,7 @@
                         },
                         { 'data': 'id' },
                         { 'data': 'full_name' },
+                        { 'data': 'class_student' },
                         { 'data': 'sum' }
                     ],                  
                     dom: 'Blfrtip',

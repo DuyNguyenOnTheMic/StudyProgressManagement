@@ -34,13 +34,26 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public JsonResult Search(int studentCourseId, string classStudentId, string studentName)
         {
-            // Search student study results
-            return Json(db.students.Where(s => s.student_course_id == studentCourseId &&
-            s.class_student_id == classStudentId && s.full_name.Contains(studentName)).Select(s => new
+            if (!string.IsNullOrEmpty(classStudentId))
             {
-                id = s.id,
-                full_name = s.full_name
-            }).ToList(), JsonRequestBehavior.AllowGet);
+                // Search student study results with class
+                return Json(db.students.Where(s => s.student_course_id == studentCourseId &&
+                s.class_student_id == classStudentId && s.full_name.Contains(studentName)).Select(s => new
+                {
+                    id = s.id,
+                    full_name = s.full_name
+                }).ToList(), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                // Search student study results with name
+                return Json(db.students.Where(s => s.student_course_id == studentCourseId &&
+                s.full_name.Contains(studentName)).Select(s => new
+                {
+                    id = s.id,
+                    full_name = s.full_name
+                }).ToList(), JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpPost]

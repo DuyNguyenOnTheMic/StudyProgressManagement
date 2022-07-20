@@ -43,7 +43,7 @@
                                         <div class="form-group">
                                             <label>Lớp: </label>
                                             <select class="form-control" id="comboboxClassStudent" name="class_student" required>
-                                                <option value="" selected="selected" disabled="disabled"> ----------- Chọn lớp ----------- </option>
+                                                <option value="" selected="selected"> ----------- Chọn lớp ----------- </option>
                                             </select>
                                         </div>
                                     </div>
@@ -76,8 +76,28 @@
                                 <tbody></tbody>
                             </table>
                         </div>
-                        <div class="table-responsive mt-4" style="display: none" id="divStudyResult">
-                            <h4 class="card-title text-center m-3" id="lblStudentName"></h4>
+                        <div class="container mt-3" id="searchStudyResult_instruction">
+                            <h4 class="card-title text-center">Nhập thông tin để tìm kiếm sinh viên</h4>
+                            <img class="mx-auto d-block w-50" alt="Instruction" src="~/assets/images/img_search_engines.svg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="display: none" id="divStudyResult">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-pink">
+                        <h4 class="card-title mb-0">Xem kết quả học tập</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <h4 class="card-title text-center mb-3" id="lblStudentName"></h4>
                             <table class="table table-bordered" id="tblStudyResult" cellspacing="0" width="100%">
                                 <thead style="text-align: center; background-color: #FFC8A4; color: rgba(0, 0, 0, 0.87) ">
                                     <tr>
@@ -107,10 +127,6 @@
                                 </thead>
                                 <tbody></tbody>
                             </table>
-                        </div>
-                        <div class="container mt-3" id="searchStudyResult_instruction">
-                            <h4 class="card-title text-center">Nhập thông tin để tìm kiếm sinh viên</h4>
-                            <img class="mx-auto d-block w-50" alt="Instruction" src="~/assets/images/img_search_engines.svg" />
                         </div>
                     </div>
                 </div>
@@ -162,7 +178,7 @@
                     dataType: 'json',
                     data: { StudentCourseId: StudentCourseId },
                     success: function (results) {
-                        $("#comboboxClassStudent").append('<option value="" selected="selected" disabled="disabled"> ----------- Chọn lớp ----------- </option>');
+                        $("#comboboxClassStudent").append('<option value="" selected="selected"> ----------- Chọn lớp ----------- </option>');
                         $.each(results, function (i, result) {
                             $("#comboboxClassStudent").append('<option value="' + result.id + '">' + result.id + '</option>');
                         });
@@ -196,13 +212,9 @@
                 toastr.options.positionClass = 'toast-bottom-right';
                 toastr.warning('Bạn chưa chọn khoá');
             }
-            else if (classStudentId == '') {
+            else if (classStudentId == '' && studentName == '') {
                 toastr.options.positionClass = 'toast-bottom-right';
-                toastr.warning('Bạn chưa chọn lớp');
-            }
-            else if (studentName == '') {
-                toastr.options.positionClass = 'toast-bottom-right';
-                toastr.warning('Bạn chưa nhập tên sinh viên');
+                toastr.warning('Bạn chưa chọn lớp hoặc nhập tên sinh viên');
             }
             else {
 
@@ -260,9 +272,7 @@
                             'loadingRecords': 'Đang lấy dữ liệu...'
                         },
 
-                        paging: false,
-                        searching: false,
-                        info: false,
+                        lengthMenu: [[25, 50, -1], [25, 50, "All"]],
                         destroy: true,
 
                     });

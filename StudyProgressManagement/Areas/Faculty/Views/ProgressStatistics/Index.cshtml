@@ -19,7 +19,7 @@
                         <form>
                             <div class="form-body">
                                 <div class="row justify-content-center">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <label>Ngành: </label>
                                             <select class="form-control" id="comboboxMajor" name="major" required">
@@ -30,16 +30,24 @@
                                                 }
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <label>Khoá: </label>
                                             <select class="form-control" id="comboboxStudentCourse" name="student_course" required>
                                                 <option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="col-6">
                                         <div class="form-group">
-                                            <label>Tín chỉ cần đạt: </label>
-                                            <input type="number" min="0" class="form-control" id="txtCredits" name="term" placeholder="Nhập số tín chỉ cần đạt tính đến hiện tại" required oninput="this.value = this.value.toUpperCase()">
+                                            <label>Tín chỉ tối thiểu: </label>
+                                            <input type="number" min="0" class="form-control" id="txtCreditsFrom" name="term" placeholder="Nhập số tín chỉ tối thiểu cần đạt tính đến hiện tại" required oninput="this.value = this.value.toUpperCase()">
                                         </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label>Tín chỉ tối đa: </label>
+                                        <input type="number" min="0" class="form-control" id="txtCreditsTo" name="term" placeholder="Nhập số tín chỉ tối đa cần đạt tính đến hiện tại" required oninput="this.value = this.value.toUpperCase()">
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +60,8 @@
                         </form>
                         <div class="card-block chartjs" style="display: none">
                             <input type="hidden" id="inputStudentCourse" value="" />
-                            <input type="hidden" id="inputCredits" value="" />
+                            <input type="hidden" id="inputCreditsFrom" value="" />
+                            <input type="hidden" id="inputCreditsTo" value="" />
                             <canvas id="simple-pie-chart"></canvas>
                         </div>
                         <div class="form-actions" id="frmShowStudents" style="display: none">
@@ -60,10 +69,6 @@
                                 <button type="button" class="btn btn-primary mr-1" id="btnSuccessStudent">
                                     Xem sinh viên đạt
                                     <i class="ft-check-circle position-right"></i>
-                                </button>
-                                <button type="reset" class="btn btn-warning" id="btnFailStudent">
-                                    Xem sinh viên chưa đạt
-                                    <i class="ft-x-circle position-right"></i>
                                 </button>
                             </div>
                         </div>
@@ -77,7 +82,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title-wrap" id="cardTitle">
+                    <div class="card-title-wrap bar-primary">
                         <h4 class="card-title" id="lblViewStudents"></h4>
                     </div>
                 </div>
@@ -159,7 +164,7 @@
                 },
                 datalabels: {
                     formatter: function (value, context) {
-                        return Math.round(value / context.chart.getDatasetMeta(0).total * 100) + "%";
+                        return value + " SV";
                     },
                     color: '#FFFFFF',
                     font: {
@@ -185,7 +190,8 @@
             // Get form's data
             var majorId = document.getElementById("comboboxMajor").value;
             var studentCourseId = document.getElementById("comboboxStudentCourse").value;
-            var credits = document.getElementById("txtCredits").value;
+            var creditsFrom = document.getElementById("txtCreditsFrom").value;
+            var creditsTo = document.getElementById("txtCreditsTo").value;
 
 
             // Validation for form
@@ -197,11 +203,15 @@
                 toastr.options.positionClass = 'toast-bottom-right';
                 toastr.warning('Bạn chưa chọn khoá');
             }
-            else if (credits == '') {
+            else if (creditsFrom == '') {
                 toastr.options.positionClass = 'toast-bottom-right';
-                toastr.warning('Bạn chưa nhập tín chỉ cần đạt');
+                toastr.warning('Bạn chưa nhập tín chỉ tối thiểu');
             }
-            else if (credits < 0) {
+            else if (creditsTo == '') {
+                toastr.options.positionClass = 'toast-bottom-right';
+                toastr.warning('Bạn chưa nhập tín chỉ tối đa');
+            }
+            else if (creditsFrom < 0 || creditsTo < 0) {
                 toastr.options.positionClass = 'toast-bottom-right';
                 toastr.warning('Tín chỉ không được âm');
             }
@@ -213,26 +223,27 @@
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("GetStatistics", "ProgressStatistics")',
-                    data: { 'studentCourseId': studentCourseId, 'credits': credits },
+                    data: { 'studentCourseId': studentCourseId, 'creditsFrom': creditsFrom, 'creditsTo': creditsTo },
                     success: function (response) {
 
                         var chartData = {
-                            labels: ['Sinh viên đạt', 'Sinh viên chưa đạt'],
+                            labels: ['Sinh viên đạt'],
                             datasets: [{
                                 label: "My First dataset",
-                                data: [response.Data.passStudents, response.Data.failStudents],
-                                backgroundColor: ["rgba(102, 110, 232, 0.8)", "rgba(255, 95, 32, 0.8)"],
+                                data: [response.Data.passStudents],
+                                backgroundColor: ["rgba(102, 110, 232, 0.8)"],
                             }]
                         };
 
-                        if (response.Data.passStudents != 0 || response.Data.failStudents != 0) {
+                        if (response.Data.passStudents != 0) {
 
                             // Add value to hidden input credits
                             $('#inputStudentCourse').val(studentCourseId);
-                            $('#inputCredits').val(credits);
+                            $('#inputCreditsFrom').val(creditsFrom);
+                            $('#inputCreditsTo').val(creditsTo);
 
                             // Update chart data
-                            chart.options.plugins.title.text = 'Thống kê sinh viên đạt ' + credits + ' tín chỉ';
+                            chart.options.plugins.title.text = 'Thống kê sinh viên đạt ' + creditsFrom + ' tín chỉ';
                             chart.data = chartData;
                             chart.update();
 
@@ -256,45 +267,22 @@
         $("#btnSuccessStudent").click(function (event) {
 
             var inputStudentCourse = $('#inputStudentCourse').val();
-            var inputCredits = $('#inputCredits').val();
+            var inputCreditsFrom = $('#inputCreditsFrom').val();
+            var inputCreditsTo = $('#inputCreditsTo').val();
 
             $('#divViewStudents').show();
 
             // Create datatable for success students
-            $('#lblViewStudents').text('Danh sách sinh viên đạt ' + inputCredits + ' chỉ');
-            PopulateDatatable(inputStudentCourse, inputCredits, true);
+            $('#lblViewStudents').text('Danh sách sinh viên đạt ' + inputCreditsFrom + ' chỉ');
+            PopulateDatatable(inputStudentCourse, inputCreditsFrom, inputCreditsTo);
 
         });
 
-        $("#btnFailStudent").click(function (event) {
-
-            var inputStudentCourse = $('#inputStudentCourse').val();
-            var inputCredits = $('#inputCredits').val();
-
-            $('#divViewStudents').show();
-
-            // Create datatable for fail students
-            $('#lblViewStudents').text('Danh sách sinh viên chưa đạt ' + inputCredits + ' chỉ');
-            PopulateDatatable(inputStudentCourse, inputCredits, false);
-
-        });
-
-        function PopulateDatatable(inputStudentCourse, inputCredits, isTrue) {
+        function PopulateDatatable(inputStudentCourse, inputCreditsFrom, inputCreditsTo) {
 
             var dataTable;
-            var fileName, buttonClass;
+            var fileName;
             fileName = $('#lblViewStudents').text();
-
-            if (isTrue) {
-                $("#cardTitle").removeClass("bar-warning");
-                $("#cardTitle").addClass("bar-primary");
-                buttonClass = 'btn btn-outline-primary mr-1';
-            }
-            else {
-                $("#cardTitle").removeClass("bar-primary");
-                $("#cardTitle").addClass("bar-warning");
-                buttonClass = 'btn btn-outline-warning mr-1';
-            }
 
             dataTable = $('#tblViewStudents').DataTable(
                 {
@@ -302,7 +290,7 @@
                         dataSrc: '',
                         type: 'POST',
                         url: '@Url.Action("GetStudentList", "ProgressStatistics")',
-                        data: { 'studentCourseId': inputStudentCourse, 'credits': inputCredits, 'isTrue': isTrue },
+                        data: { 'studentCourseId': inputStudentCourse, 'inputCreditsFrom': inputCreditsFrom, 'inputCreditsTo': inputCreditsTo },
                         dataType: "json",
                     },
                     lengthMenu: [[50, 100, -1], [50, 100, "All"]],
@@ -352,7 +340,7 @@
                 });
             });
 
-            $('.buttons-copy, .buttons-print, .buttons-excel').addClass(buttonClass);
+            $('.buttons-copy, .buttons-print, .buttons-excel').addClass('btn btn-outline-primary mr-1');
         };
     </script>
 }

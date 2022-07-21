@@ -142,7 +142,9 @@
             paramName: 'postedFile',
             timeout: null,
             maxFiles: 1,
+            maxFilesize: 50,
             acceptedFiles: '.xlsx, .xls',
+            dictFileTooBig: "Tệp quá lớn ({{filesize}}MB). Kích thước tối đa: {{maxFilesize}}MB.",
             dictInvalidFileType: "Tệp tin sai định dạng, chỉ được upload file excel",
 
             init: function () {

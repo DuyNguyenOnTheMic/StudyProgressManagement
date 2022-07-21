@@ -37,7 +37,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers
         public JsonResult GetData(string studentId)
         {
             var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
-            var query_studyResult = db.study_results;
+            var query_studyResult = db.study_results.OrderByDescending(s => s.id);
             // Get study results of student
             if (query_student != null)
             {

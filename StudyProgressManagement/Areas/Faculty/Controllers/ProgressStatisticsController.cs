@@ -52,9 +52,19 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public JsonResult GetStudentList(int studentCourseId, int inputCreditsFrom, int inputCreditsTo)
         {
-            // Get study results group by student (except for optional knowledge_type)
-            var query_studyResult = db.study_results.Where(s => s.student_course_id == studentCourseId && s.is_pass != null && s.curriculum.knowledge_type.knowledge_type_alias != "DCKTL").GroupBy(s => s.student_id).
-            Select(s => new { id = s.Key, full_name = s.Select(n => n.student.full_name).Distinct(), class_student = s.Select(c => c.student.class_student_id).Distinct(), sum = s.Sum(item => item.curriculum.credits) });
+
+            var query_originalNoCulmulative = db.knowledge_type.Where(s => s.student_course_id == studentCourseId && s.knowledge_type_alias == "DCKTL").FirstOrDefault();
+
+            // Get study results statistics group by student
+            var query_studyResult = db.study_results.Where(s => s.student_course_id == studentCourseId && s.is_pass != null).GroupBy(s => s.student_id).Select(s => new
+            {
+                id = s.Key,
+                full_name = s.Select(n => n.student.full_name).Distinct(),
+                class_student = s.Select(c => c.student.class_student_id).Distinct(),
+                sum = s.Where(item => item.curriculum.knowledge_type.knowledge_type_alias != "DCKTL").Sum(item => item.curriculum.credits),
+                current_no_culmulative =
+                s.Where(item => item.curriculum.knowledge_type.knowledge_type_alias == "DCKTL").Select(item => item.curriculum.credits).DefaultIfEmpty(0).Sum() + "/" + query_originalNoCulmulative.compulsory_credits
+            });
 
             // Query for student list
             var query_studentList = query_studyResult;

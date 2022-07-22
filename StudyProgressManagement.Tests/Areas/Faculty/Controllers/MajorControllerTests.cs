@@ -209,8 +209,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         {
             // Arrange
             var controller = new MajorController();
+            major major = new major() { id = "7480104", name = "Hệ thống thông tin" };
 
             // Act
+            controller.Create(major);
             var result = controller.Edit("7480104") as ViewResult;
             var model = result.Model as major;
 
@@ -236,7 +238,20 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
 
             // Assert...
             Assert.AreEqual(true, jsonCollection.success);
+        }
 
+        [TestMethod]
+        public void Delete_Major_Test()
+        {
+            // Arrange...
+            var controller = new MajorController();
+
+            // Act...
+            var result = controller.Delete("7480104") as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert...
+            Assert.AreEqual(true, jsonCollection.success);
         }
     }
 }

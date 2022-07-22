@@ -96,7 +96,7 @@
                                         <th> MSSV </th>
                                         <th> Họ và tên </th>
                                         <th> Lớp </th>
-                                        <th> Tín chỉ đã học (không tính DCKTL) </th>
+                                        <th> Tín chỉ đã học </th>
                                         <th> Đại cương KTL đã học </th>
                                     </tr>
                                 </thead>
@@ -297,6 +297,9 @@
                     lengthMenu: [[50, 100, -1], [50, 100, "All"]],
                     destroy: true,
                     order: [[4, 'desc']],
+                    columnDefs: [
+                        { className: 'text-center', targets: [4] },
+                    ],
                     columns: [
                         {
                             'data': '',
@@ -310,7 +313,15 @@
                         { 'data': 'full_name' },
                         { 'data': 'class_student' },
                         { 'data': 'sum' },
-                        { 'data': 'current_no_culmulative' }
+                        {
+                            'data': 'current_no_culmulative',
+                            'render': function (data) {
+                                var number = data.split("/");
+                                var progress = Math.round((number[0] * 100) / number[1]);
+                                return '<div class="text-center">' + data + '</div><div class="progress mb-2"><div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="' + progress + '" aria-valuemin="0" aria-valuemax="100" style="width:' + progress + '%"></div></div>';
+                            },
+                            orderable: false,
+                        }
                     ],                  
                     dom: 'Blfrtip',
                     buttons: [

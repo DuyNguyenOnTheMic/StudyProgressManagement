@@ -318,7 +318,7 @@
                             'render': function (data) {
                                 var number = data.split("/");
                                 var progress = Math.round((number[0] * 100) / number[1]);
-                                return '<div class="text-center">' + data + '</div><div class="progress mb-2"><div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="' + progress + '" aria-valuemin="0" aria-valuemax="100" style="width:' + progress + '%"></div></div>';
+                                return '<div class="text-center">' + data + '</div><div class="progress mb-2"><div class="progress-bar progress-bar-striped" role="progressbar" aria-label="No culmulative credits progress" aria-valuenow="' + progress + '" aria-valuemin="0" aria-valuemax="100" style="width:' + progress + '%"></div></div>';
                             },
                             orderable: false,
                         }
@@ -341,7 +341,7 @@
                     language: {
                         'emptyTable': "Không tìm thấy sinh viên <i class='ft-help-circle' style='vertical-align:middle'></i>",
                         'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>",
-                        'loadingRecords': 'Đang lấy dữ liệu...'
+                        'loadingRecords': "Đang lấy dữ liệu..."
                     },
                 });
 

@@ -44,7 +44,7 @@ else
                     </div>
                     <div class="card-body">
                         <div class="card-block chartjs">
-                            <canvas id="column-chart" height="400"></canvas>
+                            <canvas id="column-chart" height="500"></canvas>
                         </div>
                     </div>
                 </div>
@@ -120,17 +120,21 @@ else
                             return e.group_2;
                         }
                     });
-                    var data = response.map(function (e) {
+                    var data_original = response.map(function (e) {
+                        var credits_sum = e.compulsory_credits + e.optional_credits;
+                        return credits_sum;
+                    });
+                    var data_learned = response.map(function (e) {
                         return e.sum;
-                    });;
-
+                    });
+                    
 
                     // Chart Data
                     var chartData = {
                         labels: labels,
                         datasets: [{
-                            label: "Đã học",
-                            data: data,
+                            label: "Tổng chỉ cần học",
+                            data: data_original,
                             backgroundColor: "rgba(255, 95, 32, 0.8)",
                             borderColor: "transparent",
                             pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -138,8 +142,8 @@ else
                             pointHoverBackgroundColor: '#fff',
                             pointHoverBorderColor: 'rgba(148,159,177,0.8)'
                         }, {
-                            label: "Series B",
-                            data: [28, 48, 40, 19],
+                            label: "Đã học",
+                            data: data_learned,
                             backgroundColor: "rgba(102, 110, 232, 0.8)",
                             borderColor: 'transparent',
                             pointBackgroundColor: 'rgba(148,159,177,1)',

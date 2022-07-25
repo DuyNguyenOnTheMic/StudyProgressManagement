@@ -27,6 +27,8 @@ namespace StudyProgressManagement.Areas.Student.Controllers
                 id = s.Key,
                 group_2 = s.Select(k => k.curriculum.knowledge_type.group_2).FirstOrDefault(),
                 group_3 = s.Select(k => k.curriculum.knowledge_type.group_3).FirstOrDefault(),
+                compulsory_credits = s.Select(k => k.curriculum.knowledge_type.compulsory_credits).FirstOrDefault(),
+                optional_credits = s.Select(k => k.curriculum.knowledge_type.optional_credits).FirstOrDefault(),
                 sum = s.Sum(item => item.curriculum.credits)
             });
 

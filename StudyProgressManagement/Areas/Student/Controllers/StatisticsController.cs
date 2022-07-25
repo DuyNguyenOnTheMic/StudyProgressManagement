@@ -14,17 +14,14 @@ namespace StudyProgressManagement.Areas.Student.Controllers
             return View();
         }
 
-        public ActionResult GetStatistics()
+        public JsonResult GetStatistics()
         {
-            string studentId = ViewBag.StudentID;
-            var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
-            if (query_student != null)
-            {
-                var query_studyResult = db.study_results.Where(s => s.student_id == studentId && s.is_pass != null)
-                .GroupBy(s => s.curriculum.knowledge_type.knowledge_type_alias).Select(s => new { Id = s.Key, Sum = s.Sum(item => item.curriculum.credits) }).ToList();
-                return Json(query_studyResult.ToList(), JsonRequestBehavior.AllowGet);
-            }
-            return View();
+            string studentId = Session["StudentId"].ToString();
+            // Get credits count for each knowledge type based on study result
+            var query_studyResult = db.study_results.Where(s => s.student_id == studentId && s.is_pass != null)
+            .GroupBy(s => s.curriculum.knowledge_type.knowledge_type_alias).Select(s => new { Id = s.Key, group_2 = s.Select(k => k.curriculum.knowledge_type.group_2).FirstOrDefault(), Sum = s.Sum(item => item.curriculum.credits) });
+
+            return Json(query_studyResult.ToList(), JsonRequestBehavior.AllowGet);
         }
     }
 }

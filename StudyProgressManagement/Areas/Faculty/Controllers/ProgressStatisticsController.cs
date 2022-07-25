@@ -59,16 +59,15 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             var query_studyResult = db.study_results.Where(s => s.student_course_id == studentCourseId && s.is_pass != null).GroupBy(s => s.student_id).Select(s => new
             {
                 id = s.Key,
-                full_name = s.Select(n => n.student.full_name).Distinct(),
-                class_student = s.Select(c => c.student.class_student_id).Distinct(),
+                full_name = s.Select(n => n.student.full_name).FirstOrDefault(),
+                class_student = s.Select(c => c.student.class_student_id).FirstOrDefault(),
                 sum = s.Where(item => item.curriculum.knowledge_type.knowledge_type_alias != "DCKTL").Sum(item => item.curriculum.credits),
                 current_no_culmulative =
                 s.Where(item => item.curriculum.knowledge_type.knowledge_type_alias == "DCKTL").Select(item => item.curriculum.credits).DefaultIfEmpty(0).Sum() + "/" + query_originalNoCulmulative.compulsory_credits
             });
 
             // Query for student list
-            var query_studentList = query_studyResult;
-            query_studentList = query_studentList.Where(s => s.sum >= inputCreditsFrom && s.sum <= inputCreditsTo);
+            var query_studentList = query_studyResult.Where(s => s.sum >= inputCreditsFrom && s.sum <= inputCreditsTo);
 
             return Json(query_studentList.ToList(), JsonRequestBehavior.AllowGet);
         }

@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title-wrap bar-pink">
-                            <h4 class="card-title mb-0">Xem tiến độ học tập</h4>
+                            <h4 class="card-title mb-0">Thống kê tình hình học tập</h4>
                         </div>
                     </div>
                     <div class="card-body">
@@ -38,7 +38,7 @@ else
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title-wrap bar-primary">
+                        <div class="card-title-wrap bar-pink">
                             <h4 class="card-title">Bar Chart</h4>
                         </div>
                     </div>
@@ -58,6 +58,19 @@ else
         <script src="~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js"></script>
 
         <script type="text/javascript">
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetStatistics", "Statistics")',
+                success: function (response) {
+                    if (response) {
+                        console.log(response);
+                    }
+                    else {
+                    }
+                }
+            });
+
             //Get the context of the Chart canvas element we want to select
             var ctx = $("#column-chart");
 

@@ -195,7 +195,8 @@ namespace StudyProgressManagement.Controllers
             var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
             if (query_student != null)
             {
-                Session["StudentId"] = studentId;
+                Session["StudentId"] = query_student.id;
+                Session["StudentCourseId"] = query_student.student_course_id;
             }
         }
 

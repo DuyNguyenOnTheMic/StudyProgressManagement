@@ -19,9 +19,10 @@ namespace StudyProgressManagement.Areas.Student.Controllers
         {
             // Get student id
             string studentId = Session["StudentId"].ToString();
+            int studentCourseId = int.Parse(Session["StudentCourseId"].ToString());
 
             // Get credits count for each knowledge type based on study result
-            var query_studyResult = db.study_results.Where(s => s.student_id == studentId && s.is_pass != null)
+            var query_studyResult = db.study_results.Where(s => s.student_id == studentId)
             .GroupBy(s => s.curriculum.knowledge_type.knowledge_type_alias).Select(s => new
             {
                 id = s.Key,
@@ -29,7 +30,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers
                 group_3 = s.Select(k => k.curriculum.knowledge_type.group_3).FirstOrDefault(),
                 compulsory_credits = s.Select(k => k.curriculum.knowledge_type.compulsory_credits).FirstOrDefault(),
                 optional_credits = s.Select(k => k.curriculum.knowledge_type.optional_credits).FirstOrDefault(),
-                sum = s.Sum(item => item.curriculum.credits)
+                sum = s.Where(item => item.is_pass != null).Select(item => item.curriculum.credits).DefaultIfEmpty(0).Sum()
             });
 
             return Json(query_studyResult.ToList(), JsonRequestBehavior.AllowGet);

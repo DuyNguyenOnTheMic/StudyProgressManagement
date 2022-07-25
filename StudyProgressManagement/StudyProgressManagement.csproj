@@ -188,6 +188,7 @@
     <Compile Include="Areas\Faculty\Controllers\StudyResultController.cs" />
     <Compile Include="Areas\Faculty\FacultyAreaRegistration.cs" />
     <Compile Include="Areas\Student\Controllers\LearningProgressController.cs" />
+    <Compile Include="Areas\Student\Controllers\StatisticsController.cs" />
     <Compile Include="Areas\Student\StudentAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -481,8 +482,6 @@
     <Content Include="app-assets\img\width-600\portfolio-3.jpg" />
     <Content Include="app-assets\js\app-sidebar.js" />
     <Content Include="app-assets\js\app-sidebar.min.js" />
-    <Content Include="app-assets\js\chartist.js" />
-    <Content Include="app-assets\js\chartist.min.js" />
     <Content Include="app-assets\js\chartjs.js" />
     <Content Include="app-assets\js\chartjs.min.js" />
     <Content Include="app-assets\js\chat.js" />
@@ -550,7 +549,6 @@
     <Content Include="app-assets\js\tour.min.js" />
     <Content Include="app-assets\js\wizard-steps.js" />
     <Content Include="app-assets\js\wizard-steps.min.js" />
-    <Content Include="app-assets\vendors\css\chartist.min.css" />
     <Content Include="app-assets\vendors\css\core\bootstrap.min.css" />
     <Content Include="app-assets\vendors\css\daterangepicker.css" />
     <Content Include="app-assets\vendors\css\dragula.min.css" />
@@ -592,7 +590,6 @@
     <Content Include="app-assets\vendors\css\wizard.css" />
     <Content Include="app-assets\vendors\js\bootstrap-checkbox.min.js" />
     <Content Include="app-assets\vendors\js\chart.min.js" />
-    <Content Include="app-assets\vendors\js\chartist.min.js" />
     <Content Include="app-assets\vendors\js\chartjs-plugin-datalabels.min.js" />
     <Content Include="app-assets\vendors\js\core\bootstrap.min.js" />
     <Content Include="app-assets\vendors\js\core\jquery-3.6.0.min.js" />
@@ -874,6 +871,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\Faculty\Views\ProgressStatistics\Index.cshtml" />
+    <Content Include="Areas\Student\Views\Statistics\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -886,7 +884,6 @@
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
     <Content Include="src\js\app-sidebar.js" />
-    <Content Include="src\js\chartist.js" />
     <Content Include="src\js\chartjs.js" />
     <Content Include="src\js\chat.js" />
     <Content Include="src\js\coming-soon.js" />
@@ -1091,14 +1088,12 @@
     <Content Include="src\sass\scss\fonts\weather-icons.min.scss" />
     <Content Include="src\sass\scss\fonts\weather-icons.scss" />
     <Content Include="src\sass\scss\mixins\_buttons.scss" />
-    <Content Include="src\sass\scss\mixins\_chartist.scss" />
     <Content Include="src\sass\scss\mixins\_colors.scss" />
     <Content Include="src\sass\scss\mixins\_shadows.scss" />
     <Content Include="src\sass\scss\mixins\_type.scss" />
     <Content Include="src\sass\scss\mixins\_typography.scss" />
     <Content Include="src\sass\scss\mixins\_utilities.scss" />
     <Content Include="src\sass\scss\mixins\_vendor-prefixes.scss" />
-    <Content Include="src\sass\scss\pages\chartist.scss" />
     <Content Include="src\sass\scss\pages\dashboard-analytics.scss" />
     <Content Include="src\sass\scss\pages\dashboard-ecommerce.scss" />
     <Content Include="src\sass\scss\pages\fullcalendar.scss" />
@@ -1117,7 +1112,6 @@
     <Content Include="src\sass\scss\plugins\perfect-scrollbar\_variables.scss" />
     <Content Include="src\sass\scss\plugins\timeline\_timeline-horizontal.scss" />
     <Content Include="src\sass\scss\plugins\typeahead.scss" />
-    <Content Include="src\sass\scss\plugins\_chartist.scss" />
     <Content Include="src\sass\scss\plugins\_tagging.scss" />
     <Content Include="src\sass\scss\_core.scss" />
     <Content Include="src\sass\scss\_custom-bootstrap.scss" />

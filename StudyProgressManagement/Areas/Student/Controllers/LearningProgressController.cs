@@ -1,8 +1,5 @@
 ﻿using StudyProgressManagement.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace StudyProgressManagement.Areas.Student.Controllers
@@ -15,8 +12,6 @@ namespace StudyProgressManagement.Areas.Student.Controllers
         // GET: Student/LearningProgress
         public ActionResult Index()
         {
-            CheckStudentId();
-
             return View();
         }
 
@@ -70,23 +65,6 @@ namespace StudyProgressManagement.Areas.Student.Controllers
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }
             return Json(new { error = true }, JsonRequestBehavior.AllowGet);
-        }
-
-        public void CheckStudentId()
-        {
-            // Get studentId from email
-            string studentEmail = User.Identity.Name;
-            int pFrom = studentEmail.IndexOf(".") + 1;
-            int pTo = studentEmail.LastIndexOf("@");
-
-            string studentId = studentEmail.Substring(pFrom, pTo - pFrom);
-
-            // Check if student has in database
-            var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
-            if (query_student != null)
-            {
-                ViewBag.StudentID = studentId;
-            }
         }
     }
 }

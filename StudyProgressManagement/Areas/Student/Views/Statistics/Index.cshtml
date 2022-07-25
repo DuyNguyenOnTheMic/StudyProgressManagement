@@ -120,7 +120,7 @@ else
                             return e.group_2;
                         }
                     });
-                    var labelsAdjusted = labels.map(label => label.split(/[./\-_]/));
+                    var labels_adjusted = labels.map(label => label.split(/[./\-_]/));
                     var data_original = response.map(function (e) {
                         var credits_sum = e.compulsory_credits + e.optional_credits;
                         return credits_sum;
@@ -132,7 +132,7 @@ else
 
                     // Chart Data
                     var chartData = {
-                        labels: labelsAdjusted,
+                        labels: labels_adjusted,
                         datasets: [{
                             label: 'Tổng chỉ cần học',
                             data: data_original,

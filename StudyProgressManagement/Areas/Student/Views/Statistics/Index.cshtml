@@ -137,34 +137,34 @@ else
                     // Chart Data
                     var chartData = {
                         labels: labels_adjusted,
-                        datasets: [{
-                            label: 'Tổng chỉ cần học',
-                            data: data_original,
-                            backgroundColor: 'rgba(255, 95, 32, 0.8)',
-                            borderColor: 'transparent',
-                            pointBackgroundColor: 'rgba(148,159,177,1)',
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-                        }, {
-                            label: 'Đã học',
-                            data: data_learned,
-                            backgroundColor: "rgba(102, 110, 232, 0.8)",
-                            borderColor: 'transparent',
-                            pointBackgroundColor: 'rgba(148,159,177,1)',
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-                        }]
+                        datasets: [
+                            {
+                                label: 'Tổng chỉ cần học',
+                                data: data_original,
+                                backgroundColor: 'rgba(255, 95, 32, 0.8)',
+                                borderColor: 'transparent',
+                                datalabels: {
+                                    anchor: 'end',
+                                    align: 'top',
+                                }
+                            },
+                            {
+                                label: 'Đã học',
+                                data: data_learned,
+                                backgroundColor: "rgba(102, 110, 232, 0.8)",
+                                borderColor: 'transparent',
+                                datalabels: {
+                                    anchor: 'end',
+                                    align: 'top',
+                                }
+                            }]
                     };
 
                     var config = {
                         type: 'bar',
-
-                        // Chart Options
                         options: chartOptions,
-
-                        data: chartData
+                        data: chartData,
+                        plugins: [ChartDataLabels]
                     };
 
                     // Create the chart

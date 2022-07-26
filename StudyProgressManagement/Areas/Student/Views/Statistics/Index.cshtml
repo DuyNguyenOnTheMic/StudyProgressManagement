@@ -64,6 +64,8 @@ else
                 url: '@Url.Action("GetStatistics", "Statistics")',
                 success: function (response) {
 
+                    console.log(response);
+
                     //Get the context of the Chart canvas element we want to select
                     var ctx = $("#column-chart");
 

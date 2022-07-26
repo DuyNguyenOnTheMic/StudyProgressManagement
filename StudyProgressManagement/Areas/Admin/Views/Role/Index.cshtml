@@ -82,11 +82,11 @@
                         { 'data': 'role' },
                         {
                             'data': 'id', 'render': function (data) {
-                                return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("Edit","Role")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a>";
+                                return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("Edit","Role")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='deleteRow danger p-0' style='margin-left:5px' data-original-title='' title='' onclick=Delete('" + data + "')><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
                             },
                             orderable: false,
                             searchable: false,
-                            width: '50px',
+                            width: '100px',
                             className: 'text-center'
                         }
                     ],
@@ -112,6 +112,43 @@
                 });
             });
         });
+
+        // Show Create and Edit form
+        function PopupForm(url) {
+            var formDiv = $('<div/>')
+            $.get(url)
+                .done(function (response) {
+                    formDiv.html(response);
+
+                    popup = formDiv.dialog({
+                        autoOpen: true,
+                        resizable: true,
+                        title: 'Quản lý role',
+                        height: 260,
+                        width: 700,
+                        open: function () {
+                            // Prevent user from add edit delete while dialog is populated
+                            $('.editRow').each(function () {
+                                this.style.pointerEvents = 'none';
+                            });
+                            $('.deleteRow').each(function () {
+                                this.style.pointerEvents = 'none';
+                            });
+                        },
+                        close: function () {
+                            popup.dialog('destroy').remove();
+
+                            // Re-enable buttons when user closes the dialog
+                            $('.editRow').each(function () {
+                                this.style.pointerEvents = 'auto';
+                            });
+                            $('.deleteRow').each(function () {
+                                this.style.pointerEvents = 'auto';
+                            });
+                        }
+                    });
+                });
+        }
     </script>
 }
 

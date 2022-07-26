@@ -73,7 +73,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public JsonResult GetData(string studentId)
         {
             var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
-            var query_studyResult = db.study_results.OrderByDescending(s => s.id);
+            var query_studyResult = db.study_results.OrderByDescending(s => s.id).Where(s => s.student_id == studentId);
             // Get study results of student
             if (query_student != null)
             {
@@ -92,15 +92,15 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     knowledge_type_group_3 = s.knowledge_type.group_3,
                     compulsory_credits = s.knowledge_type.compulsory_credits,
                     optional_credits = s.knowledge_type.optional_credits,
-                    mark10 = query_studyResult.Where(d => d.student_id == studentId && d.curriculum_id == s.id)
+                    mark10 = query_studyResult.Where(d => d.curriculum_id == s.id)
                     .Select(d => d.mark10).FirstOrDefault().ToString(),
-                    mark10_2 = query_studyResult.Where(d => d.student_id == studentId && d.curriculum_id == s.id)
+                    mark10_2 = query_studyResult.Where(d => d.curriculum_id == s.id)
                     .Select(d => d.mark10_2).FirstOrDefault().ToString(),
-                    max_mark_10 = query_studyResult.Where(d => d.student_id == studentId && d.curriculum_id == s.id)
+                    max_mark_10 = query_studyResult.Where(d => d.curriculum_id == s.id)
                     .Select(d => d.max_mark_10).FirstOrDefault().ToString(),
-                    max_mark_letter = query_studyResult.Where(d => d.student_id == studentId && d.curriculum_id == s.id)
+                    max_mark_letter = query_studyResult.Where(d => d.curriculum_id == s.id)
                     .Select(d => d.max_mark_letter).FirstOrDefault().ToString(),
-                    is_pass = query_studyResult.Where(d => d.student_id == studentId && d.curriculum_id == s.id)
+                    is_pass = query_studyResult.Where(d => d.curriculum_id == s.id)
                     .Select(d => d.is_pass).FirstOrDefault().ToString()
 
                 }).ToList(), JsonRequestBehavior.AllowGet);

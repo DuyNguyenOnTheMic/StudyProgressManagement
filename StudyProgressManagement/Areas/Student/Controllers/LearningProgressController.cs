@@ -1,4 +1,5 @@
-﻿using StudyProgressManagement.Models;
+﻿using StudyProgressManagement.Areas.Student.Middleware;
+using StudyProgressManagement.Models;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -10,6 +11,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers
         SEP25Team03Entities db = new SEP25Team03Entities();
 
         // GET: Student/LearningProgress
+        [GetStudentID]
         public ActionResult Index()
         {
             return View();

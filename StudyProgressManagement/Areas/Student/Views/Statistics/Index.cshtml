@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (Session["StudentId"] == null)
+@if (ViewBag.StudentId == null)
 {
     <!-- Show have no data start -->
     <section>
@@ -59,9 +59,13 @@ else
 
         <script type="text/javascript">
 
+            var studentId = '@ViewBag.StudentId';
+            var studentCourseId = '@ViewBag.StudentCourseId';
+
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetStatistics", "Statistics")',
+                data: { 'studentId': studentId, 'studentCourseId': studentCourseId },
                 success: function (response) {
 
                     console.log(response);
@@ -128,7 +132,7 @@ else
                     var data_learned = response.map(function (e) {
                         return e.sum;
                     });
-                    
+
 
                     // Chart Data
                     var chartData = {

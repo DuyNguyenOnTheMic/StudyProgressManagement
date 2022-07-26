@@ -1,4 +1,5 @@
-﻿using StudyProgressManagement.Models;
+﻿using StudyProgressManagement.Areas.Student.Middleware;
+using StudyProgressManagement.Models;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -8,18 +9,18 @@ namespace StudyProgressManagement.Areas.Student.Controllers
     public class StatisticsController : Controller
     {
         SEP25Team03Entities db = new SEP25Team03Entities();
+
         // GET: Student/Statistics
+        [GetStudentID]
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public JsonResult GetStatistics()
+        public JsonResult GetStatistics(string studentId, int studentCourseId)
         {
             // Declare variables
-            string studentId = Session["StudentId"].ToString();
-            int studentCourseId = int.Parse(Session["StudentCourseId"].ToString());
             var query_studyResult = db.study_results.Where(s => s.student_id == studentId && s.is_pass != null);
 
             // Get credits count for each knowledge type based on study result

@@ -3,7 +3,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.VanLang;
 using StudyProgressManagement.Models;
-using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
@@ -14,7 +13,6 @@ namespace StudyProgressManagement.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private SEP25Team03Entities db = new SEP25Team03Entities();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -167,7 +165,6 @@ namespace StudyProgressManagement.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    GetStudentId(loginInfo.Email);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -179,24 +176,6 @@ namespace StudyProgressManagement.Controllers
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-            }
-        }
-
-        private void GetStudentId(string email)
-        {
-            // Get studentId from email
-            string studentEmail = email;
-            int pFrom = studentEmail.IndexOf(".") + 1;
-            int pTo = studentEmail.LastIndexOf("@");
-
-            string studentId = studentEmail.Substring(pFrom, pTo - pFrom);
-
-            // Check if student has in database
-            var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
-            if (query_student != null)
-            {
-                Session["StudentId"] = query_student.id;
-                Session["StudentCourseId"] = query_student.student_course_id;
             }
         }
 

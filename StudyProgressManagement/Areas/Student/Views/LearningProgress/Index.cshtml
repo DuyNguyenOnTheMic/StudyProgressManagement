@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (Session["StudentId"] == null)
+@if (ViewBag.StudentId == null)
 {
     <!-- Show have no data start -->
     <section>
@@ -93,7 +93,7 @@ else
 
         <script type="text/javascript">
 
-            var studentId = '@Session["StudentId"]';
+            var studentId = '@ViewBag.StudentId';
             var dataTable;
 
             $.ajax({

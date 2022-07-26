@@ -180,6 +180,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Faculty\Controllers\MajorController.cs" />
     <Compile Include="Areas\Faculty\Controllers\ProgressStatisticsController.cs" />
     <Compile Include="Areas\Faculty\Controllers\RegistrationResultController.cs" />
@@ -873,6 +875,7 @@
     </Content>
     <Content Include="Areas\Faculty\Views\ProgressStatistics\Index.cshtml" />
     <Content Include="Areas\Student\Views\Statistics\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\web.config" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -899,6 +902,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Role\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Faculty\Data\" />
     <Folder Include="Areas\Faculty\Views\Shared\" />
     <Folder Include="Areas\Student\Data\" />

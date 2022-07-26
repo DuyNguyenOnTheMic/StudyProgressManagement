@@ -92,6 +92,12 @@
                                 <a href="@Url.Action("Index", "ProgressStatistics", new { area = "Faculty" })"><i class="icon-pie-chart"></i><span data-i18n="" class="menu-title">Thống kê</span></a>
                             </li>
                         }
+                        else if (User.IsInRole("Admin"))
+                        {
+                            <li class="@(ViewBag.Title == "Quản lý người dùng" ? "active" : "nav-item")">
+                                <a href="@Url.Action("Index", "StudentCourse", new { Area = "Admin" })"><i class="icon-user"></i><span data-i18n="" class="menu-title">Quản lý người dùng</span></a>
+                            </li>
+                        }
                         else
                         {
                             <li class="has-sub nav-item">

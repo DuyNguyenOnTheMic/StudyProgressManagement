@@ -21,18 +21,18 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th>Mã ND</th>
-                                        <th>Tên ND</th>
+                                        <th>Email</th>
                                         <th>Role</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
                                 <tfoot>
                                     <tr>
                                         <th></th>
-                                        <th>Mã ND</th>
-                                        <th>Tên ND</th>
+                                        <th>Email</th>
                                         <th>Role</th>
+                                        <th></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -78,13 +78,21 @@
                             className: 'text-center',
                             width: '20px'
                         },
-                        { 'data': 'id' },
-                        { 'data': 'mail' },
+                        { 'data': 'email' },
                         { 'data': 'role' },
+                        {
+                            'data': 'id', 'render': function (data) {
+                                return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("Edit","Role")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a>";
+                            },
+                            orderable: false,
+                            searchable: false,
+                            width: '50px',
+                            className: 'text-center'
+                        }
                     ],
 
                     language: {
-                        'emptyTable': "Chưa có ngành học, vui lòng chọn <b>Thêm ngành mới</b>",
+                        'emptyTable': "Chưa có người dùng",
                         'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>",
                         'loadingRecords': "Đang lấy dữ liệu..."
                     },

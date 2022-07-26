@@ -22,8 +22,8 @@ namespace StudyProgressManagement.Areas.Admin.Controllers
             return Json(db.AspNetUsers.Select(m => new
             {
                 id = m.Id,
-                mail = m.UserName,
-                role = m.PhoneNumber,
+                email = m.Email,
+                role = m.AspNetRoles.Select(item => item.Name),
 
             }).ToList(), JsonRequestBehavior.AllowGet);
         }

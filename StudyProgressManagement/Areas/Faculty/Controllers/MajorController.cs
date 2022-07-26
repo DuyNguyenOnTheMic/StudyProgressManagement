@@ -16,7 +16,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return View();
         }
 
-
         [HttpPost]
         public JsonResult GetData()
         {
@@ -28,8 +27,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
 
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
-
-
 
         [HttpGet]
         public ActionResult Create()

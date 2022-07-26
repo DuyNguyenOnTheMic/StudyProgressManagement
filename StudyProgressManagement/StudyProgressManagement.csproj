@@ -876,6 +876,7 @@
     <Content Include="Areas\Faculty\Views\ProgressStatistics\Index.cshtml" />
     <Content Include="Areas\Student\Views\Statistics\Index.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -903,7 +904,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Role\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Faculty\Data\" />
     <Folder Include="Areas\Faculty\Views\Shared\" />

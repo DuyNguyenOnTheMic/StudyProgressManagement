@@ -370,7 +370,7 @@
 
                         swal({
                             title: 'Thông báo',
-                            text: 'Học kỳ này đã được import, bạn có muốn import lại?',
+                            text: 'Khoá này đã có kết quả đăng ký học tập, bạn có muốn import học kỳ mới?',
                             type: 'warning',
                             showCancelButton: true,
                             cancelButtonText: 'Huỷ',
@@ -391,7 +391,7 @@
                                 }
                             })
 
-                            // Ajax call to delete study program of that student course
+                            // Ajax call to delete registration results of that student course
                             $.ajax({
                                 type: 'POST',
                                 url: '@Url.Action("Delete", "RegistrationResult")',

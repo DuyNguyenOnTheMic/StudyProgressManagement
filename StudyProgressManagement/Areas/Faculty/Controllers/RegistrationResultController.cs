@@ -200,10 +200,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     db.SaveChanges();
                 }
 
-                // Check if term already imported of this student course
-                var query_registrationresults_term = db.registration_results.Where(s => s.term_id
-                == termId && s.student_course_id == studentCourseId).FirstOrDefault();
-                if (query_registrationresults_term != null)
+                // Check if student course has any registration results
+                var query_registrationresults = db.registration_results.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
+                if (query_registrationresults != null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
@@ -393,8 +392,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             try
             {
                 // Delete all records for re-import
-                db.registration_results.RemoveRange(db.registration_results.Where(c => c.term_id
-                == termId && c.student_course_id == studentCourseId));
+                db.registration_results.RemoveRange(db.registration_results.Where(c => c.student_course_id == studentCourseId));
                 db.SaveChanges();
             }
             catch (Exception)

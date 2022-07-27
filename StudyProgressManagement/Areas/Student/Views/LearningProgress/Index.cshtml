@@ -232,7 +232,7 @@ else
                                         return '<p class="text-danger">Rớt môn <i class="ft-x-circle" style="vertical-align:middle"></i></p>';
                                     }
                                     else if (row.regis_result_id != 0) {
-                                        return '<p class="text-info">Đang học <i class="ft-loader" style="vertical-align:middle"></i></p>';
+                                        return '<p class="text-primary">Đang học <i class="ft-loader" style="vertical-align:middle"></i></p>';
                                     }
                                     else
                                     {
@@ -250,10 +250,13 @@ else
 
                         createdRow: function (row, data, dataIndex) {
                             if (data.is_pass == "x") {
-                                $(row).css('background-color', '#f2fcf8');
+                                $(row).css('background-color', '#F2FCF8');
                             }
                             else if (data.max_mark_10) {
                                 $(row).css('background-color', '#FFE9EC');
+                            }
+                            else if (data.regis_result_id != 0) {
+                                $(row).css('background-color', '#F2F3FC');
                             }
                         }
                     });

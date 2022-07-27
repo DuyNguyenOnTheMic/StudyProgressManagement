@@ -35,6 +35,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers
         {
             var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
             var query_studyResult = db.study_results.OrderByDescending(s => s.id).Where(s => s.student_id == studentId);
+            var query_regisResult = db.registration_results.Where(s => s.student_id == studentId);
             // Get study results of student
             if (query_student != null)
             {
@@ -62,7 +63,9 @@ namespace StudyProgressManagement.Areas.Student.Controllers
                     max_mark_letter = query_studyResult.Where(d => d.curriculum_id == s.id)
                     .Select(d => d.max_mark_letter).FirstOrDefault().ToString(),
                     is_pass = query_studyResult.Where(d => d.curriculum_id == s.id)
-                    .Select(d => d.is_pass).FirstOrDefault().ToString()
+                    .Select(d => d.is_pass).FirstOrDefault().ToString(),
+                    regis_result_id = query_regisResult.Where(r => r.curriculum_id == s.id)
+                    .Select(r => r.id).FirstOrDefault().ToString()
 
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }

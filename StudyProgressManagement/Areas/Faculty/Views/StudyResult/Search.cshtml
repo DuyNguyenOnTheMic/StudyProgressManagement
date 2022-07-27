@@ -112,6 +112,7 @@
                                         <th rowspan="2" style="display: none"></th>
                                         <th rowspan="2" style="display: none"></th>
                                         <th rowspan="2" style="display: none"></th>
+                                        <th rowspan="2" style="display: none"></th>
                                         <th rowspan="2"> ĐIỂM 1 </th>
                                         <th rowspan="2"> ĐIỂM 2 </th>
                                         <th rowspan="2"> ĐIỂM MÔN </th>
@@ -400,23 +401,18 @@
                         dataSrc: ['knowledge_type_group_1', 'knowledge_type_group_2', 'knowledge_type_group_3' ]
                     },
                     columnDefs: [
-                        { visible: false, targets: [9, 10, 11, 12, 13] },
-                        { className: 'text-center', targets: [3, 4, 5, 6, 7, 8, 14, 15, 16, 17, 18] },
-                        { className: 'font-weight-bold', targets: [16, 17, 18] },
-                        { className: 'text-nowrap', targets: [18] },
+                        { visible: false, targets: [9, 10, 11, 12, 13, 14] },
+                        { className: 'text-center', targets: [0, 3, 4, 5, 6, 7, 8, 15, 16, 17, 18, 19] },
+                        { className: 'font-weight-bold', targets: [17, 18, 19] },
+                        { className: 'text-nowrap', targets: [19] },
                         { width: '20%', targets: [2] },
-                        { width: '5%', targets: [0, 3, 4, 5, 6, 7, 8, 14, 15, 16, 17] }
+                        { width: '5%', targets: [0, 3, 4, 5, 6, 7, 8, 15, 16, 17, 18] },
+                        { searchable: false, targets: [0, 14] }
                     ],
 
                     // Declare columns
                     columns: [
-                        {
-                            'data': null,
-                            searchable: false,
-                            orderable: false,
-                            className: 'text-center',
-                            width: '20px'
-                        },
+                        { 'data': null },
                         { 'data': 'curriculum_id' },
                         { 'data': 'curriculum_name' },
                         { 'data': 'credits' },
@@ -430,6 +426,7 @@
                         { 'data': 'knowledge_type_group_3' },
                         { 'data': 'compulsory_credits' },
                         { 'data': 'optional_credits' },
+                        { 'data': 'regis_result_id' },
                         { 'data': 'mark10' },
                         { 'data': 'mark10_2' },
                         { 'data': 'max_mark_10' },
@@ -442,6 +439,9 @@
                                 }
                                 else if (row.max_mark_10) {
                                     return '<p class="text-danger">Rớt môn <i class="ft-x-circle" style="vertical-align:middle"></i></p>';
+                                }
+                                else if (row.regis_result_id != 0) {
+                                    return '<p class="text-info">Đang học <i class="ft-loader" style="vertical-align:middle"></i></p>';
                                 }
                                 else
                                 {

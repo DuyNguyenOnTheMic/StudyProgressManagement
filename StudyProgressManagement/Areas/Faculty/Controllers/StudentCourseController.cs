@@ -35,16 +35,17 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpGet]
         public ActionResult AddOrEdit(int id = 0)
         {
-            // Get data from major table
-            List<major> majors = db.majors.ToList();
+            // Set Viewbag from major table
             ViewBag.major_id = new SelectList(db.majors, "id", "name");
 
             if (id == 0)
             {
+                // Return add student course view
                 return View(new student_course());
             }
             else
             {
+                // Return edit student course view
                 student_course student_course = db.student_course.Find(id);
                 ViewBag.major_id = new SelectList(db.majors, "id", "name", student_course.major_id);
                 return View(db.student_course.Where(x => x.id == id).FirstOrDefault());

@@ -84,23 +84,20 @@ else
                         },
                         scales: {
                             xAxis: {
-                                display: true,
+                                stacked: true,
                                 grid: {
                                     color: "#f3f3f3",
                                     drawTicks: false,
                                 },
-                                scaleLabel: {
-                                    display: true,
+                                ticks: {
+                                    padding: 20
                                 }
                             },
                             yAxis: {
-                                display: true,
+                                stacked: false,
                                 grid: {
                                     color: "#f3f3f3",
                                     drawTicks: false,
-                                },
-                                scaleLabel: {
-                                    display: true,
                                 }
                             }
                         }
@@ -130,21 +127,17 @@ else
                         labels: labels_adjusted,
                         datasets: [
                             {
-                                label: 'Tổng chỉ cần học',
-                                data: data_original,
-                                backgroundColor: 'rgba(255, 159, 64, 0.5)',
-                                borderColor: 'rgb(255, 159, 64)',
-                                borderWidth: 2,
-                                datalabels: {
-                                    anchor: 'end',
-                                    align: 'top',
-                                }
-                            },
-                            {
                                 label: 'Đã học',
                                 data: data_learned,
-                                backgroundColor: 'rgba(153, 102, 255, 0.5)',
-                                borderColor: 'rgb(153, 102, 255)',
+                                backgroundColor: 'rgba(40, 208, 148, 0.3)',
+                                borderColor: 'rgba(40, 208, 148, 1)',
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'Tổng chỉ cần học',
+                                data: data_original,
+                                backgroundColor: 'rgba(201, 203, 207, 0.5)',
+                                borderColor: 'rgba(201, 203, 207)',
                                 borderWidth: 2,
                                 datalabels: {
                                     anchor: 'end',

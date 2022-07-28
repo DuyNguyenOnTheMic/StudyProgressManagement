@@ -100,19 +100,13 @@
                         }
                         else
                         {
-                            <li class="has-sub nav-item">
-                                <a><i class="icon-book-open"></i><span data-i18n="" class="menu-title">Tiến độ học tập</span></a>
-                                <ul class="menu-content">
-                                    <li class="@(ViewBag.Title == "Tiến độ học tập" ? "active" : "")">
-                                        <a href="@Url.Action("Index", "LearningProgress", new { area = "Student" })" class="menu-item">Xem tiến độ</a>
-                                    </li>
-                                    <li class="@(ViewBag.Title == "Thống kê tình hình học tập" ? "active" : "")">
-                                        <a href="@Url.Action("Index", "Statistics", new { area = "Student" })" class="menu-item">Thống kê</a>
-                                    </li>
-                                </ul>
+                            <li class="@(ViewBag.Title == "Tiến độ học tập" ? "active" : "")">
+                                <a href="@Url.Action("Index", "LearningProgress", new { area = "Student" })"><i class="icon-book-open"></i><span data-i18n="" class="menu-title">Tiến độ học tập</span></a>
+                            </li>
+                            <li class="@(ViewBag.Title == "Thống kê tình hình học tập" ? "active" : "")">
+                                <a href="@Url.Action("Index", "Statistics", new { area = "Student" })"><i class="icon-bar-chart"></i><span data-i18n="" class="menu-title">Thống kê</span></a>
                             </li>
                         }
-
                     </ul>
                 </div>
             </div>

@@ -124,7 +124,7 @@
                         autoOpen: true,
                         resizable: true,
                         title: 'Quản lý role',
-                        height: 260,
+                        height: 360,
                         width: 700,
                         open: function () {
                             // Prevent user from add edit delete while dialog is populated
@@ -148,6 +148,29 @@
                         }
                     });
                 });
+        }
+
+        function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+
+            if ($(form).valid()) {
+                $.ajax({
+                    type: 'POST',
+                    url: form.action,
+                    data: $(form).serialize(),
+                    success: function (data) {
+                        if (data.Succeeded) {
+                            popup.dialog('close');
+                            dataTable.ajax.reload();
+
+                            // Show message when edit succeeded
+                            toastr.options.positionClass = 'toast-bottom-right';
+                            toastr.success(data.message);
+                        }
+                    }
+                });
+            }
+            return false;
         }
     </script>
 }

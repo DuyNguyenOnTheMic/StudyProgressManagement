@@ -355,6 +355,8 @@
                         // Show message if the file is not in the right format (like missing columns, etc, ...)
                         var errorDisplay = document.querySelectorAll('[data-dz-errormessage]');
                         errorDisplay[errorDisplay.length - 1].innerHTML = 'Đã xảy ra lỗi, vui lòng kiểm tra lại tệp tin';
+
+                        swal("Thông báo!", "Đã xảy ra lỗi, vui lòng kiểm tra lại tệp tin.", "error").done();
                     }
                     else if (errorMessage.indexOf('Error 409') !== -1) {
                         // Show message if student course has not had study program yet

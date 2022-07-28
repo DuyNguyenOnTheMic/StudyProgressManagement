@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StudyProgressManagement;
 using StudyProgressManagement.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.Mvc;
 
 namespace StudyProgressManagement.Tests.Controllers
@@ -23,6 +18,19 @@ namespace StudyProgressManagement.Tests.Controllers
 
             // Assert
             Assert.IsNotNull(result);
-        }      
+        }
+
+        [TestMethod]
+        public void Index_ViewName_Test()
+        {
+            // Arrange
+            var controller = new HomeController();
+
+            // Act
+            var result = controller.Index() as ViewResult;
+
+            // Assert
+            Assert.AreEqual("", result.ViewName);
+        }
     }
 }

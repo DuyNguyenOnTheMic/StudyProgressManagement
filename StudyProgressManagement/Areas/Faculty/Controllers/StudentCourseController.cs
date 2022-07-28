@@ -1,6 +1,5 @@
 ﻿using StudyProgressManagement.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -35,12 +34,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpGet]
         public ActionResult AddOrEdit(int id = 0)
         {
-            // Set Viewbag from major table
-            ViewBag.major_id = new SelectList(db.majors, "id", "name");
-
             if (id == 0)
             {
                 // Return add student course view
+                ViewBag.major_id = new SelectList(db.majors, "id", "name");
                 return View(new student_course());
             }
             else

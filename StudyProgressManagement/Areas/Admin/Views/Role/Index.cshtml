@@ -197,7 +197,6 @@
                     url: '@Url.Action("Delete", "Role")/' + id,
                     success: function (data) {
                         if (data.Succeeded) {
-                            console.log(data);
                             dataTable.ajax.reload();
 
                             // Show message when delete succeeded

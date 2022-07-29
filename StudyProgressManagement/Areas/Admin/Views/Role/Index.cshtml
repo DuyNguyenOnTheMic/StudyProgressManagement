@@ -60,7 +60,7 @@
 
         $(document).ready(function () {
 
-            // Populate Major datatable
+            // Populate User datatable
             dataTable = $('#tblRole').DataTable(
                 {
                      ajax: {
@@ -113,7 +113,7 @@
             });
         });
 
-        // Show Create and Edit form
+        // Show Edit form
         function PopupForm(url) {
             var formDiv = $('<div/>')
             $.get(url)
@@ -123,7 +123,7 @@
                     popup = formDiv.dialog({
                         autoOpen: true,
                         resizable: true,
-                        title: 'Quản lý role',
+                        title: 'Chỉnh sửa role',
                         height: 360,
                         width: 700,
                         open: function () {
@@ -166,6 +166,14 @@
                             // Show message when edit succeeded
                             toastr.options.positionClass = 'toast-bottom-right';
                             toastr.success(data.message);
+                        }
+                        else {
+                            // Show message when edit failed
+                            swal({
+                                title: 'Thông báo',
+                                text: 'Bạn không thể chỉnh sửa người dùng admin cuối cùng!',
+                                type: 'error',
+                            })
                         }
                     }
                 });

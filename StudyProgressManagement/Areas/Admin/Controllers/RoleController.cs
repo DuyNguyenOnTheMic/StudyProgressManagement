@@ -54,15 +54,18 @@ namespace StudyProgressManagement.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(AspNetUser aspNetUser, string role_id)
         {
-            // Get old info
+            // Declare variables
             var oldUser = UserManager.FindById(aspNetUser.Id);
             var oldRole = UserManager.GetRoles(oldUser.Id).FirstOrDefault();
+            var role = db.AspNetRoles.Find(role_id);
             var result = new IdentityResult();
 
+            // Prevent user from editing the last admin role
             int adminCount = db.AspNetUsers.Where(u => u.AspNetRoles.FirstOrDefault().Name == "Admin").Count();
-
-            // Check if user has any role
-            var role = db.AspNetRoles.Find(role_id);
+            if (adminCount <= 1 && role.Name != "Admin" && oldRole != null)
+            {
+                return Json(new { result.Errors, message = "Cập nhật thất bại!" }, JsonRequestBehavior.AllowGet);
+            }
 
             if (oldRole == null)
             {

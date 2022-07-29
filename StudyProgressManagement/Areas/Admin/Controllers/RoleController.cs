@@ -13,6 +13,18 @@ namespace StudyProgressManagement.Areas.Admin.Controllers
         SEP25Team03Entities db = new SEP25Team03Entities();
         private ApplicationUserManager _userManager;
 
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
         // GET: Admin/Role
         public ActionResult Index()
         {
@@ -64,7 +76,7 @@ namespace StudyProgressManagement.Areas.Admin.Controllers
             int adminCount = db.AspNetUsers.Where(u => u.AspNetRoles.FirstOrDefault().Name == "Admin").Count();
             if (adminCount <= 1 && role.Name != "Admin" && oldRole != null)
             {
-                return Json(new { result.Errors, message = "Cập nhật thất bại!" }, JsonRequestBehavior.AllowGet);
+                return Json(new { result.Errors }, JsonRequestBehavior.AllowGet);
             }
 
             if (oldRole == null)
@@ -82,16 +94,24 @@ namespace StudyProgressManagement.Areas.Admin.Controllers
             return Json(new { result.Succeeded, message = "Cập nhật thành công!" }, JsonRequestBehavior.AllowGet);
         }
 
-        public ApplicationUserManager UserManager
+        [HttpPost]
+        public ActionResult Delete(string id)
         {
-            get
+            // Declare variables
+            var user = UserManager.FindById(id);
+            var role = UserManager.GetRoles(id).FirstOrDefault();
+            var result = new IdentityResult();
+
+            // Prevent user from deleting the last admin role
+            int adminCount = db.AspNetUsers.Where(u => u.AspNetRoles.FirstOrDefault().Name == "Admin").Count();
+            if (adminCount <= 1 && role == "Admin")
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return Json(new { result.Errors }, JsonRequestBehavior.AllowGet);
             }
-            private set
-            {
-                _userManager = value;
-            }
+
+            // Delete user
+            result = UserManager.Delete(user);
+            return Json(new { result.Succeeded, message = "Xoá thành công!" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

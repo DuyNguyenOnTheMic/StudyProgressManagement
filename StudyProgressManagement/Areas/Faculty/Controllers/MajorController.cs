@@ -81,6 +81,5 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             }
             return Json(new { success = true, message = "Xoá thành công!" }, JsonRequestBehavior.AllowGet);
         }
-
     }
 }

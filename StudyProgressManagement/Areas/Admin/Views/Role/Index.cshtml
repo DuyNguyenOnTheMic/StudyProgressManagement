@@ -81,8 +81,8 @@
                         { 'data': 'email' },
                         { 'data': 'role' },
                         {
-                            'data': 'id', 'render': function (data) {
-                                return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("Edit","Role")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='deleteRow danger p-0' style='margin-left:5px' data-original-title='' title='' onclick=Delete('" + data + "')><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
+                            'data': 'id', 'render': function (data, type, row) {
+                                return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("Edit","Role")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='deleteRow danger p-0' style='margin-left:5px' data-original-title='' title='' onclick=Delete('" + data + "','" + row.email + "')><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
                             },
                             orderable: false,
                             searchable: false,
@@ -171,7 +171,7 @@
                             // Show message when edit failed
                             swal({
                                 title: 'Thông báo',
-                                text: 'Bạn không thể chỉnh sửa người dùng admin cuối cùng!',
+                                text: 'Bạn không thể chỉnh sửa role admin cuối cùng!',
                                 type: 'error',
                             })
                         }
@@ -180,6 +180,47 @@
             }
             return false;
         }
+
+        function Delete(id, email) {
+            swal({
+                title: 'Thông báo',
+                text: 'Bạn có chắc muốn xoá người dùng ' + email + ' này?',
+                type: 'warning',
+                showCancelButton: true,
+                cancelButtonText: 'Huỷ',
+                confirmButtonText: 'Xoá',
+
+            }).then(function () {
+                // Delete item
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Delete", "Role")/' + id,
+                    success: function (data) {
+                        console.log(data);
+                        if (data.Succeeded) {
+                            console.log(data);
+                            dataTable.ajax.reload();
+
+                            // Show message when delete succeeded
+                            toastr.options.positionClass = 'toast-bottom-right';
+                            toastr.success(data.message);
+                        }
+                        else {
+                            // Show message when delete failed
+                            swal({
+                                title: 'Thông báo',
+                                text: 'Bạn không thể xoá role admin cuối cùng!',
+                                type: 'error',
+                            })
+                        }
+                    }
+                });
+
+            }, function (dismiss) {
+                if (dismiss === 'cancel' || dismiss === 'close') {
+                    // Ignore
+                }
+            })
+        }
     </script>
 }
-

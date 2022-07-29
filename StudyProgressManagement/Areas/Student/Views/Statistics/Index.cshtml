@@ -68,8 +68,6 @@ else
                 data: { 'studentId': studentId, 'studentCourseId': studentCourseId },
                 success: function (response) {
 
-                    console.log(response);
-
                     //Get the context of the Chart canvas element we want to select
                     var ctx = $("#column-chart");
 
@@ -121,7 +119,6 @@ else
                     var data_learned = response.map(function (e) {
                         return e.sum;
                     });
-
 
                     // Chart Data
                     var chartData = {

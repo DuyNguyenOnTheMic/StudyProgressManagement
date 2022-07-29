@@ -196,7 +196,6 @@
                     type: 'POST',
                     url: '@Url.Action("Delete", "Role")/' + id,
                     success: function (data) {
-                        console.log(data);
                         if (data.Succeeded) {
                             console.log(data);
                             dataTable.ajax.reload();

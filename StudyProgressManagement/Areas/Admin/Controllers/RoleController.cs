@@ -74,7 +74,7 @@ namespace StudyProgressManagement.Areas.Admin.Controllers
 
             // Prevent user from editing the last admin role
             int adminCount = db.AspNetUsers.Where(u => u.AspNetRoles.FirstOrDefault().Name == "Admin").Count();
-            if (adminCount <= 1 && oldRole == "Admin")
+            if (adminCount <= 1 && oldRole == "Admin" && role.Name != "Admin")
             {
                 return Json(new { result.Errors }, JsonRequestBehavior.AllowGet);
             }

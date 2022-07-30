@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StudyProgressManagement.Models;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -8,6 +10,14 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
     [TestClass()]
     public class StudentCourseControllerTests
     {
+        private IList<ValidationResult> ValidateModel(object model)
+        {
+            var validationResults = new List<ValidationResult>();
+            var ctx = new ValidationContext(model, null, null);
+            Validator.TryValidateObject(model, ctx, validationResults, true);
+            return validationResults;
+        }
+
         [TestMethod()]
         public void Index_Test()
         {
@@ -129,7 +139,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         }
 
         [TestMethod()]
-        public void Add_View_Test()
+        public void Add_View_Redirect_Test()
         {
             // Arrange
             var controller = new StudentCourseController();
@@ -139,19 +149,125 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
 
             // Assert
             Assert.IsNotNull(result);
+            Assert.AreEqual(null, result.ViewData["Title"]);
         }
 
         [TestMethod()]
-        public void Add_View_Redirect_Test()
+        public void Edit_View_Redirect_Test()
         {
             // Arrange
             var controller = new StudentCourseController();
+            var db = new SEP25Team03Entities();
 
             // Act
-            var result = controller.AddOrEdit(2) as ViewResult;
+            var result = controller.AddOrEdit(1) as ViewResult;
+            var major = new SelectList(db.majors);
 
             // Assert
-            Assert.AreEqual("About Us", result.ViewData["Title"]);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(null, result.ViewData["Title"]);
+            Assert.AreEqual(major.Count(), ((IEnumerable<dynamic>)result.ViewBag.major_id).Count());
+        }
+
+        [TestMethod]
+        public void Add_StudentCourse_Test()
+        {
+            // Arrange
+            var controller = new StudentCourseController();
+            var db = new SEP25Team03Entities();
+            var student_Course = new student_course() { course = "Khoá 1", year_study = "2012 - 2016", major_id = "7480104" };
+
+            // Act
+            var query_studentCourse = db.student_course.Where(s => s.major_id == student_Course.major_id).FirstOrDefault();
+            if (query_studentCourse == null)
+            {
+                controller.AddOrEdit(student_Course);
+            }
+            var createResult = controller.GetData();
+            dynamic jsonCollection = createResult.Data;
+
+            // Assert
+            Assert.AreEqual(db.student_course.Count(), jsonCollection.Count);
+        }
+
+        [TestMethod]
+        public void Add_Shoud_Be_Failed_When_Course_Is_Null_Test()
+        {
+            // Arrange
+            var controller = new StudentCourseController();
+            var student_Course = new student_course() { course = null, year_study = "2012 - 2016", major_id = "7480104" };
+
+            // Assert
+            Assert.IsTrue(ValidateModel(student_Course).Where(x => x.ErrorMessage.Equals("Bạn chưa nhập khoá sinh viên")).Count() > 0);
+        }
+
+        [TestMethod]
+        public void Add_Shoud_Be_Failed_When_Course_Over_100_Characters_Test()
+        {
+            // Arrange
+            var controller = new StudentCourseController();
+            var student_Course = new student_course() { course = "usposueremisedaccumsanliguladiamatdsdasdsaddasasaddusposueremisedaccumsanliguladiamatdsdasdsaddasasad", year_study = "2022", major_id = "7480104" };
+
+            // Assert
+            Assert.IsTrue(ValidateModel(student_Course).Where(x => x.ErrorMessage.Equals("Tối đa 100 kí tự được cho phép")).Count() > 0);
+        }
+
+        [TestMethod()]
+        public void Edit_Student_Course_Data_Should_Load_Correctly_Test()
+        {
+            // Arrange
+            var controller = new StudentCourseController();
+            var db = new SEP25Team03Entities();
+            var student_Course = new student_course() { course = "Khoá 1", year_study = "2012 - 2016", major_id = "7480104" };
+
+            // Act
+            controller.AddOrEdit(student_Course);
+            var query_studentCourse = db.student_course.Where(s => s.major_id == student_Course.major_id).FirstOrDefault();
+            student_Course.id = query_studentCourse.id;
+            controller.AddOrEdit(student_Course);
+            var result = controller.AddOrEdit(student_Course) as JsonResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(query_studentCourse);
+            Assert.AreEqual(query_studentCourse.id, student_Course.id);
+            Assert.AreEqual(query_studentCourse.course, student_Course.course);
+            Assert.AreEqual(query_studentCourse.year_study, student_Course.year_study);
+            Assert.AreEqual(query_studentCourse.major_id, student_Course.major_id);
+        }
+
+        [TestMethod]
+        public void Edit_Student_Course_Test()
+        {
+            // Arrange
+            var controller = new StudentCourseController();
+            var db = new SEP25Team03Entities();
+            var student_Course = new student_course() { course = "Khoá 1", year_study = "2012 - 2016", major_id = "7480104" };
+
+            // Act
+            var query_studentCourse = db.student_course.Where(s => s.major_id == student_Course.major_id).FirstOrDefault();
+            student_Course.id = query_studentCourse.id;
+            var result = controller.AddOrEdit(student_Course) as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert
+            Assert.AreEqual(true, jsonCollection.success);
+        }
+
+        [TestMethod]
+        public void Delete_Student_Course_Test()
+        {
+            // Arrange
+            var controller = new StudentCourseController();
+            var db = new SEP25Team03Entities();
+
+            // Act
+            var query_studentCourse = db.student_course.Where(s => s.major_id == "7480104").FirstOrDefault();
+            var result = controller.Delete(query_studentCourse.id) as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert
+            Assert.AreEqual(true, jsonCollection.success);
         }
     }
 }

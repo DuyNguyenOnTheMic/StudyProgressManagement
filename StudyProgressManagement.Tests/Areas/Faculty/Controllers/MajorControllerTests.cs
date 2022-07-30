@@ -147,6 +147,36 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         }
 
         [TestMethod]
+        public void Create_Shoud_Be_Failed_When_Major_Id_Is_Null_Test()
+        {
+            // Arrange
+            var controller = new MajorController();
+            major major = new major() { id = "", name = "Test" };
+
+            // Act
+            var result = controller.Create(major) as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert
+            Assert.AreEqual(true, jsonCollection.error);
+        }
+
+        [TestMethod]
+        public void Create_Shoud_Be_Failed_When_Major_Name_Is_Null_Test()
+        {
+            // Arrange
+            var controller = new MajorController();
+            major major = new major() { id = "blabla", name = "" };
+
+            // Act
+            var result = controller.Create(major) as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert
+            Assert.AreEqual(true, jsonCollection.error);
+        }
+
+        [TestMethod]
         public void Create_Shoud_Be_Failed_When_Major_Id_Over_50_Characters_Test()
         {
             // Arrange
@@ -226,32 +256,46 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         [TestMethod]
         public void Edit_Major_Test()
         {
-            // Arrange...
+            // Arrange
             var controller = new MajorController();
             var major = new major();
             major.id = "7480104";
             major.name = "Hệ thống thông tin";
 
-            // Act...
+            // Act
             var result = controller.Edit(major) as JsonResult;
             dynamic jsonCollection = result.Data;
 
-            // Assert...
+            // Assert
             Assert.AreEqual(true, jsonCollection.success);
         }
 
         [TestMethod]
         public void Delete_Major_Test()
         {
-            // Arrange...
+            // Arrange
             var controller = new MajorController();
 
-            // Act...
+            // Act
             var result = controller.Delete("7480104") as JsonResult;
             dynamic jsonCollection = result.Data;
 
-            // Assert...
-            Assert.AreEqual(true, jsonCollection.success);
+            // Assert
+            Assert.IsNotNull(jsonCollection);
+        }
+
+        [TestMethod]
+        public void Delete_Major_Failed_When_Had_Student_Course_Test()
+        {
+            // Arrange
+            var controller = new MajorController();
+
+            // Act
+            var result = controller.Delete("7480104") as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert
+            Assert.AreEqual(true, jsonCollection.error);
         }
     }
 }

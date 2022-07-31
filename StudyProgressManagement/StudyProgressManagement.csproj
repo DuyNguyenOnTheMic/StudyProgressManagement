@@ -181,7 +181,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Faculty\Controllers\MajorController.cs" />
     <Compile Include="Areas\Faculty\Controllers\ProgressStatisticsController.cs" />
     <Compile Include="Areas\Faculty\Controllers\RegistrationResultController.cs" />
@@ -869,8 +869,8 @@
     <Content Include="Areas\Faculty\Views\ProgressStatistics\Index.cshtml" />
     <Content Include="Areas\Student\Views\Statistics\Index.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
-    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Role\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>

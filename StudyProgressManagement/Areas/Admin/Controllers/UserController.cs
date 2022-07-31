@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace StudyProgressManagement.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class RoleController : Controller
+    public class UserController : Controller
     {
         SEP25Team03Entities db = new SEP25Team03Entities();
         private ApplicationUserManager _userManager;
@@ -34,7 +34,7 @@ namespace StudyProgressManagement.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult GetData()
         {
-            // Get majors data from datatabse
+            // Get user data from datatabse
             return Json(db.AspNetUsers.Select(u => new
             {
                 id = u.Id,

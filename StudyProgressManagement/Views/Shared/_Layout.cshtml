@@ -95,7 +95,7 @@
                         else if (User.IsInRole("Admin"))
                         {
                             <li class="@(ViewBag.Title == "Quản lý người dùng" ? "active" : "nav-item")">
-                                <a href="@Url.Action("Index", "Role", new { Area = "Admin" })"><i class="icon-user"></i><span data-i18n="" class="menu-title">Quản lý người dùng</span></a>
+                                <a href="@Url.Action("Index", "User", new { Area = "Admin" })"><i class="icon-user"></i><span data-i18n="" class="menu-title">Quản lý người dùng</span></a>
                             </li>
                         }
                         else

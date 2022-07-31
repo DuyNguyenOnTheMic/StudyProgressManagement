@@ -4,7 +4,7 @@
     Layout = null;
 }
 
-@using (Html.BeginForm("Edit", "Role", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+@using (Html.BeginForm("Edit", "User", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
 {
     @Html.HiddenFor(model => model.Id)
 

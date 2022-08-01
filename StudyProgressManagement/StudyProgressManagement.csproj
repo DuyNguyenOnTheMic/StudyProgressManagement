@@ -483,6 +483,10 @@
     <Content Include="app-assets\img\triangle2.svg" />
     <Content Include="app-assets\img\width-600\portfolio-14.jpg" />
     <Content Include="app-assets\img\width-600\portfolio-3.jpg" />
+    <Content Include="app-assets\js\app-sidebar.js" />
+    <Content Include="app-assets\js\app-sidebar.min.js" />
+    <Content Include="app-assets\js\notification-sidebar.js" />
+    <Content Include="app-assets\js\notification-sidebar.min.js" />
     <Content Include="app-assets\vendors\css\core\bootstrap.min.css" />
     <Content Include="app-assets\vendors\css\daterangepicker.css" />
     <Content Include="app-assets\vendors\css\dragula.min.css" />

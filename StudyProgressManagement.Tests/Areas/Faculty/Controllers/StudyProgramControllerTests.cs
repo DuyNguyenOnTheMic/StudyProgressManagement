@@ -323,7 +323,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         }
 
         [TestMethod()]
-        public void Validate_Columns_Test()
+        public void Validate_Columns_Is_True_Test()
         {
             // Arrange
             var controller = new StudyProgramController();
@@ -355,7 +355,110 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             // Assert
             Assert.AreEqual(16, table.Columns.Count);
             Assert.AreEqual(true, result);
+        }
 
+        [TestMethod()]
+        public void Validate_Columns_Is_False_If_Missing_Columns_Test()
+        {
+            // Arrange
+            var controller = new StudyProgramController();
+            var table = new DataTable();
+
+            // Act
+            table.Columns.AddRange(
+                new DataColumn[15]{
+                        new DataColumn("Tên loại kiến thức"),
+                        new DataColumn("Số chỉ BB"),
+                        new DataColumn("Số chỉ TC"),
+                        new DataColumn("Mã học phần"),
+                        new DataColumn("Tên học phần (Tiếng Việt)"),
+                        new DataColumn("Tên học phần (Tiếng Anh)"),
+                        new DataColumn("TC"),
+                        new DataColumn("LT"),
+                        new DataColumn("TH"),
+                        new DataColumn("TT"),
+                        new DataColumn("DA"),
+                        new DataColumn("Bắt buộc/ Tự chọn"),
+                        new DataColumn("Điều kiện tiên quyết"),
+                        new DataColumn("Học trước – học sau"),
+                        new DataColumn("Ghi chú chỉnh sửa")
+                });
+
+            var result = controller.ValidateColumns(table);
+
+            // Assert
+            Assert.AreEqual(15, table.Columns.Count);
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod()]
+        public void Contain_Column_Is_True_Test()
+        {
+            // Arrange
+            var controller = new StudyProgramController();
+            var table = new DataTable();
+
+            // Act
+            table.Columns.AddRange(
+                new DataColumn[16]{
+                        new DataColumn("Mã loại kiến thức"),
+                        new DataColumn("Tên loại kiến thức"),
+                        new DataColumn("Số chỉ BB"),
+                        new DataColumn("Số chỉ TC"),
+                        new DataColumn("Mã học phần"),
+                        new DataColumn("Tên học phần (Tiếng Việt)"),
+                        new DataColumn("Tên học phần (Tiếng Anh)"),
+                        new DataColumn("TC"),
+                        new DataColumn("LT"),
+                        new DataColumn("TH"),
+                        new DataColumn("TT"),
+                        new DataColumn("DA"),
+                        new DataColumn("Bắt buộc/ Tự chọn"),
+                        new DataColumn("Điều kiện tiên quyết"),
+                        new DataColumn("Học trước – học sau"),
+                        new DataColumn("Ghi chú chỉnh sửa")
+                });
+
+            var result = controller.ContainColumn("Mã loại kiến thức", table);
+
+            // Assert
+            Assert.AreEqual(16, table.Columns.Count);
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod()]
+        public void Contain_Column_Is_False_Test()
+        {
+            // Arrange
+            var controller = new StudyProgramController();
+            var table = new DataTable();
+
+            // Act
+            table.Columns.AddRange(
+                new DataColumn[16]{
+                        new DataColumn("Mã loại kiến thức"),
+                        new DataColumn("Tên loại kiến thức"),
+                        new DataColumn("Số chỉ BB"),
+                        new DataColumn("Số chỉ TC"),
+                        new DataColumn("Mã học phần"),
+                        new DataColumn("Tên học phần (Tiếng Việt)"),
+                        new DataColumn("Tên học phần (Tiếng Anh)"),
+                        new DataColumn("TC"),
+                        new DataColumn("LT"),
+                        new DataColumn("TH"),
+                        new DataColumn("TT"),
+                        new DataColumn("DA"),
+                        new DataColumn("Bắt buộc/ Tự chọn"),
+                        new DataColumn("Điều kiện tiên quyết"),
+                        new DataColumn("Học trước – học sau"),
+                        new DataColumn("Ghi chú chỉnh sửa")
+                });
+
+            var result = controller.ContainColumn("Test", table);
+
+            // Assert
+            Assert.AreEqual(16, table.Columns.Count);
+            Assert.AreEqual(false, result);
         }
     }
 }

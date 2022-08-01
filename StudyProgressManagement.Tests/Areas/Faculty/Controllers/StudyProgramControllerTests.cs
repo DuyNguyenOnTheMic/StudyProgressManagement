@@ -327,7 +327,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         {
             // Arrange
             var controller = new StudyProgramController();
-            var db = new SEP25Team03Entities();
             var table = new DataTable();
 
             // Act

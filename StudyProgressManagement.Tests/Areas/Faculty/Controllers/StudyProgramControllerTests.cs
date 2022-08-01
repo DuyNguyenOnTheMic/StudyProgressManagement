@@ -353,6 +353,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var result = controller.ValidateColumns(table);
 
             // Assert
+            Assert.AreEqual(16, table.Columns.Count);
             Assert.AreEqual(true, result);
 
         }

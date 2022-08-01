@@ -9,7 +9,6 @@ namespace StudyProgressManagement
         {
             // Scripts bundles
             bundles.Add(new ScriptBundle("~/bundles/vendorJs").Include(
-                "~/app-assets/vendors/js/core/jquery-3.6.0.min.js",
                 "~/app-assets/vendors/js/core/popper.min.js",
                 "~/app-assets/vendors/js/core/bootstrap.min.js",
                 "~/app-assets/vendors/js/perfect-scrollbar.jquery.min.js",
@@ -21,6 +20,9 @@ namespace StudyProgressManagement
                 "~/app-assets/vendors/js/pace/pace.min.js",
                 "~/app-assets/vendors/js/toastr.min.js",
                 "~/app-assets/vendors/js/sweetalert2.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                 "~/app-assets/vendors/js/core/jquery-{version}.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/sidebarJs").Include(
                "~/app-assets/js/app-sidebar.min.js",

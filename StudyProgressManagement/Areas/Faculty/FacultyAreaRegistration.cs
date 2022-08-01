@@ -2,17 +2,17 @@
 
 namespace StudyProgressManagement.Areas.Faculty
 {
-    public class FacultyAreaRegistration : AreaRegistration 
+    public class FacultyAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
+            get
             {
                 return "Faculty";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
                 "Faculty_default",

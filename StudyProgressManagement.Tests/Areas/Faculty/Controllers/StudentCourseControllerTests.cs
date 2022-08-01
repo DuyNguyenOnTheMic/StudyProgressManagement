@@ -53,8 +53,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
                     "JSON record does not contain \"major_id\" required property.");
                 Assert.IsNotNull(json.major_name,
                     "JSON record does not contain \"major_name\" required property.");
-                Assert.IsNotNull(json.year_study,
-                    "JSON record does not contain \"year_study\" required property.");
             }
         }
 
@@ -116,8 +114,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
                     "JSON record does not contain \"major_id\" required property.");
                 Assert.IsNotNull(json.major_name,
                     "JSON record does not contain \"major_name\" required property.");
-                Assert.IsNotNull(json.year_study,
-                    "JSON record does not contain \"year_study\" required property.");
             }
         }
 

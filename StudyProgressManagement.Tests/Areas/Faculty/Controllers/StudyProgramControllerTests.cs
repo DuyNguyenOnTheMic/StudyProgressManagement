@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StudyProgressManagement.Models;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -319,6 +320,42 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
 
             // Assert
             Assert.AreEqual(true, jsonCollection.success);
+        }
+
+        [TestMethod()]
+        public void Validate_Columns_Test()
+        {
+            // Arrange
+            var controller = new StudyProgramController();
+            var db = new SEP25Team03Entities();
+            var table = new DataTable();
+
+            // Act
+            table.Columns.AddRange(
+                new DataColumn[16]{
+                        new DataColumn("Mã loại kiến thức"),
+                        new DataColumn("Tên loại kiến thức"),
+                        new DataColumn("Số chỉ BB"),
+                        new DataColumn("Số chỉ TC"),
+                        new DataColumn("Mã học phần"),
+                        new DataColumn("Tên học phần (Tiếng Việt)"),
+                        new DataColumn("Tên học phần (Tiếng Anh)"),
+                        new DataColumn("TC"),
+                        new DataColumn("LT"),
+                        new DataColumn("TH"),
+                        new DataColumn("TT"),
+                        new DataColumn("DA"),
+                        new DataColumn("Bắt buộc/ Tự chọn"),
+                        new DataColumn("Điều kiện tiên quyết"),
+                        new DataColumn("Học trước – học sau"),
+                        new DataColumn("Ghi chú chỉnh sửa")
+                });
+
+            var result = controller.ValidateColumns(table);
+
+            // Assert
+            Assert.AreEqual(true, result);
+
         }
     }
 }

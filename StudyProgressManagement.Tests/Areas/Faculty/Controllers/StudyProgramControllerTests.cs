@@ -460,5 +460,61 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             Assert.AreEqual(16, table.Columns.Count);
             Assert.AreEqual(false, result);
         }
+
+        [TestMethod()]
+        public void To_Nullable_Int_Test()
+        {
+            // Arrange
+            string test = "2020";
+
+            // Act
+
+            var result = StudyProgramController.ToNullableInt(test);
+
+            // Assert
+            Assert.AreEqual(2020, result);
+        }
+
+        [TestMethod()]
+        public void To_Nullable_From_Empty_String_Is_True_Test()
+        {
+            // Arrange
+            string test = "";
+
+            // Act
+
+            var result = StudyProgramController.ToNullableInt(test);
+
+            // Assert
+            Assert.AreEqual(null, result);
+        }
+
+        [TestMethod()]
+        public void Set_Null_On_Empty_String_Test()
+        {
+            // Arrange
+            string test = "Anh Văn 4";
+
+            // Act
+
+            var result = StudyProgramController.SetNullOnEmpty(test);
+
+            // Assert
+            Assert.AreEqual("Anh Văn 4", result);
+        }
+
+        [TestMethod()]
+        public void Set_Null_On_Empty_Is_True_String_Test()
+        {
+            // Arrange
+            string test = "";
+
+            // Act
+
+            var result = StudyProgramController.SetNullOnEmpty(test);
+
+            // Assert
+            Assert.AreEqual(null, result);
+        }
     }
 }

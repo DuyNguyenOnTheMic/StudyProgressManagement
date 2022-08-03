@@ -16,9 +16,9 @@
                 </div>
                 <div class="card-body">
                     <div class="card-block">
-                        <form>
+                        <form  id="frmStatistics">
                             <div class="form-body">
-                                <div class="row justify-content-center" id="frmStatistics">
+                                <div class="row justify-content-center" id="frmStatistics_body">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label>Ngành: </label>
@@ -146,7 +146,7 @@
                     success: function (results) {
                         $.each(results, function (i, result) {
                             var knowledgeName; knowledgeName = null != result.group_3 ? result.group_3 : result.group_2;
-                            $("#frmStatistics").append('<div class="col-6 knowledge"><div class="form-group"><label>' + knowledgeName + ' </label><input type="number" min="0" class="form-control" id="txt' + result.id + '" placeholder="Nhập số tín chỉ"></div></div>');
+                            $("#frmStatistics_body").append('<div class="col-6 knowledge"><div class="form-group"><label>' + knowledgeName + ' </label><input type="number" min="0" class="form-control" id="txt' + result.id + '" name="' + result.id + '" placeholder="Nhập số tín chỉ"></div></div>');
                             @*$("#comboboxClassStudent").append('<option value="' + result.id + '">' + result.id + '</option>');*@
                         });
                     },
@@ -209,6 +209,7 @@
                 return this.value != '';
             });
 
+
             // Validation for form
             if (!majorId) {
                 toastr.options.positionClass = 'toast-bottom-right';
@@ -223,6 +224,19 @@
                 toastr.warning('Bạn chưa nhập tín chỉ tối thiểu');
             }
             else {
+
+                const form = document.getElementById('frmStatistics');
+                const formData = new FormData(form);
+
+                var object = {};
+                formData.forEach(function (value, key) {
+                    object[key] = value;
+                });
+                var json = JSON.stringify(object);
+
+
+                console.log(json);
+
 
                 $('#divViewStudents').hide();
                 $('.chartjs').show();

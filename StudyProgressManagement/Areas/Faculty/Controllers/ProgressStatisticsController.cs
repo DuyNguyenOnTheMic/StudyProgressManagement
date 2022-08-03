@@ -32,7 +32,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             // get student courses data from database
             return Json(db.knowledge_type.Where(s => s.student_course_id == studentCourseId).Select(s => new
             {
-                id = s.id,
+                id = s.knowledge_type_alias,
                 group_2 = s.group_2,
                 group_3 = s.group_3
             }).ToList(), JsonRequestBehavior.AllowGet);

@@ -237,11 +237,11 @@
                                     if (data == 'x') {
                                         return '<p class="text-success">Hoàn thành <i class="ft-check-circle" style="vertical-align:middle"></i></p>';
                                     }
-                                    else if (row.max_mark_10) {
-                                        return '<p class="text-danger">Rớt môn <i class="ft-x-circle" style="vertical-align:middle"></i></p>';
-                                    }
                                     else if (row.regis_result_id != 0) {
                                         return '<p class="text-primary">Đang học <i class="ft-loader" style="vertical-align:middle"></i></p>';
+                                    }
+                                    else if (row.max_mark_10) {
+                                        return '<p class="text-danger">Rớt môn <i class="ft-x-circle" style="vertical-align:middle"></i></p>';
                                     }
                                     else
                                     {

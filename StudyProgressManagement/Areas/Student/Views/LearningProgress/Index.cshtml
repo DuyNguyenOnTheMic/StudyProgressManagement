@@ -228,11 +228,11 @@ else
                                     if (data == 'x') {
                                         return '<p class="text-success">Hoàn thành <i class="ft-check-circle" style="vertical-align:middle"></i></p>';
                                     }
-                                    else if (row.max_mark_10) {
-                                        return '<p class="text-danger">Rớt môn <i class="ft-x-circle" style="vertical-align:middle"></i></p>';
-                                    }
                                     else if (row.regis_result_id != 0) {
                                         return '<p class="text-primary">Đang học <i class="ft-loader" style="vertical-align:middle"></i></p>';
+                                    }
+                                    else if (row.max_mark_10) {
+                                        return '<p class="text-danger">Rớt môn <i class="ft-x-circle" style="vertical-align:middle"></i></p>';
                                     }
                                     else
                                     {
@@ -252,11 +252,11 @@ else
                             if (data.is_pass == "x") {
                                 $(row).css('background-color', '#F2FCF8');
                             }
-                            else if (data.max_mark_10) {
-                                $(row).css('background-color', '#FFE9EC');
-                            }
                             else if (data.regis_result_id != 0) {
                                 $(row).css('background-color', '#F2F3FC');
+                            }
+                            else if (data.max_mark_10) {
+                                $(row).css('background-color', '#FFE9EC');
                             }
                         }
                     });

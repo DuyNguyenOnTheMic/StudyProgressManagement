@@ -27,6 +27,17 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult LoadKnowledgeType(int studentCourseId)
+        {
+            // get student courses data from database
+            return Json(db.knowledge_type.Where(s => s.student_course_id == studentCourseId).Select(s => new
+            {
+                id = s.id,
+                group_2 = s.group_2,
+                group_3 = s.group_3
+            }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult GetStatistics(int studentCourseId, int creditsFrom, int creditsTo)
         {

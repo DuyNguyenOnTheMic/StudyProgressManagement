@@ -18,7 +18,7 @@
                     <div class="card-block">
                         <form>
                             <div class="form-body">
-                                <div class="row justify-content-center">
+                                <div class="row justify-content-center" id="frmStatistics">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label>Ngành: </label>
@@ -38,16 +38,6 @@
                                                 <option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label>Tín chỉ tối thiểu: </label>
-                                            <input type="number" min="0" class="form-control" id="txtCreditsFrom" name="term" placeholder="Nhập số tín chỉ tối thiểu cần đạt tính đến hiện tại" required oninput="this.value = this.value.toUpperCase()">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <label>Tín chỉ tối đa: </label>
-                                        <input type="number" min="0" class="form-control" id="txtCreditsTo" name="term" placeholder="Nhập số tín chỉ tối đa cần đạt tính đến hiện tại" required oninput="this.value = this.value.toUpperCase()">
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +132,30 @@
                     }
                 });
                 return false;
-            }).change();
+            });
+
+            // Load cascading dropdown between student courses and class students
+            $("#comboboxStudentCourse").change(function () {
+                $('#frmStatistics .knowledge').remove();
+                var StudentCourseId = $('#comboboxStudentCourse option:selected').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("LoadKnowledgeType", "ProgressStatistics")',
+                    dataType: 'json',
+                    data: { studentCourseId: StudentCourseId },
+                    success: function (results) {
+                        $.each(results, function (i, result) {
+                            var knowledgeName; knowledgeName = null != result.group_3 ? result.group_3 : result.group_2;
+                            $("#frmStatistics").append('<div class="col-6 knowledge"><div class="form-group"><label>' + knowledgeName + ' </label><input type="number" min="0" class="form-control" id="txt' + result.id + '" placeholder="Nhập số tín chỉ"></div></div>');
+                            @*$("#comboboxClassStudent").append('<option value="' + result.id + '">' + result.id + '</option>');*@
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            });
         });
 
         //Get the context of the Chart canvas element we want to select
@@ -322,7 +335,7 @@
                             },
                             orderable: false,
                         }
-                    ],                  
+                    ],
                     dom: 'Blfrtip',
                     buttons: [
                         {

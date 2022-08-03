@@ -202,32 +202,25 @@
             event.preventDefault();
 
             // Get form's data
-            var majorId = document.getElementById("comboboxMajor").value;
-            var studentCourseId = document.getElementById("comboboxStudentCourse").value;
-            var creditsFrom = document.getElementById("txtCreditsFrom").value;
-            var creditsTo = document.getElementById("txtCreditsTo").value;
-
+            var majorId = $('#comboboxMajor').val();
+            var studentCourseId = $('#comboboxStudentCourse').val();
+            var reqlength = $('.form-control').length;
+            var value = $('.form-control').filter(function () {
+                return this.value != '';
+            });
 
             // Validation for form
-            if (majorId == '') {
+            if (!majorId) {
                 toastr.options.positionClass = 'toast-bottom-right';
                 toastr.warning('Bạn chưa chọn ngành và khoá');
             }
-            else if (studentCourseId == '') {
+            else if (!studentCourseId) {
                 toastr.options.positionClass = 'toast-bottom-right';
                 toastr.warning('Bạn chưa chọn khoá');
             }
-            else if (creditsFrom == '') {
+            else if (value.length >= 0 && (value.length !== reqlength)) {
                 toastr.options.positionClass = 'toast-bottom-right';
                 toastr.warning('Bạn chưa nhập tín chỉ tối thiểu');
-            }
-            else if (creditsTo == '') {
-                toastr.options.positionClass = 'toast-bottom-right';
-                toastr.warning('Bạn chưa nhập tín chỉ tối đa');
-            }
-            else if (creditsFrom < 0 || creditsTo < 0) {
-                toastr.options.positionClass = 'toast-bottom-right';
-                toastr.warning('Tín chỉ không được âm');
             }
             else {
 

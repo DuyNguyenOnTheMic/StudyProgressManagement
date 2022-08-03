@@ -27,12 +27,13 @@ namespace StudyProgressManagement.Areas.Student.Controllers
             var query_knowledge = db.knowledge_type.Where(k => k.student_course_id == studentCourseId).GroupBy(k => k.knowledge_type_alias).Select(k => new
             {
                 id = k.Key,
+                knowledge_type_id = k.Select(item => item.id).FirstOrDefault(),
                 group_2 = k.Select(item => item.group_2).FirstOrDefault(),
                 group_3 = k.Select(item => item.group_3).FirstOrDefault(),
                 compulsory_credits = k.Select(item => item.compulsory_credits).FirstOrDefault(),
                 optional_credits = k.Select(item => item.optional_credits).FirstOrDefault(),
                 sum = query_studyResult.Where(item => item.curriculum.knowledge_type.knowledge_type_alias == k.Key).Select(item => item.curriculum.credits).DefaultIfEmpty(0).Sum()
-            });
+            }).OrderBy(k => k.knowledge_type_id);
 
             return Json(query_knowledge.ToList(), JsonRequestBehavior.AllowGet);
         }

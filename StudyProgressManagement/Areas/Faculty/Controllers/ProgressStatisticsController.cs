@@ -42,9 +42,11 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public JsonResult GetStatistics(int studentCourseId, string[] knowledge_name, string[] knowledge_ids, int[] credits)
         {
+            // Declare variables
             var list = new List<Tuple<string, string, int, int>>();
             var query_studyResult = db.study_results.Where(s => s.student_course_id == studentCourseId && s.is_pass != null);
             var query_knowledge = db.knowledge_type.Where(k => k.student_course_id == studentCourseId);
+            int studentsCount = db.students.Where(s => s.student_course_id == studentCourseId).GroupBy(s => s.id).Count();
 
 
             foreach (var knowledge_id in knowledge_ids.Select((value, index) => new { value, index }))
@@ -65,11 +67,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     {
                         passStudents++;
                     }
-                    else
-                    {
-                        failStudents++;
-                    }
                 }
+                failStudents = studentsCount - passStudents;
                 list.Add(Tuple.Create(knowledge_id.value, knowledge_name[i], passStudents, failStudents));
             }
 

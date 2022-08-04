@@ -801,6 +801,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="app-assets\language\vi.json" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

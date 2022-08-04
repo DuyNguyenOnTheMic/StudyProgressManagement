@@ -118,7 +118,6 @@
 
     <script src="~/app-assets/vendors/js/dropzone.min.js"></script>
     <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
-    <script src="~/app-assets/vendors/js/datatable/dataTables.buttons.min.js"></script>
     <script src="~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js"></script>
     <script src="~/signalr/hubs"></script>
 
@@ -300,7 +299,7 @@
                                         { 'data': 'credits' },
                                     ],
                                     language: {
-                                        'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>"
+                                        'url': "/app-assets/language/vi.json"
                                     },
                                 });
 
@@ -311,8 +310,6 @@
                                         dataTable.cell(cell).invalidate('dom');
                                     });
                                 }).draw();
-
-                                $('.buttons-copy, .buttons-print, .buttons-excel').addClass('btn btn-outline-primary mr-1');
                             }
                             else {
                                 swal("Thông báo", "Import thành công!", "success").done();

@@ -105,7 +105,6 @@
 
 @section scripts {
     <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
-    <script src="~/app-assets/vendors/js/datatable/dataTables.buttons.min.js"></script>
     <script src="~/app-assets/vendors/js/chart.min.js"></script>
     <script src="~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js"></script>
 
@@ -359,9 +358,7 @@
                         }
                     ],
                     language: {
-                        'emptyTable': "Không tìm thấy sinh viên <i class='ft-help-circle' style='vertical-align:middle'></i>",
-                        'sZeroRecords': "Không có kết quả <i class='ft-help-circle' style='vertical-align:middle'></i>",
-                        'loadingRecords': "Đang lấy dữ liệu..."
+                        'url': "/app-assets/language/vi.json"
                     },
                 });
 
@@ -372,8 +369,6 @@
                     dataTable.cell(cell).invalidate('dom');
                 });
             });
-
-            $('.buttons-copy, .buttons-print, .buttons-excel').addClass('btn btn-outline-primary mr-1');
         };
     </script>
 }

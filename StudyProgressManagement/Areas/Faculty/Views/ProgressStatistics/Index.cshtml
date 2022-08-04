@@ -52,7 +52,7 @@
                             <input type="hidden" id="inputStudentCourse" value="" />
                             <input type="hidden" id="inputCreditsFrom" value="" />
                             <input type="hidden" id="inputCreditsTo" value="" />
-                            <canvas id="simple-pie-chart"></canvas>
+                            <canvas id="column-chart" height="550"></canvas>
                         </div>
                         <div class="form-actions" id="frmShowStudents" style="display: none">
                             <div class="text-right">
@@ -146,7 +146,6 @@
                         $.each(results, function (i, result) {
                             var knowledgeName; knowledgeName = null != result.group_3 ? result.group_3 : result.group_2;
                             $("#frmStatistics_body").append('<div class="col-6 knowledge"><div class="form-group"><label>' + knowledgeName + ' </label><input type="number" min="0" class="form-control" id="txt' + result.id + '" name="' + result.id + '" placeholder="Nhập số tín chỉ"></div></div>');
-                            @*$("#comboboxClassStudent").append('<option value="' + result.id + '">' + result.id + '</option>');*@
                         });
                     },
                     error: function (ex) {
@@ -158,39 +157,51 @@
         });
 
         //Get the context of the Chart canvas element we want to select
-        var ctx = $("#simple-pie-chart");
+        var ctx = $("#column-chart");
 
         // Chart Options
         var chartOptions = {
             responsive: true,
             maintainAspectRatio: false,
+            scaleShowVerticalLines: false,
             responsiveAnimationDuration: 500,
-            tooltips: {
-                enabled: false
+            borderRadius: 4,
+            legend: {
+                position: 'top',
+            },
+            scales: {
+                xAxis: {
+                    stacked: true,
+                    grid: {
+                        color: "#f3f3f3",
+                        drawTicks: false,
+                    },
+                    ticks: {
+                        padding: 20
+                    }
+                },
+                yAxis: {
+                    stacked: true,
+                    grid: {
+                        color: "#f3f3f3",
+                        drawTicks: false,
+                    }
+                }
             },
             plugins: {
                 title: {
+                    text: "Thống kê SV theo từng khối kiến thức",
                     display: true,
                     font: {
                         size: 25
                     }
                 },
-                datalabels: {
-                    formatter: function (value, context) {
-                        return value + " SV";
-                    },
-                    color: '#FFFFFF',
-                    font: {
-                        weight: 'bold',
-                        size: 16,
-                    },
-                }
             }
         };
 
         // Create the chart
         var chart = new Chart(ctx, {
-            type: "pie",
+            type: "bar",
             data: {},
             options: chartOptions,
             plugins: [ChartDataLabels]
@@ -224,18 +235,16 @@
             }
             else {
 
-                const form = document.getElementById('frmStatistics');
-                const formData = new FormData(form);
-
-                var object = {};
-                formData.forEach(function (value, key) {
-                    object[key] = value;
-                });
-                var json = JSON.stringify(object);
-
-
-                console.log(json);
-
+                // Get values from form group
+                var knowledge_name = $(".knowledge .form-group").map(function () {
+                    return $(this).text().trim();
+                }).get();
+                var knowledge_ids = $(".knowledge .form-control").map(function () {
+                    return $(this).attr('name');
+                }).get();
+                var credits = $(".knowledge .form-control").map(function () {
+                    return $(this).val();
+                }).get();
 
                 $('#divViewStudents').hide();
                 $('.chartjs').show();
@@ -243,42 +252,59 @@
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("GetStatistics", "ProgressStatistics")',
-                    data: { 'studentCourseId': studentCourseId, 'creditsFrom': creditsFrom, 'creditsTo': creditsTo },
+                    data: { 'studentCourseId': studentCourseId, 'knowledge_name': knowledge_name, 'knowledge_ids': knowledge_ids, 'credits': credits },
                     success: function (response) {
 
+                        // Get chart labels and data
+                        var labels = response.map(function (e) {
+                            return e.Item2;
+                        });
+                        var labels_adjusted = labels.map(label => label.split(/[./\-_]/));
+                        var data_pass = response.map(function (e) {
+                            return e.Item3;
+                        });
+                        var data_fail = response.map(function (e) {
+                            return e.Item4;
+                        });
+
+                        // Chart Data
                         var chartData = {
-                            labels: ['Sinh viên đạt'],
-                            datasets: [{
-                                label: "My First dataset",
-                                data: [response.Data.passStudents],
-                                backgroundColor: ["rgba(102, 110, 232, 0.8)"],
-                            }]
+                            labels: labels_adjusted,
+                            datasets: [
+                                {
+                                    label: 'Đã đạt',
+                                    data: data_pass,
+                                    backgroundColor: 'rgba(105, 222, 180, 1)',
+                                    borderColor: 'rgba(40, 208, 148, 1)',
+                                    borderWidth: 1,
+                                    datalabels: {
+                                        display: function (context) {
+                                            // Only return positive values
+                                            return context.dataset.data[context.dataIndex] !== 0;
+                                        }
+                                    }
+                                },
+                                {
+                                    label: 'Chưa đạt',
+                                    data: data_fail,
+                                    backgroundColor: 'rgba(189, 189, 189, 0.3)',
+                                    borderColor: 'rgba(189, 189, 189, 1)',
+                                    borderWidth: 1
+                                }
+                            ]
                         };
 
-                        if (response.Data.passStudents != 0) {
+                        // Add value to hidden input credits
+                        $('#inputStudentCourse').val(studentCourseId);
+                        $('#inputCreditsFrom').val(knowledge_ids);
+                        $('#inputCreditsTo').val(credits);
 
-                            // Add value to hidden input credits
-                            $('#inputStudentCourse').val(studentCourseId);
-                            $('#inputCreditsFrom').val(creditsFrom);
-                            $('#inputCreditsTo').val(creditsTo);
+                        // Update chart data
+                        chart.data = chartData;
+                        chart.update();
 
-                            // Update chart data
-                            chart.options.plugins.title.text = 'Thống kê sinh viên đạt từ ' + creditsFrom + ' đến ' + creditsTo + ' tín chỉ';
-                            chart.data = chartData;
-                            chart.update();
-
-                            // Show buttons to view list of students in statistics
-                            $('#frmShowStudents').show();
-
-                        }
-                        else {
-                            $('#frmShowStudents').hide();
-
-                            // Show message chart has no data
-                            chart.options.plugins.title.text = 'Chưa có dữ liệu...';
-                            chart.data = chartData;
-                            chart.update();
-                        }
+                        // Show buttons to view list of students in statistics
+                        $('#frmShowStudents').show();
                     }
                 });
             }

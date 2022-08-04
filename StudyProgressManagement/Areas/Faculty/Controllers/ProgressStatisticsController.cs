@@ -1,11 +1,12 @@
 ﻿using StudyProgressManagement.Models;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace StudyProgressManagement.Areas.Faculty.Controllers
 {
-    [Authorize(Roles = "Faculty")]
     public class ProgressStatisticsController : Controller
     {
         SEP25Team03Entities db = new SEP25Team03Entities();
@@ -39,25 +40,40 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetStatistics(int studentCourseId, int creditsFrom, int creditsTo)
+        public JsonResult GetStatistics(int studentCourseId, string[] knowledge_name, string[] knowledge_ids, int[] credits)
         {
-            int passStudents = 0;
+            var list = new List<Tuple<string, string, int, int>>();
+            var query_studyResult = db.study_results.Where(s => s.student_course_id == studentCourseId && s.is_pass != null);
+            var query_knowledge = db.knowledge_type.Where(k => k.student_course_id == studentCourseId);
 
-            // Get study results group by student (except for optional knowledge_type)
-            var query_studyResult = db.study_results.Where(s => s.student_course_id == studentCourseId && s.is_pass != null && s.curriculum.knowledge_type.knowledge_type_alias
-            != "DCKTL").GroupBy(s => s.student_id).Select(s => new { Id = s.Key, Sum = s.Sum(item => item.curriculum.credits) }).ToList();
 
-            foreach (var result in query_studyResult)
+            foreach (var knowledge_id in knowledge_ids.Select((value, index) => new { value, index }))
             {
-                // Check if students's credits pass
-                if (result.Sum >= creditsFrom && result.Sum <= creditsTo)
+                // Reset number in every foreach
+                int passStudents = 0;
+                int failStudents = 0;
+                int i = knowledge_id.index;
+
+                // Get study results group by student base on each knowledge type
+                var query_sum = query_studyResult.Where(s => s.curriculum.knowledge_type.knowledge_type_alias.Equals(knowledge_id.value))
+                .GroupBy(s => s.student_id).Select(s => new { Id = s.Key, Sum = s.Sum(item => item.curriculum.credits) }).ToList();
+
+                foreach (var result in query_sum)
                 {
-                    passStudents++;
+                    // Check if students's credits pass
+                    if (result.Sum >= credits[i])
+                    {
+                        passStudents++;
+                    }
+                    else
+                    {
+                        failStudents++;
+                    }
                 }
+                list.Add(Tuple.Create(knowledge_id.value, knowledge_name[i], passStudents, failStudents));
             }
 
-            var finalResult = Json(new { passStudents = passStudents });
-            return Json(finalResult, JsonRequestBehavior.AllowGet);
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

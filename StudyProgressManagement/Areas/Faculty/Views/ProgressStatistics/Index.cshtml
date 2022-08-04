@@ -48,19 +48,9 @@
                                 </button>
                             </div>
                         </form>
-                        <div class="card-block chartjs" style="display: none">
-                            <input type="hidden" id="inputStudentCourse" value="" />
-                            <input type="hidden" id="inputCreditsFrom" value="" />
-                            <input type="hidden" id="inputCreditsTo" value="" />
+                        <div class="card-block chartjs" id="divChartJs" style="display: none">
                             <canvas id="column-chart" height="550"></canvas>
-                        </div>
-                        <div class="form-actions" id="frmShowStudents" style="display: none">
-                            <div class="text-right">
-                                <button type="button" class="btn btn-primary mr-1" id="btnSuccessStudent">
-                                    Xem sinh viên đạt
-                                    <i class="ft-check-circle position-right"></i>
-                                </button>
-                            </div>
+                            <input type="hidden" id="inputStudentCourse" value="" />
                         </div>
                     </div>
                 </div>
@@ -87,7 +77,6 @@
                                         <th> Họ và tên </th>
                                         <th> Lớp </th>
                                         <th> Tín chỉ đã học </th>
-                                        <th> Đại cương KTL đã học </th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -257,9 +246,8 @@
 
                         // Get chart labels and data
                         var labels = response.map(function (e) {
-                            return e.Item2;
+                            return e.Item1;
                         });
-                        var labels_adjusted = labels.map(label => label.split(/[./\-_]/));
                         var data_pass = response.map(function (e) {
                             return e.Item3;
                         });
@@ -269,7 +257,7 @@
 
                         // Chart Data
                         var chartData = {
-                            labels: labels_adjusted,
+                            labels: labels,
                             datasets: [
                                 {
                                     label: 'Đã đạt',
@@ -296,8 +284,10 @@
 
                         // Add value to hidden input credits
                         $('#inputStudentCourse').val(studentCourseId);
-                        $('#inputCreditsFrom').val(knowledge_ids);
-                        $('#inputCreditsTo').val(credits);
+                        $.each(response, function (i, result) {
+                            $("#divChartJs").append('<input type="hidden" id="input' + result.Item1 + '" value="' + result.Item5 + '" />');
+                        });
+                        console.log(response);
 
                         // Update chart data
                         chart.data = chartData;
@@ -310,21 +300,29 @@
                             if (points.length) {
                                 const firstPoint = points[0];
                                 const label = chart.data.labels[firstPoint.index];
-                                const value = chart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-                                alert(value);
-                                console.log(response);
+                                const datasetLabel = chart.data.datasets[firstPoint.datasetIndex].label;
+
+                                $('#divViewStudents').show();
+                                $('#lblViewStudents').text('DSSV đạt từ TC');
+
+                                var inputStudentCourse = $('#inputStudentCourse').val();
+                                var inputCredits = $('#input' + label).val();
+
+                                if (datasetLabel == "Đã đạt") {
+                                    PopulateDatatable(inputStudentCourse, inputCredits, label, true);
+                                }
+                                else {
+                                    PopulateDatatable(inputStudentCourse, inputCredits, label, false);
+                                }
                             }
                         };
-
-                        // Show buttons to view list of students in statistics
-                        $('#frmShowStudents').show();
                     }
                 });
             }
         });
        
 
-        $("#btnSuccessStudent").click(function (event) {
+        @*$("#btnSuccessStudent").click(function (event) {
 
             var inputStudentCourse = $('#inputStudentCourse').val();
             var inputCreditsFrom = $('#inputCreditsFrom').val();
@@ -336,9 +334,9 @@
             $('#lblViewStudents').text('DSSV đạt từ ' + inputCreditsFrom + ' đến ' + inputCreditsTo + ' TC');
             PopulateDatatable(inputStudentCourse, inputCreditsFrom, inputCreditsTo);
 
-        });
+        });*@
 
-        function PopulateDatatable(inputStudentCourse, inputCreditsFrom, inputCreditsTo) {
+        function PopulateDatatable(inputStudentCourse, inputCredits, inputKnowledge, isTrue) {
 
             var dataTable;
             var fileName;
@@ -350,10 +348,10 @@
                         dataSrc: '',
                         type: 'POST',
                         url: '@Url.Action("GetStudentList", "ProgressStatistics")',
-                        data: { 'studentCourseId': inputStudentCourse, 'inputCreditsFrom': inputCreditsFrom, 'inputCreditsTo': inputCreditsTo },
+                        data: { 'studentCourseId': inputStudentCourse, 'inputCredits': inputCredits, 'inputKnowledge': inputKnowledge, 'isTrue': isTrue },
                         dataType: "json",
                     },
-                    lengthMenu: [[50, 100, -1], [50, 100, "All"]],
+                    lengthMenu: [[50, 100, -1], [50, 100, "Tất cả"]],
                     destroy: true,
                     order: [[4, 'desc']],
                     columnDefs: [
@@ -371,16 +369,7 @@
                         { 'data': 'id' },
                         { 'data': 'full_name' },
                         { 'data': 'class_student' },
-                        { 'data': 'sum' },
-                        {
-                            'data': 'current_no_culmulative',
-                            'render': function (data) {
-                                var number = data.split("/");
-                                var progress = Math.round((number[0] * 100) / number[1]);
-                                return '<div class="text-center">' + data + '</div><div class="progress mb-2"><div class="progress-bar progress-bar-striped" role="progressbar" aria-label="No culmulative credits progress" aria-valuenow="' + progress + '" aria-valuemin="0" aria-valuemax="100" style="width:' + progress + '%"></div></div>';
-                            },
-                            orderable: false,
-                        }
+                        { 'data': 'sum' }
                     ],
                     dom: 'Blfrtip',
                     buttons: [

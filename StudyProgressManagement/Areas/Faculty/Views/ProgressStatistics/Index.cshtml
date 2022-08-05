@@ -324,6 +324,9 @@
                         var labels = response.map(function (e) {
                             return e.Item1;
                         });
+                        var knowledge_name = response.map(function (e) {
+                            return e.Item2;
+                        });
                         var data_pass = response.map(function (e) {
                             return e.Item3;
                         });
@@ -374,6 +377,9 @@
                         var majorName = $('#comboboxMajor option:selected').text();
                         var studentCourseName = $('#comboboxStudentCourse option:selected').text();
                         chart.options.plugins.title.text = 'Thống kê sinh viên ' + studentCourseName + ' Ngành ' + majorName;
+                        chart.options.plugins.tooltip.callbacks.beforeBody = function (context) {
+                            return `${knowledge_name[context[0].dataIndex]}`;
+                        };
                         chart.data = chartData;
                         chart.update();
 

@@ -50,7 +50,6 @@
                         </form>
                         <div class="card-block chartjs" id="divChartJs" style="display: none">
                             <canvas id="column-chart" height="550"></canvas>
-                            <input type="hidden" id="inputStudentCourse" value="" />
                         </div>
                     </div>
                 </div>
@@ -282,8 +281,8 @@
                             ]
                         };
 
-                        // Add value to hidden input credits
-                        $('#inputStudentCourse').val(studentCourseId);
+                        // Add value to hidden inputs
+                        $("#divChartJs").append('<input type="hidden" id="inputStudentCourse" value="' + studentCourseId + '" />');
                         $.each(response, function (i, result) {
                             $("#divChartJs").append('<input type="hidden" id="input' + result.Item1 + '" value="' + result.Item5 + '" />');
                         });
@@ -303,6 +302,7 @@
                                 const label = chart.data.labels[firstPoint.index];
                                 const datasetLabel = chart.data.datasets[firstPoint.datasetIndex].label;
 
+                                // Get values from hidden inputs
                                 var inputStudentCourse = $('#inputStudentCourse').val();
                                 var inputCredits = $('#input' + label).val();
 

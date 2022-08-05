@@ -161,14 +161,24 @@
                     dataType: 'json',
                     data: { studentCourseId: StudentCourseId },
                     success: function (results) {
+
+                        // Get submit button
+                        var mybutton = document.getElementById("btnSubmit");
+
                         if (results.length !== 0) {
                             $.each(results, function (i, result) {
+                                // Enable submit button
+                                mybutton.disabled = false;
+
                                 // Load knowledge type text fields
                                 var knowledgeName; knowledgeName = null != result.group_3 ? result.group_3 : result.group_2;
-                                $("#frmStatistics_body").append('<div class="col-xl-4 col-lg-6 col-md-12 mb-1 knowledge"><div class="form-group"><label>' + knowledgeName + ' </label><input type="number" min="0" class="form-control" id="txt' + result.id + '" name="' + result.id + '" placeholder="Nhập số tín chỉ"></div></div>');
+                                $("#frmStatistics_body").append('<div class="col-xl-4 col-lg-6 col-md-12 mb-1 knowledge"><div class="form-group"><label>' + knowledgeName + ': </label><input type="number" min="0" class="form-control" id="txt' + result.id + '" name="' + result.id + '" placeholder="Nhập số tín chỉ"></div></div>');
                             });
                         }
                         else {
+                            // disable submit button
+                            mybutton.disabled = true;
+
                             // Show error message when student course has no study program
                             $("#frmStatistics_body").append('<div class="container knowledge"><h4 class="card-title text-center m-3">Khoá này chưa có chương trình đào tạo <i class="ft-help-circle"></i></h4></div>');
                         }
@@ -331,7 +341,13 @@
                                     data: data_fail,
                                     backgroundColor: 'rgba(189, 189, 189, 0.3)',
                                     borderColor: 'rgba(189, 189, 189, 1)',
-                                    borderWidth: 1
+                                    borderWidth: 1,
+                                    datalabels: {
+                                        display: function (context) {
+                                            // Only return positive values
+                                            return context.dataset.data[context.dataIndex] !== 0;
+                                        }
+                                    }
                                 }
                             ]
                         };

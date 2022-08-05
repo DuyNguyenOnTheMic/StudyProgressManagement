@@ -298,20 +298,24 @@
                             const points = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
 
                             if (points.length) {
+                                // Get values on user click
                                 const firstPoint = points[0];
                                 const label = chart.data.labels[firstPoint.index];
                                 const datasetLabel = chart.data.datasets[firstPoint.datasetIndex].label;
 
-                                $('#divViewStudents').show();
-                                $('#lblViewStudents').text('DSSV đạt từ TC');
-
                                 var inputStudentCourse = $('#inputStudentCourse').val();
                                 var inputCredits = $('#input' + label).val();
 
+                                // Show and set text for view student list section
+                                $('#divViewStudents').show();
+                                $('#lblViewStudents').text('DSSV ' + datasetLabel + ' ' + inputCredits + 'TC của khối ' + label);
+
                                 if (datasetLabel == "Đã đạt") {
+                                    // Get success students
                                     PopulateDatatable(inputStudentCourse, inputCredits, label, true);
                                 }
                                 else {
+                                    // Get fail students
                                     PopulateDatatable(inputStudentCourse, inputCredits, label, false);
                                 }
                             }
@@ -321,20 +325,6 @@
             }
         });
        
-
-        @*$("#btnSuccessStudent").click(function (event) {
-
-            var inputStudentCourse = $('#inputStudentCourse').val();
-            var inputCreditsFrom = $('#inputCreditsFrom').val();
-            var inputCreditsTo = $('#inputCreditsTo').val();
-
-            $('#divViewStudents').show();
-
-            // Create datatable for success students
-            $('#lblViewStudents').text('DSSV đạt từ ' + inputCreditsFrom + ' đến ' + inputCreditsTo + ' TC');
-            PopulateDatatable(inputStudentCourse, inputCreditsFrom, inputCreditsTo);
-
-        });*@
 
         function PopulateDatatable(inputStudentCourse, inputCredits, inputKnowledge, isTrue) {
 

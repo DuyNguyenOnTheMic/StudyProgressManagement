@@ -43,9 +43,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public JsonResult GetStatistics(int studentCourseId, string[] knowledge_name, string[] knowledge_ids, int[] credits)
         {
             // Declare variables
-            var list = new List<Tuple<string, string, int, int, int>>();
+            var statisticsList = new List<Tuple<string, string, int, int, int>>();
             var query_studyResult = db.study_results.Where(s => s.student_course_id == studentCourseId && s.is_pass != null);
-            var query_knowledge = db.knowledge_type.Where(k => k.student_course_id == studentCourseId);
             int studentsCount = db.students.Where(s => s.student_course_id == studentCourseId).GroupBy(s => s.id).Count();
 
 
@@ -69,27 +68,27 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     }
                 }
                 failStudents = studentsCount - passStudents;
-                list.Add(Tuple.Create(knowledge_id.value, knowledge_name[i], passStudents, failStudents, credits[i]));
+                statisticsList.Add(Tuple.Create(knowledge_id.value, knowledge_name[i], passStudents, failStudents, credits[i]));
             }
 
-            return Json(list, JsonRequestBehavior.AllowGet);
+            return Json(statisticsList, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult GetStudentList(int studentCourseId, int inputCredits, string inputKnowledge, bool isTrue)
         {
+            // Get study results of input knowledge type
+            var query_studyResult = db.study_results.Where(item => item.is_pass != null && item.curriculum.knowledge_type.knowledge_type_alias.Equals(inputKnowledge));
+
             // Query for student lists
             var query_students = db.students.Where(s => s.student_course_id == studentCourseId).GroupBy(s => s.id).Select(s => new
             {
                 id = s.Key,
                 full_name = s.Select(n => n.full_name).FirstOrDefault(),
                 class_student = s.Select(c => c.class_student_id).FirstOrDefault(),
-                sum = db.study_results.Where(item => item.is_pass != null && item.curriculum.knowledge_type.knowledge_type_alias
-                .Equals(inputKnowledge) && item.student_id == s.Key).Select(item => item.curriculum.credits).DefaultIfEmpty(0).Sum()
+                sum = query_studyResult.Where(item => item.student_id == s.Key).Select(item => item.curriculum.credits).DefaultIfEmpty(0).Sum()
             });
 
-
-            // Query for student list
             var query_studentList = query_students;
             if (isTrue)
             {

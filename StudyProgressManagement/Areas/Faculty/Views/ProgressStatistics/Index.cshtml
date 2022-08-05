@@ -48,6 +48,10 @@
                                 </button>
                             </div>
                         </form>
+                        <div class="container" id="viewStatistics_instruction">
+                            <h4 class="card-title text-center m-4">Chọn ngành và khoá, sau đó nhập tín chỉ cần đạt để xem thống kê</h4>
+                            <img class="mx-auto d-block w-50" alt="Instruction" src="~/assets/images/img_view_statistics.svg" />
+                        </div>
                         <div class="card-block chartjs" id="divChartJs" style="display: none">
                             <canvas id="column-chart" height="550"></canvas>
                         </div>
@@ -268,6 +272,7 @@
                 }).get();
 
                 $('#divViewStudents').hide();
+                $('#viewStatistics_instruction').hide();
                 $('.chartjs').show();
 
                 swal({

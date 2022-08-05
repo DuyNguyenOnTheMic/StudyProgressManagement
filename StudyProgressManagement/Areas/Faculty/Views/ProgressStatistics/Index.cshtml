@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-body">
                     <div class="card-block">
-                        <form  id="frmStatistics">
+                        <form id="frmStatistics">
                             <div class="form-body">
                                 <div class="row justify-content-center" id="frmStatistics_body">
                                     <div class="col-6">
@@ -95,8 +95,34 @@
     <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
     <script src="~/app-assets/vendors/js/chart.min.js"></script>
     <script src="~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js"></script>
+    <script src="~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
 
     <script type="text/javascript">
+
+        function StartProgressBar() {
+            // Reference the auto-generated proxy for the hub.
+            var progress = $.connection.progressHub;
+            console.log(progress);
+
+            // Create a function that the hub can call back to display messages.
+            progress.client.AddProgress = function (message, percentage) {
+                if (percentage >= 100) {
+                    return;
+                }
+                else {
+                    $('#myprogress')
+                        .attr({ 'aria-valuenow': percentage })
+                        .text(message + ' ' + percentage + ' %')
+                        .width(percentage);
+                }
+            };
+
+            $.connection.hub.start().done(function () {
+                var connectionId = $.connection.hub.id;
+                console.log(connectionId);
+            });
+        }
 
         $(document).ready(function () {
             // Load cascading dropdown between majors and student courses
@@ -237,11 +263,25 @@
                 $('#divViewStudents').hide();
                 $('.chartjs').show();
 
+                swal({
+                    title: 'Vui lòng đợi...',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+                    html: '<div class="progress mb-2 mt-4" style="height: 30px"><div id="myprogress" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div></div>',
+                    onOpen: () => {
+                        swal.showLoading();
+                    }
+                })
+
+                StartProgressBar();
+
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("GetStatistics", "ProgressStatistics")',
                     data: { 'studentCourseId': studentCourseId, 'knowledge_name': knowledge_name, 'knowledge_ids': knowledge_ids, 'credits': credits },
                     success: function (response) {
+
+                        swal.close();
 
                         // Remove previous hidden inputs
                         $('#divChartJs input[type="hidden"]').remove();
@@ -327,7 +367,7 @@
                 });
             }
         });
-       
+
 
         function PopulateDatatable(inputStudentCourse, inputCredits, inputKnowledge, isTrue) {
 

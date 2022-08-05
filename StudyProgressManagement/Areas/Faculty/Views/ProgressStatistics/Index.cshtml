@@ -202,8 +202,8 @@
             // Get form's data
             var majorId = $('#comboboxMajor').val();
             var studentCourseId = $('#comboboxStudentCourse').val();
-            var reqlength = $('.form-control').length;
-            var value = $('.form-control').filter(function () {
+            var reqlength = $('.knowledge .form-control').length;
+            var value = $('.knowledge .form-control').filter(function () {
                 return this.value != '';
             });
 
@@ -242,6 +242,9 @@
                     url: '@Url.Action("GetStatistics", "ProgressStatistics")',
                     data: { 'studentCourseId': studentCourseId, 'knowledge_name': knowledge_name, 'knowledge_ids': knowledge_ids, 'credits': credits },
                     success: function (response) {
+
+                        // Remove previous hidden inputs
+                        $('#divChartJs input[type="hidden"]').remove();
 
                         // Get chart labels and data
                         var labels = response.map(function (e) {

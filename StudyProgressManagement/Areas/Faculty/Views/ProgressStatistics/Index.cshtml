@@ -53,7 +53,7 @@
                             <img class="mx-auto d-block w-50" alt="Instruction" src="~/assets/images/img_view_statistics.svg" />
                         </div>
                         <div class="card-block chartjs" id="divChartJs" style="display: none">
-                            <canvas id="column-chart" height="550"></canvas>
+                            <canvas id="column-chart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -234,12 +234,25 @@
             }
         };
 
+        // Plugin block
+        const legendMargin = {
+            id: 'legendMargin',
+            beforeInit(chart, legend, options) {
+                const fitValue = chart.legend.fit;
+
+                chart.legend.fit = function fit() {
+                    fitValue.bind(chart.legend)();
+                    return this.height += 30;
+                }
+            }
+        };
+
         // Create the chart
         var chart = new Chart(ctx, {
             type: "bar",
             data: {},
             options: chartOptions,
-            plugins: [ChartDataLabels]
+            plugins: [ChartDataLabels, legendMargin]
         });
 
         $("#btnSubmit").click(function (event) {

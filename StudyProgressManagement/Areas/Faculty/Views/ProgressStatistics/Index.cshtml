@@ -65,7 +65,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title-wrap bar-primary">
+                    <div class="card-title-wrap bar-info">
                         <h4 class="card-title" id="lblViewStudents"></h4>
                     </div>
                 </div>
@@ -225,7 +225,6 @@
             },
             plugins: {
                 title: {
-                    text: "Thống kê SV theo từng khối kiến thức",
                     display: true,
                     font: {
                         size: 25
@@ -372,6 +371,9 @@
                         });
 
                         // Update chart data
+                        var majorName = $('#comboboxMajor option:selected').text();
+                        var studentCourseName = $('#comboboxStudentCourse option:selected').text();
+                        chart.options.plugins.title.text = 'Thống kê sinh viên ' + studentCourseName + ' Ngành ' + majorName;
                         chart.data = chartData;
                         chart.update();
 

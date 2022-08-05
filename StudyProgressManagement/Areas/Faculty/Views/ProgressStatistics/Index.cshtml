@@ -18,7 +18,7 @@
                     <div class="card-block">
                         <form id="frmStatistics">
                             <div class="form-body">
-                                <div class="row justify-content-center" id="frmStatistics_body">
+                                <div class="row justify-content-start" id="frmStatistics_body">
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label>Ngành: </label>
@@ -159,7 +159,7 @@
                     success: function (results) {
                         $.each(results, function (i, result) {
                             var knowledgeName; knowledgeName = null != result.group_3 ? result.group_3 : result.group_2;
-                            $("#frmStatistics_body").append('<div class="col-6 knowledge"><div class="form-group"><label>' + knowledgeName + ' </label><input type="number" min="0" class="form-control" id="txt' + result.id + '" name="' + result.id + '" placeholder="Nhập số tín chỉ"></div></div>');
+                            $("#frmStatistics_body").append('<div class="col-xl-4 col-lg-6 col-md-12 mb-1 knowledge"><div class="form-group"><label>' + knowledgeName + ' </label><input type="number" min="0" class="form-control" id="txt' + result.id + '" name="' + result.id + '" placeholder="Nhập số tín chỉ"></div></div>');
                         });
                     },
                     error: function (ex) {

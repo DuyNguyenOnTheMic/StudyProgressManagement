@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\Faculty\Controllers\MajorControllerTests.cs" />
+    <Compile Include="Areas\Faculty\Controllers\RegistrationResultControllerTests.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudentCourseControllerTests.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudyProgramControllerTests.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudyResultControllerTests.cs" />

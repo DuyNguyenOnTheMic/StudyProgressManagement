@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using StudyProgressManagement.Models;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -762,7 +764,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         public void Delete_Registration_Result_Test()
         {
             // Arrange
-            var controller = new StudyResultController();
+            var controller = new RegistrationResultController();
             var db = new SEP25Team03Entities();
 
             // Act
@@ -772,6 +774,237 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
 
             // Assert
             Assert.AreEqual(true, jsonCollection.success);
+        }
+
+        [TestMethod()]
+        public void Validate_Columns_Is_True_Test()
+        {
+            // Arrange
+            var controller = new RegistrationResultController();
+            var table = new DataTable();
+
+            // Act
+            table.Columns.AddRange(
+                new DataColumn[17]{
+                        new DataColumn("Mã SV"),
+                        new DataColumn("Họ tên SV"),
+                        new DataColumn("Email SV"),
+                        new DataColumn("Ngày sinh"),
+                        new DataColumn("Giới tính"),
+                        new DataColumn("Thuộc Lớp"),
+                        new DataColumn("Thuộc Khoa"),
+                        new DataColumn("Mã HP"),
+                        new DataColumn("Mã LHP"),
+                        new DataColumn("Tên HP"),
+                        new DataColumn("Số TC"),
+                        new DataColumn("HT Đăng Ký"),
+                        new DataColumn("Ngày ĐK"),
+                        new DataColumn("Người ĐK"),
+                        new DataColumn("Mã giảng viên"),
+                        new DataColumn("Giảng viên"),
+                        new DataColumn("Thời khóa biểu")
+                });
+
+            var result = controller.ValidateColumns(table);
+
+            // Assert
+            Assert.AreEqual(17, table.Columns.Count);
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod()]
+        public void Validate_Columns_Is_False_If_Missing_Columns_Test()
+        {
+            // Arrange
+            var controller = new RegistrationResultController();
+            var table = new DataTable();
+
+            // Act
+            table.Columns.AddRange(
+                new DataColumn[16]{
+                        new DataColumn("Họ tên SV"),
+                        new DataColumn("Email SV"),
+                        new DataColumn("Ngày sinh"),
+                        new DataColumn("Giới tính"),
+                        new DataColumn("Thuộc Lớp"),
+                        new DataColumn("Thuộc Khoa"),
+                        new DataColumn("Mã HP"),
+                        new DataColumn("Mã LHP"),
+                        new DataColumn("Tên HP"),
+                        new DataColumn("Số TC"),
+                        new DataColumn("HT Đăng Ký"),
+                        new DataColumn("Ngày ĐK"),
+                        new DataColumn("Người ĐK"),
+                        new DataColumn("Mã giảng viên"),
+                        new DataColumn("Giảng viên"),
+                        new DataColumn("Thời khóa biểu")
+                });
+
+            var result = controller.ValidateColumns(table);
+
+            // Assert
+            Assert.AreEqual(16, table.Columns.Count);
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod()]
+        public void Contain_Column_Is_True_Test()
+        {
+            // Arrange
+            var controller = new RegistrationResultController();
+            var table = new DataTable();
+
+            // Act
+            table.Columns.AddRange(
+                new DataColumn[17]{
+                        new DataColumn("Mã SV"),
+                        new DataColumn("Họ tên SV"),
+                        new DataColumn("Email SV"),
+                        new DataColumn("Ngày sinh"),
+                        new DataColumn("Giới tính"),
+                        new DataColumn("Thuộc Lớp"),
+                        new DataColumn("Thuộc Khoa"),
+                        new DataColumn("Mã HP"),
+                        new DataColumn("Mã LHP"),
+                        new DataColumn("Tên HP"),
+                        new DataColumn("Số TC"),
+                        new DataColumn("HT Đăng Ký"),
+                        new DataColumn("Ngày ĐK"),
+                        new DataColumn("Người ĐK"),
+                        new DataColumn("Mã giảng viên"),
+                        new DataColumn("Giảng viên"),
+                        new DataColumn("Thời khóa biểu")
+                });
+
+            var result = controller.ContainColumn("Họ tên SV", table);
+
+            // Assert
+            Assert.AreEqual(17, table.Columns.Count);
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod()]
+        public void Contain_Column_Is_False_Test()
+        {
+            // Arrange
+            var controller = new RegistrationResultController();
+            var table = new DataTable();
+
+            // Act
+            table.Columns.AddRange(
+                new DataColumn[17]{
+                        new DataColumn("Mã SV"),
+                        new DataColumn("Họ tên SV"),
+                        new DataColumn("Email SV"),
+                        new DataColumn("Ngày sinh"),
+                        new DataColumn("Giới tính"),
+                        new DataColumn("Thuộc Lớp"),
+                        new DataColumn("Thuộc Khoa"),
+                        new DataColumn("Mã HP"),
+                        new DataColumn("Mã LHP"),
+                        new DataColumn("Tên HP"),
+                        new DataColumn("Số TC"),
+                        new DataColumn("HT Đăng Ký"),
+                        new DataColumn("Ngày ĐK"),
+                        new DataColumn("Người ĐK"),
+                        new DataColumn("Mã giảng viên"),
+                        new DataColumn("Giảng viên"),
+                        new DataColumn("Thời khóa biểu")
+                });
+
+            var result = controller.ContainColumn("Test", table);
+
+            // Assert
+            Assert.AreEqual(17, table.Columns.Count);
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod]
+        public void Convert_Datatable_To_Json_Data_Not_Null_Test()
+        {
+            // Arrange
+            var controller = new RegistrationResultController();
+            var table = new DataTable();
+
+            // Act
+            table.Columns.AddRange(
+                new DataColumn[17]{
+                        new DataColumn("Mã SV"),
+                        new DataColumn("Họ tên SV"),
+                        new DataColumn("Email SV"),
+                        new DataColumn("Ngày sinh"),
+                        new DataColumn("Giới tính"),
+                        new DataColumn("Thuộc Lớp"),
+                        new DataColumn("Thuộc Khoa"),
+                        new DataColumn("Mã HP"),
+                        new DataColumn("Mã LHP"),
+                        new DataColumn("Tên HP"),
+                        new DataColumn("Số TC"),
+                        new DataColumn("HT Đăng Ký"),
+                        new DataColumn("Ngày ĐK"),
+                        new DataColumn("Người ĐK"),
+                        new DataColumn("Mã giảng viên"),
+                        new DataColumn("Giảng viên"),
+                        new DataColumn("Thời khóa biểu")
+                });
+
+            table.Rows.Add(
+                    "197PM21905",
+                    "Nguyễn Tân Duy",
+                    "duy.197pm21905@vanlanguni.vn",
+                    "22/07/2001",
+                    "Nam",
+                    "K25T-PM2",
+                    "CNTT",
+                    "MaHP",
+                    "MaLHP",
+                    "TenHP",
+                    "4",
+                    "Kế hoạch",
+                    "22/07/2022",
+                    "Duy",
+                    "21221223",
+                    "Lý Thị Hồng Phan",
+                    "Ca 2 3h30 ca 3 4h30"
+                );
+            string jsonString = JsonConvert.SerializeObject(table);
+
+
+            var result = controller.DataTableToJson(table);
+            dynamic jsonCollection = result.Data;
+
+            // Assert
+            Assert.IsNotNull(result, "No ActionResult returned from action method.");
+            Assert.IsNotNull(jsonString, jsonCollection);
+            Assert.AreEqual("[{\"Mã SV\":\"197PM21905\",\"Họ tên SV\":\"Nguyễn Tân Duy\",\"Email SV\":\"duy.197pm21905@vanlanguni.vn\",\"Ngày sinh\":\"22/07/2001\",\"Giới tính\":\"Nam\",\"Thuộc Lớp\":\"K25T-PM2\",\"Thuộc Khoa\":\"CNTT\",\"Mã HP\":\"MaHP\",\"Mã LHP\":\"MaLHP\",\"Tên HP\":\"TenHP\",\"Số TC\":\"4\",\"HT Đăng Ký\":\"Kế hoạch\",\"Ngày ĐK\":\"22/07/2022\",\"Người ĐK\":\"Duy\",\"Mã giảng viên\":\"21221223\",\"Giảng viên\":\"Lý Thị Hồng Phan\",\"Thời khóa biểu\":\"Ca 2 3h30 ca 3 4h30\"}]", jsonCollection);
+        }
+
+        [TestMethod()]
+        public void Set_Null_On_Empty_String_Test()
+        {
+            // Arrange
+            string test = "Anh Văn 4";
+
+            // Act
+
+            var result = RegistrationResultController.SetNullOnEmpty(test);
+
+            // Assert
+            Assert.AreEqual("Anh Văn 4", result);
+        }
+
+        [TestMethod()]
+        public void Set_Null_On_Empty_Is_True_String_Test()
+        {
+            // Arrange
+            string test = "";
+
+            // Act
+
+            var result = RegistrationResultController.SetNullOnEmpty(test);
+
+            // Assert
+            Assert.AreEqual(null, result);
         }
     }
 }

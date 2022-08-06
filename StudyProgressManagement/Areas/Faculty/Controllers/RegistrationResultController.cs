@@ -379,7 +379,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return false;
         }
 
-        public ActionResult DataTableToJson(DataTable table)
+        public JsonResult DataTableToJson(DataTable table)
         {
             // Convert datatable to Json
             string jsonString = JsonConvert.SerializeObject(table);

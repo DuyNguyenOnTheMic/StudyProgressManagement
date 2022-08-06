@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR;
-using SignalRProgressBarSimpleExample.Hubs;
+using StudyProgressManagement.Hubs;
 
-namespace SignalRProgressBarSimpleExample.Util
+namespace StudyProgressManagement.Util
 {
     public class Functions
     {

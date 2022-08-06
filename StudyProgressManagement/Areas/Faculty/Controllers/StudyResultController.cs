@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
-using SignalRProgressBarSimpleExample.Util;
 using StudyProgressManagement.Models;
+using StudyProgressManagement.Util;
 using System;
 using System.Configuration;
 using System.Data;

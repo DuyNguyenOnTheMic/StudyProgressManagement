@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR;
 
-namespace SignalRProgressBarSimpleExample.Hubs
+namespace StudyProgressManagement.Hubs
 {
     public class ProgressHub : Hub
     {

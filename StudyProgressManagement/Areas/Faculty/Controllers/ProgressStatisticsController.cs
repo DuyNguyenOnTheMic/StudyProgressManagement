@@ -1,5 +1,5 @@
-﻿using SignalRProgressBarSimpleExample.Util;
-using StudyProgressManagement.Models;
+﻿using StudyProgressManagement.Models;
+using StudyProgressManagement.Util;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -73,7 +73,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 statisticsList.Add(Tuple.Create(knowledge_id.value, knowledge_name[i], passStudents, failStudents, credits[i]));
 
                 // Send progress to progress bar
-                Functions.SendProgress("Đang lấy dữ liệu...", knowledge_id.index, knowledge_ids.Count());
+                Functions.SendProgress("Đang lấy dữ liệu...", i, knowledge_ids.Count());
             }
 
             return Json(statisticsList, JsonRequestBehavior.AllowGet);

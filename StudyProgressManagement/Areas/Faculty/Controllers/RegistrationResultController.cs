@@ -89,7 +89,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     lecturer_name = s.lecturer.name,
                     term_id = s.term_id
 
-                }).OrderBy(s => s.term_id).ToList(), JsonRequestBehavior.AllowGet);
+                }).ToList(), JsonRequestBehavior.AllowGet);
             }
             return Json(new { error = true }, JsonRequestBehavior.AllowGet);
         }
@@ -387,7 +387,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int studentCourseId, string termId)
+        public ActionResult Delete(int studentCourseId)
         {
             try
             {

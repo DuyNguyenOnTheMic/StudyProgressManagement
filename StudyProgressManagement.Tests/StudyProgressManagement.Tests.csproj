@@ -90,6 +90,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Admin\Controllers\UserControllerTests.cs" />
     <Compile Include="Areas\Faculty\Controllers\MajorControllerTests.cs" />
     <Compile Include="Areas\Faculty\Controllers\ProgressStatisticsControllerTests.cs" />
     <Compile Include="Areas\Faculty\Controllers\RegistrationResultControllerTests.cs" />

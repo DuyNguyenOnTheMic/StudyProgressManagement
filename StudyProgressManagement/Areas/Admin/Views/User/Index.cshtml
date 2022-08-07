@@ -56,6 +56,7 @@
 
     <script type="text/javascript">
 
+        var userEmail = @User.Identity.Name;
         var popup, dataTable;
 
         $(document).ready(function () {
@@ -82,7 +83,14 @@
                         { 'data': 'role' },
                         {
                             'data': 'id', 'render': function (data, type, row) {
-                                return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("Edit","User")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='deleteRow danger p-0' style='margin-left:5px' data-original-title='' title='' onclick=Delete('" + data + "','" + row.email + "')><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
+                                if (row.email != userEmail) {
+                                    // Reder edit and delete function
+                                    return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("Edit","User")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='deleteRow danger p-0' style='margin-left:5px' data-original-title='' title='' onclick=Delete('" + data + "','" + row.email + "')><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
+                                }
+                                else {
+                                    // Prevent user from edit her/himself
+                                    return null;
+                                }
                             },
                             orderable: false,
                             searchable: false,
@@ -123,7 +131,7 @@
                         resizable: true,
                         title: 'Chỉnh sửa role',
                         height: 360,
-                        width: 700,
+                        width: 500,
                         open: function () {
                             // Prevent user from add edit delete while dialog is populated
                             $('.editRow').each(function () {

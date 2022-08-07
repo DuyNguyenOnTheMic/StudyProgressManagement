@@ -12,7 +12,7 @@ namespace StudyProgressManagement.Areas.Student.Middleware
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             dynamic ViewBag = filterContext.Controller.ViewBag;
-            ViewBag.Test = "test";
+
             // Get studentId from email
             string studentEmail = HttpContext.Current.User.Identity.Name;
             int pFrom = studentEmail.IndexOf(".") + 1;

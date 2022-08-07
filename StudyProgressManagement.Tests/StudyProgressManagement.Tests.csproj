@@ -98,6 +98,7 @@
     <Compile Include="Areas\Faculty\Controllers\StudyProgramControllerTests.cs" />
     <Compile Include="Areas\Faculty\Controllers\StudyResultControllerTests.cs" />
     <Compile Include="Areas\Student\Controllers\LearningProgressControllerTests.cs" />
+    <Compile Include="Areas\Student\Controllers\StatisticsControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>

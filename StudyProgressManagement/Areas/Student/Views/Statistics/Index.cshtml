@@ -103,14 +103,9 @@ else
                     };
 
                     // Get chart labels and data
-                    var labels = response.map(function (e) {
-                        if (e.group_3 != null) {
-                            return e.group_3;
-                        }
-                        else {
-                            return e.group_2;
-                        }
-                    });
+                    var labels = response.map((function (e) {
+                        return null != e.group_3 ? e.group_3 : e.group_2
+                    }));
                     var labels_adjusted = labels.map(label => label.split(/[./\-_]/));
                     var data_original = response.map(function (e) {
                         var credits_sum = e.compulsory_credits + e.optional_credits;

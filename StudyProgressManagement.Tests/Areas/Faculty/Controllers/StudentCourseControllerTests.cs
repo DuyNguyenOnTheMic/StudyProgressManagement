@@ -32,7 +32,28 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         }
 
         [TestMethod()]
-        public void Get_Student_Course_Json_Data_Test()
+        public void Get_Student_Course_Json_Data_Not_Null_Test()
+        {
+            // Arrange.
+            var controller = new StudentCourseController();
+
+            // Act.
+            var actionResult = controller.GetData();
+
+            // Assert.
+            Assert.IsNotNull(actionResult, "No ActionResult returned from action method.");
+            dynamic jsonCollection = actionResult.Data;
+            foreach (dynamic json in jsonCollection)
+            {
+                Assert.IsNotNull(json.id);
+                Assert.IsNotNull(json.course);
+                Assert.IsNotNull(json.major_id);
+                Assert.IsNotNull(json.major_name);
+            }
+        }
+
+        [TestMethod()]
+        public void Get_Student_Course_Json_Data_Correctly_Test()
         {
             // Arrange.
             var controller = new StudentCourseController();

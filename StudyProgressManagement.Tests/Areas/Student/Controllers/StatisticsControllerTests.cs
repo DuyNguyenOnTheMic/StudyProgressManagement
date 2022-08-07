@@ -1,11 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StudyProgressManagement.Areas.Student.Controllers;
 using StudyProgressManagement.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace StudyProgressManagement.Areas.Student.Controllers.Tests
@@ -43,7 +38,6 @@ namespace StudyProgressManagement.Areas.Student.Controllers.Tests
             foreach (dynamic json in jsonCollection)
             {
                 Assert.IsNotNull(json.id);
-                Assert.IsNotNull(json.knowledge_type_id);
                 Assert.IsNotNull(json.sum);
             }
         }
@@ -66,8 +60,6 @@ namespace StudyProgressManagement.Areas.Student.Controllers.Tests
             {
                 Assert.IsNotNull(json.id,
                     "JSON record does not contain \"id\" required property.");
-                Assert.IsNotNull(json.knowledge_type_id,
-                    "JSON record does not contain \"knowledge_type_id\" required property.");
                 Assert.IsNotNull(json.sum,
                     "JSON record does not contain \"sum\" required property.");
             }
@@ -131,8 +123,6 @@ namespace StudyProgressManagement.Areas.Student.Controllers.Tests
                 Assert.IsNotNull(json);
                 Assert.IsNotNull(json.id,
                     "JSON record does not contain \"id\" required property.");
-                Assert.IsNotNull(json.knowledge_type_id,
-                    "JSON record does not contain \"knowledge_type_id\" required property.");
                 Assert.IsNotNull(json.sum,
                     "JSON record does not contain \"sum\" required property.");
             }
@@ -148,7 +138,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers.Tests
             // Act
             var query_student = db.students.FirstOrDefault();
             var actionResult = controller.GetStatistics(query_student.id, query_student.student_course_id);
-            var query_knowledge = db.knowledge_type.Where(k => k.student_course_id == query_student.student_course_id).GroupBy(k => k.knowledge_type_alias);
+            var query_knowledge = db.knowledge_type.Where(k => k.student_course_id == query_student.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert

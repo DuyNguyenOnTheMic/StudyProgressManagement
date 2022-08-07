@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StudyProgressManagement.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -22,7 +23,27 @@ namespace StudyProgressManagement.Areas.Admin.Controllers.Tests
         }
 
         [TestMethod()]
-        public void Get_User_Json_Data_Test()
+        public void Get_User_Json_Data_Not_Null_Test()
+        {
+            // Arrange.
+            var controller = new UserController();
+
+            // Act.
+            var actionResult = controller.GetData();
+
+            // Assert.
+            Assert.IsNotNull(actionResult, "No ActionResult returned from action method.");
+            dynamic jsonCollection = actionResult.Data;
+            foreach (dynamic json in jsonCollection)
+            {
+                Assert.IsNotNull(json.id);
+                Assert.IsNotNull(json.email);
+                Assert.IsNotNull(json.role);
+            }
+        }
+
+        [TestMethod()]
+        public void Get_User_Json_Data_Correctly_Test()
         {
             // Arrange.
             var controller = new UserController();
@@ -118,6 +139,23 @@ namespace StudyProgressManagement.Areas.Admin.Controllers.Tests
             dynamic jsonCollection = actionResult.Data;
 
             Assert.AreEqual(model.Count, jsonCollection.Count);
+        }
+
+        [TestMethod()]
+        public void Edit_View_Test()
+        {
+            // Arrange
+            var controller = new UserController();
+            var db = new SEP25Team03Entities();
+
+            // Act
+            var query_user = db.AspNetUsers.FirstOrDefault();
+            ViewResult result = controller.Edit(query_user.Id) as ViewResult;
+            var userRoles = new SelectList(db.AspNetRoles);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(userRoles.Count(), ((IEnumerable<dynamic>)result.ViewBag.role_id).Count());
         }
     }
 }

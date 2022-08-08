@@ -62,7 +62,7 @@
 
         var popup, dataTable;
 
-        $(document).ready(function () {           
+        $(document).ready(function () {
 
             // Populate Student Course datatable
             dataTable = $('#tblStudentCourse').DataTable(
@@ -97,9 +97,8 @@
                         },
                         { 'data': 'major_name' },
                         { 'data': 'year_study' },
-                         {
-                            'data': 'id', 'render': function (data)
-                            {
+                        {
+                            'data': 'id', 'render': function (data) {
                                 return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("AddOrEdit","StudentCourse")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='deleteRow danger p-0' style='margin-left:5px' data-original-title='' title='' onclick=Delete(" + data + ")><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
                             },
                             orderable: false,
@@ -111,13 +110,7 @@
 
                     language: {
                         'url': "/app-assets/language/vi.json"
-                    },
-
-                    LengthChange: true,
-                    Filter: true,
-                    Sort: true,
-                    Paginate: true
-
+                    }
                 });
 
             // Create Index column datatable
@@ -213,12 +206,45 @@
                         }
                         else
                         {
-                            // Show message when delete failed
+                            // Show message for user to confirm delete all data
                             swal({
                                 title: 'Thông báo',
-                                text: 'Không thể xoá do khoá sinh viên này đã có CTĐT!',
-                                type: 'error',
-                            })
+                                text: 'Khoá này đã có dữ liệu được import vào, bạn có muốn xoá hết tất cả dữ liệu liên quan đến khoá này?',
+                                type: 'warning',
+                                showCancelButton: true,
+                                cancelButtonText: 'Huỷ',
+                                confirmButtonText: 'Xác nhận xoá',
+
+                            }).then(function () {
+
+                                // Show waiting message while delete
+                                swal({
+                                    title: 'Đang xoá dữ liệu...',
+                                    allowEscapeKey: false,
+                                    allowOutsideClick: false,
+                                    onOpen: () => {
+                                        swal.showLoading();
+                                    }
+                                })
+
+                                // Ajax call to delete all study results and registration results of student course
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '@Url.Action("DeleteAll", "StudentCourse")/' + id,
+                                    success: function (data) {
+                                        if (data.success) {
+                                            // Show succeeded message
+                                            swal("Thông báo", "Xoá hết khoá thành công!", "success").done();
+                                        }
+                                    }
+                                });
+
+
+                            }), function (dismiss) {
+                                if (dismiss === 'cancel' || dismiss === 'close') {
+                                    // Ignore
+                                }
+                            }
                         }
                     }
 

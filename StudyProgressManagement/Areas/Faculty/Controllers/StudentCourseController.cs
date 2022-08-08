@@ -5,7 +5,6 @@ using System.Web.Mvc;
 
 namespace StudyProgressManagement.Areas.Faculty.Controllers
 {
-    [Authorize(Roles = "Faculty")]
     public class StudentCourseController : Controller
     {
         SEP25Team03Entities db = new SEP25Team03Entities();
@@ -84,6 +83,25 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 return Json(new { error = true }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { success = true, message = "Xoá thành công!" }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteAll(int id)
+        {
+            try
+            {
+                // Delete all records about student course
+                db.study_results.RemoveRange(db.study_results.Where(c => c.student_course_id == id));
+                db.registration_results.RemoveRange(db.registration_results.Where(c => c.student_course_id == id));
+                db.curricula.RemoveRange(db.curricula.Where(c => c.student_course_id == id));
+                db.knowledge_type.RemoveRange(db.knowledge_type.Where(c => c.student_course_id == id));
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return Json(new { error = true }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }

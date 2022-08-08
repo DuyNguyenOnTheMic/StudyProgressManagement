@@ -231,36 +231,33 @@
                             dataType: "json",
                         },
 
+                        destroy: true,
+                        lengthMenu: [[25, 50, -1], [25, 50, "Tất cả"]],
                         order: [[1, 'asc']],
-                        columns: [
+                        columnDefs: [
                             {
-                                'data': null,
                                 searchable: false,
                                 orderable: false,
                                 className: 'text-center',
-                                width: '20px'
-                            },
+                                width: '20px',
+                                targets: [0, 3]
+                            }
+                        ],
+
+                        columns: [
+                            { 'data': null },
                             { 'data': 'id' },
                             { 'data': 'full_name' },
                             {
-                                'data': 'id', 'render': function (data)
-                                {
-                                    return "<a class='viewRegistrationResult success p - 0' data-original-title='' title='' onclick=PopulateStudyResult('"+ data + "')><i class='fa fa-info-circle font-medium-3 mr-2'></i></a>";
-                                },
-                                orderable: false,
-                                searchable: false,
-                                width: '20px',
-                                className: 'text-center'
+                                'data': 'id', 'render': function (data) {
+                                    return "<a class='viewRegistrationResult success p - 0' data-original-title='' title='' onclick=PopulateRegistrationResult('" + data + "')><i class='fa fa-info-circle font-medium-3 mr-2'></i></a>";
+                                }
                             }
                         ],
 
                         language: {
                             'url': "/app-assets/language/vi.json"
-                        },
-
-                        lengthMenu: [[25, 50, -1], [25, 50, "Tất cả"]],
-                        destroy: true,
-
+                        }
                     });
 
                 // Create Index column datatable
@@ -272,7 +269,7 @@
             }
         });
 
-        function PopulateStudyResult(studentId) {
+        function PopulateRegistrationResult(studentId) {
 
             // Prevent user from submit multiple times
             $('.viewRegistrationResult').each(function () {

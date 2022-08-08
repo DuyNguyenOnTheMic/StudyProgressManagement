@@ -126,7 +126,6 @@
         function StartProgressBar() {
             // Reference the auto-generated proxy for the hub.
             var progress = $.connection.progressHub;
-            console.log(progress);
 
             // Create a function that the hub can call back to display messages.
             progress.client.AddProgress = function (message, percentage) {
@@ -141,10 +140,7 @@
                 }
             };
 
-            $.connection.hub.start().done(function () {
-                var connectionId = $.connection.hub.id;
-                console.log(connectionId);
-            });
+            $.connection.hub.start();
         }
 
         $(document).ready(function () {
@@ -262,46 +258,52 @@
                                 var dataTable;
                                 var fileName = $('#lblCantImport').text();
 
-                                // Populate datatable showing the error curriculums
-                                dataTable = $('#tblErrorRows').DataTable({
-                                    data: data,
-                                    paging: false,
-                                    info: false,
-                                    destroy: true,
-                                    dom: 'Blfrtip',
-                                    buttons: [
-                                        {
-                                            extend: 'copy',
-                                            title: fileName
-                                        },
-                                        {
-                                            extend: 'excel',
-                                            title: fileName
-                                        },
-                                        {
-                                            extend: 'print',
-                                            title: fileName
+                                if (!$.fn.DataTable.isDataTable('#tblErrorRows')) {
+
+                                    // Populate datatable showing the error curriculums
+                                    dataTable = $('#tblErrorRows').DataTable({
+                                        lengthMenu: [[25, 50, -1], [25, 50, "Tất cả"]],
+                                        dom: 'Blfrtip',
+                                        buttons: [
+                                            {
+                                                extend: 'copy',
+                                                title: fileName
+                                            },
+                                            {
+                                                extend: 'excel',
+                                                title: fileName
+                                            },
+                                            {
+                                                extend: 'print',
+                                                title: fileName
+                                            }
+                                        ],
+                                        columnDefs: [{
+                                            defaultContent: '',
+                                            searchable: false,
+                                            orderable: false,
+                                            className: 'text-center',
+                                            width: '20px',
+                                            targets: 0,
+                                        }],
+                                        order: [[1, 'asc']],
+                                        columns: [
+                                            { 'data': '' },
+                                            { 'data': 'curriculumId' },
+                                            { 'data': 'curriculumName' },
+                                            { 'data': 'credits' },
+                                        ],
+                                        language: {
+                                            'url': "/app-assets/language/vi.json"
                                         }
-                                    ],
-                                    columnDefs: [{
-                                        defaultContent: '',
-                                        searchable: false,
-                                        orderable: false,
-                                        className: 'text-center',
-                                        width: '20px',
-                                        targets: 0,
-                                    }],
-                                    order: [[1, 'asc']],
-                                    columns: [
-                                        { 'data': '' },
-                                        { 'data': 'curriculumId' },
-                                        { 'data': 'curriculumName' },
-                                        { 'data': 'credits' },
-                                    ],
-                                    language: {
-                                        'url': "/app-assets/language/vi.json"
-                                    },
-                                });
+                                    });
+                                }
+
+                                // Update current datatable
+                                dataTable = $('#tblErrorRows').DataTable();
+                                dataTable.clear();
+                                dataTable.rows.add(data);
+                                dataTable.draw();
 
                                 // Create Index column datatable
                                 dataTable.on('order.dt search.dt', function () {

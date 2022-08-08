@@ -234,12 +234,13 @@
                                     url: '@Url.Action("DeleteAll", "StudentCourse")/' + id,
                                     success: function (data) {
                                         if (data.success) {
+                                            dataTable.ajax.reload();
+
                                             // Show succeeded message
-                                            swal("Thông báo", "Xoá hết khoá thành công!", "success").done();
+                                            swal("Thông báo", "Xoá thành công khoá sinh viên!", "success").done();
                                         }
                                     }
                                 });
-
 
                             }), function (dismiss) {
                                 if (dismiss === 'cancel' || dismiss === 'close') {
@@ -248,7 +249,6 @@
                             }
                         }
                     }
-
                 });
 
             }, function (dismiss) {

@@ -95,6 +95,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 db.registration_results.RemoveRange(db.registration_results.Where(c => c.student_course_id == id));
                 db.curricula.RemoveRange(db.curricula.Where(c => c.student_course_id == id));
                 db.knowledge_type.RemoveRange(db.knowledge_type.Where(c => c.student_course_id == id));
+                db.students.RemoveRange(db.students.Where(c => c.student_course_id == id));
+                db.class_student.RemoveRange(db.class_student.Where(c => c.student_course_id == id));
+
+                // Remove student course
+                student_course student_course = db.student_course.Where(x => x.id == id).FirstOrDefault();
+                db.student_course.Remove(student_course);
                 db.SaveChanges();
             }
             catch (Exception)

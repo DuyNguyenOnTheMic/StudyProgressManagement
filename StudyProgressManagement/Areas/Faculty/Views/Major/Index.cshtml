@@ -71,38 +71,33 @@
                         dataType: "json",
                     },
 
-                    columns: [
+                    order: [[1, 'asc']],
+                    columnDefs: [
                         {
-                            'data': null,
                             searchable: false,
                             orderable: false,
                             className: 'text-center',
-                            width: '20px'
+                            targets: [0, 3]
                         },
+                        { width: '20px', targets: [0] },
+                        { width: '100px', targets: [3] }
+                    ],
+
+                    columns: [
+                        { 'data': null },
                         { 'data': 'id' },
                         { 'data': 'name' },
                         {
                             'data': 'id', 'render': function (data)
                             {
                                 return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("Edit","Major")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='deleteRow danger p-0' style='margin-left:5px' data-original-title='' title='' onclick=Delete('" + data + "')><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
-                            },
-                            orderable: false,
-                            searchable: false,
-                            width: '100px',
-                            className: 'text-center'
+                            }
                         }
                     ],
 
                     language: {
                         'url': "/app-assets/language/vi.json"
-                    },
-
-                    order: [[1, 'asc']],
-                    LengthChange: true,
-                    Filter: true,
-                    Sort: true,
-                    Paginate: true
-
+                    }
                 });
 
             // Create Index column datatable

@@ -56,7 +56,7 @@
 
     <script type="text/javascript">
 
-        var userEmail = @User.Identity.Name;
+        var userEmail = "duy.197pm21905@vanlanguni.vn";
         var popup, dataTable;
 
         $(document).ready(function () {
@@ -71,14 +71,15 @@
                         dataType: "json",
                     },
                     order: [[1, 'asc']],
+                    columnDefs: [
+                        { searchable: false, targets: [0, 3] },
+                        { orderable: false, targets: [0, 3] },
+                        { className: 'text-center', targets: [0, 3] },
+                        { width: '20px', targets: [0] },
+                        { width: '100px', targets: [3] },
+                    ],
                     columns: [
-                        {
-                            'data': null,
-                            searchable: false,
-                            orderable: false,
-                            className: 'text-center',
-                            width: '20px'
-                        },
+                        { 'data': null },
                         { 'data': 'email' },
                         { 'data': 'role' },
                         {
@@ -91,11 +92,7 @@
                                     // Prevent user from edit her/himself
                                     return null;
                                 }
-                            },
-                            orderable: false,
-                            searchable: false,
-                            width: '100px',
-                            className: 'text-center'
+                            }
                         }
                     ],
                     language: {
@@ -122,8 +119,7 @@
                         autoOpen: true,
                         resizable: true,
                         title: 'Chỉnh sửa role',
-                        height: 360,
-                        width: 500,
+                        width: 550,
                         open: function () {
                             // Prevent user from add edit delete while dialog is populated
                             $('.editRow').each(function () {

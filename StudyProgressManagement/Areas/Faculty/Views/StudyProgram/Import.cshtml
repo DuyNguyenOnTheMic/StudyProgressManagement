@@ -91,7 +91,6 @@
         function StartProgressBar() {
             // Reference the auto-generated proxy for the hub.
             var progress = $.connection.progressHub;
-            console.log(progress);
 
             // Create a function that the hub can call back to display messages.
             progress.client.AddProgress = function (message, percentage) {
@@ -106,10 +105,7 @@
                 }
             };
 
-            $.connection.hub.start().done(function () {
-                var connectionId = $.connection.hub.id;
-                console.log(connectionId);
-            });
+            $.connection.hub.start();
         }
 
         $(document).ready(function () {

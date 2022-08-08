@@ -74,38 +74,39 @@
                         dataType: 'json',
                     },
 
-                    // Row grouping
-                    columnDefs: [{ visible: false, targets: 3 }],
+                    columnDefs: [
+                        {
+                            visible: false,
+                            searchable: true,
+                            targets: [2]
+                        },
+                        {
+                            searchable: false,
+                            orderable: false,
+                            className: 'text-center',
+                            targets: [0, 5]
+                        },
+                        { width: '20px', targets: [0] },
+                        { width: '100px', targets: [5] }
+                    ],
                     order: [[3, 'asc']],
+
+                    // Row grouping
                     rowGroup: {
                         dataSrc: 'major_name'
                     },
 
                     columns: [
-                        {
-                            'data': null,
-                            searchable: false,
-                            orderable: false,
-                            className: 'text-center',
-                            width: '20px'
-                        },
+                        { 'data': null },
                         { 'data': 'course' },
-                        {
-                            'data': 'major_id',
-                            visible: false,
-                            searchable: true,
-                        },
+                        { 'data': 'major_id' },
                         { 'data': 'major_name' },
                         { 'data': 'year_study' },
                         {
                             'data': 'id', 'render': function (data) {
                                 return "<a class='editRow success p - 0' data-original-title='' title='' onclick=PopupForm('@Url.Action("AddOrEdit","StudentCourse")/" + data + "')><i class='fa fa-pencil font-medium-3 mr-2'></i></a> <a class='deleteRow danger p-0' style='margin-left:5px' data-original-title='' title='' onclick=Delete(" + data + ")><i class='fa fa-trash-o font-medium-3 mr-2'></i></a>";
-                            },
-                            orderable: false,
-                            searchable: false,
-                            width: '100px',
-                            className: 'text-center'
-                        },
+                            }
+                        }
                     ],
 
                     language: {

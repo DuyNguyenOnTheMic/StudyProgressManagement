@@ -1017,7 +1017,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             string test = "Anh Văn 4";
 
             // Act
-
             var result = StudyResultController.SetNullOnEmpty(test);
 
             // Assert
@@ -1031,7 +1030,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             string test = "";
 
             // Act
-
             var result = StudyResultController.SetNullOnEmpty(test);
 
             // Assert

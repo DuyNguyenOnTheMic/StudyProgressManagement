@@ -287,5 +287,24 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             // Assert
             Assert.AreEqual(true, jsonCollection.success);
         }
+
+        [TestMethod()]
+        public void Delete_All_Data_About_Student_Course_Test()
+        {
+            // Arrange
+            var controller = new StudentCourseController();
+            var db = new SEP25Team03Entities();
+            var student_Course = new student_course() { course = "Khoá 1", year_study = "2012 - 2016", major_id = "7480104" };
+
+            // Act
+            var query_studentCourse = db.student_course.Where(s => s.major_id == student_Course.major_id).FirstOrDefault();
+            controller.AddOrEdit(student_Course);
+
+            var result = controller.DeleteAll(query_studentCourse.id) as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert
+            Assert.AreEqual(true, jsonCollection.success);
+        }
     }
 }

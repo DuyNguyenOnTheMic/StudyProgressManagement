@@ -59,7 +59,7 @@
     <script src="~/app-assets/vendors/js/jquery-ui.min.js"></script>
 
     <script type="text/javascript">
-
+    @Html.JsMinify(@<text>
         var popup, dataTable;
 
         $(document).ready(function () {
@@ -261,5 +261,6 @@
                 }
             })
         }
+    </text>)
     </script>
 }

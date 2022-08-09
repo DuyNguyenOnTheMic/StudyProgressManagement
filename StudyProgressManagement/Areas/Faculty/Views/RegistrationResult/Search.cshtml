@@ -132,7 +132,7 @@
     <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
 
     <script type="text/javascript">
-
+    @Html.JsMinify(@<text>
         $(document).ready(function () {
             // Load cascading dropdown between majors and student courses
             $("#comboboxMajor").change(function () {
@@ -374,5 +374,6 @@
                     return;
                 };
             }
+    </text>)
     </script>
 }

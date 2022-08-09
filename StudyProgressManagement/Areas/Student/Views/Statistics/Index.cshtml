@@ -58,7 +58,7 @@ else
         <script src="~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js"></script>
 
         <script type="text/javascript">
-
+        @Html.JsMinify(@<text>
             var studentId = '@ViewBag.StudentId';
             var studentCourseId = '@ViewBag.StudentCourseId';
 
@@ -157,6 +157,7 @@ else
                     var chart = new Chart(ctx, config);
                 }
             });
+        </text>)
         </script>
     }
 }

@@ -66,7 +66,7 @@
     <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
 
     <script type="text/javascript">
-
+    @Html.JsMinify(@<text>
         $("#btnSubmit").click(function (event) {
 
             event.preventDefault();
@@ -180,5 +180,6 @@
                 };
             }
         });
+    </text>)
     </script>
 }

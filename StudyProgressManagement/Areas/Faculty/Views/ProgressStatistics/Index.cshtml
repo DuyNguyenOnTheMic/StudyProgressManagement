@@ -103,7 +103,7 @@
     <script src="~/signalr/hubs"></script>
 
     <script type="text/javascript">
-
+    @Html.JsMinify(@<text>
         function StartProgressBar() {
             // Reference the auto-generated proxy for the hub.
             var progress = $.connection.progressHub;
@@ -476,5 +476,6 @@
                 });
             });
         };
+    </text>)
     </script>
 }

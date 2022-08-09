@@ -177,7 +177,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var result = controller.AddOrEdit(1) as ViewResult;
+            var query_studentCourse = db.student_course.FirstOrDefault();
+            var result = controller.AddOrEdit(query_studentCourse.id) as ViewResult;
             var major = new SelectList(db.majors);
 
             // Assert

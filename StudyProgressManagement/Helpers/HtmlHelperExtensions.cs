@@ -5,11 +5,10 @@ namespace System.Web.Mvc
     public static class HtmlHelperExtensions
     {
         public static MvcHtmlString JsMinify(
-            this HtmlHelper helper,
-            Func<object, object> markup)
+            this HtmlHelper helper, Func<object, object> markup)
         {
             string notMinifiedJs =
-                (markup.DynamicInvoke(helper.ViewContext) ?? "").ToString();
+             markup.Invoke(helper.ViewContext)?.ToString() ?? "";
 
             var minifier = new Minifier();
             var minifiedJs = minifier.MinifyJavaScript(notMinifiedJs, new CodeSettings
@@ -19,6 +18,5 @@ namespace System.Web.Mvc
             });
             return new MvcHtmlString(minifiedJs);
         }
-
     }
 }

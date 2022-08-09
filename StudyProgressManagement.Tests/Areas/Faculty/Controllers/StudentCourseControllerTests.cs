@@ -289,7 +289,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         }
 
         [TestMethod()]
-        public void Delete_All_Data_About_Student_Course_Test()
+        public void Delete_All_Data_About_Student_Course_Success_Test()
         {
             // Arrange
             var controller = new StudentCourseController();
@@ -305,6 +305,20 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
 
             // Assert
             Assert.AreEqual(true, jsonCollection.success);
+        }
+
+        [TestMethod()]
+        public void Delete_All_Data_Shoud_Fail_When_Student_Course_Not_Available_Test()
+        {
+            // Arrange
+            var controller = new StudentCourseController();
+
+            // Act
+            var result = controller.DeleteAll(-1) as JsonResult;
+            dynamic jsonCollection = result.Data;
+
+            // Assert
+            Assert.AreEqual(true, jsonCollection.error);
         }
     }
 }

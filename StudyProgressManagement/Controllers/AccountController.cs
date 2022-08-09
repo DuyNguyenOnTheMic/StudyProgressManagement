@@ -3,7 +3,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.VanLang;
 using StudyProgressManagement.Models;
-using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -81,14 +80,14 @@ namespace StudyProgressManagement.Controllers
                 return RedirectToAction("Login");
             }
 
-            // check email domain of VanLang
+            /*// check email domain of VanLang
             MailAddress address = new MailAddress(loginInfo.Email);
             string host = address.Host;
             if (host != "vanlanguni.vn" && host != "vlu.edu.vn")
             {
                 TempData["mailDomainError"] = "Oops, dường như email bạn dùng để đăng nhập không nằm trong hệ thống email Văn Lang, bạn hãy thử lại nhé!";
                 return RedirectToAction("Login");
-            }
+            }*/
 
             // Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync2(loginInfo, UserManager);

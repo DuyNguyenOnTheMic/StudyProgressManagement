@@ -1,6 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
+[assembly: OwinStartupAttribute(typeof(StudyProgressManagement.Startup))]
 namespace StudyProgressManagement
 {
     public partial class Startup

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -126,14 +127,31 @@ namespace StudyProgressManagement.Controllers
                 UserName = User.Identity.Name,
             };
 
+            var currentUser = await UserManager.FindByEmailAsync(User.Identity.Name);
+
+            ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+            identity.AddClaim(new Claim(ClaimTypes.Role, "Faculty"));
+
+            IOwinContext context = HttpContext.GetOwinContext();
+
+            context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+            context.Authentication.SignIn(identity);
+
+
             var result = await UserManager.CreateAsync(user);
 
             if (result.Succeeded)
             {
-                await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "Home");
+            var user2role = await UserManager.GetRolesAsync(currentUser.Id);
+            if (User.IsInRole("Faculty"))
+            {
+                await SignInManager.SignInAsync(currentUser, isPersistent: false, rememberBrowser: false);
+                return RedirectToAction("Index", "Home");
+            }
+            return View("Login");
 
         }
 

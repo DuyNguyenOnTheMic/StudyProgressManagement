@@ -27,6 +27,8 @@ namespace StudyProgressManagement
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
 
+            app.MapSignalR();
+
             app.UseOpenIdConnectAuthentication(
                 new OpenIdConnectAuthenticationOptions
                 {

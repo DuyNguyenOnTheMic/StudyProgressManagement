@@ -55,7 +55,7 @@
 
     <script type="text/javascript">
     @Html.JsMinify(@<text>
-        var userEmail = @User.Identity.Name;
+        var userEmail = '@User.Identity.Name';
         var popup, dataTable;
 
         $(document).ready(function () {

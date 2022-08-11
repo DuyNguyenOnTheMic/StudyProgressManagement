@@ -127,32 +127,39 @@ namespace StudyProgressManagement.Controllers
                 UserName = User.Identity.Name,
             };
 
-            var currentUser = await UserManager.FindByEmailAsync(User.Identity.Name);
+            var currentUser = await UserManager.FindByEmailAsync(user.Email);
+            if (currentUser.Roles.Count != 0)
+            {
+                ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
 
-            ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
-            identity.AddClaim(new Claim(ClaimTypes.Role, "Faculty"));
+                var currentRole = await UserManager.GetRolesAsync(currentUser.Id);
+                if (currentRole[0] == "Faculty")
+                {
+                    // Add Faculty role claim to user
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "Faculty"));
+                }
+                else
+                {
+                    // Add Admin role claim to user
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
+                }
+                IOwinContext context = HttpContext.GetOwinContext();
 
-            IOwinContext context = HttpContext.GetOwinContext();
-
-            context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-            context.Authentication.SignIn(identity);
+                context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+                context.Authentication.SignIn(identity);
+            }
 
 
             var result = await UserManager.CreateAsync(user);
 
             if (result.Succeeded)
             {
+                // Sign in after create Succeeded
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                return RedirectToAction("Index", "Home");
             }
-            var user2role = await UserManager.GetRolesAsync(currentUser.Id);
-            if (User.IsInRole("Faculty"))
-            {
-                await SignInManager.SignInAsync(currentUser, isPersistent: false, rememberBrowser: false);
-                return RedirectToAction("Index", "Home");
-            }
-            return View("Login");
-
+            // Sign in the user if user already had account
+            await SignInManager.SignInAsync(currentUser, isPersistent: false, rememberBrowser: false);
+            return RedirectToAction("Index", "Home");
         }
 
         public void SignOut()

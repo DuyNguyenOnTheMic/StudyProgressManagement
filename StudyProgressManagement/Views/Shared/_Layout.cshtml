@@ -133,9 +133,8 @@
                                     <span class="avatar avatar-online"><img id="navbar-avatar" src="~/assets/images/img_user_avatar.png" alt="avatar" style="-webkit-box-shadow: 5px 5px 5px #ccc" /></span>
                                     <p class="d-none">User Settings</p>
                                 </a>
-                                @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
+                                @using (Html.BeginForm("SignOut", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
                                 {
-                                    @Html.AntiForgeryToken()
                                     <div aria-labelledby="dropdownBasic3" class="dropdown-menu dropdown-menu-right">
                                         <div class="arrow_box_right">
                                             <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item"><i class="ft-power mr-2"></i><span>Đăng xuất</span></a>

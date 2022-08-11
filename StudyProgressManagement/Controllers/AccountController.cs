@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OpenIdConnect;
 using Microsoft.Owin.Security.VanLang;
 using StudyProgressManagement.Models;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -106,6 +109,52 @@ namespace StudyProgressManagement.Controllers
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
+        }
+
+        public async Task<ActionResult> SignIn()
+        {
+            // Send an OpenID Connect sign-in request.
+            if (!Request.IsAuthenticated)
+            {
+                HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = "/" },
+                    OpenIdConnectAuthenticationDefaults.AuthenticationType);
+            }
+
+            var user = new ApplicationUser
+            {
+                Email = User.Identity.Name,
+                UserName = User.Identity.Name,
+            };
+
+            var result = await UserManager.CreateAsync(user);
+
+            if (result.Succeeded)
+            {
+                await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        public void SignOut()
+        {
+            string callbackUrl = Url.Action("SignOutCallback", "Account", routeValues: null, protocol: Request.Url.Scheme);
+
+            HttpContext.GetOwinContext().Authentication.SignOut(
+                new AuthenticationProperties { RedirectUri = callbackUrl },
+                OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+        }
+
+        public ActionResult SignOutCallback()
+        {
+            if (Request.IsAuthenticated)
+            {
+                // Redirect to home page if the user is authenticated.
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View("Login");
         }
 
         //

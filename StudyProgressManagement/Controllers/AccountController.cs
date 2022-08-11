@@ -162,24 +162,13 @@ namespace StudyProgressManagement.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public void SignOut()
+        public ActionResult SignOut()
         {
             HttpContext.GetOwinContext()
                         .Authentication
                         .SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            Response.Redirect("/");
-        }
-
-        public ActionResult SignOutCallback()
-        {
-            if (Request.IsAuthenticated)
-            {
-                // Redirect to home page if the user is authenticated.
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View("Login");
-        }
+            return RedirectToAction("Index", "Home");
+        }       
 
         //
         // POST: /Account/LogOff

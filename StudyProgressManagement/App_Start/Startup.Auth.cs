@@ -14,6 +14,7 @@ namespace StudyProgressManagement
         private static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
         private static string aadInstance = EnsureTrailingSlash(ConfigurationManager.AppSettings["ida:AADInstance"]);
         private static string tenantId = ConfigurationManager.AppSettings["ida:TenantId"];
+        private static string postLogoutRedirectUri = ConfigurationManager.AppSettings["ida:PostLogoutRedirectUri"];
         private static string authority = aadInstance + tenantId + "/v2.0";
 
         public void ConfigureAuth(IAppBuilder app)
@@ -33,6 +34,7 @@ namespace StudyProgressManagement
                 {
                     ClientId = clientId,
                     Authority = authority,
+                    PostLogoutRedirectUri = postLogoutRedirectUri,
 
                     Notifications = new OpenIdConnectAuthenticationNotifications()
                     {

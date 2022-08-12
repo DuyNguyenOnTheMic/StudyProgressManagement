@@ -77,27 +77,18 @@ namespace StudyProgressManagement.Controllers
             };
 
             var currentUser = await UserManager.FindByEmailAsync(user.Email);
-            if (currentUser.Roles.Count != 0)
+            if (currentUser != null && currentUser.Roles.Count != 0)
             {
+                // Add role to user
                 ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
 
                 var currentRole = await UserManager.GetRolesAsync(currentUser.Id);
-                if (currentRole[0] == "Faculty")
-                {
-                    // Add Faculty role claim to user
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "Faculty"));
-                }
-                else
-                {
-                    // Add Admin role claim to user
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
-                }
+                identity.AddClaim(new Claim(ClaimTypes.Role, currentRole[0]));
                 IOwinContext context = HttpContext.GetOwinContext();
 
                 context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
                 context.Authentication.SignIn(identity);
             }
-
 
             var result = await UserManager.CreateAsync(user);
 
@@ -106,8 +97,11 @@ namespace StudyProgressManagement.Controllers
                 // Sign in after create Succeeded
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            // Sign in the user if user already had account
-            await SignInManager.SignInAsync(currentUser, isPersistent: false, rememberBrowser: false);
+            else
+            {
+                // Sign in the user if user already had account
+                await SignInManager.SignInAsync(currentUser, isPersistent: false, rememberBrowser: false);
+            }
             return RedirectToAction("Index", "Home");
         }
 

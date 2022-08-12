@@ -98,7 +98,7 @@ namespace StudyProgressManagement.Controllers
             HttpContext.GetOwinContext()
                         .Authentication
                         .SignOut(CookieAuthenticationDefaults.AuthenticationType);
-            return RedirectToAction("Index", "Home");
+            return Redirect("Login");
         }
 
         protected override void Dispose(bool disposing)

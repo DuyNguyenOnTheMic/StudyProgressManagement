@@ -50,8 +50,6 @@ namespace StudyProgressManagement.Controllers
             }
         }
 
-        //
-        // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -96,6 +94,7 @@ namespace StudyProgressManagement.Controllers
 
         public ActionResult SignOut()
         {
+            /// Send an OpenID Connect sign-out request.
             HttpContext.GetOwinContext()
                         .Authentication
                         .SignOut(CookieAuthenticationDefaults.AuthenticationType);

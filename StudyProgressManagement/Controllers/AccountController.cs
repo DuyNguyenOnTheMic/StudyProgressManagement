@@ -51,9 +51,9 @@ namespace StudyProgressManagement.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
-            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.ReturnUrl = "/";
             return View();
         }
 

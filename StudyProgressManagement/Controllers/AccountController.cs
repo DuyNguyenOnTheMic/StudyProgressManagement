@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.OpenIdConnect;
 using StudyProgressManagement.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -63,45 +61,36 @@ namespace StudyProgressManagement.Controllers
 
         public async Task<ActionResult> SignIn()
         {
-            // Send an OpenID Connect sign-in request.
-            if (!Request.IsAuthenticated)
-            {
-                HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = "/" },
-                    OpenIdConnectAuthenticationDefaults.AuthenticationType);
-            }
-
+            // Get user information
             var user = new ApplicationUser
             {
                 Email = User.Identity.Name,
                 UserName = User.Identity.Name,
             };
 
+            // Check if user exists
             var currentUser = await UserManager.FindByEmailAsync(user.Email);
-            if (currentUser != null && currentUser.Roles.Count != 0)
+            if (currentUser != null)
             {
-                // Add role to user
-                ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
+                if (currentUser.Roles.Count != 0)
+                {
+                    // Add role claim to user
+                    ClaimsIdentity identity = (ClaimsIdentity)User.Identity;
 
-                var currentRole = await UserManager.GetRolesAsync(currentUser.Id);
-                identity.AddClaim(new Claim(ClaimTypes.Role, currentRole[0]));
-                IOwinContext context = HttpContext.GetOwinContext();
+                    var currentRole = await UserManager.GetRolesAsync(currentUser.Id);
+                    identity.AddClaim(new Claim(ClaimTypes.Role, currentRole[0]));
+                    IOwinContext context = HttpContext.GetOwinContext();
 
-                context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                context.Authentication.SignIn(identity);
-            }
-
-            var result = await UserManager.CreateAsync(user);
-
-            if (result.Succeeded)
-            {
-                // Sign in after create Succeeded
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    context.Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+                    context.Authentication.SignIn(identity);
+                }
             }
             else
             {
-                // Sign in the user if user already had account
-                await SignInManager.SignInAsync(currentUser, isPersistent: false, rememberBrowser: false);
+                // Create new user
+                await UserManager.CreateAsync(user);
             }
+
             return RedirectToAction("Index", "Home");
         }
 

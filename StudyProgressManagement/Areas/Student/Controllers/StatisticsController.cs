@@ -36,5 +36,14 @@ namespace StudyProgressManagement.Areas.Student.Controllers
 
             return Json(query_knowledge.ToList(), JsonRequestBehavior.AllowGet);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

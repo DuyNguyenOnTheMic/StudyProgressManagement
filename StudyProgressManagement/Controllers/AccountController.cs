@@ -52,6 +52,8 @@ namespace StudyProgressManagement.Controllers
             }
         }
 
+        //
+        // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login()
         {
@@ -59,7 +61,10 @@ namespace StudyProgressManagement.Controllers
             return View();
         }
 
+        //
+        // POST: /Account/SignIn
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public void SignIn()
         {
             // Send an OpenID Connect sign-in request.
@@ -69,6 +74,8 @@ namespace StudyProgressManagement.Controllers
             }
         }
 
+        //
+        // GET: /Account/SignInCallBack
         public async Task<ActionResult> SignInCallBack()
         {
             // Get user information
@@ -104,6 +111,10 @@ namespace StudyProgressManagement.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //
+        // POST: /Account/SignOut
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SignOut()
         {
             /// Send an OpenID Connect sign-out request.

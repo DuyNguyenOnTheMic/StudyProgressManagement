@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OpenIdConnect;
 using StudyProgressManagement.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -57,7 +59,17 @@ namespace StudyProgressManagement.Controllers
             return View();
         }
 
-        public async Task<ActionResult> SignIn()
+        [AllowAnonymous]
+        public void SignIn()
+        {
+            // Send an OpenID Connect sign-in request.
+            if (!Request.IsAuthenticated)
+            {
+                HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = "/Account/SignInCallBack" }, OpenIdConnectAuthenticationDefaults.AuthenticationType);
+            }
+        }
+
+        public async Task<ActionResult> SignInCallBack()
         {
             // Get user information
             var user = new ApplicationUser

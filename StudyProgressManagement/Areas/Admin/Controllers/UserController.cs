@@ -113,5 +113,20 @@ namespace StudyProgressManagement.Areas.Admin.Controllers
             result = UserManager.Delete(user);
             return Json(new { result.Succeeded, message = "Xoá thành công!" }, JsonRequestBehavior.AllowGet);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_userManager != null)
+                {
+                    _userManager.Dispose();
+                    _userManager = null;
+                }
+                db.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

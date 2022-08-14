@@ -359,7 +359,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             foreach (dynamic json in jsonCollection)
             {
                 Assert.IsNotNull(json.curriculum_id);
-                Assert.IsNotNull(json.curriculum_name);
+                Assert.IsNotNull(json.name);
                 Assert.IsNotNull(json.mark10);
                 Assert.IsNotNull(json.mark10_2);
                 Assert.IsNotNull(json.max_mark_10);
@@ -387,8 +387,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             {
                 Assert.IsNotNull(json.curriculum_id,
                     "JSON record does not contain \"curriculum_id\" required property.");
-                Assert.IsNotNull(json.curriculum_name,
-                    "JSON record does not contain \"curriculum_name\" required property.");
+                Assert.IsNotNull(json.name,
+                    "JSON record does not contain \"name\" required property.");
                 Assert.IsNotNull(json.mark10,
                     "JSON record does not contain \"mark10\" required property.");
                 Assert.IsNotNull(json.mark10_2,
@@ -462,8 +462,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
                 Assert.IsNotNull(json);
                 Assert.IsNotNull(json.curriculum_id,
                     "JSON record does not contain \"curriculum_id\" required property.");
-                Assert.IsNotNull(json.curriculum_name,
-                    "JSON record does not contain \"curriculum_name\" required property.");
+                Assert.IsNotNull(json.name,
+                    "JSON record does not contain \"name\" required property.");
                 Assert.IsNotNull(json.mark10,
                     "JSON record does not contain \"mark10\" required property.");
                 Assert.IsNotNull(json.mark10_2,

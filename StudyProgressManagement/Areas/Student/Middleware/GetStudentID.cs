@@ -7,7 +7,7 @@ namespace StudyProgressManagement.Areas.Student.Middleware
 {
     public class GetStudentID : ActionFilterAttribute
     {
-        private SEP25Team03Entities db = new SEP25Team03Entities();
+        private readonly SEP25Team03Entities db = new SEP25Team03Entities();
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

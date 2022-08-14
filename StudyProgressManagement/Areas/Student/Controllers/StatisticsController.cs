@@ -8,7 +8,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers
     [Authorize]
     public class StatisticsController : Controller
     {
-        SEP25Team03Entities db = new SEP25Team03Entities();
+        readonly SEP25Team03Entities db = new SEP25Team03Entities();
 
         // GET: Student/Statistics
         [GetStudentID]
@@ -27,10 +27,10 @@ namespace StudyProgressManagement.Areas.Student.Controllers
             var query_knowledge = db.knowledge_type.Where(k => k.student_course_id == studentCourseId).Select(k => new
             {
                 id = k.knowledge_type_alias,
-                group_2 = k.group_2,
-                group_3 = k.group_3,
-                compulsory_credits = k.compulsory_credits,
-                optional_credits = k.optional_credits,
+                k.group_2,
+                k.group_3,
+                k.compulsory_credits,
+                k.optional_credits,
                 sum = query_studyResult.Where(item => item.curriculum.knowledge_type_id == k.id).Select(item => item.curriculum.credits).DefaultIfEmpty(0).Sum()
             });
 

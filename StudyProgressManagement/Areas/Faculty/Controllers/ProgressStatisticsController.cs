@@ -11,7 +11,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
     [Authorize(Roles = "Faculty")]
     public class ProgressStatisticsController : Controller
     {
-        SEP25Team03Entities db = new SEP25Team03Entities();
+        readonly SEP25Team03Entities db = new SEP25Team03Entities();
 
         // GET: Faculty/ProgressStatistics
         public ActionResult Index()
@@ -25,8 +25,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             // get student courses data from database
             return Json(db.student_course.Where(s => s.major_id == majorId).Select(s => new
             {
-                id = s.id,
-                course = s.course
+                s.id,
+                s.course
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
@@ -36,8 +36,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return Json(db.knowledge_type.Where(s => s.student_course_id == studentCourseId).Select(s => new
             {
                 id = s.knowledge_type_alias,
-                group_2 = s.group_2,
-                group_3 = s.group_3
+                s.group_2,
+                s.group_3
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 

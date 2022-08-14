@@ -8,7 +8,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
     [Authorize(Roles = "Faculty")]
     public class MajorController : Controller
     {
-        SEP25Team03Entities db = new SEP25Team03Entities();
+        readonly SEP25Team03Entities db = new SEP25Team03Entities();
 
         // GET: Faculty/Major
         public ActionResult Index()
@@ -22,8 +22,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             // Get majors data from datatabse
             return Json(db.majors.Select(m => new
             {
-                id = m.id,
-                name = m.name,
+                m.id,
+                m.name,
 
             }).ToList(), JsonRequestBehavior.AllowGet);
         }

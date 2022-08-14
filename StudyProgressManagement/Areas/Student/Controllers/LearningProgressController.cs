@@ -8,7 +8,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers
     [Authorize]
     public class LearningProgressController : Controller
     {
-        SEP25Team03Entities db = new SEP25Team03Entities();
+        readonly SEP25Team03Entities db = new SEP25Team03Entities();
 
         // GET: Student/LearningProgress
         [GetStudentID]
@@ -41,19 +41,19 @@ namespace StudyProgressManagement.Areas.Student.Controllers
             {
                 return Json(db.curricula.Where(s => s.student_course_id == query_student.student_course_id).Select(s => new
                 {
-                    curriculum_id = s.curriculum_id,
-                    curriculum_name = s.name,
-                    credits = s.credits,
-                    theoretical_hours = s.theoretical_hours,
-                    practice_hours = s.practice_hours,
-                    internship_hours = s.internship_hours,
-                    project_hours = s.project_hours,
-                    compulsory_or_optional = s.compulsory_or_optional,
+                    s.curriculum_id,
+                    s.name,
+                    s.credits,
+                    s.theoretical_hours,
+                    s.practice_hours,
+                    s.internship_hours,
+                    s.project_hours,
+                    s.compulsory_or_optional,
                     knowledge_type_group_1 = s.knowledge_type.group_1,
                     knowledge_type_group_2 = s.knowledge_type.group_2,
                     knowledge_type_group_3 = s.knowledge_type.group_3,
-                    compulsory_credits = s.knowledge_type.compulsory_credits,
-                    optional_credits = s.knowledge_type.optional_credits,
+                    s.knowledge_type.compulsory_credits,
+                    s.knowledge_type.optional_credits,
                     mark10 = query_studyResult.Where(d => d.curriculum_id == s.id)
                     .Select(d => d.mark10).FirstOrDefault().ToString(),
                     mark10_2 = query_studyResult.Where(d => d.curriculum_id == s.id)

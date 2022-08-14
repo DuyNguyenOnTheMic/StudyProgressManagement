@@ -15,7 +15,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
     [Authorize(Roles = "Faculty")]
     public class StudyProgramController : Controller
     {
-        SEP25Team03Entities db = new SEP25Team03Entities();
+        readonly SEP25Team03Entities db = new SEP25Team03Entities();
 
         // GET: Faculty/StudyProgram
         public ActionResult Index()
@@ -30,23 +30,23 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             // Get curriculum of student courses data from datatabse
             return Json(db.curricula.Where(s => s.student_course_id == id).Select(s => new
             {
-                curriculum_id = s.curriculum_id,
-                name = s.name,
-                name_english = s.name_english,
-                credits = s.credits,
-                theoretical_hours = s.theoretical_hours,
-                practice_hours = s.practice_hours,
-                internship_hours = s.internship_hours,
-                project_hours = s.project_hours,
-                compulsory_or_optional = s.compulsory_or_optional,
-                prerequisites = s.prerequisites,
-                learn_before = s.learn_before,
-                editing_notes = s.editing_notes,
+                s.curriculum_id,
+                s.name,
+                s.name_english,
+                s.credits,
+                s.theoretical_hours,
+                s.practice_hours,
+                s.internship_hours,
+                s.project_hours,
+                s.compulsory_or_optional,
+                s.prerequisites,
+                s.learn_before,
+                s.editing_notes,
                 knowledge_type_group_1 = s.knowledge_type.group_1,
                 knowledge_type_group_2 = s.knowledge_type.group_2,
                 knowledge_type_group_3 = s.knowledge_type.group_3,
-                compulsory_credits = s.knowledge_type.compulsory_credits,
-                optional_credits = s.knowledge_type.optional_credits
+                s.knowledge_type.compulsory_credits,
+                s.knowledge_type.optional_credits
 
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
@@ -56,8 +56,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             // get student courses data from database
             return Json(db.student_course.Where(s => s.major_id == majorId).Select(s => new
             {
-                id = s.id,
-                course = s.course
+                s.id,
+                s.course
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
@@ -175,7 +175,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             }
                             else if (knowledgeTypeAlias.StartsWith("CSN"))
                             {
-
                                 // Add major base knowledge type
                                 query_knowledge_type.knowledge_type_alias = SetNullOnEmpty(knowledgeTypeAlias);
                                 query_knowledge_type.group_1 = "Kiến thức giáo dục chuyên nghiệp";

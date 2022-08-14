@@ -17,7 +17,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
     [Authorize(Roles = "Faculty")]
     public class StudyResultController : Controller
     {
-        SEP25Team03Entities db = new SEP25Team03Entities();
+        readonly SEP25Team03Entities db = new SEP25Team03Entities();
 
         // GET: Faculty/StudyResult
         public ActionResult Index()
@@ -40,8 +40,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 return Json(db.students.Where(s => s.student_course_id == studentCourseId &&
                 s.class_student_id == classStudentId && s.full_name.Contains(studentName)).Select(s => new
                 {
-                    id = s.id,
-                    full_name = s.full_name
+                    s.id,
+                    s.full_name
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }
             else
@@ -50,8 +50,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 return Json(db.students.Where(s => s.student_course_id == studentCourseId &&
                 s.full_name.Contains(studentName)).Select(s => new
                 {
-                    id = s.id,
-                    full_name = s.full_name
+                    s.id,
+                    s.full_name
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }
         }
@@ -80,19 +80,19 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             {
                 return Json(db.curricula.Where(s => s.student_course_id == query_student.student_course_id).Select(s => new
                 {
-                    curriculum_id = s.curriculum_id,
-                    curriculum_name = s.name,
-                    credits = s.credits,
-                    theoretical_hours = s.theoretical_hours,
-                    practice_hours = s.practice_hours,
-                    internship_hours = s.internship_hours,
-                    project_hours = s.project_hours,
-                    compulsory_or_optional = s.compulsory_or_optional,
+                    s.curriculum_id,
+                    s.name,
+                    s.credits,
+                    s.theoretical_hours,
+                    s.practice_hours,
+                    s.internship_hours,
+                    s.project_hours,
+                    s.compulsory_or_optional,
                     knowledge_type_group_1 = s.knowledge_type.group_1,
                     knowledge_type_group_2 = s.knowledge_type.group_2,
                     knowledge_type_group_3 = s.knowledge_type.group_3,
-                    compulsory_credits = s.knowledge_type.compulsory_credits,
-                    optional_credits = s.knowledge_type.optional_credits,
+                    s.knowledge_type.compulsory_credits,
+                    s.knowledge_type.optional_credits,
                     mark10 = query_studyResult.Where(d => d.curriculum_id == s.id)
                     .Select(d => d.mark10).FirstOrDefault().ToString(),
                     mark10_2 = query_studyResult.Where(d => d.curriculum_id == s.id)
@@ -116,8 +116,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             // get student courses data from database
             return Json(db.student_course.Where(s => s.major_id == majorId).Select(s => new
             {
-                id = s.id,
-                course = s.course
+                s.id,
+                s.course
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
@@ -126,7 +126,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             // get class students data from database
             return Json(db.class_student.Where(s => s.student_course_id == StudentCourseId).Select(s => new
             {
-                id = s.id
+                s.id
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 

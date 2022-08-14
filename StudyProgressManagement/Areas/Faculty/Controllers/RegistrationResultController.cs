@@ -17,7 +17,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
     [Authorize(Roles = "Faculty")]
     public class RegistrationResultController : Controller
     {
-        SEP25Team03Entities db = new SEP25Team03Entities();
+        readonly SEP25Team03Entities db = new SEP25Team03Entities();
 
         // GET: Faculty/RegistrationResult
         public ActionResult Index()
@@ -40,8 +40,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 return Json(db.students.Where(s => s.student_course_id == studentCourseId &&
                 s.class_student_id == classStudentId && s.full_name.Contains(studentName)).Select(s => new
                 {
-                    id = s.id,
-                    full_name = s.full_name
+                    s.id,
+                    s.full_name
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }
             else
@@ -50,8 +50,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 return Json(db.students.Where(s => s.student_course_id == studentCourseId &&
                 s.full_name.Contains(studentName)).Select(s => new
                 {
-                    id = s.id,
-                    full_name = s.full_name
+                    s.id,
+                    s.full_name
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }
         }
@@ -78,16 +78,16 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 // Get registration results of student
                 return Json(db.registration_results.Where(s => s.student_id == studentId).Select(s => new
                 {
-                    curriculum_id = s.curriculum.curriculum_id,
+                    s.curriculum.curriculum_id,
                     curriculum_name = s.curriculum.name,
-                    credits = s.curriculum.credits,
-                    registration_type = s.registration_type,
-                    registration_date = s.registration_date,
+                    s.curriculum.credits,
+                    s.registration_type,
+                    s.registration_date,
                     curriculum_class_id = s.curriculum_class.id,
                     curriculum_class_schedule = s.curriculum_class.schedule,
                     lecturer_id = s.lecturer.id,
                     lecturer_name = s.lecturer.name,
-                    term_id = s.term_id
+                    s.term_id
 
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }
@@ -99,8 +99,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             // get student courses data from database
             return Json(db.student_course.Where(s => s.major_id == majorId).Select(s => new
             {
-                id = s.id,
-                course = s.course
+                s.id,
+                s.course
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
@@ -109,7 +109,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             // get class students data from database
             return Json(db.class_student.Where(s => s.student_course_id == StudentCourseId).Select(s => new
             {
-                id = s.id
+                s.id
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 

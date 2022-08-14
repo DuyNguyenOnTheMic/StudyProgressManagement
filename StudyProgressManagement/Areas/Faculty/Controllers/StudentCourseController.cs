@@ -8,7 +8,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
     [Authorize(Roles = "Faculty")]
     public class StudentCourseController : Controller
     {
-        SEP25Team03Entities db = new SEP25Team03Entities();
+        readonly SEP25Team03Entities db = new SEP25Team03Entities();
 
         // GET: Faculty/StudentCourse
         public ActionResult Index()
@@ -22,11 +22,11 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             // Get student courses data from datatabse
             return Json(db.student_course.Select(s => new
             {
-                id = s.id,
-                course = s.course,
-                major_id = s.major_id,
+                s.id,
+                s.course,
+                s.major_id,
                 major_name = s.major.name,
-                year_study = s.year_study
+                s.year_study
 
             }).ToList(), JsonRequestBehavior.AllowGet);
         }

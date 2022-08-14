@@ -408,5 +408,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             return value != null && string.IsNullOrEmpty(value.Trim()) ? null : value;
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

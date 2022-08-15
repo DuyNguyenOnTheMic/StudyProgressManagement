@@ -35,8 +35,6 @@ namespace StudyProgressManagement
                 "~/app-assets/vendors/css/toastr.min.css",
                 "~/app-assets/vendors/css/sweetalert2.min.css",
                 "~/app-assets/css/app.min.css"));
-
-            BundleTable.EnableOptimizations = true;
         }
     }
 }

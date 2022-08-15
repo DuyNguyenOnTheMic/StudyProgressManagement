@@ -277,9 +277,11 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         {
             // Arrange
             var controller = new MajorController();
-            var major = new major();
-            major.id = "7480104";
-            major.name = "Hệ thống thông tin";
+            var major = new major
+            {
+                id = "7480104",
+                name = "Hệ thống thông tin"
+            };
 
             // Act
             var result = controller.Edit(major) as JsonResult;

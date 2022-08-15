@@ -22,7 +22,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label>Ngành: </label>
-                                            <select class="form-control" id="comboboxMajor" name="major" required">
+                                            <select class="form-control" title="Chọn ngành" id="comboboxMajor" name="major" required">
                                                 <option value="" selected="selected" disabled="disabled"> ----------- Chọn ngành ----------- </option>
                                                 @foreach (var major in ViewBag.majors)
                                                 {
@@ -34,7 +34,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label>Khoá: </label>
-                                            <select class="form-control" id="comboboxStudentCourse" name="student_course" required>
+                                            <select class="form-control" title="Chọn khoá" id="comboboxStudentCourse" name="student_course" required>
                                                 <option value="" selected="selected" disabled="disabled"> ----------- Chọn khoá ----------- </option>
                                             </select>
                                         </div>
@@ -42,7 +42,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label>Lớp: </label>
-                                            <select class="form-control" id="comboboxClassStudent" name="class_student" required>
+                                            <select class="form-control" title="Chọn lớp" id="comboboxClassStudent" name="class_student" required>
                                                 <option value="" selected="selected"> ----------- Chọn lớp ----------- </option>
                                             </select>
                                         </div>

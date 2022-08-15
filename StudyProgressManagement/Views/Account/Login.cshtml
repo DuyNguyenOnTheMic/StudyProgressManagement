@@ -8,11 +8,10 @@
 <html lang="en" class="loading">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Convex admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Convex admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="PIXINVENT">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
+    <meta name="description" content="Website quản lý tiến độ học tập giúp các bạn sinh viên đại học Văn Lang quản lý tiến độ học tập của mình.">
+    <meta name="keywords" content="tiến độ học tập, quản lý tiến độ, đại học Văn Lang">
+    <meta name="author" content="RetroTeam">
     <title>Login - Website quản lý tiến độ học tập</title>
     <link rel="apple-touch-icon" sizes="60x60" href="~/app-assets/img/ico/apple-icon-60.png">
     <link rel="apple-touch-icon" sizes="76x76" href="~/app-assets/img/ico/apple-icon-76.png">
@@ -44,11 +43,6 @@
                             </div>
                             <div class="card-body">
                                 <div class="card-block">
-
-                                    @if (TempData["mailDomainError"] != null)
-                                    {
-                                        <p class="text-danger" style=" text-align:justify; ">@TempData["mailDomainError"]</p>
-                                    }
 
                                     @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
 

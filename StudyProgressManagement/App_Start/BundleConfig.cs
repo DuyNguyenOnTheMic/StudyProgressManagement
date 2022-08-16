@@ -1,5 +1,4 @@
-﻿using StudyProgressManagement.Helpers;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace StudyProgressManagement
 {

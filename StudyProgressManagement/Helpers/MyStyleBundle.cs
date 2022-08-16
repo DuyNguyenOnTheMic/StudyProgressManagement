@@ -1,8 +1,6 @@
 ﻿using NUglify;
-using System;
-using System.Web.Optimization;
 
-namespace StudyProgressManagement.Helpers
+namespace System.Web.Optimization
 {
     public class MyStyleBundle : Bundle
     {

@@ -1,4 +1,5 @@
-﻿using System.Web.Optimization;
+﻿using StudyProgressManagement.Helpers;
+using System.Web.Optimization;
 
 namespace StudyProgressManagement
 {
@@ -29,7 +30,7 @@ namespace StudyProgressManagement
                "~/app-assets/js/notification-sidebar.min.js"));
 
             // Style Bundles
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new MyStyleBundle("~/Content/css").Include(
                 "~/app-assets/vendors/css/perfect-scrollbar.min.css",
                 "~/app-assets/vendors/css/prism.min.css",
                 "~/app-assets/vendors/css/toastr.min.css",

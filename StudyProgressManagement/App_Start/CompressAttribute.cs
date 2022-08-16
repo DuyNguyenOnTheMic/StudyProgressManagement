@@ -1,27 +1,32 @@
-﻿using System.IO.Compression;
+﻿using System;
+using System.IO.Compression;
+using System.Web;
 using System.Web.Mvc;
 
 public class CompressAttribute : ActionFilterAttribute
 {
-    public override void OnActionExecuting(ActionExecutingContext filterContext)
+    protected void Application_BeginRequest(object sender, EventArgs e)
     {
+        // Implement HTTP compression  
+        HttpApplication app = (HttpApplication)sender;
 
-        var encodingsAccepted = filterContext.HttpContext.Request.Headers["Accept-Encoding"];
-        if (string.IsNullOrEmpty(encodingsAccepted)) return;
-
-        encodingsAccepted = encodingsAccepted.ToLowerInvariant();
-        var response = filterContext.HttpContext.Response;
-
-        if (encodingsAccepted.Contains("gzip"))
+        // Retrieve accepted encodings  
+        string encodings = app.Request.Headers.Get("Accept-Encoding");
+        if (encodings != null)
         {
-            response.AppendHeader("Content-encoding", "gzip");
-            response.Filter = new GZipStream(response.Filter, CompressionMode.Compress);
+            // Check the browser accepts deflate or gzip (deflate takes preference)  
+            encodings = encodings.ToLower();
+            if (encodings.Contains("gzip"))
+            {
+                app.Response.Filter = new GZipStream(app.Response.Filter, CompressionMode.Compress);
+                app.Response.AppendHeader("Content-Encoding", "gzip");
+            }
+            else if
+                (encodings.Contains("deflate"))
+            {
+                app.Response.Filter = new DeflateStream(app.Response.Filter, CompressionMode.Compress);
+                app.Response.AppendHeader("Content-Encoding", "deflate");
+            }
         }
-        else if (encodingsAccepted.Contains("deflate"))
-        {
-            response.AppendHeader("Content-encoding", "deflate");
-            response.Filter = new DeflateStream(response.Filter, CompressionMode.Compress);
-        }
-
     }
 }

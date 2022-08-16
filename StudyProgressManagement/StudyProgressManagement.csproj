@@ -219,7 +219,7 @@
     </Compile>
     <Compile Include="App_Start\CompressAttribute.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
-    <Compile Include="Helpers\MyStyleBundle.cs" />
+    <Compile Include="App_Start\MyStyleBundle.cs" />
     <Compile Include="Hubs\ProgressHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">

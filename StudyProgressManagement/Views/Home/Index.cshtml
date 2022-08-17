@@ -4,16 +4,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<title>@ViewBag.Title</title>
-
 <div class="row">
     <div class="col-sm-12">
         <h2 class="content-header">Trang chủ</h2>
     </div>
 </div>
 
-<!-- Input Validation start -->
-<section class="input-validation">
+<!-- Welcome section start -->
+<section>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -29,11 +27,11 @@
                 </div>
                 <div class="card-body" style="margin-top: -2.25rem">
                     <div class="card-block">
-                        <img class="mx-auto d-block w-50" alt="Welcome" src="~/assets/images/img_welcome.svg"/>
+                        <img class="mx-auto d-block w-50" alt="Welcome" src="@Url.ContentVersioned("~/assets/images/img_welcome.svg")" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Input Validation end -->
+<!-- Welcome section end -->

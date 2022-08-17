@@ -1,37 +1,26 @@
-﻿using System.Configuration;
-using System.IO.Compression;
-using System.Web;
+﻿using System.IO.Compression;
 using System.Web.Mvc;
 
 public class CompressAttribute : ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext filterContext)
     {
-        bool allowCompression = false;
-        bool.TryParse(ConfigurationManager.AppSettings["Compression"], out allowCompression);
+        var encodingsAccepted = filterContext.HttpContext.Request.Headers["Accept-Encoding"];
+        if (string.IsNullOrEmpty(encodingsAccepted)) return;
 
-        if (allowCompression)
+        encodingsAccepted = encodingsAccepted.ToLowerInvariant();
+        var response = filterContext.HttpContext.Response;
+
+        if (encodingsAccepted.Contains("gzip"))
         {
-            HttpRequestBase request = filterContext.HttpContext.Request;
-
-            string acceptEncoding = request.Headers["Accept-Encoding"];
-
-            if (string.IsNullOrEmpty(acceptEncoding)) return;
-
-            acceptEncoding = acceptEncoding.ToUpperInvariant();
-
-            HttpResponseBase response = filterContext.HttpContext.Response;
-
-            if (acceptEncoding.Contains("GZIP"))
-            {
-                response.AppendHeader("Content-encoding", "gzip");
-                response.Filter = new GZipStream(response.Filter, CompressionMode.Compress);
-            }
-            else if (acceptEncoding.Contains("DEFLATE"))
-            {
-                response.AppendHeader("Content-encoding", "deflate");
-                response.Filter = new DeflateStream(response.Filter, CompressionMode.Compress);
-            }
+            response.AppendHeader("Content-encoding", "gzip");
+            response.Filter = new GZipStream(response.Filter, CompressionMode.Compress);
         }
+        else if (encodingsAccepted.Contains("deflate"))
+        {
+            response.AppendHeader("Content-encoding", "deflate");
+            response.Filter = new DeflateStream(response.Filter, CompressionMode.Compress);
+        }
+
     }
 }

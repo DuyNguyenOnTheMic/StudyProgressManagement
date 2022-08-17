@@ -111,14 +111,14 @@
 </section>
 <!-- // Dropzone section end -->
 
-<link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/dropzone.min.css">
-<link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="@Url.ContentVersioned("~/app-assets/vendors/css/dropzone.min.css")">
+<link rel="stylesheet" type="text/css" href="@Url.ContentVersioned("~/app-assets/vendors/css/tables/datatable/datatables.min.css")" />
 
 @section scripts {
 
-    <script src="~/app-assets/vendors/js/dropzone.min.js"></script>
-    <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
-    <script src="~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/dropzone.min.js")"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/datatables.min.js")"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js")"></script>
     <script src="~/signalr/hubs"></script>
 
     <script type="text/javascript">

@@ -125,11 +125,11 @@
 </section>
 <!-- Section end -->
 
-<link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
+<link href="@Url.ContentVersioned("~/app-assets/vendors/css/tables/datatable/datatables.min.css")" rel="stylesheet" />
 
 @section scripts {
-    <script src="~/app-assets/vendors/js/moment.min.js"></script>
-    <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/moment.min.js")"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/datatables.min.js")"></script>
 
     <script type="text/javascript">
     @Html.JsMinify(@<text>

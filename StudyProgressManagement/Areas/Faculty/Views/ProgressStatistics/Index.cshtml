@@ -93,13 +93,13 @@
 </section>
 <!-- Section end -->
 
-<link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
+<link href="@Url.ContentVersioned("~/app-assets/vendors/css/tables/datatable/datatables.min.css")" rel="stylesheet" />
 
 @section scripts {
-    <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
-    <script src="~/app-assets/vendors/js/chart.min.js"></script>
-    <script src="~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js"></script>
-    <script src="~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/datatables.min.js")"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/chart.min.js")"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js")"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js")"></script>
     <script src="~/signalr/hubs"></script>
 
     <script type="text/javascript">

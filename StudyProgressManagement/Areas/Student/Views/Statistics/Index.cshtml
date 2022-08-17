@@ -54,8 +54,8 @@ else
     <!-- Section end -->
 
     @section scripts {
-        <script src="~/app-assets/vendors/js/chart.min.js"></script>
-        <script src="~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js"></script>
+        <script src="@Url.ContentVersioned("~/app-assets/vendors/js/chart.min.js")"></script>
+        <script src="@Url.ContentVersioned("~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js")"></script>
 
         <script type="text/javascript">
         @Html.JsMinify(@<text>

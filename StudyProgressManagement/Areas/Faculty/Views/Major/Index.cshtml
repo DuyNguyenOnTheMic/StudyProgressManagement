@@ -46,13 +46,13 @@
 </section>
 <!--/ Zero configuration table -->
 
-<link href="~/app-assets/vendors/css/tables/datatable/datatables.min.css" rel="stylesheet" />
-<link href="~/app-assets/vendors/css/jquery-ui.min.css" rel="stylesheet" />
+<link href="@Url.ContentVersioned("~/app-assets/vendors/css/tables/datatable/datatables.min.css")" rel="stylesheet" />
+<link href="@Url.ContentVersioned("~/app-assets/vendors/css/jquery-ui.min.css")" rel="stylesheet" />
 
 @section scripts {
 
-    <script src="~/app-assets/vendors/js/datatable/datatables.min.js"></script>
-    <script src="~/app-assets/vendors/js/jquery-ui.min.js"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/datatables.min.js")"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/jquery-ui.min.js")"></script>
 
     <script type="text/javascript">
     @Html.JsMinify(@<text>

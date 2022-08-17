@@ -1,31 +1,36 @@
-﻿using System;
+﻿using System.Configuration;
 using System.IO.Compression;
 using System.Web;
 using System.Web.Mvc;
 
 public class CompressAttribute : ActionFilterAttribute
 {
-    protected void Application_BeginRequest(object sender, EventArgs e)
+    public override void OnActionExecuting(ActionExecutingContext filterContext)
     {
-        // Implement HTTP compression  
-        HttpApplication app = (HttpApplication)sender;
+        bool allowCompression = false;
+        bool.TryParse(ConfigurationManager.AppSettings["Compression"], out allowCompression);
 
-        // Retrieve accepted encodings  
-        string encodings = app.Request.Headers.Get("Accept-Encoding");
-        if (encodings != null)
+        if (allowCompression)
         {
-            // Check the browser accepts deflate or gzip (deflate takes preference)  
-            encodings = encodings.ToLower();
-            if (encodings.Contains("gzip"))
+            HttpRequestBase request = filterContext.HttpContext.Request;
+
+            string acceptEncoding = request.Headers["Accept-Encoding"];
+
+            if (string.IsNullOrEmpty(acceptEncoding)) return;
+
+            acceptEncoding = acceptEncoding.ToUpperInvariant();
+
+            HttpResponseBase response = filterContext.HttpContext.Response;
+
+            if (acceptEncoding.Contains("GZIP"))
             {
-                app.Response.Filter = new GZipStream(app.Response.Filter, CompressionMode.Compress);
-                app.Response.AppendHeader("Content-Encoding", "gzip");
+                response.AppendHeader("Content-encoding", "gzip");
+                response.Filter = new GZipStream(response.Filter, CompressionMode.Compress);
             }
-            else if
-                (encodings.Contains("deflate"))
+            else if (acceptEncoding.Contains("DEFLATE"))
             {
-                app.Response.Filter = new DeflateStream(app.Response.Filter, CompressionMode.Compress);
-                app.Response.AppendHeader("Content-Encoding", "deflate");
+                response.AppendHeader("Content-encoding", "deflate");
+                response.Filter = new DeflateStream(response.Filter, CompressionMode.Compress);
             }
         }
     }

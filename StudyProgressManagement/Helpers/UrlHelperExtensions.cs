@@ -3,7 +3,7 @@ using System.Web.Caching;
 
 namespace System.Web.Mvc
 {
-    public static class UrlExtensions
+    public static class UrlHelperExtensions
     {
         private const string FileDateTicksCacheKeyFormat = "FileDateTicks_{0}";
 

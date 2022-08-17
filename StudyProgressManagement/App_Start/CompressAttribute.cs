@@ -21,6 +21,5 @@ public class CompressAttribute : ActionFilterAttribute
             response.AppendHeader("Content-encoding", "deflate");
             response.Filter = new DeflateStream(response.Filter, CompressionMode.Compress);
         }
-
     }
 }

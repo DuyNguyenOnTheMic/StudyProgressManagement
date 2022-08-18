@@ -43,6 +43,7 @@
                             </div>
                         </form>
                         <div class="table-responsive">
+                            <h4 class="card-title text-center mt-4" id="lblStudyProgramName" style="display: none"></h4>
                             <table class="table table-bordered" id="tblStudyProgram" cellspacing="0" width="100%" style="display: none">
                                 <thead style="text-align: center; background-color: #FFC8A4; color: rgba(0, 0, 0, 0.87) ">
                                     <tr>
@@ -120,17 +121,15 @@
              }).change();
 
             $("#comboboxStudentCourse").change(function () {
-                var studentCourseId = $('#comboboxStudentCourse option:selected').val();
-                if (studentCourseId != null) {
-                    PopulateStudyProgram(studentCourseId);
-                }
-                else
-                {
-                }
+                var studentCourseId = $("#comboboxStudentCourse option:selected").val();
+                null != studentCourseId && PopulateStudyProgram(studentCourseId);
             }).change();
         });
 
         function PopulateStudyProgram(studentCourseId) {
+
+            var majorName = $('#comboboxMajor option:selected').text();
+            var studentCourseName = $('#comboboxStudentCourse option:selected').text();
 
             $('#tblStudyProgram').show();
             $('#viewStudyProgram_instruction').hide();
@@ -257,7 +256,7 @@
 
                     language: {
                         'url': '@Url.Content("~/app-assets/language/vi.json")'
-                    },
+                    }
                 });
             }
 
@@ -266,6 +265,9 @@
                 url: '@Url.Action("GetData", "StudyProgram")',
                 data: { 'id': studentCourseId },
                 success: function (response) {
+                    $('#lblStudyProgramName').text("Chương trình đào tạo " + majorName + " " + studentCourseName);
+                    $('#lblStudyProgramName').show();
+
                     dataTable = $('#tblStudyProgram').DataTable();
                     dataTable.clear().rows.add(response).draw();
 

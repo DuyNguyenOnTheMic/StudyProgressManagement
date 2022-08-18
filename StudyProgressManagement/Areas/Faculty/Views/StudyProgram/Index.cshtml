@@ -128,12 +128,11 @@
 
         function PopulateStudyProgram(studentCourseId) {
 
-            var majorName = $('#comboboxMajor option:selected').text();
-            var studentCourseName = $('#comboboxStudentCourse option:selected').text();
-
             $('#tblStudyProgram').show();
             $('#viewStudyProgram_instruction').hide();
 
+            var majorName = $('#comboboxMajor option:selected').text();
+            var studentCourseName = $('#comboboxStudentCourse option:selected').text();
             var dataTable;
 
             if (!$.fn.DataTable.isDataTable('#tblStudyProgram')) {

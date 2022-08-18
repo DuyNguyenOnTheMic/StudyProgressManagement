@@ -139,14 +139,6 @@
             // Populate Study Program datatable
             dataTable = $('#tblStudyProgram').DataTable(
                 {
-                    ajax: {
-                    dataSrc: '',
-                    type: 'POST',
-                    url: '@Url.Action("GetData", "StudyProgram")',
-                    data: { 'id': studentCourseId },
-                    dataType: 'json',
-                    },
-
                     paging: false,
                     ordering: false,
                     info: false,

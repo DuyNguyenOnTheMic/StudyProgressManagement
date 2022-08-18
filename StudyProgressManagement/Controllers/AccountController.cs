@@ -43,8 +43,12 @@ namespace StudyProgressManagement.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            ViewBag.ReturnUrl = "/";
-            return View();
+            if (!Request.IsAuthenticated)
+            {
+                ViewBag.ReturnUrl = "/";
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         //

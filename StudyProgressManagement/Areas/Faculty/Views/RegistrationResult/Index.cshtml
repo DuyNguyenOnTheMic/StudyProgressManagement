@@ -60,10 +60,12 @@
 <!-- Section end -->
 
 <link href="@Url.ContentVersioned("~/app-assets/vendors/css/tables/datatable/datatables.min.css")" rel="stylesheet" />
+<link href="@Url.ContentVersioned("~/app-assets/vendors/css/tables/datatable/rowGroup.dataTables.min.css")" rel="stylesheet" />
 
 @section scripts {
     <script src="@Url.ContentVersioned("~/app-assets/vendors/js/moment.min.js")"></script>
-    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/datatables.min.js")"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/jquery.dataTables.min.js")"></script>
+    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/dataTables.rowGroup.min.js")"></script>
 
     <script type="text/javascript">
     @Html.JsMinify(@<text>

@@ -13,6 +13,15 @@ namespace StudyProgressManagement.Areas.Admin.Controllers
         readonly SEP25Team03Entities db = new SEP25Team03Entities();
         private ApplicationUserManager _userManager;
 
+        public UserController()
+        {
+        }
+
+        public UserController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
         public ApplicationUserManager UserManager
         {
             get

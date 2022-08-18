@@ -272,9 +272,7 @@
 
                                 // Update current datatable
                                 dataTable = $('#tblErrorRows').DataTable();
-                                dataTable.clear();
-                                dataTable.rows.add(data);
-                                dataTable.draw();
+                                dataTable.clear().rows.add(data).draw();
 
                                 // Create Index column datatable
                                 dataTable.on('order.dt search.dt', function () {

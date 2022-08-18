@@ -137,6 +137,7 @@
 
             var dataTable;
 
+            if (!$.fn.DataTable.isDataTable('#tblStudyProgram')) {
             // Populate Study Program datatable
             dataTable = $('#tblStudyProgram').DataTable(
                 {
@@ -151,7 +152,6 @@
                     paging: false,
                     ordering: false,
                     info: false,
-                    destroy: true,
 
                     // Row grouping of knowledge type name
                     order: [[13, 'asc'], [14, 'asc'], [15, 'asc']],
@@ -258,14 +258,24 @@
                     language: {
                         'url': '@Url.Content("~/app-assets/language/vi.json")'
                     },
-
                 });
+            }
 
-            // Create Index column datatable
-            dataTable.on('draw.dt', function () {
-                dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                    cell.innerHTML = i + 1;
-                });
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetData", "StudyProgram")',
+                data: { 'id': studentCourseId },
+                success: function (response) {
+                    dataTable = $('#tblStudyProgram').DataTable();
+                    dataTable.clear().rows.add(response).draw();
+
+                    // Create Index column datatable
+                    dataTable.on('draw.dt', function () {
+                        dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    });
+                }
             });
         }
     </text>)

@@ -247,12 +247,9 @@
                             'url': '@Url.Content("~/app-assets/language/vi.json")'
                         }
                     });
-                // Create Index column datatable
-                dataTable.on('draw.dt', function () {
-                    dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                        cell.innerHTML = i + 1;
-                    });
-                });
+            }
+            else {
+                dataTable = $('#tblStudyProgram').DataTable();
             }
 
              $.ajax({
@@ -263,16 +260,14 @@
                     $('#lblStudyProgramName').text("Chương trình đào tạo " + majorName + " " + studentCourseName);
                     $('#lblStudyProgramName').show();
 
-                    dataTable = $('#tblStudyProgram').DataTable();
                     dataTable.clear().rows.add(response).draw();
-
-                    // Create Index column datatable
-                    dataTable.on('draw.dt', function () {
-                        dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                            cell.innerHTML = i + 1;
-                        });
-                    });
                 }
+             });
+            // Create Index column datatable
+            dataTable.on('draw.dt', function () {
+                dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
             });
         }
     </text>)

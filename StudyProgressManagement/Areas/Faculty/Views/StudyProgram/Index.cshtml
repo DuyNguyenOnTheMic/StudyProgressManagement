@@ -136,118 +136,122 @@
             var dataTable;
 
             if (!$.fn.DataTable.isDataTable('#tblStudyProgram')) {
-            // Populate Study Program datatable
-            dataTable = $('#tblStudyProgram').DataTable(
-                {
-                    paging: false,
-                    ordering: false,
-                    info: false,
+                // Populate Study Program datatable
+                dataTable = $('#tblStudyProgram').DataTable(
+                    {
+                        paging: false,
+                        ordering: false,
+                        info: false,
 
-                    // Row grouping of knowledge type name
-                    order: [[13, 'asc'], [14, 'asc'], [15, 'asc']],
-                    rowGroup: {
-                        startRender: function (rows, group, level) {
+                        // Row grouping of knowledge type name
+                        order: [[13, 'asc'], [14, 'asc'], [15, 'asc']],
+                        rowGroup: {
+                            startRender: function (rows, group, level) {
 
-                            var intVal = function (i) {
-                                return typeof i === 'string' ?
-                                    i.replace(/[\$,]/g, '') * 1 :
-                                    typeof i === 'number' ?
-                                        i : 0;
-                            };
+                                var intVal = function (i) {
+                                    return typeof i === 'string' ?
+                                        i.replace(/[\$,]/g, '') * 1 :
+                                        typeof i === 'number' ?
+                                            i : 0;
+                                };
 
-                            // Sum credits group by rows
-                            var creditsSum = rows
-                                .data()
-                                .pluck('credits')
-                                .reduce(function (a, b) {
-                                    return intVal(a) + intVal(b);
-                                }, 0);
+                                // Sum credits group by rows
+                                var creditsSum = rows
+                                    .data()
+                                    .pluck('credits')
+                                    .reduce(function (a, b) {
+                                        return intVal(a) + intVal(b);
+                                    }, 0);
 
-                            // Check null rowGroup
-                            if (group == null) {
-                                return;
-                            }
-                            else if (level != 0)
-                            {
-                                if (rows.data()[0].compulsory_credits != null && rows.data()[0].optional_credits != null) {
-                                    // Return total count of compulsory credits and optional credits
-                                    var total_credits = rows.data()[0].compulsory_credits + rows.data()[0].optional_credits;
-                                    return $('<tr/>')
-                                        .append('<th colspan="4">' + group + ' (' + total_credits + ' tín chỉ: ' + rows.data()[0].compulsory_credits + ' bắt buộc + ' + rows.data()[0].optional_credits + ' tự chọn)' + '</th>')
-                                        .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</th>')
-                                        .append('<th colspan="8"></th>')
+                                // Check null rowGroup
+                                if (group == null) {
+                                    return;
                                 }
-                                else if (rows.data()[0].compulsory_credits != null) {
-                                    // Return compulsory cresits
-                                    return $('<tr/>')
-                                        .append('<th colspan="4">' + group + ' (' + rows.data()[0].compulsory_credits + ' TC bắt buộc)' + '</th>')
-                                        .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</th>')
-                                        .append('<th colspan="8"></th>')
-                                }
-                                else if (rows.data()[0].optional_credits != null) {
-                                    // Return optional credits
-                                    return $('<tr/>')
-                                        .append('<th colspan="4">' + group + ' (' + rows.data()[0].optional_credits + ' TC tự chọn)' + '</th>')
-                                        .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</th>')
-                                        .append('<th colspan="8"></th>')
+                                else if (level != 0) {
+                                    if (rows.data()[0].compulsory_credits != null && rows.data()[0].optional_credits != null) {
+                                        // Return total count of compulsory credits and optional credits
+                                        var total_credits = rows.data()[0].compulsory_credits + rows.data()[0].optional_credits;
+                                        return $('<tr/>')
+                                            .append('<th colspan="4">' + group + ' (' + total_credits + ' tín chỉ: ' + rows.data()[0].compulsory_credits + ' bắt buộc + ' + rows.data()[0].optional_credits + ' tự chọn)' + '</th>')
+                                            .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</th>')
+                                            .append('<th colspan="8"></th>')
+                                    }
+                                    else if (rows.data()[0].compulsory_credits != null) {
+                                        // Return compulsory cresits
+                                        return $('<tr/>')
+                                            .append('<th colspan="4">' + group + ' (' + rows.data()[0].compulsory_credits + ' TC bắt buộc)' + '</th>')
+                                            .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</th>')
+                                            .append('<th colspan="8"></th>')
+                                    }
+                                    else if (rows.data()[0].optional_credits != null) {
+                                        // Return optional credits
+                                        return $('<tr/>')
+                                            .append('<th colspan="4">' + group + ' (' + rows.data()[0].optional_credits + ' TC tự chọn)' + '</th>')
+                                            .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</th>')
+                                            .append('<th colspan="8"></th>')
+                                    }
+                                    else {
+                                        // Return null
+                                        return $('<tr/>')
+                                            .append('<th colspan="4">' + group + ' (0 TC)' + '</th>')
+                                            .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</th>')
+                                            .append('<th colspan="8"></th>')
+                                    }
                                 }
                                 else {
-                                    // Return null
+                                    // Return level 0 knowledge group
                                     return $('<tr/>')
-                                        .append('<th colspan="4">' + group + ' (0 TC)' + '</th>')
+                                        .append('<th colspan="4">' + group + '</th>')
                                         .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</th>')
                                         .append('<th colspan="8"></th>')
                                 }
-                            }
-                            else
+                            },
+                            emptyDataGroup: null,
+                            dataSrc: ['knowledge_type_group_1', 'knowledge_type_group_2', 'knowledge_type_group_3']
+                        },
+                        columnDefs: [
+                            { visible: false, targets: [13, 14, 15, 16, 17] },
+                            { className: 'text-center', targets: [4, 5, 6, 7, 8, 9] },
+                            { width: '20%', targets: [2] },
+                        ],
+
+                        // Declare columns
+                        columns: [
                             {
-                                // Return level 0 knowledge group
-                                return $('<tr/>')
-                                    .append('<th colspan="4">' + group + '</th>')
-                                    .append('<th style="color:#9E000D">' + creditsSum.toFixed(0) + '</th>')
-                                    .append('<th colspan="8"></th>')
-                            }
-                        },
-                        emptyDataGroup: null,
-                        dataSrc: ['knowledge_type_group_1', 'knowledge_type_group_2', 'knowledge_type_group_3' ]
-                    },
-                    columnDefs: [
-                        { visible: false, targets: [13, 14, 15, 16, 17] },
-                        { className: 'text-center', targets: [4, 5, 6, 7, 8, 9] },
-                        { width: '20%', targets: [2] },
-                    ],
+                                'data': null,
+                                searchable: false,
+                                orderable: false,
+                                className: 'text-center',
+                                width: '20px'
+                            },
+                            { 'data': 'curriculum_id' },
+                            { 'data': 'name' },
+                            { 'data': 'name_english' },
+                            { 'data': 'credits' },
+                            { 'data': 'theoretical_hours' },
+                            { 'data': 'practice_hours' },
+                            { 'data': 'internship_hours' },
+                            { 'data': 'project_hours' },
+                            { 'data': 'compulsory_or_optional' },
+                            { 'data': 'prerequisites' },
+                            { 'data': 'learn_before' },
+                            { 'data': 'editing_notes' },
+                            { 'data': 'knowledge_type_group_1' },
+                            { 'data': 'knowledge_type_group_2' },
+                            { 'data': 'knowledge_type_group_3' },
+                            { 'data': 'compulsory_credits' },
+                            { 'data': 'optional_credits' }
+                        ],
 
-                    // Declare columns
-                    columns: [
-                        {
-                            'data': null,
-                            searchable: false,
-                            orderable: false,
-                            className: 'text-center',
-                            width: '20px'
-                        },
-                        { 'data': 'curriculum_id' },
-                        { 'data': 'name' },
-                        { 'data': 'name_english' },
-                        { 'data': 'credits' },
-                        { 'data': 'theoretical_hours' },
-                        { 'data': 'practice_hours' },
-                        { 'data': 'internship_hours' },
-                        { 'data': 'project_hours' },
-                        { 'data': 'compulsory_or_optional' },
-                        { 'data': 'prerequisites' },
-                        { 'data': 'learn_before' },
-                        { 'data': 'editing_notes' },
-                        { 'data': 'knowledge_type_group_1' },
-                        { 'data': 'knowledge_type_group_2' },
-                        { 'data': 'knowledge_type_group_3' },
-                        { 'data': 'compulsory_credits' },
-                        { 'data': 'optional_credits' }
-                    ],
-
-                    language: {
-                        'url': '@Url.Content("~/app-assets/language/vi.json")'
-                    }
+                        language: {
+                            'url': '@Url.Content("~/app-assets/language/vi.json")'
+                        }
+                    });
+                // Create Index column datatable
+                dataTable.on('draw.dt', function () {
+                    dataTable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
                 });
             }
 

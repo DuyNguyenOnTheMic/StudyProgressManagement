@@ -18,6 +18,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers
         }
 
         [HttpPost]
+        [OutputCache(Duration = 600, VaryByParam = "studentId")]
         public string GetStudentInfo(string studentId)
         {
             // Get student information
@@ -31,6 +32,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers
         }
 
         [HttpPost]
+        [OutputCache(Duration = 600, VaryByParam = "studentId")]
         public JsonResult GetData(string studentId)
         {
             var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();

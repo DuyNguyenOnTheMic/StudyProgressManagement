@@ -18,6 +18,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers
         }
 
         [HttpPost]
+        [OutputCache(Duration = 600, VaryByParam = "studentId")]
         public JsonResult GetStatistics(string studentId, int studentCourseId)
         {
             // Declare variables

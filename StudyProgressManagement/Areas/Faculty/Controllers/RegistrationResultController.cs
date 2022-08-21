@@ -262,21 +262,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             {
                                 id = studentId,
                                 full_name = studentName,
-                                birth_date = DateTime.ParseExact(studentBirthDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
-                                email = studentEmail,
-                                gender = studentGender,
-                                faculty = studentFaculty,
                                 class_student_id = studentClassId,
                                 student_course_id = studentCourseId
                             });
-                            db.SaveChanges();
-                        }
-                        else if (query_student.email == null)
-                        {
-                            query_student.email = studentEmail;
-                            query_student.gender = studentGender;
-                            query_student.faculty = studentFaculty;
-                            db.Entry(query_student).State = System.Data.Entity.EntityState.Modified;
                             db.SaveChanges();
                         }
 

@@ -225,21 +225,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         // Declare all columns
                         string studentId = row["StudentID"].ToString();
                         string studentName = row["StudentName"].ToString();
-                        /*string birthDay = row["BirthDay"].ToString();
-                        string birthPlace = row["BirthPlace"].ToString();*/
                         string classStudentId = row["ClassStudentID"].ToString();
                         string classStudentName = row["ClassStudentName"].ToString();
-                        /*string yearStudy = row["YearStudy"].ToString();*/
                         string curriculumId = row["CurriculumID"].ToString();
-                        /*string studyUnitId = row["StudyUnitID"].ToString();
-                        string studyUnitAlias = row["StudyUnitAlias"].ToString();*/
                         string curriculumName = row["CurriculumName"].ToString();
                         string credits = row["Credits"].ToString();
                         string mark10 = row["Mark10"].ToString();
                         string mark10_2 = row["Mark10_2"].ToString();
-                        /*string mark10_3 = row["Mark10_3"].ToString();
-                        string mark10_4 = row["Mark10_4"].ToString();
-                        string mark10_5 = row["Mark10_5"].ToString();*/
                         string maxMark10 = row["MaxMark10"].ToString();
                         string maxMark4 = row["maxMark4"].ToString();
                         string maxMarkLetter = row["MaxMarkLetter"].ToString();

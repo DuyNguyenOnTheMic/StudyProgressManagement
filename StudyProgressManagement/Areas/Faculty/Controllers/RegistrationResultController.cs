@@ -188,7 +188,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 // Generate term name
                 string termName = "Học kỳ " + termId[termId.Length - 1];
 
-                var query_term = db.terms.Where(t => t.id == termId).FirstOrDefault();
+                var query_term = db.terms.Find(termId);
                 if (query_term == null)
                 {
                     // Add term
@@ -238,7 +238,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         string lecturerName = row["Giảng viên"].ToString();
                         string curriculumClassSchedule = row["Thời khóa biểu"].ToString();
 
-                        var query_classstudent = db.class_student.Where(s => s.id == studentClassId).FirstOrDefault();
+                        var query_classstudent = db.class_student.Find(studentClassId);
                         if (query_classstudent == null)
                         {
                             // Add class student
@@ -250,7 +250,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             db.SaveChanges();
                         }
 
-                        var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
+                        var query_student = db.students.Find(studentId);
                         if (query_student == null)
                         {
                             // Add student
@@ -264,7 +264,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             db.SaveChanges();
                         }
 
-                        var query_curriculum_class = db.curriculum_class.Where(c => c.id == curriculumClassId).FirstOrDefault();
+                        var query_curriculum_class = db.curriculum_class.Find(curriculumClassId);
                         if (query_curriculum_class == null)
                         {
                             // Add curriculum class
@@ -279,7 +279,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         // Check if lecturer is null
                         if (!string.IsNullOrEmpty(lecturerId))
                         {
-                            var query_lecturer = db.lecturers.Where(l => l.id == lecturerId).FirstOrDefault();
+                            var query_lecturer = db.lecturers.Find(lecturerId);
                             if (query_lecturer == null)
                             {
                                 // Add lecturer

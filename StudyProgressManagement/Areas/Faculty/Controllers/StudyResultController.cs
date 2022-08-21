@@ -231,7 +231,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         string maxMarkLetter = row["MaxMarkLetter"].ToString();
                         string isPass = row["IsPass"].ToString();
 
-                        var query_classstudent = db.class_student.Where(s => s.id == classStudentId).FirstOrDefault();
+                        var query_classstudent = db.class_student.Find(classStudentId);
                         if (query_classstudent == null)
                         {
                             // Add class student
@@ -243,7 +243,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             db.SaveChanges();
                         }
 
-                        var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
+                        var query_student = db.students.Find(studentId);
                         if (query_student == null)
                         {
                             // Add student

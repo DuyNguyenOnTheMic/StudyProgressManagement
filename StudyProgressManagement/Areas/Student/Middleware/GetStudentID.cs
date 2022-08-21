@@ -1,5 +1,4 @@
 ﻿using StudyProgressManagement.Models;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,7 +20,7 @@ namespace StudyProgressManagement.Areas.Student.Middleware
             string studentId = studentEmail.Substring(pFrom, pTo - pFrom);
 
             // Check if student has in database
-            var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
+            var query_student = db.students.Find(studentId);
             if (query_student != null)
             {
                 ViewBag.StudentId = query_student.id;

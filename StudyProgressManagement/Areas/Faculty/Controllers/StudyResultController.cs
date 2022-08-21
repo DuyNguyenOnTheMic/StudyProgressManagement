@@ -73,7 +73,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public JsonResult GetData(string studentId)
         {
             var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
-            var query_studyResult = db.study_results.OrderByDescending(s => s.id).Where(s => s.student_id == studentId);
+            var query_studyResult = db.study_results.Where(s => s.student_id == studentId).OrderByDescending(s => s.id);
             var query_regisResult = db.registration_results.Where(s => s.student_id == studentId);
             // Get study results of student
             if (query_student != null)

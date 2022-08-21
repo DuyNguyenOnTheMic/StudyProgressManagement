@@ -23,11 +23,6 @@ namespace StudyProgressManagement.Models
     
         public string id { get; set; }
         public string full_name { get; set; }
-        public Nullable<System.DateTime> birth_date { get; set; }
-        public string birth_place { get; set; }
-        public string email { get; set; }
-        public string gender { get; set; }
-        public string faculty { get; set; }
         public string class_student_id { get; set; }
         public int student_course_id { get; set; }
     

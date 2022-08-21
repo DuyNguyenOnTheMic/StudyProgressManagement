@@ -18,7 +18,6 @@ namespace StudyProgressManagement.Models
         public term()
         {
             this.registration_results = new HashSet<registration_results>();
-            this.study_results = new HashSet<study_results>();
         }
     
         public string id { get; set; }
@@ -26,7 +25,5 @@ namespace StudyProgressManagement.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<registration_results> registration_results { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<study_results> study_results { get; set; }
     }
 }

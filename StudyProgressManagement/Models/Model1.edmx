@@ -148,11 +148,6 @@
           </Key>
           <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="full_name" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="birth_date" Type="datetime" />
-          <Property Name="birth_place" Type="nvarchar" MaxLength="255" />
-          <Property Name="email" Type="nvarchar" MaxLength="255" />
-          <Property Name="gender" Type="nvarchar" MaxLength="50" />
-          <Property Name="faculty" Type="nvarchar" MaxLength="100" />
           <Property Name="class_student_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="student_course_id" Type="int" Nullable="false" />
         </EntityType>
@@ -172,26 +167,13 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="mark10" Type="varchar" MaxLength="50" />
           <Property Name="mark10_2" Type="varchar" MaxLength="50" />
-          <Property Name="mark10_3" Type="varchar" MaxLength="50" />
-          <Property Name="mark10_4" Type="varchar" MaxLength="50" />
-          <Property Name="mark10_5" Type="varchar" MaxLength="50" />
           <Property Name="max_mark_10" Type="varchar" MaxLength="50" />
           <Property Name="max_mark_4" Type="varchar" MaxLength="50" />
           <Property Name="max_mark_letter" Type="varchar" MaxLength="50" />
           <Property Name="is_pass" Type="varchar" MaxLength="50" />
-          <Property Name="year_study" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="term_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="curriculum_id" Type="int" Nullable="false" />
-          <Property Name="study_unit_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="student_id" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="student_course_id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="study_unit">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="alias" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -446,30 +428,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_study_results_study_unit">
-          <End Role="study_unit" Type="Self.study_unit" Multiplicity="1" />
-          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="study_unit">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="study_results">
-              <PropertyRef Name="study_unit_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_study_results_term">
-          <End Role="term" Type="Self.term" Multiplicity="1" />
-          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="term">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="study_results">
-              <PropertyRef Name="term_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="SEP25Team03ModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -487,7 +445,6 @@
           <EntitySet Name="student" EntityType="Self.student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="student_course" EntityType="Self.student_course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="study_results" EntityType="Self.study_results" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="study_unit" EntityType="Self.study_unit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="term" EntityType="Self.term" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_class_student_student_course" Association="Self.FK_class_student_student_course">
@@ -564,14 +521,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_study_results_student_course" Association="Self.FK_study_results_student_course">
             <End Role="student_course" EntitySet="student_course" />
-            <End Role="study_results" EntitySet="study_results" />
-          </AssociationSet>
-          <AssociationSet Name="FK_study_results_study_unit" Association="Self.FK_study_results_study_unit">
-            <End Role="study_unit" EntitySet="study_unit" />
-            <End Role="study_results" EntitySet="study_results" />
-          </AssociationSet>
-          <AssociationSet Name="FK_study_results_term" Association="Self.FK_study_results_term">
-            <End Role="term" EntitySet="term" />
             <End Role="study_results" EntitySet="study_results" />
           </AssociationSet>
         </EntityContainer>
@@ -737,11 +686,6 @@
           </Key>
           <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="birth_date" Type="DateTime" Precision="3" />
-          <Property Name="birth_place" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="faculty" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="class_student_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="student_course_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="class_student" Relationship="Self.FK_student_class_student" FromRole="student" ToRole="class_student" />
@@ -771,32 +715,16 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="mark10" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="mark10_2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="mark10_3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="mark10_4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="mark10_5" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="max_mark_10" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="max_mark_4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="max_mark_letter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="is_pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="year_study" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="term_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="curriculum_id" Type="Int32" Nullable="false" />
-          <Property Name="study_unit_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="student_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="student_course_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="curriculum" Relationship="Self.FK_study_results_curriculum" FromRole="study_results" ToRole="curriculum" />
           <NavigationProperty Name="student" Relationship="Self.FK_study_results_student" FromRole="study_results" ToRole="student" />
           <NavigationProperty Name="student_course" Relationship="Self.FK_study_results_student_course" FromRole="study_results" ToRole="student_course" />
-          <NavigationProperty Name="study_unit" Relationship="Self.FK_study_results_study_unit" FromRole="study_results" ToRole="study_unit" />
-          <NavigationProperty Name="term" Relationship="Self.FK_study_results_term" FromRole="study_results" ToRole="term" />
-        </EntityType>
-        <EntityType Name="study_unit">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="alias" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="study_results" Relationship="Self.FK_study_results_study_unit" FromRole="study_unit" ToRole="study_results" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -815,7 +743,6 @@
           <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="registration_results" Relationship="Self.FK_registration_results_term" FromRole="term" ToRole="registration_results" />
-          <NavigationProperty Name="study_results" Relationship="Self.FK_study_results_term" FromRole="term" ToRole="study_results" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -1025,30 +952,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_study_results_study_unit">
-          <End Role="study_unit" Type="Self.study_unit" Multiplicity="1" />
-          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="study_unit">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="study_results">
-              <PropertyRef Name="study_unit_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_study_results_term">
-          <End Role="term" Type="Self.term" Multiplicity="1" />
-          <End Role="study_results" Type="Self.study_results" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="term">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="study_results">
-              <PropertyRef Name="term_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AspNetUserRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
@@ -1069,7 +972,6 @@
           <EntitySet Name="students" EntityType="Self.student" />
           <EntitySet Name="student_course" EntityType="Self.student_course" />
           <EntitySet Name="study_results" EntityType="Self.study_results" />
-          <EntitySet Name="study_unit" EntityType="Self.study_unit" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="terms" EntityType="Self.term" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -1138,14 +1040,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_study_results_student_course" Association="Self.FK_study_results_student_course">
             <End Role="student_course" EntitySet="student_course" />
-            <End Role="study_results" EntitySet="study_results" />
-          </AssociationSet>
-          <AssociationSet Name="FK_study_results_study_unit" Association="Self.FK_study_results_study_unit">
-            <End Role="study_unit" EntitySet="study_unit" />
-            <End Role="study_results" EntitySet="study_results" />
-          </AssociationSet>
-          <AssociationSet Name="FK_study_results_term" Association="Self.FK_study_results_term">
-            <End Role="term" EntitySet="terms" />
             <End Role="study_results" EntitySet="study_results" />
           </AssociationSet>
           <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
@@ -1302,11 +1196,6 @@
               <MappingFragment StoreEntitySet="student">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="full_name" ColumnName="full_name" />
-                <ScalarProperty Name="birth_date" ColumnName="birth_date" />
-                <ScalarProperty Name="birth_place" ColumnName="birth_place" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="faculty" ColumnName="faculty" />
                 <ScalarProperty Name="class_student_id" ColumnName="class_student_id" />
                 <ScalarProperty Name="student_course_id" ColumnName="student_course_id" />
               </MappingFragment>
@@ -1328,27 +1217,13 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="mark10" ColumnName="mark10" />
                 <ScalarProperty Name="mark10_2" ColumnName="mark10_2" />
-                <ScalarProperty Name="mark10_3" ColumnName="mark10_3" />
-                <ScalarProperty Name="mark10_4" ColumnName="mark10_4" />
-                <ScalarProperty Name="mark10_5" ColumnName="mark10_5" />
                 <ScalarProperty Name="max_mark_10" ColumnName="max_mark_10" />
                 <ScalarProperty Name="max_mark_4" ColumnName="max_mark_4" />
                 <ScalarProperty Name="max_mark_letter" ColumnName="max_mark_letter" />
                 <ScalarProperty Name="is_pass" ColumnName="is_pass" />
-                <ScalarProperty Name="year_study" ColumnName="year_study" />
-                <ScalarProperty Name="term_id" ColumnName="term_id" />
                 <ScalarProperty Name="curriculum_id" ColumnName="curriculum_id" />
-                <ScalarProperty Name="study_unit_id" ColumnName="study_unit_id" />
                 <ScalarProperty Name="student_id" ColumnName="student_id" />
                 <ScalarProperty Name="student_course_id" ColumnName="student_course_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="study_unit">
-            <EntityTypeMapping TypeName="SEP25Team03Model.study_unit">
-              <MappingFragment StoreEntitySet="study_unit">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="alias" ColumnName="alias" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

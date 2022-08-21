@@ -293,7 +293,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         }
 
                         var query_curriculum = db.curricula.FirstOrDefault(c => c.student_course_id == studentCourseId && c.curriculum_id == curriculumId);
-
                         if (query_curriculum != null)
                         {
                             // Add registration results

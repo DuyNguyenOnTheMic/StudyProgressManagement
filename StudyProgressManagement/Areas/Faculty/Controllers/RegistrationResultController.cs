@@ -185,6 +185,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.ExpectationFailed);
                 }
 
+                // Check if student course has any registration results
+                var query_registrationresults = db.registration_results.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
+                if (query_registrationresults != null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
                 // Generate term name
                 string termName = "Học kỳ " + termId[termId.Length - 1];
 
@@ -198,13 +205,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         name = termName
                     });
                     db.SaveChanges();
-                }
-
-                // Check if student course has any registration results
-                var query_registrationresults = db.registration_results.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
-                if (query_registrationresults != null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
                 int itemsCount = dt.Rows.Count;

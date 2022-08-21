@@ -53,7 +53,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpGet]
         public ActionResult Edit(string id)
         {
-            return View(db.majors.Where(x => x.id == id).FirstOrDefault());
+            return View(db.majors.Find(id));
         }
 
         [HttpPost]
@@ -71,7 +71,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             try
             {
                 // Delete major
-                major major = db.majors.Where(x => x.id == id).FirstOrDefault();
+                major major = db.majors.Find(id);
                 db.majors.Remove(major);
                 db.SaveChanges();
             }

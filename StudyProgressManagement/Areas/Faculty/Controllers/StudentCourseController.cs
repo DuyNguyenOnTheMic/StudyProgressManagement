@@ -45,7 +45,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 // Return edit student course view
                 student_course student_course = db.student_course.Find(id);
                 ViewBag.major_id = new SelectList(db.majors, "id", "name", student_course.major_id);
-                return View(db.student_course.Where(x => x.id == id).FirstOrDefault());
+                return View(db.student_course.Find(id));
             }
         }
 
@@ -75,7 +75,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             try
             {
                 // Delete student course
-                student_course student_course = db.student_course.Where(x => x.id == id).FirstOrDefault();
+                student_course student_course = db.student_course.Find(id);
                 db.student_course.Remove(student_course);
                 db.SaveChanges();
             }
@@ -100,7 +100,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 db.class_student.RemoveRange(db.class_student.Where(c => c.student_course_id == id));
 
                 // Remove student course
-                student_course student_course = db.student_course.Where(x => x.id == id).FirstOrDefault();
+                student_course student_course = db.student_course.Find(id);
                 db.student_course.Remove(student_course);
                 db.SaveChanges();
             }

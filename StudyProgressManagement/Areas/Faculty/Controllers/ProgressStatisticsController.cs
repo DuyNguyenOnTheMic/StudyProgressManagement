@@ -88,8 +88,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
             var query_students = db.students.Where(s => s.student_course_id == studentCourseId).GroupBy(s => s.id).Select(s => new
             {
                 id = s.Key,
-                full_name = s.Select(n => n.full_name).FirstOrDefault(),
-                class_student = s.Select(c => c.class_student_id).FirstOrDefault(),
+                s.FirstOrDefault().full_name,
+                s.FirstOrDefault().class_student_id,
                 sum = query_studyResult.Where(item => item.student_id == s.Key).Select(item => item.curriculum.credits).DefaultIfEmpty(0).Sum()
             });
 

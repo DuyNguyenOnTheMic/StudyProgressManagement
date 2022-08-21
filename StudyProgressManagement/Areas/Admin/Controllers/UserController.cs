@@ -69,7 +69,7 @@ namespace StudyProgressManagement.Areas.Admin.Controllers
                 ViewBag.role_id = new SelectList(db.AspNetRoles, "id", "name");
             }
 
-            return View(db.AspNetUsers.Where(x => x.Id == id).FirstOrDefault());
+            return View(db.AspNetUsers.Find(id));
         }
 
         [HttpPost]

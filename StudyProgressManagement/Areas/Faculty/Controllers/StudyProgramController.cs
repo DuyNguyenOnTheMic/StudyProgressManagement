@@ -125,7 +125,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 }
 
                 // Check if student course already has study program
-                var query_studentcourse_curriculum = db.curricula.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
+                var query_studentcourse_curriculum = db.curricula.FirstOrDefault(s => s.student_course_id == studentCourseId);
                 if (query_studentcourse_curriculum != null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -157,8 +157,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         string learnBefore = row["Học trước – học sau"].ToString();
                         string editingNotes = row["Ghi chú chỉnh sửa"].ToString();
 
-                        var query_knowledge_type = db.knowledge_type.Where(k => k.knowledge_type_alias ==
-                        knowledgeTypeAlias && k.student_course_id == studentCourseId).FirstOrDefault();
+                        var query_knowledge_type = db.knowledge_type.FirstOrDefault(k => k.knowledge_type_alias ==
+                        knowledgeTypeAlias && k.student_course_id == studentCourseId);
                         if (query_knowledge_type == null)
                         {
                             // Add new knowledge type

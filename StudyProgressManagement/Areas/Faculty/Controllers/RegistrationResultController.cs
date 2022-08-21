@@ -172,7 +172,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 }
 
                 // Check if student course has study program
-                var query_studentcourse_curriculum = db.curricula.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
+                var query_studentcourse_curriculum = db.curricula.FirstOrDefault(s => s.student_course_id == studentCourseId);
                 if (query_studentcourse_curriculum == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.Conflict);
@@ -186,7 +186,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 }
 
                 // Check if student course has any registration results
-                var query_registrationresults = db.registration_results.Where(s => s.student_course_id == studentCourseId).FirstOrDefault();
+                var query_registrationresults = db.registration_results.FirstOrDefault(s => s.student_course_id == studentCourseId);
                 if (query_registrationresults != null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -292,8 +292,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             }
                         }
 
-                        var query_curriculum = db.curricula.Where(c => c.student_course_id
-                        == studentCourseId && c.curriculum_id == curriculumId).FirstOrDefault();
+                        var query_curriculum = db.curricula.FirstOrDefault(c => c.student_course_id == studentCourseId && c.curriculum_id == curriculumId);
 
                         if (query_curriculum != null)
                         {

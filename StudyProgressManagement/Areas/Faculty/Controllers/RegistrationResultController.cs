@@ -60,7 +60,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public string GetStudentInfo(string studentId)
         {
             // Get student information
-            var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
+            var query_student = db.students.Find(studentId);
             if (query_student != null)
             {
                 var studentInfo = query_student.full_name + " - " + studentId + " - " + query_student.student_course.course + " Ngành " + query_student.student_course.major.name;
@@ -72,7 +72,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         [HttpPost]
         public JsonResult GetData(string studentId)
         {
-            var query_student = db.students.Where(s => s.id == studentId).FirstOrDefault();
+            var query_student = db.students.Find(studentId);
             if (query_student != null)
             {
                 // Get registration results of student

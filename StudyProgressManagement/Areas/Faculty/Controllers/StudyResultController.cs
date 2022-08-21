@@ -271,8 +271,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             db.SaveChanges();
                         }
 
-                        var query_curriculum = db.curricula.Where(c => c.student_course_id == studentCourseId
-                        && c.curriculum_id == curriculumId).FirstOrDefault();
+                        var query_curriculum = db.curricula.Where(c => c.student_course_id
+                        == studentCourseId && c.curriculum_id == curriculumId).FirstOrDefault();
 
                         if (query_curriculum != null)
                         {

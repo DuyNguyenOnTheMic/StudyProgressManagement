@@ -226,11 +226,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         // Declare all columns
                         string studentId = row["Mã SV"].ToString();
                         string studentName = row["Họ tên SV"].ToString();
-                        string studentEmail = row["Email SV"].ToString();
-                        string studentBirthDate = row["Ngày sinh"].ToString();
-                        string studentGender = row["Giới tính"].ToString();
                         string studentClassId = row["Thuộc Lớp"].ToString();
-                        string studentFaculty = row["Thuộc Khoa"].ToString();
                         string curriculumId = row["Mã HP"].ToString();
                         string curriculumClassId = row["Mã LHP"].ToString();
                         string curriculumName = row["Tên HP"].ToString();
@@ -280,10 +276,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             db.SaveChanges();
                         }
 
-
-                        var query_curriculum = db.curricula.Where(c => c.curriculum_id ==
-                        curriculumId && c.student_course_id == studentCourseId).FirstOrDefault();
-
                         // Check if lecturer is null
                         if (!string.IsNullOrEmpty(lecturerId))
                         {
@@ -299,6 +291,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                                 db.SaveChanges();
                             }
                         }
+
+                        var query_curriculum = db.curricula.Where(c => c.student_course_id
+                        == studentCourseId && c.curriculum_id == curriculumId).FirstOrDefault();
 
                         if (query_curriculum != null)
                         {
@@ -344,12 +339,11 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public bool ValidateColumns(DataTable dt)
         {
             // Validate all columns in excel file
-            if (ContainColumn("Mã SV", dt) && ContainColumn("Họ tên SV", dt) && ContainColumn("Email SV", dt)
-                && ContainColumn("Ngày sinh", dt) && ContainColumn("Giới tính", dt) && ContainColumn("Thuộc Lớp", dt)
-                && ContainColumn("Thuộc Khoa", dt) && ContainColumn("Mã HP", dt) && ContainColumn("Mã LHP", dt)
-                && ContainColumn("Tên HP", dt) && ContainColumn("Số TC", dt) && ContainColumn("HT Đăng Ký", dt)
-                && ContainColumn("Ngày ĐK", dt) && ContainColumn("Người ĐK", dt) && ContainColumn("Mã giảng viên", dt)
-                && ContainColumn("Giảng viên", dt) && ContainColumn("Thời khóa biểu", dt))
+            if (ContainColumn("Mã SV", dt) && ContainColumn("Họ tên SV", dt) && ContainColumn("Thuộc Lớp", dt)
+                && ContainColumn("Mã HP", dt) && ContainColumn("Mã LHP", dt) && ContainColumn("Tên HP", dt)
+                && ContainColumn("Số TC", dt) && ContainColumn("HT Đăng Ký", dt) && ContainColumn("Ngày ĐK", dt)
+                && ContainColumn("Người ĐK", dt) && ContainColumn("Mã giảng viên", dt) && ContainColumn("Giảng viên", dt)
+                && ContainColumn("Thời khóa biểu", dt))
             {
                 return true;
             }

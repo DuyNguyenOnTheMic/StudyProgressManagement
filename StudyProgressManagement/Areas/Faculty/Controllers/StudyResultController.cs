@@ -97,8 +97,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     query_studyResult.Where(d => d.curriculum_id == s.id).FirstOrDefault().max_mark_10,
                     query_studyResult.Where(d => d.curriculum_id == s.id).FirstOrDefault().max_mark_letter,
                     query_studyResult.Where(d => d.curriculum_id == s.id).FirstOrDefault().is_pass,
-                    regis_result_id = query_regisResult.Where(r => r.curriculum_id == s.id)
-                    .Select(r => r.id).FirstOrDefault()
+                    regis_result_id = query_regisResult.Where(r => r.curriculum_id == s.id).Select(r => r.id).FirstOrDefault()
 
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }

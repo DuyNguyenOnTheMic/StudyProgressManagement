@@ -92,18 +92,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     knowledge_type_group_3 = s.knowledge_type.group_3,
                     s.knowledge_type.compulsory_credits,
                     s.knowledge_type.optional_credits,
-                    mark10 = query_studyResult.Where(d => d.curriculum_id == s.id)
-                    .Select(d => d.mark10).FirstOrDefault().ToString(),
-                    mark10_2 = query_studyResult.Where(d => d.curriculum_id == s.id)
-                    .Select(d => d.mark10_2).FirstOrDefault().ToString(),
-                    max_mark_10 = query_studyResult.Where(d => d.curriculum_id == s.id)
-                    .Select(d => d.max_mark_10).FirstOrDefault().ToString(),
-                    max_mark_letter = query_studyResult.Where(d => d.curriculum_id == s.id)
-                    .Select(d => d.max_mark_letter).FirstOrDefault().ToString(),
-                    is_pass = query_studyResult.Where(d => d.curriculum_id == s.id)
-                    .Select(d => d.is_pass).FirstOrDefault().ToString(),
+                    query_studyResult.Where(d => d.curriculum_id == s.id).FirstOrDefault().mark10,
+                    query_studyResult.Where(d => d.curriculum_id == s.id).FirstOrDefault().mark10_2,
+                    query_studyResult.Where(d => d.curriculum_id == s.id).FirstOrDefault().max_mark_10,
+                    query_studyResult.Where(d => d.curriculum_id == s.id).FirstOrDefault().max_mark_letter,
+                    query_studyResult.Where(d => d.curriculum_id == s.id).FirstOrDefault().is_pass,
                     regis_result_id = query_regisResult.Where(r => r.curriculum_id == s.id)
-                    .Select(r => r.id).FirstOrDefault().ToString()
+                    .Select(r => r.id).FirstOrDefault()
 
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }

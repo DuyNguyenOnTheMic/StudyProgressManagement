@@ -209,8 +209,10 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         new DataColumn("credits")
                     });
 
+                // Declare variables before import
                 int itemsCount = dt.Rows.Count;
                 var query_curriculum_studentCourse = db.curricula.Where(c => c.student_course_id == studentCourseId);
+
                 try
                 {
                     //Insert records to database table.

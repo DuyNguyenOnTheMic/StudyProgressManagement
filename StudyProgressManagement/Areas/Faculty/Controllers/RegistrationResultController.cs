@@ -240,7 +240,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         string lecturerName = row["Giảng viên"].ToString();
                         string curriculumClassSchedule = row["Thời khóa biểu"].ToString();
 
-                        var query_classstudent = db.class_student.Find(studentClassId);
+                        var query_classstudent = db.class_student.FirstOrDefault(c => c.id == studentClassId);
                         if (query_classstudent == null)
                         {
                             // Add class student
@@ -252,7 +252,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             db.SaveChanges();
                         }
 
-                        var query_student = db.students.Find(studentId);
+                        var query_student = db.students.FirstOrDefault(s => s.id == studentId);
                         if (query_student == null)
                         {
                             // Add student
@@ -266,7 +266,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             db.SaveChanges();
                         }
 
-                        var query_curriculum_class = db.curriculum_class.Find(curriculumClassId);
+                        var query_curriculum_class = db.curriculum_class.FirstOrDefault(c => c.id == curriculumClassId);
                         if (query_curriculum_class == null)
                         {
                             // Add curriculum class
@@ -281,7 +281,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         // Check if lecturer is null
                         if (!string.IsNullOrEmpty(lecturerId))
                         {
-                            var query_lecturer = db.lecturers.Find(lecturerId);
+                            var query_lecturer = db.lecturers.FirstOrDefault(c => c.id == lecturerId);
                             if (query_lecturer == null)
                             {
                                 // Add lecturer

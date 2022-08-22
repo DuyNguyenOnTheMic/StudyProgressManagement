@@ -97,6 +97,7 @@
 
 @section scripts {
     <script src="@Url.Content("~/app-assets/vendors/js/datatable/datatables.min.js")"></script>
+    <script src="@Url.Content("~/app-assets/vendors/js/datatable/natural.js")"></script>
     <script src="@Url.Content("~/app-assets/vendors/js/chart.min.js")"></script>
     <script src="@Url.Content("~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js")"></script>
     <script src="@Url.Content("~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js")"></script>
@@ -432,7 +433,8 @@
                     destroy: true,
                     order: [[4, 'desc']],
                     columnDefs: [
-                        { className: 'text-center', targets: [4] },
+                        { className: 'text-center', targets: [3, 4] },
+                        { type: 'natural', targets: [3] }
                     ],
                     columns: [
                         {

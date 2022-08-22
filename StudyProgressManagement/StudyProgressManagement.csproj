@@ -560,6 +560,7 @@
     <Content Include="app-assets\vendors\js\datatable\dataTables.rowGroup.min.js" />
     <Content Include="app-assets\vendors\js\datatable\jquery.dataTables.min.js" />
     <Content Include="app-assets\vendors\js\datatable\jszip.min.js" />
+    <Content Include="app-assets\vendors\js\datatable\natural.js" />
     <Content Include="app-assets\vendors\js\datatable\pdfmake.min.js" />
     <Content Include="app-assets\vendors\js\datatable\vfs_fonts.js" />
     <Content Include="app-assets\vendors\js\daterangepicker.js" />

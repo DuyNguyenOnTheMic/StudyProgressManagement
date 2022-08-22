@@ -157,8 +157,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         string learnBefore = row["Học trước – học sau"].ToString();
                         string editingNotes = row["Ghi chú chỉnh sửa"].ToString();
 
-                        var query_knowledge_type = db.knowledge_type.FirstOrDefault(k => k.knowledge_type_alias ==
-                        knowledgeTypeAlias && k.student_course_id == studentCourseId);
+                        var query_knowledge_type = db.knowledge_type.Where(k => k.knowledge_type_alias ==
+                        knowledgeTypeAlias && k.student_course_id == studentCourseId).FirstOrDefault();
                         if (query_knowledge_type == null)
                         {
                             // Add new knowledge type

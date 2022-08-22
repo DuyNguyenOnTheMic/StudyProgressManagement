@@ -48,7 +48,7 @@
                             </table>
                             <div class="container" id="viewStudyResult_instruction">
                                 <h4 class="card-title text-center mt-4">Nhập mã số sinh viên để xem kết quả đăng ký học tập</h4>
-                                <img class="mx-auto d-block w-50" alt="Instruction" src="@Url.ContentVersioned("~/assets/images/img_view_information.svg")" />
+                                <img class="mx-auto d-block w-50" alt="Instruction" src="@Url.Content("~/assets/images/img_view_information.svg")" />
                             </div>
                         </div>
                     </div>
@@ -59,13 +59,13 @@
 </section>
 <!-- Section end -->
 
-<link href="@Url.ContentVersioned("~/app-assets/vendors/css/tables/datatable/datatables.min.css")" rel="stylesheet" />
-<link href="@Url.ContentVersioned("~/app-assets/vendors/css/tables/datatable/rowGroup.dataTables.min.css")" rel="stylesheet" />
+<link href="@Url.Content("~/app-assets/vendors/css/tables/datatable/datatables.min.css")" rel="stylesheet" />
+<link href="@Url.Content("~/app-assets/vendors/css/tables/datatable/rowGroup.dataTables.min.css")" rel="stylesheet" />
 
 @section scripts {
-    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/moment.min.js")"></script>
-    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/jquery.dataTables.min.js")"></script>
-    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/dataTables.rowGroup.min.js")"></script>
+    <script src="@Url.Content("~/app-assets/vendors/js/moment.min.js")"></script>
+    <script src="@Url.Content("~/app-assets/vendors/js/datatable/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/app-assets/vendors/js/datatable/dataTables.rowGroup.min.js")"></script>
 
     <script type="text/javascript">
     @Html.JsMinify(@<text>

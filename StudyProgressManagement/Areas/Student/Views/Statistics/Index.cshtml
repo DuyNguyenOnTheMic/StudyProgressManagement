@@ -20,7 +20,7 @@
                         <div class="card-block">
                             <div class="container" id="viewStudyResult_instruction">
                                 <h4 class="card-title text-center mt-4">Xin lỗi, hệ thống chưa có dữ liệu về bạn</h4>
-                                <img class="mx-auto d-block w-50" alt="Instruction" src="@Url.ContentVersioned("~/assets/images/img_sorry.svg")" />
+                                <img class="mx-auto d-block w-50" alt="Instruction" src="@Url.Content("~/assets/images/img_sorry.svg")" />
                             </div>
                         </div>
                     </div>
@@ -54,8 +54,8 @@ else
     <!-- Section end -->
 
     @section scripts {
-        <script src="@Url.ContentVersioned("~/app-assets/vendors/js/chart.min.js")"></script>
-        <script src="@Url.ContentVersioned("~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js")"></script>
+        <script src="@Url.Content("~/app-assets/vendors/js/chart.min.js")"></script>
+        <script src="@Url.Content("~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js")"></script>
 
         <script type="text/javascript">
         @Html.JsMinify(@<text>

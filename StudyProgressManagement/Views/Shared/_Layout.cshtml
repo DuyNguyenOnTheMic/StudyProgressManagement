@@ -7,13 +7,13 @@
     <meta name="keywords" content="tiến độ học tập, quản lý tiến độ, đại học Văn Lang">
     <meta name="author" content="RetroTeam">
     <title>@ViewBag.Title</title>
-    <link rel="shortcut icon" type="image/x-icon" href="@Url.ContentVersioned("~/app-assets/img/ico/favicon.ico")">
-    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/pace/pace.min.js")" data-pace-options='{ "ajax": false }'></script>
-    <link href="@Url.ContentVersioned("~/app-assets/vendors/js/pace/themes/red/pace-theme-minimal.css")" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/x-icon" href="@Url.Content("~/app-assets/img/ico/favicon.ico")">
+    <script src="@Url.Content("~/app-assets/vendors/js/pace/pace.min.js")" data-pace-options='{ "ajax": false }'></script>
+    <link href="@Url.Content("~/app-assets/vendors/js/pace/themes/red/pace-theme-minimal.css")" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900%7CMontserrat:300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="@Url.ContentVersioned("~/app-assets/fonts/feather/style.min.css")" rel="stylesheet">
-    <link href="@Url.ContentVersioned("~/app-assets/fonts/simple-line-icons/style.min.css")" rel="stylesheet">
-    <link href="@Url.ContentVersioned("~/app-assets/fonts/font-awesome/css/font-awesome.min.css")" rel="stylesheet">
+    <link href="@Url.Content("~/app-assets/fonts/feather/style.min.css")" rel="stylesheet">
+    <link href="@Url.Content("~/app-assets/fonts/simple-line-icons/style.min.css")" rel="stylesheet">
+    <link href="@Url.Content("~/app-assets/fonts/font-awesome/css/font-awesome.min.css")" rel="stylesheet">
     @Styles.Render("~/Content/css")
 </head>
 <body data-col="2-columns" class=" 2-columns ">
@@ -23,7 +23,7 @@
             <div class="sidebar-header">
                 <div class="logo clearfix">
                     <a href="@Url.Action("Index", "Home", new { area = "" })" class="logo-text float-left">
-                        <div class="logo-img"><img src="@Url.ContentVersioned("~/app-assets/img/logos/vlu_logo.png")" alt="VLU Logo" /></div><span class="text align-middle"><img src="@Url.ContentVersioned("~/app-assets/img/logos/vlu_name.png")" class="ml-15" alt="VLU name" width="94" /></span>
+                        <div class="logo-img"><img src="@Url.Content("~/app-assets/img/logos/vlu_logo.png")" alt="VLU Logo" /></div><span class="text align-middle"><img src="@Url.Content("~/app-assets/img/logos/vlu_name.png")" class="ml-15" alt="VLU name" width="94" /></span>
                     </a><a id="sidebarToggle" href="javascript:;" class="nav-toggle d-none d-sm-none d-md-none d-lg-block"><i data-toggle="expanded" class="ft-disc toggle-icon"></i></a><a id="sidebarClose" href="javascript:;" class="nav-close d-block d-md-block d-lg-none d-xl-none"><i class="ft-circle"></i></a>
                 </div>
             </div>
@@ -123,7 +123,7 @@
                             </li>
                             <li class="dropdown nav-item mr-0">
                                 <a id="dropdownBasic3" href="#" data-toggle="dropdown" class="nav-link position-relative dropdown-user-link dropdown-toggle">
-                                    <span class="avatar avatar-online"><img id="navbar-avatar" src="@Url.ContentVersioned("~/assets/images/img_user_avatar.png")" alt="avatar" /></span>
+                                    <span class="avatar avatar-online"><img id="navbar-avatar" src="@Url.Content("~/assets/images/img_user_avatar.png")" alt="avatar" /></span>
                                     <p class="d-none">User Settings</p>
                                 </a>
                                 @using (Html.BeginForm("SignOut", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))

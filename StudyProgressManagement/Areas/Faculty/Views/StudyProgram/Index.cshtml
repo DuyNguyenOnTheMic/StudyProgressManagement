@@ -74,7 +74,7 @@
                             </table>
                             <div class="container" id="viewStudyProgram_instruction">
                                 <h4 class="card-title text-center mt-4">Chọn ngành và khoá để xem chương trình đào tạo</h4>
-                                <img class="mx-auto d-block w-50" alt="Instruction" src="@Url.ContentVersioned("~/assets/images/img_viewing.svg")" />
+                                <img class="mx-auto d-block w-50" alt="Instruction" src="@Url.Content("~/assets/images/img_viewing.svg")" />
                             </div>
                         </div>
                     </div>
@@ -86,13 +86,13 @@
 <!--Bootstrap Grid options Ends-->
 
 
-<link href="@Url.ContentVersioned("~/app-assets/vendors/css/tables/datatable/datatables.min.css")" rel="stylesheet" />
-<link href="@Url.ContentVersioned("~/app-assets/vendors/css/tables/datatable/rowGroup.dataTables.min.css")" rel="stylesheet" />
+<link href="@Url.Content("~/app-assets/vendors/css/tables/datatable/datatables.min.css")" rel="stylesheet" />
+<link href="@Url.Content("~/app-assets/vendors/css/tables/datatable/rowGroup.dataTables.min.css")" rel="stylesheet" />
 
 @section scripts {
 
-    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/jquery.dataTables.min.js")"></script>
-    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/dataTables.rowGroup.min.js")"></script>
+    <script src="@Url.Content("~/app-assets/vendors/js/datatable/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/app-assets/vendors/js/datatable/dataTables.rowGroup.min.js")"></script>
 
     <script type="text/javascript">
     @Html.JsMinify(@<text>

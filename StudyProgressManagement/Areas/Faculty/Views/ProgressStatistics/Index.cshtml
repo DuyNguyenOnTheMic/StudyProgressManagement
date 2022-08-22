@@ -50,7 +50,7 @@
                         </form>
                         <div class="container" id="viewStatistics_instruction">
                             <h4 class="card-title text-center m-4">Chọn ngành và khoá, sau đó nhập tín chỉ cần đạt để xem thống kê</h4>
-                            <img class="mx-auto d-block w-50" alt="Instruction" src="@Url.ContentVersioned("~/assets/images/img_view_statistics.svg")" />
+                            <img class="mx-auto d-block w-50" alt="Instruction" src="@Url.Content("~/assets/images/img_view_statistics.svg")" />
                         </div>
                         <div class="card-block chartjs" id="divChartJs" style="display: none">
                             <canvas id="column-chart"></canvas>
@@ -93,13 +93,13 @@
 </section>
 <!-- Section end -->
 
-<link href="@Url.ContentVersioned("~/app-assets/vendors/css/tables/datatable/datatables.min.css")" rel="stylesheet" />
+<link href="@Url.Content("~/app-assets/vendors/css/tables/datatable/datatables.min.css")" rel="stylesheet" />
 
 @section scripts {
-    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/datatable/datatables.min.js")"></script>
-    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/chart.min.js")"></script>
-    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js")"></script>
-    <script src="@Url.ContentVersioned("~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js")"></script>
+    <script src="@Url.Content("~/app-assets/vendors/js/datatable/datatables.min.js")"></script>
+    <script src="@Url.Content("~/app-assets/vendors/js/chart.min.js")"></script>
+    <script src="@Url.Content("~/app-assets/vendors/js/chartjs-plugin-datalabels.min.js")"></script>
+    <script src="@Url.Content("~/app-assets/vendors/js/jquery.signalR-2.4.3.min.js")"></script>
     <script src="~/signalr/hubs"></script>
 
     <script type="text/javascript">

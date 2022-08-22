@@ -200,8 +200,6 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                int itemsCount = dt.Rows.Count;
-
                 // Create a datatable for error curriculums
                 DataTable errorCurriculums = new DataTable("Grid");
                 errorCurriculums.Columns.AddRange(
@@ -211,6 +209,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                         new DataColumn("credits")
                     });
 
+                int itemsCount = dt.Rows.Count;
+                var query_curriculum_studentCourse = db.curricula.Where(c => c.student_course_id == studentCourseId);
                 try
                 {
                     //Insert records to database table.
@@ -257,7 +257,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             db.SaveChanges();
                         }
 
-                        var query_curriculum = db.curricula.FirstOrDefault(c => c.student_course_id == studentCourseId && c.curriculum_id == curriculumId);
+                        var query_curriculum = query_curriculum_studentCourse.FirstOrDefault(c => c.curriculum_id == curriculumId);
                         if (query_curriculum != null)
                         {
                             // Add study results

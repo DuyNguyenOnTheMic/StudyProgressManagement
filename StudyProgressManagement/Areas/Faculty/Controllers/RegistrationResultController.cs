@@ -107,7 +107,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public JsonResult LoadClassStudents(int StudentCourseId)
         {
             // get class students data from database
-            return Json(db.class_student.Where(s => s.student_course_id == StudentCourseId).Select(s => new
+            return Json(db.class_student.Where(s => s.student_course_id == StudentCourseId).ToList().OrderBy(x => new string(x.id.Where(char.IsLetter).ToArray())).ThenBy(x =>
+            {
+                // Natural sorting
+                if (int.TryParse(new string(x.id.Where(char.IsDigit).ToArray()), out int number))
+                    return number;
+                return -1;
+            }).Select(s => new
             {
                 s.id
             }).ToList(), JsonRequestBehavior.AllowGet);

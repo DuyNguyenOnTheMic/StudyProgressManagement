@@ -470,7 +470,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             {
                 Assert.IsNotNull(json.id);
                 Assert.IsNotNull(json.full_name);
-                Assert.IsNotNull(json.class_student);
+                Assert.IsNotNull(json.class_student_id);
                 Assert.IsNotNull(json.sum);
             }
         }
@@ -498,8 +498,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
                     "JSON record does not contain \"id\" required property.");
                 Assert.IsNotNull(json.full_name,
                     "JSON record does not contain \"full_name\" required property.");
-                Assert.IsNotNull(json.class_student,
-                    "JSON record does not contain \"class_student\" required property.");
+                Assert.IsNotNull(json.class_student_id,
+                    "JSON record does not contain \"class_student_id\" required property.");
                 Assert.IsNotNull(json.sum,
                     "JSON record does not contain \"sum\" required property.");
             }
@@ -574,8 +574,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
                     "JSON record does not contain \"id\" required property.");
                 Assert.IsNotNull(json.full_name,
                     "JSON record does not contain \"full_name\" required property.");
-                Assert.IsNotNull(json.class_student,
-                    "JSON record does not contain \"class_student\" required property.");
+                Assert.IsNotNull(json.class_student_id,
+                    "JSON record does not contain \"class_student_id\" required property.");
                 Assert.IsNotNull(json.sum,
                     "JSON record does not contain \"sum\" required property.");
             }

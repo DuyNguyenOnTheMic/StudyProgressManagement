@@ -20,7 +20,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public JsonResult GetData()
         {
             // Get student courses data from datatabse
-            return Json(db.student_course.Select(s => new
+            return Json(db.student_course.ToList().OrderBy(x => new string(x.course.Where(char.IsLetter).ToArray())).ThenBy(x =>
+            {
+                // Natural sorting
+                if (int.TryParse(new string(x.course.Where(char.IsDigit).ToArray()), out int number))
+                    return number;
+                return -1;
+            }).Select(s => new
             {
                 s.id,
                 s.course,

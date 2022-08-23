@@ -23,7 +23,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
         public JsonResult LoadStudentCourses(string majorId)
         {
             // get student courses data from database
-            return Json(db.student_course.Where(s => s.major_id == majorId).Select(s => new
+            return Json(db.student_course.Where(s => s.major_id == majorId).ToList().OrderBy(x => new string(x.course.Where(char.IsLetter).ToArray())).ThenBy(x =>
+            {
+                // Natural sorting
+                if (int.TryParse(new string(x.course.Where(char.IsDigit).ToArray()), out int number))
+                    return number;
+                return -1;
+            }).Select(s => new
             {
                 s.id,
                 s.course

@@ -249,14 +249,16 @@
                                                 title: fileName
                                             }
                                         ],
-                                        columnDefs: [{
-                                            defaultContent: '',
-                                            searchable: false,
-                                            orderable: false,
-                                            className: 'text-center',
-                                            width: '20px',
-                                            targets: 0,
-                                        }],
+                                        columnDefs: [
+                                            {
+                                                defaultContent: '',
+                                                searchable: false,
+                                                orderable: false,
+                                                width: '20px',
+                                                targets: 0
+                                            },
+                                            { className: 'text-center', targets: [0, 3] }
+                                        ],
                                         order: [[1, 'asc']],
                                         columns: [
                                             { 'data': '' },

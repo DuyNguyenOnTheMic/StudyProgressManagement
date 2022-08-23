@@ -70,6 +70,7 @@
                                         <th></th>
                                         <th> MSSV </th>
                                         <th> Họ và tên </th>
+                                        <th> Lớp </th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -132,6 +133,7 @@
     <script src="@Url.Content("~/app-assets/vendors/js/moment.min.js")"></script>
     <script src="@Url.Content("~/app-assets/vendors/js/datatable/jquery.dataTables.min.js")"></script>
     <script src="@Url.Content("~/app-assets/vendors/js/datatable/dataTables.rowGroup.min.js")"></script>
+    <script src="@Url.Content("~/app-assets/vendors/js/datatable/natural.min.js")"></script>
 
     <script type="text/javascript">
     @Html.JsMinify(@<text>
@@ -240,16 +242,18 @@
                             {
                                 searchable: false,
                                 orderable: false,
-                                className: 'text-center',
                                 width: '20px',
-                                targets: [0, 3]
-                            }
+                                targets: [0, 4]
+                            },
+                            { className: 'text-center', targets: [0, 3, 4] },
+                            { type: 'natural', targets: [3] }
                         ],
 
                         columns: [
                             { 'data': null },
                             { 'data': 'id' },
                             { 'data': 'full_name' },
+                            { 'data': 'class_student_id' },
                             {
                                 'data': 'id', 'render': function (data) {
                                     return "<a class='viewRegistrationResult success p - 0' data-original-title='' title='' onclick=PopulateRegistrationResult('" + data + "')><i class='fa fa-info-circle font-medium-3 mr-2'></i></a>";

@@ -41,7 +41,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 s.class_student_id == classStudentId && s.full_name.Contains(studentName)).Select(s => new
                 {
                     s.id,
-                    s.full_name
+                    s.full_name,
+                    s.class_student_id
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }
             else
@@ -51,7 +52,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                 s.full_name.Contains(studentName)).Select(s => new
                 {
                     s.id,
-                    s.full_name
+                    s.full_name,
+                    s.class_student_id
                 }).ToList(), JsonRequestBehavior.AllowGet);
             }
         }

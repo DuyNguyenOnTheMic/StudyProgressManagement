@@ -38,7 +38,6 @@ namespace StudyProgressManagement.Areas.Admin.Controllers.Tests
             {
                 Assert.IsNotNull(json.id);
                 Assert.IsNotNull(json.email);
-                Assert.IsNotNull(json.role);
             }
         }
 
@@ -60,8 +59,6 @@ namespace StudyProgressManagement.Areas.Admin.Controllers.Tests
                     "JSON record does not contain \"id\" required property.");
                 Assert.IsNotNull(json.email,
                     "JSON record does not contain \"email\" required property.");
-                Assert.IsNotNull(json.role,
-                    "JSON record does not contain \"role\" required property.");
             }
         }
 
@@ -119,8 +116,6 @@ namespace StudyProgressManagement.Areas.Admin.Controllers.Tests
                     "JSON record does not contain \"id\" required property.");
                 Assert.IsNotNull(json.email,
                     "JSON record does not contain \"email\" required property.");
-                Assert.IsNotNull(json.role,
-                    "JSON record does not contain \"role\" required property.");
             }
         }
 

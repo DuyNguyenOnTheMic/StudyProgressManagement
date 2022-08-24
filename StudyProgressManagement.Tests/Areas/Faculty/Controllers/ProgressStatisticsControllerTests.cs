@@ -155,8 +155,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.LoadKnowledgeType(query_studentCourse.id);
+            var query_knowledgeType = db.knowledge_type.FirstOrDefault();
+            var actionResult = controller.LoadKnowledgeType(query_knowledgeType.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -175,8 +175,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.LoadKnowledgeType(query_studentCourse.id);
+            var query_knowledgeType = db.knowledge_type.FirstOrDefault();
+            var actionResult = controller.LoadKnowledgeType(query_knowledgeType.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -196,8 +196,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.LoadKnowledgeType(query_studentCourse.id);
+            var query_knowledgeType = db.knowledge_type.FirstOrDefault();
+            var actionResult = controller.LoadKnowledgeType(query_knowledgeType.student_course_id);
             dynamic jsonCollection = actionResult.Data;
             int count = 0;
             foreach (var value in jsonCollection)
@@ -217,8 +217,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.LoadKnowledgeType(query_studentCourse.id);
+            var query_knowledgeType = db.knowledge_type.FirstOrDefault();
+            var actionResult = controller.LoadKnowledgeType(query_knowledgeType.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert                
@@ -233,8 +233,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.LoadKnowledgeType(query_studentCourse.id);
+            var query_knowledgeType = db.knowledge_type.FirstOrDefault();
+            var actionResult = controller.LoadKnowledgeType(query_knowledgeType.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -257,9 +257,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_knowledge_Type = db.knowledge_type.Where(s => s.student_course_id == query_studentCourse.id);
-            var actionResult = controller.LoadKnowledgeType(query_studentCourse.id);
+            var query_knowledgeType = db.knowledge_type.FirstOrDefault();
+            var actionResult = controller.LoadKnowledgeType(query_knowledgeType.student_course_id);
+            var query_knowledge_Type = db.knowledge_type.Where(s => s.student_course_id == query_knowledgeType.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -460,8 +460,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             bool isTrue = true;
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.GetStudentList(query_studentCourse.id, inputCredits, inputKnowledge, isTrue);
+            var query_studyResult = db.study_results.FirstOrDefault();
+            var actionResult = controller.GetStudentList(query_studyResult.student_course_id, inputCredits, inputKnowledge, isTrue);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -486,8 +486,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             bool isTrue = true;
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.GetStudentList(query_studentCourse.id, inputCredits, inputKnowledge, isTrue);
+            var query_studyResult = db.study_results.FirstOrDefault();
+            var actionResult = controller.GetStudentList(query_studyResult.student_course_id, inputCredits, inputKnowledge, isTrue);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -516,8 +516,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             bool isTrue = true;
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.GetStudentList(query_studentCourse.id, inputCredits, inputKnowledge, isTrue);
+            var query_studyResult = db.study_results.FirstOrDefault();
+            var actionResult = controller.GetStudentList(query_studyResult.student_course_id, inputCredits, inputKnowledge, isTrue);
             dynamic jsonCollection = actionResult.Data;
             int count = 0;
             foreach (var value in jsonCollection)
@@ -540,8 +540,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             bool isTrue = true;
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.GetStudentList(query_studentCourse.id, inputCredits, inputKnowledge, isTrue);
+            var query_studyResult = db.study_results.FirstOrDefault();
+            var actionResult = controller.GetStudentList(query_studyResult.student_course_id, inputCredits, inputKnowledge, isTrue);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert                
@@ -559,8 +559,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             bool isTrue = true;
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.GetStudentList(query_studentCourse.id, inputCredits, inputKnowledge, isTrue);
+            var query_studyResult = db.study_results.FirstOrDefault();
+            var actionResult = controller.GetStudentList(query_studyResult.student_course_id, inputCredits, inputKnowledge, isTrue);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -593,8 +593,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
 
             // Act
             var query_studyResult = db.study_results.Where(item => item.is_pass != null && item.curriculum.knowledge_type.knowledge_type_alias.Equals(inputKnowledge));
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_students = db.students.Where(s => s.student_course_id == query_studentCourse.id).GroupBy(s => s.id).Select(s => new
+            var query_studyResult_first = db.study_results.FirstOrDefault();
+            var query_students = db.students.Where(s => s.student_course_id == query_studyResult_first.student_course_id).GroupBy(s => s.id).Select(s => new
             {
                 id = s.Key,
                 full_name = s.Select(n => n.full_name).FirstOrDefault(),
@@ -602,7 +602,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
                 sum = query_studyResult.Where(item => item.student_id == s.Key).Select(item => item.curriculum.credits).DefaultIfEmpty(0).Sum()
             }).Where(s => s.sum >= inputCredits);
 
-            var actionResult = controller.GetStudentList(query_studentCourse.id, inputCredits, inputKnowledge, isTrue);
+            var actionResult = controller.GetStudentList(query_studyResult_first.student_course_id, inputCredits, inputKnowledge, isTrue);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -621,8 +621,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
 
             // Act
             var query_studyResult = db.study_results.Where(item => item.is_pass != null && item.curriculum.knowledge_type.knowledge_type_alias.Equals(inputKnowledge));
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_students = db.students.Where(s => s.student_course_id == query_studentCourse.id).GroupBy(s => s.id).Select(s => new
+            var query_studyResult_first = db.study_results.FirstOrDefault();
+            var query_students = db.students.Where(s => s.student_course_id == query_studyResult_first.id).GroupBy(s => s.id).Select(s => new
             {
                 id = s.Key,
                 full_name = s.Select(n => n.full_name).FirstOrDefault(),
@@ -630,7 +630,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
                 sum = query_studyResult.Where(item => item.student_id == s.Key).Select(item => item.curriculum.credits).DefaultIfEmpty(0).Sum()
             }).Where(s => s.sum < inputCredits);
 
-            var actionResult = controller.GetStudentList(query_studentCourse.id, inputCredits, inputKnowledge, isTrue);
+            var actionResult = controller.GetStudentList(query_studyResult_first.id, inputCredits, inputKnowledge, isTrue);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert

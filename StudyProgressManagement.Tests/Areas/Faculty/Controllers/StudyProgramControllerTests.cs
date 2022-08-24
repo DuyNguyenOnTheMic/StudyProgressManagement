@@ -34,8 +34,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.GetData(query_studentCourse.id);
+            var query_curriculum = db.curricula.FirstOrDefault();
+            var actionResult = controller.GetData(query_curriculum.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -55,8 +55,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.GetData(query_studentCourse.id);
+            var query_curriculum = db.curricula.FirstOrDefault();
+            var actionResult = controller.GetData(query_curriculum.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -78,8 +78,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.GetData(query_studentCourse.id);
+            var query_curriculum = db.curricula.FirstOrDefault();
+            var actionResult = controller.GetData(query_curriculum.student_course_id);
             dynamic jsonCollection = actionResult.Data;
             int count = 0;
             foreach (var value in jsonCollection)
@@ -99,8 +99,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.GetData(query_studentCourse.id);
+            var query_curriculum = db.curricula.FirstOrDefault();
+            var actionResult = controller.GetData(query_curriculum.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert                
@@ -115,8 +115,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.GetData(query_studentCourse.id);
+            var query_curriculum = db.curricula.FirstOrDefault();
+            var actionResult = controller.GetData(query_curriculum.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -141,9 +141,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_curriculum = db.curricula.Where(s => s.student_course_id == query_studentCourse.id);
-            var actionResult = controller.GetData(query_studentCourse.id);
+            var query_curriculum_first = db.curricula.FirstOrDefault();
+            var query_curriculum = db.curricula.Where(s => s.student_course_id == query_curriculum_first.student_course_id);
+            var actionResult = controller.GetData(query_curriculum_first.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert

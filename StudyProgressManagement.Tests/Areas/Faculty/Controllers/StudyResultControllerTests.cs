@@ -48,9 +48,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var actionResult = controller.Search(query_studentCourse.id, query_classStudent.id, "");
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var actionResult = controller.Search(query_classStudent.student_course_id, query_classStudent.id, "");
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -71,9 +70,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var actionResult = controller.Search(query_studentCourse.id, query_classStudent.id, "");
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var actionResult = controller.Search(query_classStudent.student_course_id, query_classStudent.id, "");
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -97,9 +95,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var actionResult = controller.Search(query_studentCourse.id, query_classStudent.id, "");
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var actionResult = controller.Search(query_classStudent.student_course_id, query_classStudent.id, "");
             dynamic jsonCollection = actionResult.Data;
             int count = 0;
             foreach (var value in jsonCollection)
@@ -119,9 +116,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var actionResult = controller.Search(query_studentCourse.id, query_classStudent.id, "");
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var actionResult = controller.Search(query_classStudent.student_course_id, query_classStudent.id, "");
             dynamic jsonCollection = actionResult.Data;
 
             // Assert                
@@ -136,9 +132,8 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var actionResult = controller.Search(query_studentCourse.id, query_classStudent.id, "");
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var actionResult = controller.Search(query_classStudent.student_course_id, query_classStudent.id, "");
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -165,12 +160,11 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var query_count = db.students.Where(s => s.student_course_id == query_studentCourse.id &&
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var query_count = db.students.Where(s => s.student_course_id == query_classStudent.student_course_id &&
                 s.class_student_id == query_classStudent.id && s.full_name.Contains(""));
 
-            var actionResult = controller.Search(query_studentCourse.id, query_classStudent.id, "");
+            var actionResult = controller.Search(query_classStudent.student_course_id, query_classStudent.id, "");
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -185,10 +179,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var query_student = db.students.Where(c => c.student_course_id == query_studentCourse.id && c.class_student_id == query_classStudent.id).FirstOrDefault();
-            var actionResult = controller.Search(query_studentCourse.id, "", query_student.full_name);
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var query_student = db.students.Where(c => c.student_course_id == query_classStudent.student_course_id && c.class_student_id == query_classStudent.id).FirstOrDefault();
+            var actionResult = controller.Search(query_classStudent.student_course_id, "", query_student.full_name);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -209,10 +202,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var query_student = db.students.Where(c => c.student_course_id == query_studentCourse.id && c.class_student_id == query_classStudent.id).FirstOrDefault();
-            var actionResult = controller.Search(query_studentCourse.id, "", query_student.full_name);
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var query_student = db.students.Where(c => c.student_course_id == query_classStudent.student_course_id && c.class_student_id == query_classStudent.id).FirstOrDefault();
+            var actionResult = controller.Search(query_classStudent.student_course_id, "", query_student.full_name);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -236,10 +228,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var query_student = db.students.Where(c => c.student_course_id == query_studentCourse.id && c.class_student_id == query_classStudent.id).FirstOrDefault();
-            var actionResult = controller.Search(query_studentCourse.id, "", query_student.full_name);
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var query_student = db.students.Where(c => c.student_course_id == query_classStudent.student_course_id && c.class_student_id == query_classStudent.id).FirstOrDefault();
+            var actionResult = controller.Search(query_classStudent.student_course_id, "", query_student.full_name);
             dynamic jsonCollection = actionResult.Data;
             int count = 0;
             foreach (var value in jsonCollection)
@@ -259,10 +250,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var query_student = db.students.Where(c => c.student_course_id == query_studentCourse.id && c.class_student_id == query_classStudent.id).FirstOrDefault();
-            var actionResult = controller.Search(query_studentCourse.id, "", query_student.full_name);
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var query_student = db.students.Where(c => c.student_course_id == query_classStudent.student_course_id && c.class_student_id == query_classStudent.id).FirstOrDefault();
+            var actionResult = controller.Search(query_classStudent.student_course_id, "", query_student.full_name);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert                
@@ -277,10 +267,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var query_student = db.students.Where(c => c.student_course_id == query_studentCourse.id && c.class_student_id == query_classStudent.id).FirstOrDefault();
-            var actionResult = controller.Search(query_studentCourse.id, "", query_student.full_name);
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var query_student = db.students.Where(c => c.student_course_id == query_classStudent.student_course_id && c.class_student_id == query_classStudent.id).FirstOrDefault();
+            var actionResult = controller.Search(query_classStudent.student_course_id, "", query_student.full_name);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -307,13 +296,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(c => c.student_course_id == query_studentCourse.id).FirstOrDefault();
-            var query_student = db.students.Where(c => c.student_course_id == query_studentCourse.id && c.class_student_id == query_classStudent.id).FirstOrDefault();
-            var query_count = db.students.Where(s => s.student_course_id == query_studentCourse.id &&
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var query_student = db.students.Where(c => c.student_course_id == query_classStudent.student_course_id && c.class_student_id == query_classStudent.id).FirstOrDefault();
+            var query_count = db.students.Where(s => s.student_course_id == query_classStudent.student_course_id &&
                 s.full_name.Contains(query_student.full_name));
 
-            var actionResult = controller.Search(query_studentCourse.id, "", query_student.full_name);
+            var actionResult = controller.Search(query_classStudent.student_course_id, "", query_student.full_name);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -609,12 +597,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         public void Get_Class_Student_Json_Data_Not_Null_Test()
         {
             // Arrange
-            var controller = new StudyResultController();
+            var controller = new RegistrationResultController();
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.LoadClassStudents(query_studentCourse.id);
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var actionResult = controller.LoadClassStudents(query_classStudent.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -629,12 +617,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         public void Get_Class_Student_Json_Data_Correctly_Test()
         {
             // Arrange
-            var controller = new StudyResultController();
+            var controller = new RegistrationResultController();
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.LoadClassStudents(query_studentCourse.id);
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var actionResult = controller.LoadClassStudents(query_classStudent.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -650,12 +638,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         public void Class_Student_Json_Data_Should_Convert_To_IEnumerable_Test()
         {
             // Arrange
-            var controller = new StudyResultController();
+            var controller = new RegistrationResultController();
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.LoadClassStudents(query_studentCourse.id);
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var actionResult = controller.LoadClassStudents(query_classStudent.student_course_id);
             dynamic jsonCollection = actionResult.Data;
             int count = 0;
             foreach (var value in jsonCollection)
@@ -671,12 +659,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         public void Class_Student_Json_Data_Index_at_0_Should_Not_Be_Null_Test()
         {
             // Arrange
-            var controller = new StudyResultController();
+            var controller = new RegistrationResultController();
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.LoadClassStudents(query_studentCourse.id);
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var actionResult = controller.LoadClassStudents(query_classStudent.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert                
@@ -687,12 +675,12 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         public void Class_Student_JSon_Data_Should_Be_Indexable_Test()
         {
             // Arrange
-            var controller = new StudyResultController();
+            var controller = new RegistrationResultController();
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var actionResult = controller.LoadClassStudents(query_studentCourse.id);
+            var query_classStudent = db.class_student.FirstOrDefault();
+            var actionResult = controller.LoadClassStudents(query_classStudent.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert
@@ -711,13 +699,13 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers.Tests
         public void Class_Student_JSon_Data_Count_Should_Be_Equal_Test()
         {
             // Arrange
-            var controller = new StudyResultController();
+            var controller = new RegistrationResultController();
             var db = new SEP25Team03Entities();
 
             // Act
-            var query_studentCourse = db.student_course.FirstOrDefault();
-            var query_classStudent = db.class_student.Where(s => s.student_course_id == query_studentCourse.id);
-            var actionResult = controller.LoadClassStudents(query_studentCourse.id);
+            var query_classStudent_first = db.class_student.FirstOrDefault();
+            var query_classStudent = db.class_student.Where(s => s.student_course_id == query_classStudent_first.student_course_id);
+            var actionResult = controller.LoadClassStudents(query_classStudent_first.student_course_id);
             dynamic jsonCollection = actionResult.Data;
 
             // Assert

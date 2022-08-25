@@ -656,11 +656,8 @@
     <Content Include="Areas\Faculty\Views\StudyProgram\Import.cshtml" />
     <Content Include="Areas\Faculty\Views\StudyProgram\Index.cshtml" />
     <Content Include="Areas\Faculty\Views\StudyResult\Import.cshtml" />
-    <Content Include="assets\files\CTDT_K3_CNTT_Mau.xlsx" />
-    <Content Include="assets\files\KQHT_K3_CNTT_Mau.xlsx" />
     <Content Include="Areas\Faculty\Views\StudyResult\Index.cshtml" />
     <Content Include="Areas\Faculty\Views\RegistrationResult\Import.cshtml" />
-    <Content Include="assets\files\KQDKHT_K3_CNTT_Mau.xlsx" />
     <Content Include="Areas\Faculty\Views\StudyResult\Search.cshtml" />
     <Content Include="Areas\Faculty\Views\RegistrationResult\Index.cshtml" />
     <Content Include="Areas\Faculty\Views\RegistrationResult\Search.cshtml" />
@@ -679,6 +676,9 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="assets\files\CTDT_K25_KTPM_Mau.xlsx" />
+    <Content Include="assets\files\KQDKHT_K25_KTPM_HK213_Mau.xlsx" />
+    <Content Include="assets\files\KQHT_K25_KTPM_Mau.xlsx" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

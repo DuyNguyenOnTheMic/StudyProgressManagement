@@ -12,6 +12,7 @@ namespace StudyProgressManagement.Areas.Student.Controllers
 
         // GET: Student/LearningProgress
         [GetStudentID]
+        [OutputCache(Duration = 600, VaryByParam = "userMail")]
         public ActionResult Index()
         {
             return View();

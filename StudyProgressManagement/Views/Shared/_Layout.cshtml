@@ -22,7 +22,7 @@
         <div data-active-color="white" data-background-color="black" class="app-sidebar">
             <div class="sidebar-header">
                 <div class="logo clearfix">
-                    <a href="@Url.Action("Index", "Home", new { area = "" })" class="logo-text float-left">
+                    <a href="@Url.Action("Index", "Home", new { Area = "" })" class="logo-text float-left">
                         <div class="logo-img"><img src="@Url.Content("~/app-assets/img/logos/vlu_logo.png")" alt="VLU Logo" /></div><span class="text align-middle"><img src="@Url.Content("~/app-assets/img/logos/vlu_name.png")" class="ml-15" alt="VLU name" width="94" /></span>
                     </a><a id="sidebarToggle" href="javascript:;" class="nav-toggle d-none d-sm-none d-md-none d-lg-block"><i data-toggle="expanded" class="ft-disc toggle-icon"></i></a><a id="sidebarClose" href="javascript:;" class="nav-close d-block d-md-block d-lg-none d-xl-none"><i class="ft-circle"></i></a>
                 </div>
@@ -31,7 +31,7 @@
                 <div class="nav-container">
                     <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
                         <li class="@(ViewBag.Title == "Trang chủ" ? "active" : "nav-item")">
-                            <a href="@Url.Action("Index", "Home", new { area = "" })"><i class="icon-home"></i><span data-i18n="" class="menu-title">Trang chủ</span></a>
+                            <a href="@Url.Action("Index", "Home", new { Area = "" })"><i class="icon-home"></i><span data-i18n="" class="menu-title">Trang chủ</span></a>
                         </li>
                         @if (User.IsInRole("Faculty"))
                         {
@@ -39,10 +39,10 @@
                                 <a><i class="icon-layers"></i><span data-i18n="" class="menu-title">CTĐT</span></a>
                                 <ul class="menu-content">
                                     <li class="@(ViewBag.Title == "Xem chương trình đào tạo" ? "active" : "")">
-                                        <a href="@Url.Action("Index", "StudyProgram", new { area = "Faculty" })" class="menu-item">Xem CTĐT</a>
+                                        <a href="@Url.Action("Index", "StudyProgram", new { Area = "Faculty" })" class="menu-item">Xem CTĐT</a>
                                     </li>
                                     <li class="@(ViewBag.Title == "Import chương trình đào tạo" ? "active" : "")">
-                                        <a href="@Url.Action("Import", "StudyProgram", new { area = "Faculty" })" class="menu-item">Import CTĐT</a>
+                                        <a href="@Url.Action("Import", "StudyProgram", new { Area = "Faculty" })" class="menu-item">Import CTĐT</a>
                                     </li>
                                 </ul>
                             </li>
@@ -50,13 +50,13 @@
                                 <a><i class="icon-book-open"></i><span data-i18n="" class="menu-title">KQ học tập</span></a>
                                 <ul class="menu-content">
                                     <li class="@(ViewBag.Title == "Xem kết quả học tập" ? "active" : "")">
-                                        <a href="@Url.Action("Index", "StudyResult", new { area = "Faculty" })" class="menu-item">Xem KQ học tập</a>
+                                        <a href="@Url.Action("Index", "StudyResult", new { Area = "Faculty" })" class="menu-item">Xem KQ học tập</a>
                                     </li>
                                     <li class="@(ViewBag.Title == "Tìm kết quả học tập" ? "active" : "")">
-                                        <a href="@Url.Action("Search", "StudyResult", new { area = "Faculty" })" class="menu-item">Tìm KQ học tập</a>
+                                        <a href="@Url.Action("Search", "StudyResult", new { Area = "Faculty" })" class="menu-item">Tìm KQ học tập</a>
                                     </li>
                                     <li class="@(ViewBag.Title == "Import kết quả học tập" ? "active" : "")">
-                                        <a href="@Url.Action("Import", "StudyResult", new { area = "Faculty" })" class="menu-item">Import KQ học tập</a>
+                                        <a href="@Url.Action("Import", "StudyResult", new { Area = "Faculty" })" class="menu-item">Import KQ học tập</a>
                                     </li>
                                 </ul>
                             </li>
@@ -65,13 +65,13 @@
                                 <a><i class="icon-note"></i><span data-i18n="" class="menu-title">KQĐK học tập</span></a>
                                 <ul class="menu-content">
                                     <li class="@(ViewBag.Title == "Xem kết quả đăng ký học tập" ? "active" : "")">
-                                        <a href="@Url.Action("Index", "RegistrationResult", new { area = "Faculty" })" class="menu-item">Xem KQĐK học tập</a>
+                                        <a href="@Url.Action("Index", "RegistrationResult", new { Area = "Faculty" })" class="menu-item">Xem KQĐK học tập</a>
                                     </li>
                                     <li class="@(ViewBag.Title == "Tìm kết quả đăng ký học tập" ? "active" : "")">
-                                        <a href="@Url.Action("Search", "RegistrationResult", new { area = "Faculty" })" class="menu-item">Tìm KQĐK học tập</a>
+                                        <a href="@Url.Action("Search", "RegistrationResult", new { Area = "Faculty" })" class="menu-item">Tìm KQĐK học tập</a>
                                     </li>
                                     <li class="@(ViewBag.Title == "Import kết quả đăng ký học tập" ? "active" : "")">
-                                        <a href="@Url.Action("Import", "RegistrationResult", new { area = "Faculty" })" class="menu-item">Import KQĐK học tập</a>
+                                        <a href="@Url.Action("Import", "RegistrationResult", new { Area = "Faculty" })" class="menu-item">Import KQĐK học tập</a>
                                     </li>
                                 </ul>
                             </li>
@@ -82,7 +82,7 @@
                                 <a href="@Url.Action("Index", "Major", new { Area = "Faculty" })"><i class="icon-graduation"></i><span data-i18n="" class="menu-title">Ngành</span></a>
                             </li>
                             <li class="@(ViewBag.Title == "Thống kê tiến độ học tập" ? "active" : "nav-item")">
-                                <a href="@Url.Action("Index", "ProgressStatistics", new { area = "Faculty" })"><i class="icon-pie-chart"></i><span data-i18n="" class="menu-title">Thống kê</span></a>
+                                <a href="@Url.Action("Index", "ProgressStatistics", new { Area = "Faculty" })"><i class="icon-pie-chart"></i><span data-i18n="" class="menu-title">Thống kê</span></a>
                             </li>
                         }
                         else if (User.IsInRole("Admin"))
@@ -94,10 +94,10 @@
                         else
                         {
                             <li class="@(ViewBag.Title == "Tiến độ học tập" ? "active" : "")">
-                                <a href="@Url.Action("Index", "LearningProgress", new { area = "Student" })"><i class="icon-book-open"></i><span data-i18n="" class="menu-title">Tiến độ học tập</span></a>
+                                <a href="@Url.Action("Index", "LearningProgress", new { Area = "Student", userMail = User.Identity.Name })"><i class="icon-book-open"></i><span data-i18n="" class="menu-title">Tiến độ học tập</span></a>
                             </li>
                             <li class="@(ViewBag.Title == "Thống kê tình hình học tập" ? "active" : "")">
-                                <a href="@Url.Action("Index", "Statistics", new { area = "Student" })"><i class="icon-bar-chart"></i><span data-i18n="" class="menu-title">Thống kê</span></a>
+                                <a href="@Url.Action("Index", "Statistics", new { Area = "Student", userMail = User.Identity.Name })"><i class="icon-bar-chart"></i><span data-i18n="" class="menu-title">Thống kê</span></a>
                             </li>
                         }
                     </ul>
@@ -126,7 +126,7 @@
                                     <span class="avatar avatar-online"><img id="navbar-avatar" src="@Url.Content("~/assets/images/img_user_avatar.png")" alt="avatar" /></span>
                                     <p class="d-none">User Settings</p>
                                 </a>
-                                @using (Html.BeginForm("SignOut", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm" }))
+                                @using (Html.BeginForm("SignOut", "Account", new { Area = "" }, FormMethod.Post, new { id = "logoutForm" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     <div aria-labelledby="dropdownBasic3" class="dropdown-menu dropdown-menu-right">

@@ -260,7 +260,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             // Add class student
                             db.class_student.Add(new class_student
                             {
-                                id = studentClassId,
+                                id = SetNullOnEmpty(studentClassId),
                                 student_course_id = studentCourseId
                             });
                             db.SaveChanges();
@@ -272,9 +272,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             // Add student
                             db.students.Add(new student
                             {
-                                id = studentId,
-                                full_name = studentName,
-                                class_student_id = studentClassId,
+                                id = SetNullOnEmpty(studentId),
+                                full_name = SetNullOnEmpty(studentName),
+                                class_student_id = SetNullOnEmpty(studentClassId),
                                 student_course_id = studentCourseId
                             });
                             db.SaveChanges();
@@ -286,7 +286,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             // Add curriculum class
                             db.curriculum_class.Add(new curriculum_class
                             {
-                                id = curriculumClassId,
+                                id = SetNullOnEmpty(curriculumClassId),
                                 schedule = SetNullOnEmpty(curriculumClassSchedule)
                             });
                             db.SaveChanges();
@@ -319,9 +319,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                                 registration_person = SetNullOnEmpty(registrationPerson),
                                 term_id = termId,
                                 curriculum_id = query_curriculum.id,
-                                curriculum_class_id = curriculumClassId,
+                                curriculum_class_id = SetNullOnEmpty(curriculumClassId),
                                 lecturer_id = SetNullOnEmpty(lecturerId),
-                                student_id = studentId,
+                                student_id = SetNullOnEmpty(studentId),
                                 student_course_id = studentCourseId
                             });
                         }

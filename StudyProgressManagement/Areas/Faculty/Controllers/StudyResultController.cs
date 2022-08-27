@@ -253,7 +253,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             // Add class student
                             db.class_student.Add(new class_student
                             {
-                                id = classStudentId,
+                                id = SetNullOnEmpty(classStudentId),
                                 student_course_id = studentCourseId
                             });
                             db.SaveChanges();
@@ -265,9 +265,9 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                             // Add student
                             db.students.Add(new student
                             {
-                                id = studentId,
-                                full_name = studentName,
-                                class_student_id = classStudentId,
+                                id = SetNullOnEmpty(studentId),
+                                full_name = SetNullOnEmpty(studentName),
+                                class_student_id = SetNullOnEmpty(classStudentId),
                                 student_course_id = studentCourseId
                             });
                             db.SaveChanges();
@@ -286,7 +286,7 @@ namespace StudyProgressManagement.Areas.Faculty.Controllers
                                 max_mark_letter = SetNullOnEmpty(maxMarkLetter),
                                 is_pass = SetNullOnEmpty(isPass),
                                 curriculum_id = query_curriculum.id,
-                                student_id = studentId,
+                                student_id = SetNullOnEmpty(studentId),
                                 student_course_id = studentCourseId
                             });
                         }

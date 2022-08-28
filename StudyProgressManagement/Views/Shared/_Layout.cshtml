@@ -128,14 +128,12 @@
                                 </a>
                                 @using (Html.BeginForm("SignOut", "Account", new { Area = "" }, FormMethod.Post, new { id = "logoutForm" }))
                                 {
-                                    @Html.AntiForgeryToken()
                                     <div aria-labelledby="dropdownBasic3" class="dropdown-menu dropdown-menu-right">
                                         <div class="arrow_box_right">
                                             <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item"><i class="ft-power mr-2"></i><span>Đăng xuất</span></a>
                                         </div>
                                     </div>
                                 }
-
                             </li>
                         </ul>
                     </div>
